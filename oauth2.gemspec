@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{oauth2}
-  s.version = "0.0.1"
+  s.version = "0.0.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Michael Bleigh"]
@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
      "lib/oauth2/strategy/base.rb",
      "lib/oauth2/strategy/web_server.rb",
      "lib/oauth2/uri.rb",
+     "oauth2.gemspec",
      "spec/oauth2/client_spec.rb",
      "spec/oauth2/strategy/base_spec.rb",
      "spec/oauth2/strategy/web_server_spec.rb",
