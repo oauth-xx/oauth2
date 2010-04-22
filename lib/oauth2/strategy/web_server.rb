@@ -8,7 +8,7 @@ module OAuth2
       def access_token(code, options = {})
         response = @client.request(:get, @client.access_token_url, access_token_params(code, options))
         params   = Rack::Utils.parse_query(response)
-        token    = response.split('&').inject({}){|h,kv| (k,v) = kv.split('='); h[k] = v; h}['access_token']
+        token    = params['access_token']
         OAuth2::AccessToken.new(@client, token)
       end
       
