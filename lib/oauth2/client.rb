@@ -33,45 +33,11 @@ module OAuth2
       connection.build_url(path, params).to_s
     end
     
-    def request(verb, url_or_path, params = {}, headers = {})
-      if url_or_path[0..3] == 'http'
-        uri = URI.parse(url_or_path)
-        path = uri.path
-      else
-        uri = URI.parse(self.site)
-        path = (uri.path + url_or_path).gsub('//','/')
+    def request(verb, url, params = {}, headers = {})
+      resp = connection.run_request(verb, url, nil, headers) do |req|
+        req.params.update(params)
       end
-      
-      net = Net::HTTP.new(uri.host, uri.port)
-      net.use_ssl = (uri.scheme == 'https')
-      
-      net.start do |http|
-        if verb == :get
-          uri.query_hash = uri.query_hash.merge(params)
-          path += "?#{uri.query}"
-        end
-        
-        req = Net::HTTP.const_get(verb.to_s.capitalize).new(path, headers)
-        
-        unless verb == :get
-          req.set_form_data(params)
-        end
-        
-        response = http.request(req)
-        
-        case response
-          when Net::HTTPSuccess
-            response.body
-          when Net::HTTPUnauthorized
-            e = OAuth2::AccessDenied.new("Received HTTP 401 when retrieving access token.")
-            e.response = response
-            raise e
-          else
-            e = OAuth2::HTTPError.new("Received HTTP #{response.code} when retrieving access token.")
-            e.response = response
-            raise e
-        end
-      end
+      resp.status ? resp.body : resp
     end
     
     def web_server; OAuth2::Strategy::WebServer.new(self) end
