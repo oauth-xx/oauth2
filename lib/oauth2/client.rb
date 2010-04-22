@@ -2,6 +2,11 @@ require 'faraday'
 
 module OAuth2
   class Client
+    class << self
+      attr_accessor :default_connection_adapter
+    end
+    self.default_connection_adapter = :net_http
+
     attr_accessor :id, :secret, :site, :connection, :options
     
     # Instantiate a new OAuth 2.0 client using the
@@ -16,11 +21,15 @@ module OAuth2
     # <tt>:access_token_path</tt> :: Specify the path to the access token endpoint.
     # <tt>:access_token_url</tt> :: Specify the full URL of the access token endpoint.
     def initialize(client_id, client_secret, opts = {})
+      adapter         = opts.delete(:adapter) || self.class.default_connection_adapter
       self.id         = client_id
       self.secret     = client_secret
       self.site       = opts.delete(:site) if opts[:site]
       self.options    = opts
       self.connection = Faraday::Connection.new(site)
+      if adapter != :test
+        connection.build { |b| b.adapter(adapter) }
+      end
     end
     
     def authorize_url(params = nil)

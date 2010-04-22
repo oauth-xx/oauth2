@@ -5,6 +5,8 @@ require 'oauth2'
 require 'spec'
 require 'spec/autorun'
 
+OAuth2::Client.default_connection_adapter = :test
+
 Spec::Runner.configure do |config|
   
 end
