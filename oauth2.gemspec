@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{oauth2}
-  s.version = "0.0.3"
+  s.version = "0.0.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Michael Bleigh"]
@@ -28,12 +28,11 @@ Gem::Specification.new do |s|
      "lib/oauth2/client.rb",
      "lib/oauth2/strategy/base.rb",
      "lib/oauth2/strategy/web_server.rb",
-     "lib/oauth2/uri.rb",
      "oauth2.gemspec",
+     "spec/oauth2/access_token_spec.rb",
      "spec/oauth2/client_spec.rb",
      "spec/oauth2/strategy/base_spec.rb",
      "spec/oauth2/strategy/web_server_spec.rb",
-     "spec/oauth2/uri_spec.rb",
      "spec/spec.opts",
      "spec/spec_helper.rb",
      "specs.watchr"
@@ -44,10 +43,10 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.6}
   s.summary = %q{A Ruby wrapper for the OAuth 2.0 protocol.}
   s.test_files = [
-    "spec/oauth2/client_spec.rb",
+    "spec/oauth2/access_token_spec.rb",
+     "spec/oauth2/client_spec.rb",
      "spec/oauth2/strategy/base_spec.rb",
      "spec/oauth2/strategy/web_server_spec.rb",
-     "spec/oauth2/uri_spec.rb",
      "spec/spec_helper.rb"
   ]
 
@@ -56,11 +55,14 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<faraday>, ["~> 0.3.0"])
       s.add_development_dependency(%q<rspec>, [">= 1.2.9"])
     else
+      s.add_dependency(%q<faraday>, ["~> 0.3.0"])
       s.add_dependency(%q<rspec>, [">= 1.2.9"])
     end
   else
+    s.add_dependency(%q<faraday>, ["~> 0.3.0"])
     s.add_dependency(%q<rspec>, [">= 1.2.9"])
   end
 end
