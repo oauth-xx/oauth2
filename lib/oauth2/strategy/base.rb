@@ -6,9 +6,7 @@ module OAuth2
       end
     
       def authorize_url(options = {}) #:nodoc:
-        uri = URI.parse(@client.authorize_url)
-        uri.query_hash = authorize_params(options)
-        uri.to_s
+        @client.authorize_url(authorize_params(options))
       end
     
       def authorize_params(options = {}) #:nodoc:
@@ -17,9 +15,7 @@ module OAuth2
       end
       
       def access_token_url(options = {})
-        uri = URI.parse(@client.access_token_url)
-        uri.query_hash = access_token_params(options)
-        uri.to_s
+        @client.access_token_url(access_token_params(options))
       end
       
       def access_token_params(options = {})

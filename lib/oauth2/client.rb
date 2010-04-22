@@ -23,14 +23,14 @@ module OAuth2
       self.connection = Faraday::Connection.new(site)
     end
     
-    def authorize_url
-      return options[:authorize_url] if options[:authorize_url]
-      connection.build_url(options[:authorize_path] || "/oauth/authorize").to_s
+    def authorize_url(params = nil)
+      path = options[:authorize_url] || options[:authorize_path] || "/oauth/authorize"
+      connection.build_url(path, params).to_s
     end
     
-    def access_token_url
-      return options[:access_token_url] if options[:access_token_url]
-      connection.build_url(options[:access_token_path] || "/oauth/access_token").to_s
+    def access_token_url(params = nil)
+      path = options[:access_token_url] || options[:access_token_path] || "/oauth/access_token"
+      connection.build_url(path, params).to_s
     end
     
     def request(verb, url_or_path, params = {}, headers = {})

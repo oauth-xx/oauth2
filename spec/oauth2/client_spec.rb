@@ -12,6 +12,10 @@ describe OAuth2::Client do
     it 'should assign site from the options hash' do
       subject.site.should == 'https://api.example.com'
     end
+
+    it 'should assign Faraday::Connection#host' do
+      subject.connection.host.should == 'api.example.com'
+    end
   end
   
   %w(authorize access_token).each do |path_type|
