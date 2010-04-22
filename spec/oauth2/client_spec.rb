@@ -1,7 +1,17 @@
 require 'spec_helper'
 
 describe OAuth2::Client do
-  subject{ OAuth2::Client.new('abc','def', :site => 'https://api.example.com')}
+  subject do
+    cli = OAuth2::Client.new('abc','def', :site => 'https://api.example.com')
+    cli.connection.build do |b|
+      b.adapter :test do |stub|
+        stub.get('/success')      { |env| [200, {}, 'yay'] }
+        stub.get('/unauthorized') { |env| [401, {}, '']    }
+        stub.get('/error')        { |env| [500, {}, '']    }
+      end
+    end
+    cli
+  end
   
   describe '#initialize' do
     it 'should assign id and secret' do
@@ -35,7 +45,21 @@ describe OAuth2::Client do
       end
     end
   end
-  
+
+  describe "#request" do
+    it "returns response body on successful response" do
+      subject.request(:get, '/success', {}, {}).should == 'yay'
+    end
+
+    it "raises OAuth2::AccessDenied on 401 response" do
+      lambda { subject.request(:get, '/unauthorized', {}, {}) }.should raise_error(OAuth2::AccessDenied)
+    end
+
+    it "raises OAuth2::HTTPError on error response" do
+      lambda { subject.request(:get, '/error', {}, {}) }.should raise_error(OAuth2::HTTPError)
+    end
+  end
+
   it '#web_server should instantiate a WebServer strategy with this client' do
     subject.web_server.should be_kind_of(OAuth2::Strategy::WebServer)
   end

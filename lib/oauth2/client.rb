@@ -46,7 +46,17 @@ module OAuth2
       resp = connection.run_request(verb, url, nil, headers) do |req|
         req.params.update(params)
       end
-      resp.status ? resp.body : resp
+      case resp.status
+        when 200...201 then resp.body
+        when 401
+          e = OAuth2::AccessDenied.new("Received HTTP 401 when retrieving access token.")
+          e.response = resp
+          raise e
+        else
+          e = OAuth2::HTTPError.new("Received HTTP #{resp.status} when retrieving access token.")
+          e.response = resp
+          raise e
+      end
     end
     
     def web_server; OAuth2::Strategy::WebServer.new(self) end
