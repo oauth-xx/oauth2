@@ -27,12 +27,8 @@ Below is a fully functional example of a Sinatra application that would authenti
     end
 
     get '/auth/facebook/callback' do
-      begin
-        access_token = client.web_server.access_token(params[:code], :redirect_uri => redirect_uri)
-        user = JSON.parse(access_token.get('/me'))
-      rescue OAuth2::ErrorWithResponse => e
-        raise e.response.body
-      end
+      access_token = client.web_server.access_token(params[:code], :redirect_uri => redirect_uri)
+      user = JSON.parse(access_token.get('/me'))
 
       user.inspect
     end
