@@ -1,6 +1,50 @@
-= oauth2
+= OAuth2
 
-Description goes here.
+A Ruby wrapper for the OAuth 2.0 specification. This is a work in progress, being built first to solve the pragmatic process of connecting to existing OAuth 2.0 endpoints (a.k.a. Facebook) with the goal of building it up to meet the entire specification over time.
+
+== Installation
+
+    gem install oauth2
+   
+== Web Server Example (Sinatra)
+
+Below is a fully functional example of a Sinatra application that would authenticate to Facebook utilizing the OAuth 2.0 web server flow.
+
+    require 'rubygems'
+    require 'sinatra'
+    require 'oauth2'
+    require 'json'
+
+    def client
+      OAuth2::Client.new('5a816feeea97e6c7188a12f8e98a2c0f', 'd04fafd7d173b0e80853adab158fbd1f', :site => 'https://graph.facebook.com')
+    end
+    
+    get '/auth/facebook' do
+      redirect client.web_server.authorize_url(
+        :redirect_uri => redirect_uri, 
+        :scope => 'email,offline_access'
+      )
+    end
+
+    get '/auth/facebook/callback' do
+      begin
+        access_token = client.web_server.access_token(params[:code], :redirect_uri => redirect_uri)
+        user = JSON.parse(access_token.get('/me'))
+      rescue OAuth2::ErrorWithResponse => e
+        raise e.response.body
+      end
+
+      user.inspect
+    end
+
+    def redirect_uri
+      uri = URI.parse(request.url)
+      uri.path = '/auth/facebook/callback'
+      uri.query = nil
+      uri.to_s
+    end
+    
+That's all there is to it! You can use the access token like you would with the OAuth gem, calling HTTP verbs on it etc.
 
 == Note on Patches/Pull Requests
  
