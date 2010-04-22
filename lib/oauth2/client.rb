@@ -1,8 +1,8 @@
-require 'net/https'
+require 'faraday'
 
 module OAuth2
   class Client
-    attr_accessor :id, :secret, :site, :options
+    attr_accessor :id, :secret, :site, :connection, :options
     
     # Instantiate a new OAuth 2.0 client using the
     # client ID and client secret registered to your
@@ -16,26 +16,21 @@ module OAuth2
     # <tt>:access_token_path</tt> :: Specify the path to the access token endpoint.
     # <tt>:access_token_url</tt> :: Specify the full URL of the access token endpoint.
     def initialize(client_id, client_secret, opts = {})
-      self.id = client_id
-      self.secret = client_secret
-      self.site = opts.delete(:site) if opts[:site]
-      self.options = opts
+      self.id         = client_id
+      self.secret     = client_secret
+      self.site       = opts.delete(:site) if opts[:site]
+      self.options    = opts
+      self.connection = Faraday::Connection.new(site)
     end
     
     def authorize_url
       return options[:authorize_url] if options[:authorize_url]
-
-      uri = URI.parse(site)
-      uri.path = options[:authorize_path] || "/oauth/authorize"
-      uri.to_s
+      connection.build_url(options[:authorize_path] || "/oauth/authorize").to_s
     end
     
     def access_token_url
       return options[:access_token_url] if options[:access_token_url]
-
-      uri = URI.parse(site)
-      uri.path = options[:access_token_path] || "/oauth/access_token"
-      uri.to_s
+      connection.build_url(options[:access_token_path] || "/oauth/access_token").to_s
     end
     
     def request(verb, url_or_path, params = {}, headers = {})
