@@ -16,7 +16,7 @@ Below is a fully functional example of a Sinatra application that would authenti
     require 'json'
 
     def client
-      OAuth2::Client.new('5a816feeea97e6c7188a12f8e98a2c0f', 'd04fafd7d173b0e80853adab158fbd1f', :site => 'https://graph.facebook.com')
+      OAuth2::Client.new('api_key', 'api_secret', :site => 'https://graph.facebook.com')
     end
     
     get '/auth/facebook' do
