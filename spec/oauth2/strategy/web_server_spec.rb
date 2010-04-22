@@ -1,8 +1,19 @@
 require 'spec_helper'
 
 describe OAuth2::Strategy::WebServer do
-  let(:client){ OAuth2::Client.new('abc','def', :site => 'http://api.example.com') }
+  let(:client) do
+    cli = OAuth2::Client.new('abc','def', :site => 'http://api.example.com')
+    cli.connection.build do |b|
+      b.adapter :test do |stub|
+        stub.get('/oauth/access_token?code=sushi&client_id=abc&client_secret=def&type=web_server') do |env| 
+          [200, {}, 'a=1&access_token=salmon']
+        end
+      end
+    end
+    cli
+  end
   subject { client.web_server }
+
   describe '#authorize_url' do
     it 'should include the client_id' do
       subject.authorize_url.should be_include('client_id=abc')
@@ -14,7 +25,21 @@ describe OAuth2::Strategy::WebServer do
     
     it 'should include passed in options' do
       cb = 'http://myserver.local/oauth/callback'
-      subject.authorize_url(:redirect_uri => cb).should be_include("redirect_uri=#{CGI.escape(cb)}")
+      subject.authorize_url(:redirect_uri => cb).should be_include("redirect_uri=#{Rack::Utils.escape(cb)}")
+    end
+  end
+
+  describe "#access_token" do
+    before do
+      @access = subject.access_token('sushi')
+    end
+
+    it 'returns AccessToken with same Client' do
+      @access.client.should == client
+    end
+
+    it 'returns AccessToken with #token' do
+      @access.token.should == 'salmon'
     end
   end
 end

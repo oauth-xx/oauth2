@@ -4,7 +4,6 @@ module OAuth2
   class HTTPError < ErrorWithResponse; end
 end
 
-require 'oauth2/uri'
 require 'oauth2/client'
 require 'oauth2/strategy/base'
 require 'oauth2/strategy/web_server'

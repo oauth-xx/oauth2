@@ -1,6 +1,6 @@
 module OAuth2
   class AccessToken
-    attr_accessor :token
+    attr_reader :client, :token
 
     def initialize(client, token)
       @client = client
