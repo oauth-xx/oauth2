@@ -14,7 +14,7 @@ describe OAuth2::Strategy::WebServer do
     
     it 'should include passed in options' do
       cb = 'http://myserver.local/oauth/callback'
-      subject.authorize_url(:redirect_uri => cb).should be_include("redirect_uri=#{CGI.escape(cb)}")
+      subject.authorize_url(:redirect_uri => cb).should be_include("redirect_uri=#{Rack::Utils.escape(cb)}")
     end
   end
 end
