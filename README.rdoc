@@ -54,4 +54,4 @@ That's all there is to it! You can use the access token like you would with the 
 
 == Copyright
 
-Copyright (c) 2010 Michael Bleigh. See LICENSE for details.
+Copyright (c) 2010 Intridea, Inc. and Michael Bleigh. See LICENSE for details.
