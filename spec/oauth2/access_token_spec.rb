@@ -6,9 +6,9 @@ describe OAuth2::AccessToken do
     cli.connection.build do |b|
       b.adapter :test do |stub|
         stub.get('/client?access_token=monkey')    { |env| [200, {}, 'get']    }
-        stub.post('/client?access_token=monkey')   { |env| [200, {}, 'post']   }
-        stub.put('/client?access_token=monkey')    { |env| [200, {}, 'put']    }
-        stub.delete('/client?access_token=monkey') { |env| [200, {}, 'delete'] }
+        stub.post('/client')   { |env| [200, {}, 'post']   }
+        stub.put('/client')    { |env| [200, {}, 'put']    }
+        stub.delete('/client') { |env| [200, {}, 'delete'] }
       end
     end
     cli
