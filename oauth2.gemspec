@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{oauth2}
-  s.version = "0.0.5"
+  s.version = "0.0.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Michael Bleigh"]
-  s.date = %q{2010-04-23}
+  s.date = %q{2010-04-25}
   s.description = %q{A Ruby wrapper for the OAuth 2.0 protocol built with a similar style to the original OAuth gem.}
   s.email = %q{michael@intridea.com}
   s.extra_rdoc_files = [
@@ -19,6 +19,7 @@ Gem::Specification.new do |s|
   s.files = [
     ".document",
      ".gitignore",
+     "CHANGELOG.rdoc",
      "LICENSE",
      "README.rdoc",
      "Rakefile",
@@ -26,6 +27,7 @@ Gem::Specification.new do |s|
      "lib/oauth2.rb",
      "lib/oauth2/access_token.rb",
      "lib/oauth2/client.rb",
+     "lib/oauth2/response_string.rb",
      "lib/oauth2/strategy/base.rb",
      "lib/oauth2/strategy/web_server.rb",
      "oauth2.gemspec",
