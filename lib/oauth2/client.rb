@@ -42,6 +42,7 @@ module OAuth2
       connection.build_url(path, params).to_s
     end
 
+    # Makes a request relative to the specified site root.
     def request(verb, url, params = {}, headers = {})
       if verb == :get
         resp = connection.run_request(verb, url, nil, headers) do |req|
@@ -51,13 +52,13 @@ module OAuth2
         resp = connection.run_request(verb, url, params, headers)
       end
       case resp.status
-        when 200...201 then resp.body
+        when 200...201 then ResponseString.new(resp)
         when 401
-          e = OAuth2::AccessDenied.new("Received HTTP 401 when retrieving access token.")
+          e = OAuth2::AccessDenied.new("Received HTTP 401 during request.")
           e.response = resp
           raise e
         else
-          e = OAuth2::HTTPError.new("Received HTTP #{resp.status} when retrieving access token.")
+          e = OAuth2::HTTPError.new("Received HTTP #{resp.status} during request.")
           e.response = resp
           raise e
       end

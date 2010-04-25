@@ -5,7 +5,7 @@ describe OAuth2::Client do
     cli = OAuth2::Client.new('abc','def', :site => 'https://api.example.com')
     cli.connection.build do |b|
       b.adapter :test do |stub|
-        stub.get('/success')      { |env| [200, {}, 'yay'] }
+        stub.get('/success')      { |env| [200, {'Content-Type' => 'text/awesome'}, 'yay'] }
         stub.get('/unauthorized') { |env| [401, {}, '']    }
         stub.get('/error')        { |env| [500, {}, '']    }
       end
@@ -47,8 +47,11 @@ describe OAuth2::Client do
   end
 
   describe "#request" do
-    it "returns response body on successful response" do
-      subject.request(:get, '/success', {}, {}).should == 'yay'
+    it "returns ResponseString on successful response" do
+      response = subject.request(:get, '/success', {}, {})
+      response.should == 'yay'
+      response.status.should == 200
+      response.headers.should == {'Content-Type' => 'text/awesome'}
     end
 
     it "raises OAuth2::AccessDenied on 401 response" do

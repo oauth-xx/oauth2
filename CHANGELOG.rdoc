@@ -1,0 +1,4 @@
+== 0.0.6 (April 25)
+
+* Added ResponseString so as not to throw away response information when making requests.
+* Deprecated #access_token on WebServer strategy in favor of #get_access_token

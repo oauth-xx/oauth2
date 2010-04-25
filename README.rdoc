@@ -5,6 +5,12 @@ A Ruby wrapper for the OAuth 2.0 specification. This is a work in progress, bein
 == Installation
 
     gem install oauth2
+    
+== Resources
+
+* View Source on GitHub (http://github.com/intridea/oauth2)
+* Report Issues on GitHub (http://github.com/intridea/oauth2/issues)
+* Read More at the Wiki (http://wiki.github.com/intridea/oauth2/)
    
 == Web Server Example (Sinatra)
 
@@ -18,7 +24,7 @@ Below is a fully functional example of a Sinatra application that would authenti
     def client
       OAuth2::Client.new('api_key', 'api_secret', :site => 'https://graph.facebook.com')
     end
-    
+
     get '/auth/facebook' do
       redirect client.web_server.authorize_url(
         :redirect_uri => redirect_uri, 
@@ -27,7 +33,7 @@ Below is a fully functional example of a Sinatra application that would authenti
     end
 
     get '/auth/facebook/callback' do
-      access_token = client.web_server.access_token(params[:code], :redirect_uri => redirect_uri)
+      access_token = client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri)
       user = JSON.parse(access_token.get('/me'))
 
       user.inspect
@@ -40,7 +46,7 @@ Below is a fully functional example of a Sinatra application that would authenti
       uri.to_s
     end
     
-That's all there is to it! You can use the access token like you would with the OAuth gem, calling HTTP verbs on it etc.
+That's all there is to it! You can use the access token like you would with the OAuth gem, calling HTTP verbs on it etc. You can view more examples on the OAuth2 Wiki (http://wiki.github.com/intridea/oauth2/examples)
 
 == Note on Patches/Pull Requests
  

@@ -29,9 +29,9 @@ describe OAuth2::Strategy::WebServer do
     end
   end
 
-  describe "#access_token" do
+  describe "#get_access_token" do
     before do
-      @access = subject.access_token('sushi')
+      @access = subject.get_access_token('sushi')
     end
 
     it 'returns AccessToken with same Client' do
