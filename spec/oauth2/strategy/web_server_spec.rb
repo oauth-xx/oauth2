@@ -6,7 +6,7 @@ describe OAuth2::Strategy::WebServer do
     cli.connection.build do |b|
       b.adapter :test do |stub|
         stub.post('/oauth/access_token?code=sushi&client_id=abc&client_secret=def&type=web_server') do |env| 
-          [200, {}, 'a=1&access_token=salmon']
+          [200, {}, 'a=1&access_token=salmon&refresh_token=trout']
         end
       end
     end
@@ -40,6 +40,10 @@ describe OAuth2::Strategy::WebServer do
 
     it 'returns AccessToken with #token' do
       @access.token.should == 'salmon'
+    end
+
+    it 'returns AccessToken with #refresh_token' do
+      @access.refresh_token.should == 'trout'
     end
   end
 end

@@ -12,8 +12,9 @@ module OAuth2
       def get_access_token(code, options = {})
         response = @client.request(:post, @client.access_token_url, access_token_params(code, options))
         params   = Rack::Utils.parse_query(response)
-        token    = params['access_token']
-        OAuth2::AccessToken.new(@client, token)
+        access   = params['access_token']
+        refresh  = params['refresh_token']
+        OAuth2::AccessToken.new(@client, access, refresh)
       end
       
       # <b>DEPRECATED:</b> Use #get_access_token instead.
