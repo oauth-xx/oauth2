@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{oauth2}
-  s.version = "0.0.6"
+  s.version = "0.0.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Michael Bleigh"]
-  s.date = %q{2010-04-25}
+  s.date = %q{2010-04-27}
   s.description = %q{A Ruby wrapper for the OAuth 2.0 protocol built with a similar style to the original OAuth gem.}
   s.email = %q{michael@intridea.com}
   s.extra_rdoc_files = [
@@ -57,14 +57,14 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
-      s.add_runtime_dependency(%q<faraday>, ["~> 0.3.0"])
+      s.add_runtime_dependency(%q<faraday>, ["~> 0.4.1"])
       s.add_development_dependency(%q<rspec>, [">= 1.2.9"])
     else
-      s.add_dependency(%q<faraday>, ["~> 0.3.0"])
+      s.add_dependency(%q<faraday>, ["~> 0.4.1"])
       s.add_dependency(%q<rspec>, [">= 1.2.9"])
     end
   else
-    s.add_dependency(%q<faraday>, ["~> 0.3.0"])
+    s.add_dependency(%q<faraday>, ["~> 0.4.1"])
     s.add_dependency(%q<rspec>, [">= 1.2.9"])
   end
 end
