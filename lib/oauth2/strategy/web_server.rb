@@ -10,10 +10,11 @@ module OAuth2
       # in order to successfully verify your request for most OAuth 2.0
       # endpoints.
       def get_access_token(code, options = {})
-        response = @client.request(:get, @client.access_token_url, access_token_params(code, options))
+        response = @client.request(:post, @client.access_token_url, access_token_params(code, options))
         params   = Rack::Utils.parse_query(response)
-        token    = params['access_token']
-        OAuth2::AccessToken.new(@client, token)
+        access   = params['access_token']
+        refresh  = params['refresh_token']
+        OAuth2::AccessToken.new(@client, access, refresh)
       end
       
       # <b>DEPRECATED:</b> Use #get_access_token instead.
