@@ -1,3 +1,7 @@
+== 0.0.7 (April 27)
+
+* Updating Faraday dependency for improved SSL support (via technoweenie)
+
 == 0.0.6 (April 25)
 
 * Added ResponseString so as not to throw away response information when making requests.
