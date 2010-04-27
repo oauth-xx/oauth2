@@ -5,7 +5,7 @@ describe OAuth2::Strategy::WebServer do
     cli = OAuth2::Client.new('abc','def', :site => 'http://api.example.com')
     cli.connection.build do |b|
       b.adapter :test do |stub|
-        stub.post('/oauth/access_token?code=sushi&client_id=abc&client_secret=def&type=web_server') do |env| 
+        stub.post('/oauth/access_token') do |env| 
           [200, {}, 'a=1&access_token=salmon&refresh_token=trout']
         end
       end
