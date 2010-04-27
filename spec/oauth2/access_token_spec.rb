@@ -5,10 +5,10 @@ describe OAuth2::AccessToken do
     cli = OAuth2::Client.new('abc','def', :site => 'https://api.example.com')
     cli.connection.build do |b|
       b.adapter :test do |stub|
-        stub.get('/client?access_token=monkey')    { |env| [200, {}, 'get']    }
-        stub.post('/client')   { |env| [200, {}, 'post']   }
-        stub.put('/client')    { |env| [200, {}, 'put']    }
-        stub.delete('/client') { |env| [200, {}, 'delete'] }
+        stub.get('/client?access_token=monkey') { |env| [200, {}, 'get']    }
+        stub.post('/client')                    { |env| [200, {}, 'access_token=' << env[:body]['access_token']] }
+        stub.put('/client')                     { |env| [200, {}, 'access_token=' << env[:body]['access_token']] }
+        stub.delete('/client')                  { |env| [200, {}, 'access_token=' << env[:body]['access_token']] }
       end
     end
     cli
@@ -24,9 +24,13 @@ describe OAuth2::AccessToken do
       subject.token.should  == token
     end
 
-    %w(get post put delete).each do |http_method|
+    it "makes GET requests with access token" do
+      subject.send(:get, 'client').should == 'get'
+    end
+
+    %w(post put delete).each do |http_method|
       it "makes #{http_method.upcase} requests with access token" do
-        subject.send(http_method.to_sym, 'client').should == http_method
+        subject.send(http_method.to_sym, 'client').should == 'access_token=monkey'
       end
     end
   end
