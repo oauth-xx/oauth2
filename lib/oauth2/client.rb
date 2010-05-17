@@ -31,8 +31,8 @@ module OAuth2
       adapter         = opts.delete(:adapter)
       self.id         = client_id
       self.secret     = client_secret
-      self.site       = opts.delete(:site) if opts[:site]
-      self.options    = opts
+      self.options    = opts.dup
+      self.site       = self.options.delete(:site) if self.options[:site]
       self.connection = Faraday::Connection.new(site)
       if adapter && adapter != :test
         connection.build { |b| b.adapter(adapter) }
