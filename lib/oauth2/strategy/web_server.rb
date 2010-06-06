@@ -1,3 +1,5 @@
+require 'yajl'
+
 module OAuth2
   module Strategy
     class WebServer < Base
@@ -11,7 +13,7 @@ module OAuth2
       # endpoints.
       def get_access_token(code, options = {})
         response = @client.request(:post, @client.access_token_url, access_token_params(code, options))
-        params   = Rack::Utils.parse_query(response)
+        params   = Yajl::Parser.parse(response) rescue Rack::Utils.parse_query(response)
         access   = params['access_token']
         refresh  = params['refresh_token']
         OAuth2::AccessToken.new(@client, access, refresh)
