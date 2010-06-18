@@ -1,4 +1,4 @@
-require 'yajl'
+require 'multi_json'
 
 module OAuth2
   module Strategy
@@ -13,10 +13,11 @@ module OAuth2
       # endpoints.
       def get_access_token(code, options = {})
         response = @client.request(:post, @client.access_token_url, access_token_params(code, options))
-        params   = Yajl::Parser.parse(response) rescue Rack::Utils.parse_query(response)
+        params   = MultiJson.decode(response) rescue Rack::Utils.parse_query(response)
         access   = params['access_token']
         refresh  = params['refresh_token']
-        OAuth2::AccessToken.new(@client, access, refresh)
+        expires_in = params['expires_in']
+        OAuth2::AccessToken.new(@client, access, refresh, expires_in)
       end
       
       # <b>DEPRECATED:</b> Use #get_access_token instead.
