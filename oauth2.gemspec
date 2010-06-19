@@ -58,16 +58,16 @@ Gem::Specification.new do |s|
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<faraday>, ["~> 0.4.1"])
-      s.add_runtime_dependency(%q<multi_json >= 0.0.4>, [">= 0"])
+      s.add_runtime_dependency(%q<multi_json>, [">= 0.0.4"])
       s.add_development_dependency(%q<rspec>, [">= 1.2.9"])
     else
       s.add_dependency(%q<faraday>, ["~> 0.4.1"])
-      s.add_dependency(%q<multi_json >= 0.0.4>, [">= 0"])
+      s.add_dependency(%q<multi_json>, [">= 0.0.4"])
       s.add_dependency(%q<rspec>, [">= 1.2.9"])
     end
   else
     s.add_dependency(%q<faraday>, ["~> 0.4.1"])
-    s.add_dependency(%q<multi_json >= 0.0.4>, [">= 0"])
+    s.add_dependency(%q<multi_json>, [">= 0.0.4"])
     s.add_dependency(%q<rspec>, [">= 1.2.9"])
   end
 end
