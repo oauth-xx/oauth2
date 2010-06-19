@@ -13,7 +13,14 @@ module OAuth2
       # endpoints.
       def get_access_token(code, options = {})
         response = @client.request(:post, @client.access_token_url, access_token_params(code, options))
-        params   = MultiJson.decode(response) rescue Rack::Utils.parse_query(response)
+
+        params   = MultiJson.decode(response) rescue nil
+        # the ActiveSupport JSON parser won't cause an exception when
+        # given a formencoded string, so make sure that it was
+        # actually parsed in an Hash. This covers even the case where
+        # it caused an exception since it'll still be nil.
+        params   = Rack::Utils.parse_query(response) unless params.is_a? Hash
+
         access   = params['access_token']
         refresh  = params['refresh_token']
         expires_in = params['expires_in']
