@@ -1,3 +1,8 @@
+== 0.0.10 (June 19)
+
+* Handle ActiveSupport JSON case where incompatible string does not raise an error. (via Flameeyes)
+* Depend on latest version of MultiJSON.
+
 == 0.0.9 (June 18)
 
 * Support a JSON token response with swappable JSON parser via MultiJSON.
