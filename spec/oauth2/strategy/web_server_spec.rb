@@ -34,8 +34,8 @@ describe OAuth2::Strategy::WebServer do
     end
   end
 
-  describe "#get_access_token" do
-    %w(json formencoded).each do |mode|
+  %w(json formencoded).each do |mode|
+    describe "#get_access_token (#{mode})" do
       before do
         @mode = mode
         @access = subject.get_access_token('sushi')
