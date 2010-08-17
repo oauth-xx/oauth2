@@ -8,6 +8,7 @@ describe OAuth2::Client do
         stub.get('/success')      { |env| [200, {'Content-Type' => 'text/awesome'}, 'yay'] }
         stub.get('/unauthorized') { |env| [401, {}, '']    }
         stub.get('/error')        { |env| [500, {}, '']    }
+        stub.get('/json')         { |env| [200, {'Content-Type' => 'application/json'}, '{"abc":"def"}']}
       end
     end
     cli
@@ -65,5 +66,32 @@ describe OAuth2::Client do
 
   it '#web_server should instantiate a WebServer strategy with this client' do
     subject.web_server.should be_kind_of(OAuth2::Strategy::WebServer)
+  end
+  
+  context 'with JSON parsing' do
+    before do
+      subject.json = true
+    end
+    
+    describe '#request' do
+      it 'should return a response hash' do
+        response = subject.request(:get, '/json', {}, {})
+        response.should be_kind_of(ResponseHash)
+        response['abc'].should == 'def'
+      end
+      
+      it 'should only try to decode application/json' do
+        subject.request(:get, '/success').should == 'yay'
+      end
+    end
+    
+    it 'should set json? based on the :parse_json option' do
+      OAuth2::Client.new('abc','def', :site => 'http://example.com', :parse_json => true).should be_json
+      OAuth2::Client.new('abc','def', :site => 'http://example.com', :parse_json => false).should_not be_json
+    end
+    
+    after do
+      subject.json = false
+    end
   end
 end

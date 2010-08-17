@@ -46,7 +46,24 @@ Below is a fully functional example of a Sinatra application that would authenti
       uri.to_s
     end
     
-That's all there is to it! You can use the access token like you would with the OAuth gem, calling HTTP verbs on it etc. You can view more examples on the OAuth2 Wiki (http://wiki.github.com/intridea/oauth2/examples)
+That's all there is to it! You can use the access token like you would with the 
+OAuth gem, calling HTTP verbs on it etc. You can view more examples on the OAuth2 
+Wiki (http://wiki.github.com/intridea/oauth2/examples)
+    
+== JSON Parsing
+
+Because JSON has become the standard format of the OAuth 2.0 specification,
+the <tt>oauth2</tt> gem contains a mode that will perform automatic parsing
+of JSON response bodies, returning a hash instead of a string. To enable this
+mode, simply add the <tt>:parse_json</tt> option to your client initialization:
+
+    client = OAuth2::Client.new('app_id', 'app_secret', 
+      :site => 'https://example.com', 
+      :parse_json => true
+    )
+    
+    # Obtain an access token using the client
+    token.get('/some/url.json') # {"some" => "hash"}
 
 == Note on Patches/Pull Requests
  

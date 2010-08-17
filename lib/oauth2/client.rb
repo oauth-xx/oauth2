@@ -15,6 +15,7 @@ module OAuth2
     end
 
     attr_accessor :id, :secret, :site, :connection, :options
+    attr_writer :json
 
     # Instantiate a new OAuth 2.0 client using the
     # client ID and client secret registered to your
@@ -34,6 +35,8 @@ module OAuth2
       self.site       = opts.delete(:site) if opts[:site]
       self.options    = opts
       self.connection = Faraday::Connection.new(site)
+      self.json       = opts.delete(:parse_json)
+      
       if adapter && adapter != :test
         connection.build { |b| b.adapter(adapter) }
       end
@@ -59,7 +62,12 @@ module OAuth2
         resp = connection.run_request(verb, url, params, headers)
       end
       case resp.status
-        when 200...201 then ResponseString.new(resp)
+        when 200...201 
+          if json? && resp.headers['Content-Type'] == 'application/json'
+            ResponseHash.new(resp)
+          else
+            ResponseString.new(resp)
+          end
         when 401
           e = OAuth2::AccessDenied.new("Received HTTP 401 during request.")
           e.response = resp
@@ -70,6 +78,8 @@ module OAuth2
           raise e
       end
     end
+    
+    def json?; !!@json end
 
     def web_server; OAuth2::Strategy::WebServer.new(self) end
   end

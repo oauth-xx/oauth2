@@ -10,11 +10,6 @@ class ResponseString < String
     
   attr_accessor :response
   
-  def status
-    response.status
-  end
-  
-  def headers
-    response.headers
-  end
+  def status; response.status end
+  def headers; response.headers end
 end
