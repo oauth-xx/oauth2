@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{oauth2}
-  s.version = "0.0.10"
+  s.version = "0.0.11"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Michael Bleigh"]
-  s.date = %q{2010-06-19}
+  s.date = %q{2010-08-17}
   s.description = %q{A Ruby wrapper for the OAuth 2.0 protocol built with a similar style to the original OAuth gem.}
   s.email = %q{michael@intridea.com}
   s.extra_rdoc_files = [
@@ -27,6 +27,7 @@ Gem::Specification.new do |s|
      "lib/oauth2.rb",
      "lib/oauth2/access_token.rb",
      "lib/oauth2/client.rb",
+     "lib/oauth2/response_hash.rb",
      "lib/oauth2/response_string.rb",
      "lib/oauth2/strategy/base.rb",
      "lib/oauth2/strategy/web_server.rb",
@@ -42,7 +43,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/intridea/oauth2}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.6}
+  s.rubygems_version = %q{1.3.7}
   s.summary = %q{A Ruby wrapper for the OAuth 2.0 protocol.}
   s.test_files = [
     "spec/oauth2/access_token_spec.rb",
@@ -56,20 +57,20 @@ Gem::Specification.new do |s|
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<faraday>, ["~> 0.4.1"])
-      s.add_runtime_dependency(%q<faraday-middleware>)
+      s.add_runtime_dependency(%q<faraday-middleware>, [">= 0"])
       s.add_runtime_dependency(%q<multi_json>, [">= 0.0.4"])
       s.add_development_dependency(%q<rspec>, [">= 1.2.9"])
     else
       s.add_dependency(%q<faraday>, ["~> 0.4.1"])
-      s.add_runtime_dependency(%q<faraday-middleware>)
+      s.add_dependency(%q<faraday-middleware>, [">= 0"])
       s.add_dependency(%q<multi_json>, [">= 0.0.4"])
       s.add_dependency(%q<rspec>, [">= 1.2.9"])
     end
   else
     s.add_dependency(%q<faraday>, ["~> 0.4.1"])
-    s.add_runtime_dependency(%q<faraday-middleware>)
+    s.add_dependency(%q<faraday-middleware>, [">= 0"])
     s.add_dependency(%q<multi_json>, [">= 0.0.4"])
     s.add_dependency(%q<rspec>, [">= 1.2.9"])
   end
