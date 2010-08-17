@@ -64,8 +64,12 @@ module OAuth2
       end
       case resp.status
         when 200...201 
-          if json? && resp.headers['Content-Type'].include?('application/json')
-            ResponseHash.new(resp)
+          if json?
+            begin
+              ResponseHash.new(resp)
+            rescue StandardError => e
+              ResponseString.new(resp)
+            end
           else
             ResponseString.new(resp)
           end
