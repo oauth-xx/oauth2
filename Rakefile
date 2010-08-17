@@ -11,7 +11,6 @@ begin
     gem.homepage = "http://github.com/intridea/oauth2"
     gem.authors = ["Michael Bleigh"]
     gem.add_dependency 'faraday', '~> 0.4.1'
-    gem.add_dependency 'faraday-middleware'
     gem.add_dependency 'multi_json', '>= 0.0.4'
     gem.add_development_dependency "rspec", ">= 1.2.9"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings

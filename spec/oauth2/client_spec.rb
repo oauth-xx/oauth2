@@ -8,7 +8,7 @@ describe OAuth2::Client do
         stub.get('/success')      { |env| [200, {'Content-Type' => 'text/awesome'}, 'yay'] }
         stub.get('/unauthorized') { |env| [401, {}, '']    }
         stub.get('/error')        { |env| [500, {}, '']    }
-        stub.get('/json')         { |env| [200, {'Content-Type' => 'application/json'}, '{"abc":"def"}']}
+        stub.get('/json')         { |env| [200, {'Content-Type' => 'application/json; charset=utf8'}, '{"abc":"def"}']}
       end
     end
     cli
