@@ -27,4 +27,7 @@ log
 .bundle
 pkg
 
+## RCOV
+coverage.data
+
 ## PROJECT::SPECIFIC

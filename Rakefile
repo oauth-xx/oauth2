@@ -1,19 +1,23 @@
-require 'rubygems'
-require 'rake'
 require 'bundler'
-
 Bundler::GemHelper.install_tasks
 
-require 'spec/rake/spectask'
-Spec::Rake::SpecTask.new(:spec) do |spec|
-  spec.libs << 'lib' << 'spec'
-  spec.spec_files = FileList['spec/**/*_spec.rb']
+require 'rspec/core/rake_task'
+desc "Run all examples"
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.rspec_opts = %w[--color]
 end
 
-Spec::Rake::SpecTask.new(:rcov) do |spec|
-  spec.libs << 'lib' << 'spec'
-  spec.pattern = 'spec/**/*_spec.rb'
-  spec.rcov = true
+task :cleanup_rcov_files do
+  rm_rf 'coverage.data'
+end
+
+namespace :spec do
+  desc "Run all examples using rcov"
+  RSpec::Core::RakeTask.new :rcov => :cleanup_rcov_files do |t|
+    t.rcov = true
+    t.rcov_opts =  %[-Ilib -Ispec --exclude "gems/*,features"]
+    t.rcov_opts << %[--text-report --sort coverage --no-html --aggregate coverage.data]
+  end
 end
 
 task :default => :spec
