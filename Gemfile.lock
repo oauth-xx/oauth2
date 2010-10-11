@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    oauth2 (0.0.13)
+    oauth2 (0.0.14)
       faraday (~> 0.5.0)
       multi_json (~> 0.0.4)
 
