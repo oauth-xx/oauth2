@@ -16,8 +16,8 @@ Gem::Specification.new do |s|
   s.executables = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.files = `git ls-files`.split("\n")
   s.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
-  s.add_runtime_dependency("faraday", "~> 0.4.1")
-  s.add_runtime_dependency("multi_json", ">= 0.0.4")
+  s.add_runtime_dependency("faraday", "~> 0.5.0")
+  s.add_runtime_dependency("multi_json", "~> 0.0.4")
   s.add_development_dependency("json_pure", "~> 1.4.6")
   s.add_development_dependency("rake", "~> 0.8")
   s.add_development_dependency("rspec", "~> 1.2")
