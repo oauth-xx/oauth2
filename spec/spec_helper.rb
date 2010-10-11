@@ -6,7 +6,3 @@ require 'spec'
 require 'spec/autorun'
 
 Faraday.default_adapter = :test
-
-Spec::Runner.configure do |config|
-  
-end

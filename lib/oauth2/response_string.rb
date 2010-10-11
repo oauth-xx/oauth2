@@ -7,9 +7,9 @@ class ResponseString < String
     super(response.body)
     self.response = response
   end
-    
+
   attr_accessor :response
-  
+
   def status; response.status end
   def headers; response.headers end
 end

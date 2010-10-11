@@ -37,7 +37,7 @@ module OAuth2
       self.options    = opts
       self.connection = Faraday::Connection.new(site)
       self.json       = opts.delete(:parse_json)
-      
+
       if adapter && adapter != :test
         connection.build { |b| b.adapter(adapter) }
       end
@@ -63,7 +63,7 @@ module OAuth2
         resp = connection.run_request(verb, url, params, headers)
       end
       case resp.status
-        when 200...201 
+        when 200...201
           if json?
             begin
               ResponseHash.new(resp)
@@ -83,7 +83,7 @@ module OAuth2
           raise e
       end
     end
-    
+
     def json?; !!@json end
 
     def web_server; OAuth2::Strategy::WebServer.new(self) end
