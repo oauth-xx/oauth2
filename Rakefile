@@ -12,6 +12,8 @@ begin
     gem.authors = ["Michael Bleigh"]
     gem.add_dependency 'faraday', '~> 0.4.1'
     gem.add_dependency 'multi_json', '>= 0.0.4'
+    gem.add_development_dependency 'jeweler', "~> 1.4"
+    gem.add_development_dependency 'rake', "~> 0.8"
     gem.add_development_dependency 'rspec', "~> 1.2"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
