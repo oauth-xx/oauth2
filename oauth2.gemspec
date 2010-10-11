@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Michael Bleigh"]
-  s.date = %q{2010-08-17}
+  s.date = %q{2010-10-11}
   s.description = %q{A Ruby wrapper for the OAuth 2.0 protocol built with a similar style to the original OAuth gem.}
   s.email = %q{michael@intridea.com}
   s.extra_rdoc_files = [
@@ -60,16 +60,16 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<faraday>, ["~> 0.4.1"])
       s.add_runtime_dependency(%q<multi_json>, [">= 0.0.4"])
-      s.add_development_dependency(%q<rspec>, [">= 1.2.9"])
+      s.add_development_dependency(%q<rspec>, ["~> 1.2"])
     else
       s.add_dependency(%q<faraday>, ["~> 0.4.1"])
       s.add_dependency(%q<multi_json>, [">= 0.0.4"])
-      s.add_dependency(%q<rspec>, [">= 1.2.9"])
+      s.add_dependency(%q<rspec>, ["~> 1.2"])
     end
   else
     s.add_dependency(%q<faraday>, ["~> 0.4.1"])
     s.add_dependency(%q<multi_json>, [">= 0.0.4"])
-    s.add_dependency(%q<rspec>, [">= 1.2.9"])
+    s.add_dependency(%q<rspec>, ["~> 1.2"])
   end
 end
 
