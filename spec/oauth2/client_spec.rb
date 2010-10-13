@@ -75,8 +75,9 @@ describe OAuth2::Client do
     
     describe '#request' do
       it 'should return a response hash' do
-        response = subject.request(:get, '/json', {}, {})
-        response.should be_kind_of(ResponseHash)
+        response = subject.request(:get, '/json')
+        puts response.inspect
+        response.should be_kind_of(OAuth2::ResponseHash)
         response['abc'].should == 'def'
       end
       

@@ -62,16 +62,13 @@ module OAuth2
       else
         resp = connection.run_request(verb, url, params, headers)
       end
+      
       case resp.status
         when 200...201 
           if json?
-            begin
-              ResponseHash.new(resp)
-            rescue StandardError => e
-              ResponseString.new(resp)
-            end
+            return ResponseObject.from(resp)
           else
-            ResponseString.new(resp)
+            return ResponseString.new(resp)
           end
         when 401
           e = OAuth2::AccessDenied.new("Received HTTP 401 during request.")
