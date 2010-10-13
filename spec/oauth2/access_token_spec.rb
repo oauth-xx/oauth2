@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe OAuth2::AccessToken do
-  let(:client) do 
-    cli = OAuth2::Client.new('abc','def', :site => 'https://api.example.com')
+  let(:client) do
+    cli = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com')
     cli.connection.build do |b|
       b.adapter :test do |stub|
         stub.get('/client?access_token=monkey') { |env| [200, {}, 'get']    }
@@ -34,25 +34,25 @@ describe OAuth2::AccessToken do
       end
     end
   end
-  
+
   describe '#expires?' do
     it 'should be false if there is no expires_at' do
       OAuth2::AccessToken.new(client, token).should_not be_expires
     end
-    
+
     it 'should be true if there is an expires_at' do
       OAuth2::AccessToken.new(client, token, 'abaca', 600).should be_expires
     end
   end
-  
+
   describe '#expires_at' do
     before do
       @now = Time.now
       Time.stub!(:now).and_return(@now)
     end
-    
+
     subject{ OAuth2::AccessToken.new(client, token, 'abaca', 600)}
-    
+
     it 'should be a time representation of #expires_in' do
       subject.expires_at.should == (@now + 600)
     end

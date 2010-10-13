@@ -18,7 +18,16 @@ tmtags
 
 ## PROJECT::GENERAL
 coverage
+doc
 rdoc
+log
+
+## BUNDLER
+*.gem
+.bundle
 pkg
+
+## RCOV
+coverage.data
 
 ## PROJECT::SPECIFIC
