@@ -24,6 +24,12 @@ describe OAuth2::AccessToken do
       subject.token.should  == token
     end
 
+    it 'should assign extra params' do
+      target = OAuth2::AccessToken.new(client, token, nil, nil, { 'foo' => 'bar' })
+      target.params.should include('foo')
+      target.params['foo'].should == 'bar'
+    end
+
     it "makes GET requests with access token" do
       subject.send(:get, 'client').should == 'get'
     end

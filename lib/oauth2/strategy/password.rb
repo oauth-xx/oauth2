@@ -2,17 +2,16 @@ require 'multi_json'
 
 module OAuth2
   module Strategy
-    class WebServer < Base
-      def authorize_params(options = {}) #:nodoc:
-        super(options).merge('type' => 'web_server')
+    class Password < Base
+      def authorize_url
+        raise NotImplementedError, "The authorization endpoint is not used in this strategy"
       end
-
       # Retrieve an access token given the specified validation code.
       # Note that you must also provide a <tt>:redirect_uri</tt> option
       # in order to successfully verify your request for most OAuth 2.0
       # endpoints.
-      def get_access_token(code, options = {})
-        response = @client.request(:post, @client.access_token_url, access_token_params(code, options))
+      def get_access_token(username, password, options = {})
+        response = @client.request(:post, @client.access_token_url, access_token_params(username, password, options))
 
         params   = MultiJson.decode(response) rescue nil
         # the ActiveSupport JSON parser won't cause an exception when
@@ -27,16 +26,11 @@ module OAuth2
         OAuth2::AccessToken.new(@client, access, refresh, expires_in, params)
       end
 
-      # <b>DEPRECATED:</b> Use #get_access_token instead.
-      def access_token(*args)
-        warn '[DEPRECATED] OAuth2::Strategy::WebServer#access_token is deprecated, use #get_access_token instead. Will be removed in 0.1.0'
-        get_access_token(*args)
-      end
-
-      def access_token_params(code, options = {}) #:nodoc:
-        super(options).merge({
-          'type' => 'web_server',
-          'code' => code
+      def access_token_params(username, password, options = {}) #:nodoc:
+        super(options).merge({ 
+          'grant_type'  => 'password',
+          'username'    => username,
+          'password'    => password
         })
       end
     end

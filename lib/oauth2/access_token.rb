@@ -1,13 +1,14 @@
 module OAuth2
   class AccessToken
-    attr_reader :client, :token, :refresh_token, :expires_in, :expires_at
+    attr_reader :client, :token, :refresh_token, :expires_in, :expires_at, :params
 
-    def initialize(client, token, refresh_token = nil, expires_in = nil)
+    def initialize(client, token, refresh_token = nil, expires_in = nil, params = {})
       @client = client
       @token = token
       @refresh_token = refresh_token
       @expires_in = (expires_in.nil? || expires_in == '') ? nil : expires_in.to_i
       @expires_at = Time.now + @expires_in if @expires_in
+      @params = params
     end
 
     # True if the token in question has an expiration time.

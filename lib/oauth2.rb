@@ -7,5 +7,6 @@ end
 require 'oauth2/client'
 require 'oauth2/strategy/base'
 require 'oauth2/strategy/web_server'
+require 'oauth2/strategy/password'
 require 'oauth2/access_token'
 require 'oauth2/response_object'
