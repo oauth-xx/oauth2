@@ -32,3 +32,4 @@ Gemfile.lock
 coverage.data
 
 ## PROJECT::SPECIFIC
+.svn
