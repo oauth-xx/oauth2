@@ -64,7 +64,7 @@ module OAuth2
       end
       
       case resp.status
-        when 200...201
+        when 200..299
           if json?
             return ResponseObject.from(resp)
           else
