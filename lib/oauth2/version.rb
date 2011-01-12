@@ -1,3 +1,3 @@
-module Oauth2
-  VERSION = "0.1.0"
+module OAuth2
+  VERSION = "0.1.1"
 end

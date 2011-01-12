@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    oauth2 (0.0.14)
+    oauth2 (0.1.0)
       faraday (~> 0.5.0)
       multi_json (~> 0.0.4)
 
@@ -20,16 +20,14 @@ GEM
     rack (1.2.1)
     rake (0.8.7)
     rcov (0.9.9)
-    rspec (2.0.0)
-      rspec-core (= 2.0.0)
-      rspec-expectations (= 2.0.0)
-      rspec-mocks (= 2.0.0)
-    rspec-core (2.0.0)
-    rspec-expectations (2.0.0)
-      diff-lcs (>= 1.1.2)
-    rspec-mocks (2.0.0)
-      rspec-core (= 2.0.0)
-      rspec-expectations (= 2.0.0)
+    rspec (2.4.0)
+      rspec-core (~> 2.4.0)
+      rspec-expectations (~> 2.4.0)
+      rspec-mocks (~> 2.4.0)
+    rspec-core (2.4.0)
+    rspec-expectations (2.4.0)
+      diff-lcs (~> 1.1.2)
+    rspec-mocks (2.4.0)
 
 PLATFORMS
   ruby
@@ -41,4 +39,4 @@ DEPENDENCIES
   oauth2!
   rake (~> 0.8)
   rcov (~> 0.9)
-  rspec (~> 2.0)
+  rspec (~> 2.4.0)

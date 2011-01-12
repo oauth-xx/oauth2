@@ -24,7 +24,7 @@ module OAuth2
         access   = params['access_token']
         refresh  = params['refresh_token']
         expires_in = params['expires_in']
-        OAuth2::AccessToken.new(@client, access, refresh, expires_in)
+        OAuth2::AccessToken.new(@client, access, refresh, expires_in, params)
       end
 
       # <b>DEPRECATED:</b> Use #get_access_token instead.

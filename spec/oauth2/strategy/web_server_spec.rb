@@ -8,9 +8,9 @@ describe OAuth2::Strategy::WebServer do
         stub.post('/oauth/access_token') do |env|
           case @mode
             when "formencoded"
-              [200, {}, 'expires_in=600&access_token=salmon&refresh_token=trout']
+              [200, {}, 'expires_in=600&access_token=salmon&refresh_token=trout&extra_param=steve']
             when "json"
-              [200, {}, '{"expires_in":600,"access_token":"salmon","refresh_token":"trout"}']
+              [200, {}, '{"expires_in":600,"access_token":"salmon","refresh_token":"trout","extra_param":"steve"}']
           end
         end
       end
@@ -59,6 +59,10 @@ describe OAuth2::Strategy::WebServer do
 
       it 'returns AccessToken with #expires_at' do
         @access.expires_at.should be_kind_of(Time)
+      end
+
+      it 'returns AccessToken with params accessible via []' do
+        @access['extra_param'].should == 'steve'
       end
     end
   end
