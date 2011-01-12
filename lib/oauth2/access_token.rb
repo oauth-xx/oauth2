@@ -5,8 +5,8 @@ module OAuth2
 
     def initialize(client, token, refresh_token = nil, expires_in = nil, params = {})
       @client = client
-      @token = token
-      @refresh_token = refresh_token
+      @token = token.to_s
+      @refresh_token = refresh_token.to_s
       @expires_in = (expires_in.nil? || expires_in == '') ? nil : expires_in.to_i
       @expires_at = Time.now + @expires_in if @expires_in
       @params = params
