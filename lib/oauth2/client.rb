@@ -30,6 +30,7 @@ module OAuth2
     # <tt>:access_token_url</tt> :: Specify the full URL of the access token endpoint.
     # <tt>:parse_json</tt> :: If true, <tt>application/json</tt> responses will be automatically parsed.
     def initialize(client_id, client_secret, opts = {})
+      opts            = opts.dup
       adapter         = opts.delete(:adapter)
       self.id         = client_id
       self.secret     = client_secret

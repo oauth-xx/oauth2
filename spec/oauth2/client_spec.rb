@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe OAuth2::Client do
   subject do
-    cli = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com')
+    options = { :site => 'https://api.example.com' }.freeze
+
+    cli = OAuth2::Client.new('abc', 'def', options)
     cli.connection.build do |b|
       b.adapter :test do |stub|
         stub.get('/success')      { |env| [200, {'Content-Type' => 'text/awesome'}, 'yay'] }
