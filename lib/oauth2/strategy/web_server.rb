@@ -23,7 +23,7 @@ module OAuth2
 
         access   = params['access_token']
         refresh  = params['refresh_token']
-        expires_in = params['expires_in']
+        expires_in = params['expires']
         OAuth2::AccessToken.new(@client, access, refresh, expires_in, params)
       end
 
