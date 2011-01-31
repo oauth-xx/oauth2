@@ -4,7 +4,7 @@ module OAuth2
   module Strategy
     class WebServer < Base
       def authorize_params(options = {}) #:nodoc:
-        super(options).merge('type' => 'web_server')
+        super(options).merge('response_type' => 'code')
       end
 
       # Retrieve an access token given the specified validation code.
@@ -35,7 +35,7 @@ module OAuth2
 
       def access_token_params(code, options = {}) #:nodoc:
         super(options).merge({
-          'type' => 'web_server',
+          'grant_type' => 'authorization_code',
           'code' => code
         })
       end
