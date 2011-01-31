@@ -25,7 +25,7 @@ describe OAuth2::Strategy::WebServer do
     end
 
     it 'should include the type' do
-      subject.authorize_url.should be_include('type=web_server')
+      subject.authorize_url.should be_include('response_type=code')
     end
 
     it 'should include passed in options' do
