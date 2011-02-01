@@ -37,6 +37,7 @@ module OAuth2
         super(options).merge({
           'type' => 'web_server',
           'code' => code
+          'grant_type' => 'authorization_code',
         })
       end
     end
