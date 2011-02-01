@@ -12,7 +12,7 @@ module OAuth2
       # in order to successfully verify your request for most OAuth 2.0
       # endpoints.
       def get_access_token(code, options = {})
-        response = @client.request(:post, @client.access_token_url, access_token_params(code, options))
+        response = @client.request(:get, @client.access_token_url, access_token_params(code, options))
 
         params   = MultiJson.decode(response) rescue nil
         # the ActiveSupport JSON parser won't cause an exception when
