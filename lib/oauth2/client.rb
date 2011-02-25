@@ -29,13 +29,16 @@ module OAuth2
     # <tt>:access_token_path</tt> :: Specify the path to the access token endpoint.
     # <tt>:access_token_url</tt> :: Specify the full URL of the access token endpoint.
     # <tt>:parse_json</tt> :: If true, <tt>application/json</tt> responses will be automatically parsed.
+    # <tt>:ssl</tt> :: Specify SSL options for the connection.
     def initialize(client_id, client_secret, opts = {})
       adapter         = opts.delete(:adapter)
+      ssl_opts        = opts.delete(:ssl) || {}
+      connection_opts = ssl_opts ? {:ssl => ssl_opts} : {}
       self.id         = client_id
       self.secret     = client_secret
       self.site       = opts.delete(:site) if opts[:site]
       self.options    = opts
-      self.connection = Faraday::Connection.new(site)
+      self.connection = Faraday::Connection.new(site, connection_opts)
       self.json       = opts.delete(:parse_json)
 
       if adapter && adapter != :test

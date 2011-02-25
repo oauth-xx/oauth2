@@ -27,6 +27,10 @@ describe OAuth2::Client do
     it 'should assign Faraday::Connection#host' do
       subject.connection.host.should == 'api.example.com'
     end
+
+    it 'should leave Faraday::Connection#ssl unset' do
+      subject.connection.ssl.should == {}
+    end
   end
 
   %w(authorize access_token).each do |path_type|
@@ -93,6 +97,20 @@ describe OAuth2::Client do
 
     after do
       subject.json = false
+    end
+  end
+
+  context 'with SSL options' do
+    subject do
+      cli = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :ssl => {:ca_file => 'foo.pem'})
+      cli.connection.build do |b|
+        b.adapter :test
+      end
+      cli
+    end
+
+    it 'should pass the SSL options along to Faraday::Connection#ssl' do
+      subject.connection.ssl.should == {:ca_file => 'foo.pem'}
     end
   end
 end
