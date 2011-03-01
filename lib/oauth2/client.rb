@@ -29,6 +29,8 @@ module OAuth2
     # <tt>:access_token_path</tt> :: Specify the path to the access token endpoint.
     # <tt>:access_token_url</tt> :: Specify the full URL of the access token endpoint.
     # <tt>:parse_json</tt> :: If true, <tt>application/json</tt> responses will be automatically parsed.
+    # <tt>:adapter</tt> :: The name of the Faraday::Adapter::* class to use, e.g. :net_http. To pass arguments
+    # to the adapter pass an array here, e.g. [:action_dispatch, my_test_session]
     def initialize(client_id, client_secret, opts = {})
       adapter         = opts.delete(:adapter)
       self.id         = client_id
@@ -39,7 +41,7 @@ module OAuth2
       self.json       = opts.delete(:parse_json)
 
       if adapter && adapter != :test
-        connection.build { |b| b.adapter(adapter) }
+        connection.build { |b| b.adapter(*[adapter].flatten) }
       end
     end
 
