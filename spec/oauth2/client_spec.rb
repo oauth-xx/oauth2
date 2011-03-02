@@ -6,7 +6,7 @@ describe OAuth2::Client do
     cli.connection.build do |b|
       b.adapter :test do |stub|
         stub.get('/success')      { |env| [200, {'Content-Type' => 'text/awesome'}, 'yay'] }
-        stub.get('/unauthorized') { |env| [401, {}, '']    }
+        stub.get('/unauthorized') { |env| [401, {'Content-Type' => 'text/plain'}, 'not authorized']    }
         stub.get('/error')        { |env| [500, {}, '']    }
         stub.get('/json')         { |env| [200, {'Content-Type' => 'application/json; charset=utf8'}, '{"abc":"def"}']}
       end
@@ -65,6 +65,15 @@ describe OAuth2::Client do
       response.should == 'yay'
       response.status.should == 200
       response.headers.should == {'Content-Type' => 'text/awesome'}
+    end
+    
+    it "returns ResponseString on error if raise_errors is false" do
+      subject.raise_errors = false
+      response = subject.request(:get, '/unauthorized', {}, {})
+      
+      response.should == 'not authorized'
+      response.status.should == 401
+      response.headers.should == {'Content-Type' => 'text/plain'}
     end
 
     it "raises OAuth2::AccessDenied on 401 response" do

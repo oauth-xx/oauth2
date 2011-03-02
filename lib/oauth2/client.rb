@@ -14,7 +14,7 @@ module OAuth2
       end
     end
 
-    attr_accessor :id, :secret, :site, :connection, :options
+    attr_accessor :id, :secret, :site, :connection, :options, :raise_errors
     attr_writer :json
 
     # Instantiate a new OAuth 2.0 client using the
@@ -32,13 +32,14 @@ module OAuth2
     # <tt>:adapter</tt> :: The name of the Faraday::Adapter::* class to use, e.g. :net_http. To pass arguments
     # to the adapter pass an array here, e.g. [:action_dispatch, my_test_session]
     def initialize(client_id, client_secret, opts = {})
-      adapter         = opts.delete(:adapter)
-      self.id         = client_id
-      self.secret     = client_secret
-      self.site       = opts.delete(:site) if opts[:site]
-      self.options    = opts
-      self.connection = Faraday::Connection.new(site)
-      self.json       = opts.delete(:parse_json)
+      adapter           = opts.delete(:adapter)
+      self.id           = client_id
+      self.secret       = client_secret
+      self.site         = opts.delete(:site) if opts[:site]
+      self.options      = opts
+      self.connection   = Faraday::Connection.new(site)
+      self.json         = opts.delete(:parse_json)
+      self.raise_errors = true
 
       if adapter && adapter != :test
         connection.build { |b| b.adapter(*[adapter].flatten) }
@@ -65,26 +66,36 @@ module OAuth2
         resp = connection.run_request(verb, url, params, headers)
       end
       
-      case resp.status
-        when 200..299
-          if json?
-            return ResponseObject.from(resp)
+      if raise_errors
+        case resp.status
+          when 200..299
+            return response_for(resp)
+          when 401
+            e = OAuth2::AccessDenied.new("Received HTTP 401 during request.")
+            e.response = resp
+            raise e
           else
-            return ResponseString.new(resp)
-          end
-        when 401
-          e = OAuth2::AccessDenied.new("Received HTTP 401 during request.")
-          e.response = resp
-          raise e
-        else
-          e = OAuth2::HTTPError.new("Received HTTP #{resp.status} during request.")
-          e.response = resp
-          raise e
+            e = OAuth2::HTTPError.new("Received HTTP #{resp.status} during request.")
+            e.response = resp
+            raise e
+        end
+      else
+        response_for resp
       end
     end
 
     def json?; !!@json end
 
     def web_server; OAuth2::Strategy::WebServer.new(self) end
+    
+    private
+    
+    def response_for(resp)
+      if json?
+        return ResponseObject.from(resp)
+      else
+        return ResponseString.new(resp)
+      end
+    end
   end
 end
