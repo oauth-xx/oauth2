@@ -35,7 +35,7 @@ module OAuth2
 
       def access_token_params(code, options = {}) #:nodoc:
         super(options).merge({
-          'type' => 'web_server',
+          #eax: adding type parameter causes some oauth2 providers complain (i.e. see Google API's HTTP 400 issue). Merely, it should be added in options array if requested...
           'code' => code
         })
       end
