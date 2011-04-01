@@ -2,22 +2,22 @@ PATH
   remote: .
   specs:
     oauth2 (0.1.1)
-      faraday (~> 0.5.0)
+      faraday (~> 0.6.0)
       multi_json (~> 0.0.4)
 
 GEM
   remote: http://rubygems.org/
   specs:
-    addressable (2.1.2)
+    addressable (2.2.4)
     diff-lcs (1.1.2)
-    faraday (0.5.0)
-      addressable (~> 2.1.1)
-      multipart-post (~> 1.0.1)
-      rack (~> 1.2.1)
+    faraday (0.6.0)
+      addressable (~> 2.2.4)
+      multipart-post (~> 1.1.0)
+      rack (< 2, >= 1.1.0)
     json_pure (1.4.6)
-    multi_json (0.0.4)
-    multipart-post (1.0.1)
-    rack (1.2.1)
+    multi_json (0.0.5)
+    multipart-post (1.1.0)
+    rack (1.2.2)
     rake (0.8.7)
     rcov (0.9.9)
     rspec (2.4.0)
@@ -33,9 +33,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  faraday (~> 0.5.0)
   json_pure (~> 1.4.6)
-  multi_json (~> 0.0.4)
   oauth2!
   rake (~> 0.8)
   rcov (~> 0.9)
