@@ -22,6 +22,10 @@ module OAuth2
       !!@expires_in
     end
 
+    def expired?
+      expires? && expires_at < Time.now
+    end
+
     def request(verb, path, params = {}, headers = {})
       params = params.merge token_param => @token
       headers = headers.merge 'Authorization' => "OAuth #{@token}"
