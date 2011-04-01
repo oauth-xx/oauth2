@@ -57,4 +57,21 @@ describe OAuth2::AccessToken do
       subject.expires_at.should == (@now + 600)
     end
   end
+
+  describe '#expired?' do
+    it 'should be false if there is no expires_at' do
+      OAuth2::AccessToken.new(client, token).should_not be_expired
+    end
+
+    it 'should be false if expires_at is in the future' do
+      OAuth2::AccessToken.new(client, token, 'abaca', 10800).should_not be_expired
+    end
+
+    it 'should be true if expires_at is in the past' do
+      access = OAuth2::AccessToken.new(client, token, 'abaca', 600)
+      @now = Time.now + 10800
+      Time.stub!(:now).and_return(@now)
+      access.should be_expired
+    end
+  end
 end
