@@ -22,16 +22,16 @@ module OAuth2
     # to the adapter pass an array here, e.g. [:action_dispatch, my_test_session]
     # <tt>:raise_errors</tt> :: Default true. When false it will then return the error status and response instead of raising an exception.
     def initialize(client_id, client_secret, opts={})
-      adapter           = opts.delete(:adapter)
-      ssl_opts          = opts.delete(:ssl) || {}
+      self.options      = opts.dup
+      adapter           = self.options.delete(:adapter)
+      ssl_opts          = self.options.delete(:ssl) || {}
       connection_opts   = ssl_opts ? {:ssl => ssl_opts} : {}
       self.id           = client_id
       self.secret       = client_secret
-      self.site         = opts.delete(:site) if opts[:site]
-      self.options      = opts
+      self.site         = self.options.delete(:site) if self.options[:site]
       self.connection   = Faraday::Connection.new(site, connection_opts)
-      self.json         = opts.delete(:parse_json)
-      self.raise_errors = opts.delete(:raise_errors) || true
+      self.json         = self.options.delete(:parse_json)
+      self.raise_errors = self.options.delete(:raise_errors) || true
 
       if adapter && adapter != :test
         connection.build do |b|
