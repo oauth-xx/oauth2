@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency("multi_json", "~> 0.0.4")
   s.add_development_dependency("json_pure", "~> 1.5")
   s.add_development_dependency("rake", "~> 0.8")
-  s.add_development_dependency("rcov", "~> 0.9")
+  s.add_development_dependency("simplecov", "~> 0.4")
   s.add_development_dependency("rspec", "~> 2.5")
   s.add_development_dependency("ZenTest", "~> 4.5")
 end
