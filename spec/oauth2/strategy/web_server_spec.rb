@@ -44,27 +44,27 @@ describe OAuth2::Strategy::WebServer do
           client.json=parse_json
           @access = subject.get_access_token('sushi')
         end
-  
+
         it 'returns AccessToken with same Client' do
           @access.client.should == client
         end
-  
+
         it 'returns AccessToken with #token' do
           @access.token.should == 'salmon'
         end
-  
+
         it 'returns AccessToken with #refresh_token' do
           @access.refresh_token.should == 'trout'
         end
-  
+
         it 'returns AccessToken with #expires_in' do
           @access.expires_in.should == 600
         end
-  
+
         it 'returns AccessToken with #expires_at' do
           @access.expires_at.should be_kind_of(Time)
         end
-  
+
         it 'returns AccessToken with params accessible via []' do
           @access['extra_param'].should == 'steve'
         end

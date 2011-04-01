@@ -14,35 +14,35 @@ module OAuth2
     rescue
       ResponseString.new(response)
     end
-  
+
     def self.included(base)
       base.class_eval do
         attr_accessor :response
       end
     end
-  
+
     def headers; response.headers end
     def status; response.status end
   end
-  
+
   class ResponseHash < Hash
     include ResponseObject
-  
+
     def initialize(response, hash)
       self.response = response
       hash.keys.each{|k| self[k] = hash[k]}
     end
   end
-  
+
   class ResponseArray < Array
     include ResponseObject
-  
+
     def initialize(response, array)
       self.response = response
       super(array)
     end
   end
-  
+
   # This special String class is returned from HTTP requests
   # and contains the original full response along with convenience
   # methods for accessing the HTTP status code and headers. It
