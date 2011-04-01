@@ -4,7 +4,7 @@ module OAuth2
   module Strategy
     class WebServer < Base
       def authorize_params(options = {}) #:nodoc:
-        super(options).merge('type' => 'web_server')
+        super(options).merge('response_type' => 'code')
       end
 
       # Retrieve an access token given the specified validation code.
@@ -27,7 +27,7 @@ module OAuth2
 
         access   = params['access_token']
         refresh  = params['refresh_token']
-        expires_in = params['expires']
+        expires_in = params['expires_in'] || params['expires'] # params['expires'] is only for facebook
         OAuth2::AccessToken.new(@client, access, refresh, expires_in, params)
       end
 
@@ -39,7 +39,7 @@ module OAuth2
 
       def access_token_params(code, options = {}) #:nodoc:
         super(options).merge({
-          'type' => 'web_server',
+          'grant_type' => 'authorization_code',
           'code' => code
         })
       end
