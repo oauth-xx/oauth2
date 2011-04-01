@@ -1,6 +1,9 @@
-$LOAD_PATH.unshift(File.dirname(__FILE__))
-$LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
-require 'rubygems'
+begin
+  require 'bundler/setup'
+rescue LoadError
+  puts 'although not required, it is recommended that you use bundler during development'
+end
+
 require 'oauth2'
 require 'rspec'
 require 'rspec/autorun'
