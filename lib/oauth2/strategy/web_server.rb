@@ -31,12 +31,6 @@ module OAuth2
         OAuth2::AccessToken.new(@client, access, refresh, expires_in, params)
       end
 
-      # <b>DEPRECATED:</b> Use #get_access_token instead.
-      def access_token(*args)
-        warn '[DEPRECATED] OAuth2::Strategy::WebServer#access_token is deprecated, use #get_access_token instead. Will be removed in 0.1.0'
-        get_access_token(*args)
-      end
-
       def access_token_params(code, options = {}) #:nodoc:
         super(options).merge({
           'grant_type' => 'authorization_code',
