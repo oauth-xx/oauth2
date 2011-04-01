@@ -7,12 +7,12 @@ describe OAuth2::Strategy::WebServer do
       b.adapter :test do |stub|
         stub.post('/oauth/access_token') do |env|
           case @mode
-            when "formencoded"
-              [200, {}, 'expires_in=600&access_token=salmon&refresh_token=trout&extra_param=steve']
-            when "json"
-              [200, {}, '{"expires_in":600,"access_token":"salmon","refresh_token":"trout","extra_param":"steve"}']
-            when "from_facebook"
-              [200, {}, 'expires=600&access_token=salmon&refresh_token=trout&extra_param=steve']
+          when "formencoded"
+            [200, {}, 'expires_in=600&access_token=salmon&refresh_token=trout&extra_param=steve']
+          when "json"
+            [200, {}, '{"expires_in":600,"access_token":"salmon","refresh_token":"trout","extra_param":"steve"}']
+          when "from_facebook"
+            [200, {}, 'expires=600&access_token=salmon&refresh_token=trout&extra_param=steve']
           end
         end
       end
