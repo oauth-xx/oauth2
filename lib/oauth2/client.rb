@@ -2,7 +2,7 @@ require 'faraday'
 
 module OAuth2
   class Client
-    attr_accessor :id, :secret, :site, :connection, :options
+    attr_accessor :id, :secret, :site, :connection, :options, :raise_errors
     attr_writer :json
 
     # Instantiate a new OAuth 2.0 client using the
@@ -18,19 +18,25 @@ module OAuth2
     # <tt>:access_token_url</tt> :: Specify the full URL of the access token endpoint.
     # <tt>:parse_json</tt> :: If true, <tt>application/json</tt> responses will be automatically parsed.
     # <tt>:ssl</tt> :: Specify SSL options for the connection.
-    def initialize(client_id, client_secret, opts = {})
-      adapter         = opts.delete(:adapter)
-      ssl_opts        = opts.delete(:ssl) || {}
-      connection_opts = ssl_opts ? {:ssl => ssl_opts} : {}
-      self.id         = client_id
-      self.secret     = client_secret
-      self.site       = opts.delete(:site) if opts[:site]
-      self.options    = opts
-      self.connection = Faraday::Connection.new(site, connection_opts)
-      self.json       = opts.delete(:parse_json)
+    # <tt>:adapter</tt> :: The name of the Faraday::Adapter::* class to use, e.g. :net_http. To pass arguments
+    # to the adapter pass an array here, e.g. [:action_dispatch, my_test_session]
+    # <tt>:raise_errors</tt> :: Default true. When false it will then return the error status and response instead of raising an exception.
+    def initialize(client_id, client_secret, opts={})
+      adapter           = opts.delete(:adapter)
+      ssl_opts          = opts.delete(:ssl) || {}
+      connection_opts   = ssl_opts ? {:ssl => ssl_opts} : {}
+      self.id           = client_id
+      self.secret       = client_secret
+      self.site         = opts.delete(:site) if opts[:site]
+      self.options      = opts
+      self.connection   = Faraday::Connection.new(site, connection_opts)
+      self.json         = opts.delete(:parse_json)
+      self.raise_errors = opts.delete(:raise_errors) || true
 
       if adapter && adapter != :test
-        connection.build { |b| b.adapter(adapter) }
+        connection.build do |b|
+          b.adapter(*[adapter].flatten)
+        end
       end
     end
 
@@ -54,21 +60,21 @@ module OAuth2
         resp = connection.run_request(verb, url, params, headers)
       end
 
-      case resp.status
-        when 200..299
-          if json?
-            return ResponseObject.from(resp)
+      if raise_errors
+        case resp.status
+          when 200..299
+            return response_for(resp)
+          when 401
+            e = OAuth2::AccessDenied.new("Received HTTP 401 during request.")
+            e.response = resp
+            raise e
           else
-            return ResponseString.new(resp)
-          end
-        when 401
-          e = OAuth2::AccessDenied.new("Received HTTP 401 during request.")
-          e.response = resp
-          raise e
-        else
-          e = OAuth2::HTTPError.new("Received HTTP #{resp.status} during request.")
-          e.response = resp
-          raise e
+            e = OAuth2::HTTPError.new("Received HTTP #{resp.status} during request.")
+            e.response = resp
+            raise e
+        end
+      else
+        response_for resp
       end
     end
 
@@ -76,5 +82,15 @@ module OAuth2
 
     def web_server; OAuth2::Strategy::WebServer.new(self) end
     def password; OAuth2::Strategy::Password.new(self) end
+    
+    private
+    
+    def response_for(resp)
+      if json?
+        return ResponseObject.from(resp)
+      else
+        return ResponseString.new(resp)
+      end
+    end
   end
 end

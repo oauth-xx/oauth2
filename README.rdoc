@@ -65,6 +65,14 @@ mode, simply add the <tt>:parse_json</tt> option to your client initialization:
     # Obtain an access token using the client
     token.get('/some/url.json') # {"some" => "hash"}
 
+== Testing
+
+To use the OAuth2 client for testing error conditions do:
+
+    my_client.raise_errors = false
+    
+It will then return the error status and response instead of raising an exception.
+
 == Note on Patches/Pull Requests
  
 * Fork the project.
