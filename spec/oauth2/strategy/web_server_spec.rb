@@ -11,6 +11,8 @@ describe OAuth2::Strategy::WebServer do
               [200, {}, 'expires_in=600&access_token=salmon&refresh_token=trout&extra_param=steve']
             when "json"
               [200, {}, '{"expires_in":600,"access_token":"salmon","refresh_token":"trout","extra_param":"steve"}']
+            when "from_facebook"
+              [200, {}, 'expires=600&access_token=salmon&refresh_token=trout&extra_param=steve']
           end
         end
       end
@@ -34,8 +36,8 @@ describe OAuth2::Strategy::WebServer do
     end
   end
 
-  %w(json formencoded).each do |mode|
-    [false,true].each do |parse_json|
+  %w(json formencoded from_facebook).each do |mode|
+    [false, true].each do |parse_json|
       describe "#get_access_token (#{mode}, parse_json=#{parse_json})" do
         before do
           @mode = mode
