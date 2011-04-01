@@ -72,5 +72,6 @@ module OAuth2
     def json?; !!@json end
 
     def web_server; OAuth2::Strategy::WebServer.new(self) end
+    def password; OAuth2::Strategy::Password.new(self) end
   end
 end

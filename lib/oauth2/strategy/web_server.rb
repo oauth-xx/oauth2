@@ -25,9 +25,10 @@ module OAuth2
           params   = Rack::Utils.parse_query(response) unless params.is_a? Hash
         end
 
-        access   = params['access_token']
-        refresh  = params['refresh_token']
-        expires_in = params['expires_in'] || params['expires'] # params['expires'] is only for facebook
+        access   = params.delete('access_token')
+        refresh  = params.delete('refresh_token')
+        # params['expires'] is only for Facebook
+        expires_in = params.delete('expires_in') || params.delete('expires')
         OAuth2::AccessToken.new(@client, access, refresh, expires_in, params)
       end
 
