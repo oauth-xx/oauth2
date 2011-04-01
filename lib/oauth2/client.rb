@@ -2,18 +2,6 @@ require 'faraday'
 
 module OAuth2
   class Client
-    class << self
-      def default_connection_adapter
-        warn '[DEPRECATED] OAuth2::Client#default_connection_adapter is deprecated, use Faraday.default_adapter instead. Will be removed in 0.1.0'
-        Faraday.default_adapter
-      end
-
-      def default_connection_adapter=(adapter)
-        warn '[DEPRECATED] OAuth2::Client#default_connection_adapter is deprecated, use Faraday.default_adapter instead. Will be removed in 0.1.0'
-        Faraday.default_adapter = adapter
-      end
-    end
-
     attr_accessor :id, :secret, :site, :connection, :options
     attr_writer :json
 
