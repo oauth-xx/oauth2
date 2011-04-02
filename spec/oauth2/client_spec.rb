@@ -35,13 +35,13 @@ describe OAuth2::Client do
     it "should be able to pass parameters to the adapter, e.g. Faraday::Adapter::ActionDispatch" do
       connection = stub('connection')
       Faraday::Connection.stub(:new => connection)
-      session = stub('session', to_ary: nil)
+      session = stub('session', :to_ary => nil)
       builder = stub('builder')
       connection.stub(:build).and_yield(builder)
 
       builder.should_receive(:adapter).with(:action_dispatch, session)
 
-      OAuth2::Client.new('abc', 'def', adapter: [:action_dispatch, session])
+      OAuth2::Client.new('abc', 'def', :adapter => [:action_dispatch, session])
     end
   end
 
