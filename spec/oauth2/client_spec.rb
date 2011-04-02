@@ -43,6 +43,17 @@ describe OAuth2::Client do
 
       OAuth2::Client.new('abc', 'def', :adapter => [:action_dispatch, session])
     end
+    
+    it "defaults raise_errors to true" do
+      subject.raise_errors.should be_true
+    end
+    
+    it "allows true/false for raise_errors option" do
+      client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :raise_errors => false)
+      client.raise_errors.should be_false
+      client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :raise_errors => true)
+      client.raise_errors.should be_true
+    end
   end
 
   %w(authorize access_token).each do |path_type|

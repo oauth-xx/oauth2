@@ -31,7 +31,7 @@ module OAuth2
       self.site         = self.options.delete(:site) if self.options[:site]
       self.connection   = Faraday::Connection.new(site, connection_opts)
       self.json         = self.options.delete(:parse_json)
-      self.raise_errors = self.options.delete(:raise_errors) || true
+      self.raise_errors = !(self.options.delete(:raise_errors) == false)
 
       if adapter && adapter != :test
         connection.build do |b|
