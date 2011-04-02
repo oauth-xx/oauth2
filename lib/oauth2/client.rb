@@ -62,7 +62,7 @@ module OAuth2
 
       if raise_errors
         case resp.status
-          when 200..299
+          when 200...299
             return response_for(resp)
           when 401
             e = OAuth2::AccessDenied.new("Received HTTP 401 during request.")
