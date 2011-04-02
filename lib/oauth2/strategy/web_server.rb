@@ -3,7 +3,7 @@ require 'multi_json'
 module OAuth2
   module Strategy
     class WebServer < Base
-      def authorize_params(options = {}) #:nodoc:
+      def authorize_params(options={}) #:nodoc:
         super(options).merge('response_type' => 'code')
       end
 
@@ -11,7 +11,7 @@ module OAuth2
       # Note that you must also provide a <tt>:redirect_uri</tt> option
       # in order to successfully verify your request for most OAuth 2.0
       # endpoints.
-      def get_access_token(code, options = {})
+      def get_access_token(code, options={})
         response = @client.request(:get, @client.access_token_url, access_token_params(code, options))
 
         if response.is_a? Hash
@@ -32,7 +32,7 @@ module OAuth2
         OAuth2::AccessToken.new(@client, access, refresh, expires_in, params)
       end
 
-      def access_token_params(code, options = {}) #:nodoc:
+      def access_token_params(code, options={}) #:nodoc:
         super(options).merge({
           'grant_type' => 'authorization_code',
           'code' => code,

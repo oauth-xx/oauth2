@@ -5,18 +5,18 @@ describe OAuth2::AccessToken do
     cli = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com')
     cli.connection.build do |b|
       b.adapter :test do |stub|
-        stub.get('/client?oauth_token=monkey') { |env| [200, {}, 'get']    }
-        stub.post('/client')                   { |env| [200, {}, 'oauth_token=' << env[:body]['oauth_token']] }
-        stub.put('/client')                    { |env| [200, {}, 'oauth_token=' << env[:body]['oauth_token']] }
-        stub.delete('/client')                 { |env| [200, {}, 'oauth_token=' << env[:body]['oauth_token']] }
+        stub.get('/client?oauth_token=monkey') {|env| [200, {}, 'get']}
+        stub.post('/client')                   {|env| [200, {}, 'oauth_token=' << env[:body]['oauth_token']]}
+        stub.put('/client')                    {|env| [200, {}, 'oauth_token=' << env[:body]['oauth_token']]}
+        stub.delete('/client')                 {|env| [200, {}, 'oauth_token=' << env[:body]['oauth_token']]}
       end
     end
     cli
   end
 
-  let(:token)  { 'monkey' }
+  let(:token) {'monkey'}
 
-  subject { OAuth2::AccessToken.new(client, token) }
+  subject {OAuth2::AccessToken.new(client, token)}
 
   describe '#initialize' do
     it 'should assign client and token' do
@@ -25,7 +25,7 @@ describe OAuth2::AccessToken do
     end
 
     it 'should assign extra params' do
-      target = OAuth2::AccessToken.new(client, token, nil, nil, { 'foo' => 'bar' })
+      target = OAuth2::AccessToken.new(client, token, nil, nil, {'foo' => 'bar'})
       target.params.should include('foo')
       target.params['foo'].should == 'bar'
     end
@@ -57,7 +57,7 @@ describe OAuth2::AccessToken do
       Time.stub!(:now).and_return(@now)
     end
 
-    subject{ OAuth2::AccessToken.new(client, token, 'abaca', 600)}
+    subject{OAuth2::AccessToken.new(client, token, 'abaca', 600)}
 
     it 'should be a time representation of #expires_in' do
       subject.expires_at.should == (@now + 600)

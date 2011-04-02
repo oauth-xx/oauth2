@@ -40,18 +40,18 @@ module OAuth2
       end
     end
 
-    def authorize_url(params = nil)
+    def authorize_url(params=nil)
       path = options[:authorize_url] || options[:authorize_path] || "/oauth/authorize"
       connection.build_url(path, params).to_s
     end
 
-    def access_token_url(params = nil)
+    def access_token_url(params=nil)
       path = options[:access_token_url] || options[:access_token_path] || "/oauth/access_token"
       connection.build_url(path, params).to_s
     end
 
     # Makes a request relative to the specified site root.
-    def request(verb, url, params = {}, headers = {})
+    def request(verb, url, params={}, headers={})
       if verb == :get
         resp = connection.run_request(verb, url, nil, headers) do |req|
           req.params.update(params)
@@ -82,9 +82,9 @@ module OAuth2
 
     def web_server; OAuth2::Strategy::WebServer.new(self) end
     def password; OAuth2::Strategy::Password.new(self) end
-    
+
     private
-    
+
     def response_for(resp)
       if json?
         return ResponseObject.from(resp)

@@ -17,14 +17,14 @@ describe OAuth2::Strategy::Password do
     end
     cli
   end
-  subject { client.password }
-  
+  subject {client.password}
+
   describe "#authorize_url" do
     it "should raise NotImplementedError" do
-      lambda { subject.authorize_url }.should raise_error(NotImplementedError)
+      lambda {subject.authorize_url}.should raise_error(NotImplementedError)
     end
   end
-  
+
   %w(json formencoded).each do |mode|
     describe "#get_access_token (#{mode})" do
       before do
@@ -53,5 +53,5 @@ describe OAuth2::Strategy::Password do
       end
     end
   end
-  
+
 end

@@ -10,7 +10,7 @@ module OAuth2
       # Note that you must also provide a <tt>:redirect_uri</tt> option
       # in order to successfully verify your request for most OAuth 2.0
       # endpoints.
-      def get_access_token(username, password, options = {})
+      def get_access_token(username, password, options={})
         response = @client.request(:post, @client.access_token_url, access_token_params(username, password, options))
 
         params   = MultiJson.decode(response) rescue nil
@@ -26,8 +26,8 @@ module OAuth2
         OAuth2::AccessToken.new(@client, access, refresh, expires_in, params)
       end
 
-      def access_token_params(username, password, options = {}) #:nodoc:
-        super(options).merge({ 
+      def access_token_params(username, password, options={}) #:nodoc:
+        super(options).merge({
           'grant_type'  => 'password',
           'username'    => username,
           'password'    => password

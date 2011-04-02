@@ -19,7 +19,7 @@ describe OAuth2::Strategy::WebServer do
     end
     cli
   end
-  subject { client.web_server }
+  subject{client.web_server}
 
   describe '#authorize_url' do
     it 'should include the client_id' do

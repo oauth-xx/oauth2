@@ -5,10 +5,10 @@ describe OAuth2::Client do
     cli = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com')
     cli.connection.build do |b|
       b.adapter :test do |stub|
-        stub.get('/success')      { |env| [200, {'Content-Type' => 'text/awesome'}, 'yay'] }
-        stub.get('/unauthorized') { |env| [401, {'Content-Type' => 'text/plain'}, 'not authorized']    }
-        stub.get('/error')        { |env| [500, {}, '']    }
-        stub.get('/json')         { |env| [200, {'Content-Type' => 'application/json; charset=utf8'}, '{"abc":"def"}']}
+        stub.get('/success')      {|env| [200, {'Content-Type' => 'text/awesome'}, 'yay']}
+        stub.get('/unauthorized') {|env| [401, {'Content-Type' => 'text/plain'}, 'not authorized']}
+        stub.get('/error')        {|env| [500, {}, '']}
+        stub.get('/json')         {|env| [200, {'Content-Type' => 'application/json; charset=utf8'}, '{"abc":"def"}']}
       end
     end
     cli
@@ -31,16 +31,16 @@ describe OAuth2::Client do
     it 'should leave Faraday::Connection#ssl unset' do
       subject.connection.ssl.should == {}
     end
-    
+
     it "should be able to pass parameters to the adapter, e.g. Faraday::Adapter::ActionDispatch" do
       connection = stub('connection')
       Faraday::Connection.stub(:new => connection)
       session = stub('session', to_ary: nil)
       builder = stub('builder')
       connection.stub(:build).and_yield(builder)
-      
+
       builder.should_receive(:adapter).with(:action_dispatch, session)
-      
+
       OAuth2::Client.new('abc', 'def', adapter: [:action_dispatch, session])
     end
   end
@@ -70,22 +70,22 @@ describe OAuth2::Client do
       response.status.should == 200
       response.headers.should == {'Content-Type' => 'text/awesome'}
     end
-    
+
     it "returns ResponseString on error if raise_errors is false" do
       subject.raise_errors = false
       response = subject.request(:get, '/unauthorized', {}, {})
-      
+
       response.should == 'not authorized'
       response.status.should == 401
       response.headers.should == {'Content-Type' => 'text/plain'}
     end
 
     it "raises OAuth2::AccessDenied on 401 response" do
-      lambda { subject.request(:get, '/unauthorized', {}, {}) }.should raise_error(OAuth2::AccessDenied)
+      lambda {subject.request(:get, '/unauthorized', {}, {})}.should raise_error(OAuth2::AccessDenied)
     end
 
     it "raises OAuth2::HTTPError on error response" do
-      lambda { subject.request(:get, '/error', {}, {}) }.should raise_error(OAuth2::HTTPError)
+      lambda {subject.request(:get, '/error', {}, {})}.should raise_error(OAuth2::HTTPError)
     end
   end
 

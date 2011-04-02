@@ -5,20 +5,20 @@ module OAuth2
         @client = client
       end
 
-      def authorize_url(options = {}) #:nodoc:
+      def authorize_url(options={}) #:nodoc:
         @client.authorize_url(authorize_params(options))
       end
 
-      def authorize_params(options = {}) #:nodoc:
+      def authorize_params(options={}) #:nodoc:
         options = options.inject({}){|h, (k, v)| h[k.to_s] = v; h}
         {'client_id' => @client.id}.merge(options)
       end
 
-      def access_token_url(options = {})
+      def access_token_url(options={})
         @client.access_token_url(access_token_params(options))
       end
 
-      def access_token_params(options = {})
+      def access_token_params(options={})
         {
           'client_id' => @client.id,
           'client_secret' => @client.secret
