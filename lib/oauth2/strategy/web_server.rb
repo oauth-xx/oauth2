@@ -12,7 +12,7 @@ module OAuth2
       # in order to successfully verify your request for most OAuth 2.0
       # endpoints.
       def get_access_token(code, options={})
-        response = @client.request(:get, @client.access_token_url, access_token_params(code, options))
+        response = @client.request(:get, @client.access_token_url, access_token_params(code, 'access', options))
 
         if response.is_a? Hash
           params = response
@@ -32,11 +32,38 @@ module OAuth2
         OAuth2::AccessToken.new(@client, access, refresh, expires_in, params)
       end
 
-      def access_token_params(code, options={}) #:nodoc:
-        super(options).merge({
-          'grant_type' => 'authorization_code',
-          'code' => code,
-        })
+      def refresh_access_token(refresh_token, options={})
+        response = @client.request(:post, @client.access_token_url, access_token_params(refresh_token, 'refresh', options))
+
+        if response.is_a? Hash
+          params = response
+        else
+          params = MultiJson.decode(response) rescue nil
+          # the ActiveSupport JSON parser won't cause an exception when
+          # given a formencoded string, so make sure that it was
+          # actually parsed in an Hash. This covers even the case where
+          # it caused an exception since it'll still be nil.
+          params = Rack::Utils.parse_query(response) unless params.is_a? Hash
+        end
+
+        access = params.delete('access_token')
+        expires_in = params.delete('expires_in') || params.delete('expires')
+        OAuth2::AccessToken.new(@client, access, refresh_token, expires_in, params)
+      end
+
+      def access_token_params(code, type, options={}) #:nodoc:
+        if type == 'access'
+          super(options).merge({
+                                 'grant_type' => 'authorization_code',
+                                 'code' => code,
+                               })
+        elsif type == 'refresh'
+          super(options).merge({
+                                 'grant_type' => 'refresh_token',
+                                 'refresh_token' => code,
+                               })
+        end
+
       end
     end
   end
