@@ -12,12 +12,12 @@ module OAuth2
       # in order to successfully verify your request for most OAuth 2.0
       # endpoints.
       def get_access_token(code, options={})
-        response = @client.request(:get, @client.access_token_url, access_token_params(code, options))
+        response = @client.request(@client.token_method, @client.access_token_url, access_token_params(code, options))
         parse_response(response)
       end
 
       def refresh_access_token(refresh_token, options={})
-        response = @client.request(:post, @client.access_token_url, refresh_token_params(refresh_token, options))
+        response = @client.request(@client.token_method, @client.access_token_url, refresh_token_params(refresh_token, options))
         parse_response(response, refresh_token)
       end
 
