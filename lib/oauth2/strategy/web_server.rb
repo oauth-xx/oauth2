@@ -12,8 +12,30 @@ module OAuth2
       # in order to successfully verify your request for most OAuth 2.0
       # endpoints.
       def get_access_token(code, options={})
-        response = @client.request(:get, @client.access_token_url, access_token_params(code, options))
+        response = @client.request(:post, @client.access_token_url, access_token_params(code, options))
+        parse_response(response)
+      end
 
+      def refresh_access_token(refresh_token, options={})
+        response = @client.request(:post, @client.access_token_url, refresh_token_params(refresh_token, options))
+        parse_response(response, refresh_token)
+      end
+
+      def access_token_params(code, options={}) #:nodoc:
+        super(options).merge({
+          'grant_type' => 'authorization_code',
+          'code' => code,
+        })
+      end
+
+      def refresh_token_params(refresh_token, options={}) #:nodoc:
+        super(options).merge({
+          'grant_type' => 'refresh_token',
+          'refresh_token' => refresh_token,
+        })
+      end
+
+      def parse_response(response, refresh_token = nil)
         if response.is_a? Hash
           params = response
         else
@@ -26,17 +48,10 @@ module OAuth2
         end
 
         access = params.delete('access_token')
-        refresh = params.delete('refresh_token')
+        refresh = params.delete('refresh_token') || refresh_token
         # params['expires'] is only for Facebook
         expires_in = params.delete('expires_in') || params.delete('expires')
         OAuth2::AccessToken.new(@client, access, refresh, expires_in, params)
-      end
-
-      def access_token_params(code, options={}) #:nodoc:
-        super(options).merge({
-          'grant_type' => 'authorization_code',
-          'code' => code,
-        })
       end
     end
   end
