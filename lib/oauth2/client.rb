@@ -52,9 +52,6 @@ module OAuth2
 
     # Makes a request relative to the specified site root.
     def request(verb, url, params={}, headers={})
-      puts "MOOOOOOOOOOOO"
-      puts params.to_yaml
-
       if verb == :get
         resp = connection.run_request(verb, url, nil, headers) do |req|
           req.params.update(params)
@@ -63,7 +60,6 @@ module OAuth2
         resp = connection.run_request(verb, url, params, headers)
       end
 
-      puts resp.to_yaml
       if raise_errors
         case resp.status
           when 200...299
