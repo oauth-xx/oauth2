@@ -9,8 +9,6 @@ Gem::Specification.new do |s|
   s.description = %q{A Ruby wrapper for the OAuth 2.0 protocol built with a similar style to the original OAuth gem.}
   s.summary = %q{A Ruby wrapper for the OAuth 2.0 protocol.}
   s.email = "michael@intridea.com"
-  s.extra_rdoc_files = ["LICENSE", "README.rdoc"]
-  s.rdoc_options = ["--charset=UTF-8"]
   s.homepage = "http://github.com/intridea/oauth2"
   s.require_paths = ["lib"]
   s.executables = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
