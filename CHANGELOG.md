@@ -1,22 +1,22 @@
-== 0.0.10 (June 19)
-
+0.0.10 - June 19, 2010
+----------------------
 * Handle ActiveSupport JSON case where incompatible string does not raise an error. (via Flameeyes)
 * Depend on latest version of MultiJSON.
 
-== 0.0.9 (June 18)
-
+0.0.9 - June 18, 2010
+---------------------
 * Support a JSON token response with swappable JSON parser via MultiJSON.
 * Add support for "expires_in" parameter and relevant methods on AccessToken.
 
-== 0.0.8 (April 27)
-
+0.0.8 - April 27, 2010
+----------------------
 * Change get_request_token to use POST to conform to OAuth 2.0 spec. (via jeremy)
 
-== 0.0.7 (April 27)
-
+0.0.7 - April 27, 2010
+----------------------
 * Updating Faraday dependency for improved SSL support (via technoweenie)
 
-== 0.0.6 (April 25)
-
+0.0.6 - April 25, 2010
+----------------------
 * Added ResponseString so as not to throw away response information when making requests.
 * Deprecated #access_token on WebServer strategy in favor of #get_access_token

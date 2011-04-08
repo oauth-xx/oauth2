@@ -1,4 +1,4 @@
-Copyright (c) 2009 Intridea, Inc. and Michael Bleigh
+Copyright (c) 2011 Intridea, Inc. and Michael Bleigh
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
