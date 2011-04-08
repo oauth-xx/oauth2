@@ -54,6 +54,13 @@ describe OAuth2::Client do
       client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :raise_errors => true)
       client.raise_errors.should be_true
     end
+
+    it "allows get/post for access_token_method option" do
+      client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :access_token_method => :get)
+      client.token_method.should == :get
+      client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :access_token_method => :post)
+      client.token_method.should == :post
+    end
   end
 
   %w(authorize access_token).each do |path_type|

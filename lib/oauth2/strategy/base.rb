@@ -19,6 +19,15 @@ module OAuth2
       end
 
       def access_token_params(options={})
+        return default_params(options)
+      end
+
+      def refresh_token_params(options={})
+        return default_params(options)
+      end
+
+      private
+      def default_params(options={})
         {
           'client_id' => @client.id,
           'client_secret' => @client.secret
