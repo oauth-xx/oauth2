@@ -59,6 +59,10 @@ module OAuth2
         resp = connection.run_request(verb, url, nil, headers) do |req|
           req.params.update(params)
         end
+      elsif verb == :delete
+        resp = connection.run_request(verb, url, nil, nil) do |req|
+          req.params.update(params)
+        end
       else
         resp = connection.run_request(verb, url, params, headers)
       end
@@ -69,6 +73,10 @@ module OAuth2
             return response_for(resp)
           when 401
             e = OAuth2::AccessDenied.new("Received HTTP 401 during request.")
+            e.response = resp
+            raise e
+          when 409
+            e = OAuth2::Conflict.new("Received HTTP 409 during request.")
             e.response = resp
             raise e
           else
