@@ -7,6 +7,7 @@ describe OAuth2::Client do
       b.adapter :test do |stub|
         stub.get('/success')      {|env| [200, {'Content-Type' => 'text/awesome'}, 'yay']}
         stub.get('/unauthorized') {|env| [401, {'Content-Type' => 'text/plain'}, 'not authorized']}
+        stub.get('/conflict')    {|env| [409, {'Content-Type' => 'text/plain'}, 'not authorized']}
         stub.get('/redirect')     {|env| [302, {'Content-Type' => 'text/plain', 'location' => '/success' }, '']}
         stub.get('/error')        {|env| [500, {}, '']}
         stub.get('/json')         {|env| [200, {'Content-Type' => 'application/json; charset=utf8'}, '{"abc":"def"}']}
@@ -108,6 +109,10 @@ describe OAuth2::Client do
 
     it "raises OAuth2::AccessDenied on 401 response" do
       lambda {subject.request(:get, '/unauthorized', {}, {})}.should raise_error(OAuth2::AccessDenied)
+    end
+
+    it "raises OAuth2::Conflict on 409 response" do
+      lambda {subject.request(:get, '/conflict', {}, {})}.should raise_error(OAuth2::Conflict)
     end
 
     it "raises OAuth2::HTTPError on error response" do
