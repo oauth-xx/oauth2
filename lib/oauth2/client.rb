@@ -71,6 +71,8 @@ module OAuth2
         case resp.status
           when 200...299
             return response_for(resp)
+          when 302
+            return request(verb, resp.headers['location'], params, headers)
           when 401
             e = OAuth2::AccessDenied.new("Received HTTP 401 during request.")
             e.response = resp
