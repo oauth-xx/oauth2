@@ -55,12 +55,8 @@ module OAuth2
 
     # Makes a request relative to the specified site root.
     def request(verb, url, params={}, headers={})
-      if verb == :get
+      if (verb == :get) || (verb == :delete)
         resp = connection.run_request(verb, url, nil, headers) do |req|
-          req.params.update(params)
-        end
-      elsif verb == :delete
-        resp = connection.run_request(verb, url, nil, nil) do |req|
           req.params.update(params)
         end
       else
