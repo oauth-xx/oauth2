@@ -7,6 +7,7 @@ describe OAuth2::AccessToken do
       b.adapter :test do |stub|
         stub.get('/client?oauth_token=monkey')    {|env| [200, {}, 'get']}
         stub.post('/client')                      {|env| [200, {}, 'oauth_token=' << env[:body]['oauth_token']]}
+        stub.get('/empty_get?oauth_token=monkey') {|env| [204, {},  nil]}
         stub.put('/client')                       {|env| [200, {}, 'oauth_token=' << env[:body]['oauth_token']]}
         stub.delete('/client?oauth_token=monkey') {|env| [200, {}, 'delete']}
       end
@@ -40,6 +41,10 @@ describe OAuth2::AccessToken do
       it "makes #{http_method.upcase} requests with access token" do
         subject.send(http_method.to_sym, 'client').should == 'oauth_token=monkey'
       end
+    end
+    
+    it "works with a null response body" do
+      subject.get('empty_get').should == ''
     end
   end
 

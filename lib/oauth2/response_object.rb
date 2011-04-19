@@ -51,7 +51,7 @@ module OAuth2
     include ResponseObject
 
     def initialize(response)
-      super(response.body)
+      super(response.body.to_s)
       self.response = response
     end
   end
