@@ -1,5 +1,6 @@
 # CHANGELOG
 
+* [0.4.0 - April 20, 2011](https://github.com/intridea/oauth2/compare/v0.3.0...v0.4.0)
 * [0.3.0 - April 8, 2011](https://github.com/intridea/oauth2/compare/v0.2.0...v0.3.0)
 * [0.2.0 - April 1, 2011](https://github.com/intridea/oauth2/compare/v0.1.1...v0.2.0)
 * [0.1.1 - January 12, 2011](https://github.com/intridea/oauth2/compare/v0.1.0...v0.1.1)
