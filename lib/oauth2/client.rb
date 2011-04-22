@@ -25,7 +25,7 @@ module OAuth2
     # <tt>:raise_errors</tt> :: Default true. When false it will then return the error status and response instead of raising an exception.
     def initialize(client_id, client_secret, opts={})
       self.options      = opts.dup
-      self.token_method = self.options.delete(:access_token_method) || :get
+      self.token_method = self.options.delete(:access_token_method) || :post
       adapter           = self.options.delete(:adapter)
       ssl_opts          = self.options.delete(:ssl) || {}
       connection_opts   = ssl_opts ? {:ssl => ssl_opts} : {}
