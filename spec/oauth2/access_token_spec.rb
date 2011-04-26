@@ -42,7 +42,7 @@ describe OAuth2::AccessToken do
         subject.send(http_method.to_sym, 'client').should == 'oauth_token=monkey'
       end
     end
-    
+
     it "works with a null response body" do
       subject.get('empty_get').should == ''
     end
