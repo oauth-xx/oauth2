@@ -10,7 +10,8 @@ module OAuth2
       @expires_in = (expires_in.nil? || expires_in == '') ? nil : expires_in.to_i
       @expires_at = Time.now + @expires_in if @expires_in
       @params = params
-      @token_param = 'oauth_token'
+      # @token_param = 'oauth_token'
+      @token_param = 'access_token'
     end
 
     def [](key)
