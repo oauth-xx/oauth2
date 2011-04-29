@@ -2,7 +2,7 @@ require 'faraday'
 
 module OAuth2
   class Client
-    attr_accessor :id, :secret, :site, :connection, :options, :raise_errors, :token_method
+    attr_accessor :id, :secret, :site, :connection, :options
     attr_writer :json
 
     # Instantiate a new OAuth 2.0 client using the
@@ -24,33 +24,59 @@ module OAuth2
     # to the adapter pass an array here, e.g. [:action_dispatch, my_test_session]
     # <tt>:raise_errors</tt> :: Default true. When false it will then return the error status and response instead of raising an exception.
     def initialize(client_id, client_secret, opts={})
-      self.options      = opts.dup
-      self.token_method = self.options.delete(:access_token_method) || :post
-      adapter           = self.options.delete(:adapter)
-      ssl_opts          = self.options.delete(:ssl) || {}
-      connection_opts   = ssl_opts ? {:ssl => ssl_opts} : {}
-      self.id           = client_id
-      self.secret       = client_secret
-      self.site         = self.options.delete(:site) if self.options[:site]
-      self.connection   = Faraday::Connection.new(site, connection_opts)
-      self.json         = self.options.delete(:parse_json)
-      self.raise_errors = !(self.options.delete(:raise_errors) == false)
-
-      if adapter && adapter != :test
-        connection.build do |b|
-          b.adapter(*[adapter].flatten)
+      @id = client_id
+      @secret = client_secret
+      @site = opts.delete(:site)
+      ssl = opts.delete(:ssl)
+      @options = {  :authorize_url        => '/oauth/authorize',
+                    :access_token_url     => '/oauth/access_token', 
+                    :access_token_method  => :post,
+                    :connection_opts      => {},
+                    :parse_json           => false,
+                    :raise_errors         => true }.merge(opts)
+      @options[:connection_opts][:ssl] = ssl if ssl
+      # self.options      = opts.dup
+      # self.token_method = self.options.delete(:access_token_method) || :post
+      # adapter           = self.options.delete(:adapter)
+      # ssl_opts          = self.options.delete(:ssl) || {}
+      # connection_opts   = ssl_opts ? {:ssl => ssl_opts} : {}
+      # self.id           = client_id
+      # self.secret       = client_secret
+      # self.site         = self.options.delete(:site) if self.options[:site]
+      # self.connection   = Faraday::Connection.new(site, connection_opts)
+      # self.json         = self.options.delete(:parse_json)
+      # self.raise_errors = !(self.options.delete(:raise_errors) == false)
+      # 
+      # if adapter && adapter != :test
+      #   connection.build do |b|
+      #     b.adapter(*[adapter].flatten)
+      #   end
+      # end
+    end
+    
+    def site=(value)
+      @connection = nil
+      @site = value
+    end
+    
+    def connection
+      @connection ||= begin
+        conn = Faraday::Connection.new(site, options[:connection_opts])
+        conn.build do |b|
+          b.adapter(*[options[:adapter]].flatten) if options[:adapter]
         end
+        conn
       end
     end
 
     def authorize_url(params=nil)
-      path = options[:authorize_url] || options[:authorize_path] || "/oauth/authorize"
-      connection.build_url(path, params).to_s
+      # path = options[:authorize_url] || options[:authorize_path] || "/oauth/authorize"
+      connection.build_url(options[:authorize_url], params).to_s
     end
 
     def access_token_url(params=nil)
-      path = options[:access_token_url] || options[:access_token_path] || "/oauth/access_token"
-      connection.build_url(path, params).to_s
+      # path = options[:access_token_url] || options[:access_token_path] || "/oauth/access_token"
+      connection.build_url(options[:access_token_url], params).to_s
     end
 
     # Makes a request relative to the specified site root.
@@ -63,7 +89,7 @@ module OAuth2
         resp = connection.run_request(verb, url, params, headers)
       end
 
-      if raise_errors
+      if options[:raise_errors]
         case resp.status
           when 200...299
             return response_for(resp)
@@ -87,19 +113,13 @@ module OAuth2
       end
     end
 
-    def json?; !!@json end
-
     def web_server; OAuth2::Strategy::WebServer.new(self) end
     def password; OAuth2::Strategy::Password.new(self) end
 
     private
 
     def response_for(resp)
-      if json?
-        return ResponseObject.from(resp)
-      else
-        return ResponseString.new(resp)
-      end
+      options[:parse_json] ? ResponseObject.from(resp) : ResponseString.new(resp)
     end
   end
 end
