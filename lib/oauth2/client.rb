@@ -79,8 +79,7 @@ module OAuth2
           response.error = e
           response
         else
-          response = Response.new(resp)
-          raise Error.new(response), "Unhandled status code value of #{resp.status}"
+          raise Error.new(Response.new(resp)), "Unhandled status code value of #{resp.status}"
       end
     end
 
