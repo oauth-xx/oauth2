@@ -10,7 +10,6 @@ describe OAuth2::Client do
         stub.get('/conflict')     {|env| [409, {'Content-Type' => 'text/plain'}, 'not authorized']}
         stub.get('/redirect')     {|env| [302, {'Content-Type' => 'text/plain', 'location' => '/success' }, '']}
         stub.get('/error')        {|env| [500, {}, '']}
-        stub.get('/json')         {|env| [200, {'Content-Type' => 'application/json; charset=utf8'}, '{"abc":"def"}']}
       end
     end
     cli
@@ -84,25 +83,25 @@ describe OAuth2::Client do
   end
 
   describe "#request" do
-    it "returns ResponseString on successful response" do
+    it "returns on a successful response" do
       response = subject.request(:get, '/success', {}, {})
-      response.should == 'yay'
+      response.body.should == 'yay'
       response.status.should == 200
       response.headers.should == {'Content-Type' => 'text/awesome'}
     end
 
     it "follows redirects properly" do
       response = subject.request(:get, '/redirect', {}, {})
-      response.should == 'yay'
+      response.body.should == 'yay'
       response.status.should == 200
       response.headers.should == {'Content-Type' => 'text/awesome'}
     end
 
-    it "returns ResponseString on error if raise_errors is false" do
+    it "returns if raise_errors is false" do
       subject.options[:raise_errors] = false
       response = subject.request(:get, '/unauthorized', {}, {})
 
-      response.should == 'not authorized'
+      response.body.should == 'not authorized'
       response.status.should == 401
       response.headers.should == {'Content-Type' => 'text/plain'}
     end
@@ -122,33 +121,6 @@ describe OAuth2::Client do
 
   it '#web_server should instantiate a WebServer strategy with this client' do
     subject.web_server.should be_kind_of(OAuth2::Strategy::WebServer)
-  end
-
-  context 'with JSON parsing' do
-    before do
-      subject.options[:parse_json] = true
-    end
-
-    describe '#request' do
-      it 'should return a response hash' do
-        response = subject.request(:get, '/json')
-        response.should be_kind_of(OAuth2::ResponseHash)
-        response['abc'].should == 'def'
-      end
-
-      it 'should only try to decode application/json' do
-        subject.request(:get, '/success').should == 'yay'
-      end
-    end
-
-    it 'should set :parse_json option' do
-      OAuth2::Client.new('abc', 'def', :site => 'http://example.com', :parse_json => true).options[:parse_json].should be_true
-      OAuth2::Client.new('abc', 'def', :site => 'http://example.com', :parse_json => false).options[:parse_json].should be_false
-    end
-
-    after do
-      subject.options[:parse_json] = false
-    end
   end
 
   context 'with SSL options' do
