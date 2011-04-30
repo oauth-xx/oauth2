@@ -13,12 +13,12 @@ module OAuth2
       # endpoints.
       def get_access_token(code, options={})
         response = @client.request(@client.options[:access_token_method], @client.access_token_url, access_token_params(code, options))
-        parse_response(response)
+        parse_token_response(response)
       end
 
       def refresh_access_token(refresh_token, options={})
         response = @client.request(@client.options[:access_token_method], @client.access_token_url, refresh_token_params(refresh_token, options))
-        parse_response(response, refresh_token)
+        parse_token_response(response, refresh_token)
       end
 
       def access_token_params(code, options={}) #:nodoc:
@@ -35,23 +35,11 @@ module OAuth2
         })
       end
 
-      def parse_response(response, refresh_token = nil)
-        if response.is_a? Hash
-          params = response
-        else
-          params = MultiJson.decode(response) rescue nil
-          # the ActiveSupport JSON parser won't cause an exception when
-          # given a formencoded string, so make sure that it was
-          # actually parsed in an Hash. This covers even the case where
-          # it caused an exception since it'll still be nil.
-          params = Rack::Utils.parse_query(response) unless params.is_a? Hash
-        end
-
-        access = params.delete('access_token')
-        refresh = params.delete('refresh_token') || refresh_token
-        # params['expires'] is only for Facebook
-        expires_in = params.delete('expires_in') || params.delete('expires')
-        OAuth2::AccessToken.new(@client, access, refresh, expires_in, params)
+      def parse_token_response(response, refresh_token=nil)
+        access = response.parsed.delete('access_token')
+        refresh = response.parsed.delete('refresh_token') || refresh_token
+        expires_in = response.parsed.delete('expires_in') || response.parsed.delete('expires')
+        OAuth2::AccessToken.new(@client, access, refresh, expires_in, response.parsed)
       end
     end
   end
