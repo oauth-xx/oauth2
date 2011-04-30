@@ -72,12 +72,15 @@ module OAuth2
           return Response.new(resp)
         when 302
           return request(verb, resp.headers['location'], params, headers)
-        else
+        when 400..599
           response = Response.new(resp)
           e = Error.new(response)
           raise e if options[:raise_errors]
           response.error = e
           response
+        else
+          response = Response.new(resp)
+          raise Error.new(response), "Unhandled status code value of #{resp.status}"
       end
     end
 
