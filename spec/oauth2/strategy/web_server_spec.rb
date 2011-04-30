@@ -65,11 +65,11 @@ describe OAuth2::Strategy::WebServer do
   %w(json formencoded from_facebook).each do |mode|
     [false, true].each do |parse_json|
       [:get, :post].each do |verb|
-        describe "#get_access_token (#{mode}, token_method=#{verb} parse_json=#{parse_json})" do
+        describe "#get_access_token (#{mode}, access_token_method=#{verb} parse_json=#{parse_json})" do
           before do
             @mode = mode
-            client.json=parse_json
-            client.token_method=verb
+            client.options[:parse_json] = parse_json
+            client.options[:access_token_method] = verb
             @access = subject.get_access_token('sushi')
           end
 
@@ -107,8 +107,8 @@ describe OAuth2::Strategy::WebServer do
         describe "#refresh_access_token (#{mode}, token_method=#{verb} parse_json=#{parse_json})" do
           before do
             @mode = mode
-            client.json=parse_json
-            client.token_method=verb
+            client.options[:parse_json] = parse_json
+            client.options[:access_token_method] = verb
             @access = subject.refresh_access_token('trout')
           end
 
