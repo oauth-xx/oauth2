@@ -70,7 +70,7 @@ module OAuth2
       if options[:raise_errors]
         case resp.status
           when 200...299
-            return response_for(resp)
+            return Response.new(resp)
           when 302
             return request(verb, resp.headers['location'], params, headers)
           when 401
@@ -87,17 +87,11 @@ module OAuth2
             raise e
         end
       else
-        response_for resp
+        Response.new(resp)
       end
     end
 
     def web_server; OAuth2::Strategy::WebServer.new(self) end
     def password; OAuth2::Strategy::Password.new(self) end
-
-    private
-
-    def response_for(resp)
-      options[:parse_json] ? ResponseObject.from(resp) : ResponseString.new(resp)
-    end
   end
 end

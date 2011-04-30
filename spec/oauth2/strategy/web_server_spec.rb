@@ -8,27 +8,27 @@ describe OAuth2::Strategy::WebServer do
         stub.get('/oauth/access_token?client_id=abc&client_secret=def&code=sushi&grant_type=authorization_code') do |env|
           case @mode
           when "formencoded"
-            [200, {}, 'expires_in=600&access_token=salmon&refresh_token=trout&extra_param=steve']
+            [200, {'Content-Type' => 'x-www-form-urlencoded'}, 'expires_in=600&access_token=salmon&refresh_token=trout&extra_param=steve']
           when "json"
             [200, {}, '{"expires_in":600,"access_token":"salmon","refresh_token":"trout","extra_param":"steve"}']
           when "from_facebook"
-            [200, {}, 'expires=600&access_token=salmon&refresh_token=trout&extra_param=steve']
+            [200, {'Content-Type' => 'x-www-form-urlencoded'}, 'expires=600&access_token=salmon&refresh_token=trout&extra_param=steve']
           end
         end
         stub.post('/oauth/access_token', { 'client_id' => 'abc', 'client_secret' => 'def', 'code' => 'sushi', 'grant_type' => 'authorization_code' }) do |env|
           case @mode
           when "formencoded"
-            [200, {}, 'expires_in=600&access_token=salmon&refresh_token=trout&extra_param=steve']
+            [200, {'Content-Type' => 'x-www-form-urlencoded'}, 'expires_in=600&access_token=salmon&refresh_token=trout&extra_param=steve']
           when "json"
             [200, {}, '{"expires_in":600,"access_token":"salmon","refresh_token":"trout","extra_param":"steve"}']
           when "from_facebook"
-            [200, {}, 'expires=600&access_token=salmon&refresh_token=trout&extra_param=steve']
+            [200, {'Content-Type' => 'x-www-form-urlencoded'}, 'expires=600&access_token=salmon&refresh_token=trout&extra_param=steve']
           end
         end
         stub.get('/oauth/access_token?client_id=abc&client_secret=def&grant_type=refresh_token&refresh_token=trout') do |env|
           case @mode
           when "formencoded"
-            [200, {}, 'expires_in=600&access_token=tuna']
+            [200, { 'Content-Type' => 'x-www-form-urlencoded'}, 'expires_in=600&access_token=tuna']
           when "json"
             [200, {}, '{"expires_in":600,"access_token":"tuna"}']
           end
@@ -36,7 +36,7 @@ describe OAuth2::Strategy::WebServer do
         stub.post('/oauth/access_token', { 'client_id' => 'abc', 'client_secret' => 'def', 'refresh_token' => 'trout', 'grant_type' => 'refresh_token' }) do |env|
           case @mode
           when "formencoded"
-            [200, {}, 'expires_in=600&access_token=tuna']
+            [200, {'Content-Type' => 'x-www-form-urlencoded'}, 'expires_in=600&access_token=tuna']
           when "json"
             [200, {}, '{"expires_in":600,"access_token":"tuna"}']
           end
@@ -61,41 +61,47 @@ describe OAuth2::Strategy::WebServer do
       subject.authorize_url(:redirect_uri => cb).should be_include("redirect_uri=#{Rack::Utils.escape(cb)}")
     end
   end
+  
+  # it 'does' do
+  #   @mode = 'formencoded'
+  #   client.options[:access_token_method] = :post
+  #   @access = subject.get_access_token('sushi')
+  #   puts "<br> WOW <br>"
+  #   puts @access.token
+  #   puts "<br> Wow2 <br>"
+  # end
 
   %w(json formencoded from_facebook).each do |mode|
-    [false, true].each do |parse_json|
-      [:get, :post].each do |verb|
-        describe "#get_access_token (#{mode}, access_token_method=#{verb} parse_json=#{parse_json})" do
-          before do
-            @mode = mode
-            client.options[:parse_json] = parse_json
-            client.options[:access_token_method] = verb
-            @access = subject.get_access_token('sushi')
-          end
+    [:get, :post].each do |verb|
+      describe "#get_access_token (#{mode}, access_token_method=#{verb}" do
+        before :each do
+          @mode = mode
+          client.options[:access_token_method] = verb
+          @access = subject.get_access_token('sushi')
+        end
 
-          it 'returns AccessToken with same Client' do
-            @access.client.should == client
-          end
+        it 'returns AccessToken with same Client' do
+          @access.client.should == client
+        end
 
-          it 'returns AccessToken with #token' do
-            @access.token.should == 'salmon'
-          end
+        it 'returns AccessToken with #token' do
+          @access.token.should == 'salmon'
+        end
 
-          it 'returns AccessToken with #refresh_token' do
-            @access.refresh_token.should == 'trout'
-          end
+        it 'returns AccessToken with #refresh_token' do
+          @access.refresh_token.should == 'trout'
+        end
 
-          it 'returns AccessToken with #expires_in' do
-            @access.expires_in.should == 600
-          end
+        it 'returns AccessToken with #expires_in' do
+          @access.expires_in.should == 600
+        end
 
-          it 'returns AccessToken with #expires_at' do
-            @access.expires_at.should be_kind_of(Time)
-          end
+        it 'returns AccessToken with #expires_at' do
+          @access.expires_at.should be_kind_of(Time)
+        end
 
-          it 'returns AccessToken with params accessible via []' do
-            @access['extra_param'].should == 'steve'
-          end
+        it 'returns AccessToken with params accessible via []' do
+          @access['extra_param'].should == 'steve'
         end
       end
     end

@@ -33,18 +33,18 @@ describe OAuth2::AccessToken do
 
     %w(get delete).each do |http_method|
       it "makes #{http_method.upcase} requests with access token" do
-        subject.send(http_method.to_sym, 'client').should == http_method
+        subject.send(http_method.to_sym, 'client').body.should == http_method
       end
     end
 
     %w(post put).each do |http_method|
       it "makes #{http_method.upcase} requests with access token" do
-        subject.send(http_method.to_sym, 'client').should == 'oauth_token=monkey'
+        subject.send(http_method.to_sym, 'client').body.should == 'oauth_token=monkey'
       end
     end
 
     it "works with a null response body" do
-      subject.get('empty_get').should == ''
+      subject.get('empty_get').body.should == ''
     end
   end
 
