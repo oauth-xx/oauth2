@@ -32,23 +32,6 @@ module OAuth2
                     :parse_json           => false,
                     :raise_errors         => true }.merge(opts)
       @options[:connection_opts][:ssl] = ssl if ssl
-      # self.options      = opts.dup
-      # self.token_method = self.options.delete(:access_token_method) || :post
-      # adapter           = self.options.delete(:adapter)
-      # ssl_opts          = self.options.delete(:ssl) || {}
-      # connection_opts   = ssl_opts ? {:ssl => ssl_opts} : {}
-      # self.id           = client_id
-      # self.secret       = client_secret
-      # self.site         = self.options.delete(:site) if self.options[:site]
-      # self.connection   = Faraday::Connection.new(site, connection_opts)
-      # self.json         = self.options.delete(:parse_json)
-      # self.raise_errors = !(self.options.delete(:raise_errors) == false)
-      # 
-      # if adapter && adapter != :test
-      #   connection.build do |b|
-      #     b.adapter(*[adapter].flatten)
-      #   end
-      # end
     end
     
     def site=(value)

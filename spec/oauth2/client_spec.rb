@@ -65,20 +65,20 @@ describe OAuth2::Client do
     end
   end
 
-  %w(authorize access_token).each do |path_type|
-    describe "##{path_type}_url" do
-      it "should default to a path of /oauth/#{path_type}" do
-        subject.send("#{path_type}_url").should == "https://api.example.com/oauth/#{path_type}"
+  %w(authorize access_token).each do |url_type|
+    describe ":#{url_type}_url option" do
+      it "should default to a path of /oauth/#{url_type}" do
+        subject.send("#{url_type}_url").should == "https://api.example.com/oauth/#{url_type}"
       end
 
-      it "should be settable via the :#{path_type}_path option" do
-        subject.options[:"#{path_type}_url"] = '/oauth/custom'
-        subject.send("#{path_type}_url").should == 'https://api.example.com/oauth/custom'
+      it "should be settable via the :#{url_type}_url option" do
+        subject.options[:"#{url_type}_url"] = '/oauth/custom'
+        subject.send("#{url_type}_url").should == 'https://api.example.com/oauth/custom'
       end
       
       it "allows a different host than the site" do
-        subject.options[:"#{path_type}_url"] = 'https://api.foo.com/oauth/custom'
-        subject.send("#{path_type}_url").should == 'https://api.foo.com/oauth/custom'
+        subject.options[:"#{url_type}_url"] = 'https://api.foo.com/oauth/custom'
+        subject.send("#{url_type}_url").should == 'https://api.foo.com/oauth/custom'
       end
     end
   end
@@ -116,13 +116,12 @@ describe OAuth2::Client do
     end
 
     it "raises OAuth2::HTTPError on error response" do
-      # subject.request(:get, '/error', {}, {})
       lambda {subject.request(:get, '/error', {}, {})}.should raise_error(OAuth2::HTTPError)
     end
   end
 
   it '#web_server should instantiate a WebServer strategy with this client' do
-    subject.web_server# .should be_kind_of(OAuth2::Strategy::WebServer)
+    subject.web_server.should be_kind_of(OAuth2::Strategy::WebServer)
   end
 
   context 'with JSON parsing' do
@@ -148,7 +147,7 @@ describe OAuth2::Client do
     end
 
     after do
-      subject.json = false
+      subject.options[:parse_json] = false
     end
   end
 
@@ -161,7 +160,7 @@ describe OAuth2::Client do
       cli
     end
 
-    it 'should pass the SSL options along to Faraday::Connection#ssl' do      
+    it 'should pass the SSL options along to Faraday::Connection#ssl' do
       subject.connection.ssl.should == {:ca_file => 'foo.pem'}
     end
   end
