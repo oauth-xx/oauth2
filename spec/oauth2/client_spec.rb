@@ -1,12 +1,15 @@
 require 'spec_helper'
 
 describe OAuth2::Client do
+  let!(:error_value) {'invalid_token'}
+  let!(:error_description_value) {'bad bad token'}
+  
   subject do
     cli = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com')
     cli.connection.build do |b|
       b.adapter :test do |stub|
         stub.get('/success')      {|env| [200, {'Content-Type' => 'text/awesome'}, 'yay']}
-        stub.get('/unauthorized') {|env| [401, {'Content-Type' => 'text/plain'}, 'not authorized']}
+        stub.get('/unauthorized') {|env| [401, {'Content-Type' => 'text/plain'}, MultiJson.encode(:error => error_value, :error_description => error_description_value)]}
         stub.get('/conflict')     {|env| [409, {'Content-Type' => 'text/plain'}, 'not authorized']}
         stub.get('/redirect')     {|env| [302, {'Content-Type' => 'text/plain', 'location' => '/success' }, '']}
         stub.get('/error')        {|env| [500, {}, '']}
@@ -101,21 +104,32 @@ describe OAuth2::Client do
       subject.options[:raise_errors] = false
       response = subject.request(:get, '/unauthorized', {}, {})
 
-      response.body.should == 'not authorized'
       response.status.should == 401
       response.headers.should == {'Content-Type' => 'text/plain'}
+      response.error.should_not be_nil
+    end
+    
+    %w(/unauthorized /conflict /error).each do |error_path|
+      it "raises OAuth2::Error on error response to path #{error_path}" do
+        lambda {subject.request(:get, error_path, {}, {})}.should raise_error(OAuth2::Error)
+      end
+    end
+    
+    it 'parses OAuth2 standard error response' do
+      begin
+        subject.request(:get, '/unauthorized', {}, {})
+      rescue Exception => e
+        e.code.should == error_value.to_sym
+        e.description.should == error_description_value
+      end
     end
 
-    it "raises OAuth2::AccessDenied on 401 response" do
-      lambda {subject.request(:get, '/unauthorized', {}, {})}.should raise_error(OAuth2::AccessDenied)
-    end
-
-    it "raises OAuth2::Conflict on 409 response" do
-      lambda {subject.request(:get, '/conflict', {}, {})}.should raise_error(OAuth2::Conflict)
-    end
-
-    it "raises OAuth2::HTTPError on error response" do
-      lambda {subject.request(:get, '/error', {}, {})}.should raise_error(OAuth2::HTTPError)
+    it "provides the response in the Exception" do
+      begin
+        subject.request(:get, '/error', {}, {})
+      rescue Exception => e
+        e.response.should_not be_nil
+      end
     end
   end
 

@@ -1,6 +1,7 @@
 module OAuth2
   class Response
     attr_reader :response
+    attr_accessor :error
     
     def initialize(response)
       @response = response

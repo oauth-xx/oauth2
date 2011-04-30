@@ -67,27 +67,17 @@ module OAuth2
         resp = connection.run_request(verb, url, params, headers)
       end
 
-      if options[:raise_errors]
-        case resp.status
-          when 200...299
-            return Response.new(resp)
-          when 302
-            return request(verb, resp.headers['location'], params, headers)
-          when 401
-            e = OAuth2::AccessDenied.new("Received HTTP 401 during request.")
-            e.response = resp
-            raise e
-          when 409
-            e = OAuth2::Conflict.new("Received HTTP 409 during request.")
-            e.response = resp
-            raise e
-          else
-            e = OAuth2::HTTPError.new("Received HTTP #{resp.status} during request.")
-            e.response = resp
-            raise e
-        end
-      else
-        Response.new(resp)
+      case resp.status
+        when 200...299
+          return Response.new(resp)
+        when 302
+          return request(verb, resp.headers['location'], params, headers)
+        else
+          response = Response.new(resp)
+          e = Error.new(response)
+          raise e if options[:raise_errors]
+          response.error = e
+          response
       end
     end
 
