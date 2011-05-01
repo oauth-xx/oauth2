@@ -69,9 +69,9 @@ module OAuth2
 
       case resp.status
         when 200...299
-          return Response.new(resp)
+          Response.new(resp)
         when 302
-          return request(verb, resp.headers['location'], params, headers)
+          request(verb, resp.headers['location'], params, headers)
         when 400...599
           response = Response.new(resp)
           e = Error.new(response)
