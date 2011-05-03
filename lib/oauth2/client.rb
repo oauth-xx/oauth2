@@ -15,12 +15,10 @@ module OAuth2
     # <tt>:access_token_url</tt> :: Specify the full URL of the access token endpoint.
     # <tt>:access_token_method</tt> :: Specify the method to use for token endpoints, can be :get or :post
     # (note: for Facebook this should be :get and for Google this should be :post)
-    # <tt>:parse_json</tt> :: If true, <tt>application/json</tt> responses will be automatically parsed.
     # <tt>:raise_errors</tt> :: Default true. When false it will then return the error status and response instead of raising an exception.
     # <tt>:ssl</tt> :: Specify SSL options for the connection.
-    # <tt>:adapter</tt> :: The name of the Faraday::Adapter::* class to use, e.g. :net_http. To pass arguments
-    # to the adapter pass an array here, e.g. [:action_dispatch, my_test_session]
-    def initialize(client_id, client_secret, opts={})
+    # <tt>&block</tt> :: Faraday connection build block
+    def initialize(client_id, client_secret, opts={}, &block)
       @id = client_id
       @secret = client_secret
       @site = opts.delete(:site)
@@ -29,7 +27,8 @@ module OAuth2
                     :access_token_url     => '/oauth/access_token', 
                     :access_token_method  => :post,
                     :connection_opts      => {},
-                    :parse_json           => false,
+                    :connection_build     => block,
+                    :max_redirects        => 5,
                     :raise_errors         => true }.merge(opts)
       @options[:connection_opts][:ssl] = ssl if ssl
     end
@@ -41,10 +40,10 @@ module OAuth2
     
     def connection
       @connection ||= begin
-        conn = Faraday::Connection.new(site, options[:connection_opts])
+        conn = Faraday.new(site, options[:connection_opts])
         conn.build do |b|
-          b.adapter(*[options[:adapter]].flatten) if options[:adapter]
-        end
+          options[:connection_build].call(b)
+        end if options[:connection_build]
         conn
       end
     end
@@ -58,32 +57,37 @@ module OAuth2
     end
 
     # Makes a request relative to the specified site root.
-    def request(verb, url, params={}, headers={})
-      if (verb == :get) || (verb == :delete)
-        resp = connection.run_request(verb, url, nil, headers) do |req|
-          req.params.update(params)
-        end
-      else
-        resp = connection.run_request(verb, url, params, headers)
+    def request(verb, url, args={})
+      url = self.connection.build_url(url, args[:params]).to_s
+      
+      response = connection.run_request(verb, url, args[:body], args[:headers]) do |req|
+        yield(req) if block_given?
       end
-
-      case resp.status
+      response = Response.new(response)
+      
+      case response.status
         when 200...299
-          Response.new(resp)
-        when 302
-          request(verb, resp.headers['location'], params, headers)
+          response
+        when 300...307
+          args[:redirect_count] ||= 0
+          args[:redirect_count] += 1
+          return response if args[:redirect_count] > options[:max_redirects]
+          if response.status == 303
+            verb = :get
+            args.delete(:body)
+          end
+          request(verb, response.headers['location'], args)
         when 400...599
-          response = Response.new(resp)
           e = Error.new(response)
           raise e if options[:raise_errors]
           response.error = e
           response
         else
-          raise Error.new(Response.new(resp)), "Unhandled status code value of #{resp.status}"
+          raise Error.new(response), "Unhandled status code value of #{response.status}"
+        end
       end
     end
 
     def web_server; OAuth2::Strategy::WebServer.new(self) end
     def password; OAuth2::Strategy::Password.new(self) end
-  end
 end

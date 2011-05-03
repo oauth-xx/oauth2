@@ -26,28 +26,26 @@ module OAuth2
       expires? && expires_at < Time.now
     end
 
-    def request(verb, path, params={}, headers={})
-      if params.instance_of?(Hash)
-        params = params.merge token_param => @token
-      end
-      headers = headers.merge 'Authorization' => "OAuth #{@token}"
-      @client.request(verb, path, params, headers)
+    def request(verb, path, options={}, &block)
+      options[:headers] ||= {}
+      options[:headers].merge! 'Authorization' => "OAuth #{@token}"
+      @client.request(verb, path, options, &block)
     end
 
-    def get(path, params={}, headers={})
-      request(:get, path, params, headers)
+    def get(path, options={}, &block)
+      request(:get, path, options, &block)
     end
 
-    def post(path, params={}, headers={})
-      request(:post, path, params, headers)
+    def post(path, options={}, &block)
+      request(:post, path, options, &block)
     end
 
-    def put(path, params={}, headers={})
-      request(:put, path, params, headers)
+    def put(path, options={}, &block)
+      request(:put, path, options, &block)
     end
 
-    def delete(path, params={}, headers={})
-      request(:delete, path, params, headers)
+    def delete(path, options={}, &block)
+      request(:delete, path, options, &block)
     end
   end
 end

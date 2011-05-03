@@ -2,9 +2,8 @@ require 'spec_helper'
 
 describe OAuth2::Strategy::WebServer do
   let(:client) do
-    cli = OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com')
-    cli.connection.build do |b|
-      b.adapter :test do |stub|
+    OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com') do |builder|
+      builder.adapter :test do |stub|
         stub.get('/oauth/access_token?client_id=abc&client_secret=def&code=sushi&grant_type=authorization_code') do |env|
           case @mode
           when "formencoded"
@@ -43,8 +42,8 @@ describe OAuth2::Strategy::WebServer do
         end
       end
     end
-    cli
   end
+
   subject{client.web_server}
 
   describe '#authorize_url' do
@@ -62,15 +61,6 @@ describe OAuth2::Strategy::WebServer do
     end
   end
   
-  # it 'does' do
-  #   @mode = 'formencoded'
-  #   client.options[:access_token_method] = :post
-  #   @access = subject.get_access_token('sushi')
-  #   puts "<br> WOW <br>"
-  #   puts @access.token
-  #   puts "<br> Wow2 <br>"
-  # end
-
   %w(json formencoded from_facebook).each do |mode|
     [:get, :post].each do |verb|
       describe "#get_access_token (#{mode}, access_token_method=#{verb}" do
@@ -108,35 +98,32 @@ describe OAuth2::Strategy::WebServer do
   end
 
   %w(json formencoded).each do |mode|
-    [false, true].each do |parse_json|
-      [:get].each do |verb|
-        describe "#refresh_access_token (#{mode}, token_method=#{verb} parse_json=#{parse_json})" do
-          before do
-            @mode = mode
-            client.options[:parse_json] = parse_json
-            client.options[:access_token_method] = verb
-            @access = subject.refresh_access_token('trout')
-          end
+    [:get, :post].each do |verb|
+      describe "#refresh_access_token (#{mode}, token_method=#{verb})" do
+        before do
+          @mode = mode
+          client.options[:access_token_method] = verb
+          @access = subject.refresh_access_token('trout')
+        end
 
-           it 'returns AccessToken with same Client' do
-             @access.client.should == client
-           end
+         it 'returns AccessToken with same Client' do
+           @access.client.should == client
+         end
 
-          it 'returns AccessToken with #token' do
-            @access.token.should == 'tuna'
-          end
+        it 'returns AccessToken with #token' do
+          @access.token.should == 'tuna'
+        end
 
-          it 'returns AccessToken with #refresh_token' do
-            @access.refresh_token.should == 'trout'
-          end
+        it 'returns AccessToken with #refresh_token' do
+          @access.refresh_token.should == 'trout'
+        end
 
-          it 'returns AccessToken with #expires_in' do
-            @access.expires_in.should == 600
-          end
+        it 'returns AccessToken with #expires_in' do
+          @access.expires_in.should == 600
+        end
 
-          it 'returns AccessToken with #expires_at' do
-            @access.expires_at.should be_kind_of(Time)
-          end
+        it 'returns AccessToken with #expires_at' do
+          @access.expires_at.should be_kind_of(Time)
         end
       end
     end
