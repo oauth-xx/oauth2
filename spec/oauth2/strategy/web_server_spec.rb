@@ -98,7 +98,7 @@ describe OAuth2::Strategy::WebServer do
   end
 
   %w(json formencoded).each do |mode|
-    [:get].each do |verb|
+    [:get, :post].each do |verb|
       describe "#refresh_access_token (#{mode}, token_method=#{verb})" do
         before do
           @mode = mode
