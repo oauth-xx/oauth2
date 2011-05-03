@@ -12,13 +12,18 @@ module OAuth2
       # in order to successfully verify your request for most OAuth 2.0
       # endpoints.
       def get_access_token(code, options={})
-        response = @client.request(@client.options[:access_token_method], @client.access_token_url, access_token_params(code, options))
+        response = get_token(access_token_params(code, options))
         parse_token_response(response)
       end
 
       def refresh_access_token(refresh_token, options={})
-        response = @client.request(@client.options[:access_token_method], @client.access_token_url, refresh_token_params(refresh_token, options))
+        response = get_token(refresh_token_params(refresh_token, options))
         parse_token_response(response, refresh_token)
+      end
+      
+      def get_token(params)
+        args = @client.options[:access_token_method] == :get ? { :params => params } : { :body => params }
+        @client.request(@client.options[:access_token_method], @client.access_token_url, args)
       end
 
       def access_token_params(code, options={}) #:nodoc:

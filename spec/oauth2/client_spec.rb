@@ -5,17 +5,18 @@ describe OAuth2::Client do
   let!(:error_description_value) {'bad bad token'}
   
   subject do
-    cli = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com')
-    cli.connection.build do |b|
-      b.adapter :test do |stub|
+    OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com') do |builder|
+      builder.adapter :test do |stub|
         stub.get('/success')      {|env| [200, {'Content-Type' => 'text/awesome'}, 'yay']}
+        stub.get('/reflect')      {|env| [200, {}, env[:body]]}
+        stub.post('/reflect')     {|env| [200, {}, env[:body]]}
         stub.get('/unauthorized') {|env| [401, {'Content-Type' => 'text/plain'}, MultiJson.encode(:error => error_value, :error_description => error_description_value)]}
         stub.get('/conflict')     {|env| [409, {'Content-Type' => 'text/plain'}, 'not authorized']}
         stub.get('/redirect')     {|env| [302, {'Content-Type' => 'text/plain', 'location' => '/success' }, '']}
+        stub.post('/redirect')    {|env| [303, {'Content-Type' => 'text/plain', 'location' => '/reflect' }, '']}
         stub.get('/error')        {|env| [500, {}, '']}
       end
     end
-    cli
   end
 
   describe '#initialize' do
@@ -36,16 +37,18 @@ describe OAuth2::Client do
       subject.connection.ssl.should == {}
     end
 
-    it "should be able to pass parameters to the adapter, e.g. Faraday::Adapter::ActionDispatch" do
+    it "should be able to pass a block to configure the connection" do
       connection = stub('connection')
-      Faraday::Connection.stub(:new => connection)
       session = stub('session', :to_ary => nil)
       builder = stub('builder')
       connection.stub(:build).and_yield(builder)
+      Faraday::Connection.stub(:new => connection)
 
-      builder.should_receive(:adapter).with(:action_dispatch, session)
+      builder.should_receive(:adapter).with(:test)
 
-      OAuth2::Client.new('abc', 'def', :adapter => [:action_dispatch, session]).connection
+      OAuth2::Client.new('abc', 'def') do |builder|
+        builder.adapter :test
+      end.connection
     end
 
     it "defaults raise_errors to true" do
@@ -87,22 +90,41 @@ describe OAuth2::Client do
 
   describe "#request" do
     it "returns on a successful response" do
-      response = subject.request(:get, '/success', {}, {})
+      response = subject.request(:get, '/success')
       response.body.should == 'yay'
       response.status.should == 200
       response.headers.should == {'Content-Type' => 'text/awesome'}
     end
-
+    
+    it "posts a body" do
+      response = subject.request(:post, '/reflect', :body => 'foo=bar')
+      response.body.should == 'foo=bar'
+    end
+    
     it "follows redirects properly" do
-      response = subject.request(:get, '/redirect', {}, {})
+      response = subject.request(:get, '/redirect')
       response.body.should == 'yay'
       response.status.should == 200
       response.headers.should == {'Content-Type' => 'text/awesome'}
+    end
+    
+    it "redirects using GET on a 303" do
+      response = subject.request(:post, '/redirect', :body => 'foo=bar')
+      response.body.should be_empty
+      response.status.should == 200
+    end
+    
+    it "obeys the :max_redirects option" do
+      max_redirects = subject.options[:max_redirects]
+      subject.options[:max_redirects] = 0
+      response = subject.request(:get, '/redirect')
+      response.status.should == 302
+      subject.options[:max_redirects] = max_redirects
     end
 
     it "returns if raise_errors is false" do
       subject.options[:raise_errors] = false
-      response = subject.request(:get, '/unauthorized', {}, {})
+      response = subject.request(:get, '/unauthorized')
 
       response.status.should == 401
       response.headers.should == {'Content-Type' => 'text/plain'}
@@ -111,13 +133,13 @@ describe OAuth2::Client do
     
     %w(/unauthorized /conflict /error).each do |error_path|
       it "raises OAuth2::Error on error response to path #{error_path}" do
-        lambda {subject.request(:get, error_path, {}, {})}.should raise_error(OAuth2::Error)
+        lambda {subject.request(:get, error_path)}.should raise_error(OAuth2::Error)
       end
     end
     
     it 'parses OAuth2 standard error response' do
       begin
-        subject.request(:get, '/unauthorized', {}, {})
+        subject.request(:get, '/unauthorized')
       rescue Exception => e
         e.code.should == error_value.to_sym
         e.description.should == error_description_value
@@ -126,7 +148,7 @@ describe OAuth2::Client do
 
     it "provides the response in the Exception" do
       begin
-        subject.request(:get, '/error', {}, {})
+        subject.request(:get, '/error')
       rescue Exception => e
         e.response.should_not be_nil
       end

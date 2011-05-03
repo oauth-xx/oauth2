@@ -8,24 +8,24 @@ module OAuth2
     end
     
     def headers
-      self.response.headers
+      response.headers
     end
     
     def status
-      self.response.status
+      response.status
     end
     
     def body
-      self.response.body || ''
+      response.body || ''
     end
     
     def parsed
       @parsed ||= begin
-        if self.response.headers['Content-Type'] && 
-          self.response.headers['Content-Type'].include?('x-www-form-urlencoded') 
-          Rack::Utils.parse_query(self.response.body)
+        if response.headers['Content-Type'] && 
+          response.headers['Content-Type'].include?('x-www-form-urlencoded') 
+          Rack::Utils.parse_query(response.body)
         else
-          MultiJson.decode(self.response.body) rescue (self.response.body || '')
+          MultiJson.decode(response.body) rescue (response.body || '')
         end
       end
     end

@@ -2,17 +2,15 @@ require 'spec_helper'
 
 describe OAuth2::AccessToken do
   let(:client) do
-    cli = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com')
-    cli.connection.build do |b|
-      b.adapter :test do |stub|
-        stub.get('/client?oauth_token=monkey')    {|env| [200, {}, 'get']}
-        stub.post('/client')                      {|env| [200, {}, 'oauth_token=' << env[:body]['oauth_token']]}
-        stub.get('/empty_get?oauth_token=monkey') {|env| [204, {},  nil]}
-        stub.put('/client')                       {|env| [200, {}, 'oauth_token=' << env[:body]['oauth_token']]}
-        stub.delete('/client?oauth_token=monkey') {|env| [200, {}, 'delete']}
+    OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com') do |builder|
+      builder.adapter :test do |stub|
+        stub.get('/client')     {|env| [200, {}, env[:request_headers]['Authorization']]}
+        stub.post('/client')    {|env| [200, {}, env[:request_headers]['Authorization']]}
+        stub.get('/empty_get')  {|env| [204, {}, nil]}
+        stub.put('/client')     {|env| [200, {}, env[:request_headers]['Authorization']]}
+        stub.delete('/client')  {|env| [200, {}, env[:request_headers]['Authorization']]}
       end
     end
-    cli
   end
 
   let(:token) {'monkey'}
@@ -33,13 +31,13 @@ describe OAuth2::AccessToken do
 
     %w(get delete).each do |http_method|
       it "makes #{http_method.upcase} requests with access token" do
-        subject.send(http_method.to_sym, 'client').body.should == http_method
+        subject.send(http_method.to_sym, 'client').body.should == "OAuth #{token}"
       end
     end
 
     %w(post put).each do |http_method|
       it "makes #{http_method.upcase} requests with access token" do
-        subject.send(http_method.to_sym, 'client').body.should == 'oauth_token=monkey'
+        subject.send(http_method.to_sym, 'client').body.should == "OAuth #{token}"
       end
     end
 
