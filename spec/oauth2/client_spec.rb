@@ -8,10 +8,12 @@ describe OAuth2::Client do
     OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com') do |builder|
       builder.adapter :test do |stub|
         stub.get('/success')      {|env| [200, {'Content-Type' => 'text/awesome'}, 'yay']}
+        stub.get('/reflect')      {|env| [200, {}, env[:body]]}
         stub.post('/reflect')     {|env| [200, {}, env[:body]]}
         stub.get('/unauthorized') {|env| [401, {'Content-Type' => 'text/plain'}, MultiJson.encode(:error => error_value, :error_description => error_description_value)]}
         stub.get('/conflict')     {|env| [409, {'Content-Type' => 'text/plain'}, 'not authorized']}
         stub.get('/redirect')     {|env| [302, {'Content-Type' => 'text/plain', 'location' => '/success' }, '']}
+        stub.post('/redirect')    {|env| [303, {'Content-Type' => 'text/plain', 'location' => '/reflect' }, '']}
         stub.get('/error')        {|env| [500, {}, '']}
       end
     end
@@ -104,6 +106,20 @@ describe OAuth2::Client do
       response.body.should == 'yay'
       response.status.should == 200
       response.headers.should == {'Content-Type' => 'text/awesome'}
+    end
+    
+    it "redirects using GET on a 303" do
+      response = subject.request(:post, '/redirect', :body => 'foo=bar')
+      response.body.should be_empty
+      response.status.should == 200
+    end
+    
+    it "obeys the :max_redirects option" do
+      max_redirects = subject.options[:max_redirects]
+      subject.options[:max_redirects] = 0
+      response = subject.request(:get, '/redirect')
+      response.status.should == 302
+      subject.options[:max_redirects] = max_redirects
     end
 
     it "returns if raise_errors is false" do

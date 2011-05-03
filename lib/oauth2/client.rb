@@ -74,7 +74,7 @@ module OAuth2
           return response if args[:redirect_count] > options[:max_redirects]
           if response.status == 303
             verb = :get
-            options[:body] = nil
+            args.delete(:body)
           end
           request(verb, response.headers['location'], args)
         when 400...599
