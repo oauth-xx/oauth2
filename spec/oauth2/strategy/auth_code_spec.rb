@@ -35,20 +35,20 @@ describe OAuth2::Strategy::AuthCode do
 
   subject { client.auth_code }
 
-  # describe '#authorize_url' do
-  #   it 'should include the client_id' do
-  #     subject.authorize_url.should be_include('client_id=abc')
-  #   end
-  # 
-  #   it 'should include the type' do
-  #     subject.authorize_url.should be_include('response_type=code')
-  #   end
-  # 
-  #   it 'should include passed in options' do
-  #     cb = 'http://myserver.local/oauth/callback'
-  #     subject.authorize_url(:redirect_uri => cb).should be_include("redirect_uri=#{Rack::Utils.escape(cb)}")
-  #   end
-  # end
+  describe '#authorize_url' do
+    it 'should include the client_id' do
+      subject.authorize_url.should be_include('client_id=abc')
+    end
+  
+    it 'should include the type' do
+      subject.authorize_url.should be_include('response_type=code')
+    end
+  
+    it 'should include passed in options' do
+      cb = 'http://myserver.local/oauth/callback'
+      subject.authorize_url(:redirect_uri => cb).should be_include("redirect_uri=#{Rack::Utils.escape(cb)}")
+    end
+  end
   
   %w(json formencoded from_facebook).each do |mode|
     [:get, :post].each do |verb|
