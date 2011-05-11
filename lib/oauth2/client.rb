@@ -12,8 +12,8 @@ module OAuth2
     #
     # <tt>:site</tt> :: Specify a base URL for your OAuth 2.0 client.
     # <tt>:authorize_url</tt> :: Specify a full URL of the authorization endpoint.
-    # <tt>:access_token_url</tt> :: Specify the full URL of the access token endpoint.
-    # <tt>:access_token_method</tt> :: Specify the method to use for token endpoints, can be :get or :post
+    # <tt>:token_url</tt> :: Specify the full URL of the access token endpoint.
+    # <tt>:token_method</tt> :: Specify the method to use for token endpoints, can be :get or :post
     # (note: for Facebook this should be :get and for Google this should be :post)
     # <tt>:raise_errors</tt> :: Default true. When false it will then return the error status and response instead of raising an exception.
     # <tt>:ssl</tt> :: Specify SSL options for the connection.
@@ -23,13 +23,13 @@ module OAuth2
       @secret = client_secret
       @site = opts.delete(:site)
       ssl = opts.delete(:ssl)
-      @options = {  :authorize_url        => '/oauth/authorize',
-                    :access_token_url     => '/oauth/access_token', 
-                    :access_token_method  => :post,
-                    :connection_opts      => {},
-                    :connection_build     => block,
-                    :max_redirects        => 5,
-                    :raise_errors         => true }.merge(opts)
+      @options = {  :authorize_url    => '/oauth/authorize',
+                    :token_url        => '/oauth/token', 
+                    :token_method     => :post,
+                    :connection_opts  => {},
+                    :connection_build => block,
+                    :max_redirects    => 5,
+                    :raise_errors     => true }.merge(opts)
       @options[:connection_opts][:ssl] = ssl if ssl
     end
     
@@ -52,8 +52,8 @@ module OAuth2
       connection.build_url(options[:authorize_url], params).to_s
     end
 
-    def access_token_url(params=nil)
-      connection.build_url(options[:access_token_url], params).to_s
+    def token_url(params=nil)
+      connection.build_url(options[:token_url], params).to_s
     end
 
     # Makes a request relative to the specified site root.
@@ -88,6 +88,6 @@ module OAuth2
       end
     end
 
-    def web_server; OAuth2::Strategy::WebServer.new(self) end
+    def auth_code; OAuth2::Strategy::AuthCode.new(self) end
     def password; OAuth2::Strategy::Password.new(self) end
 end

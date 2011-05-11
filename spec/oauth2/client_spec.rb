@@ -15,6 +15,7 @@ describe OAuth2::Client do
         stub.get('/redirect')     {|env| [302, {'Content-Type' => 'text/plain', 'location' => '/success' }, '']}
         stub.post('/redirect')    {|env| [303, {'Content-Type' => 'text/plain', 'location' => '/reflect' }, '']}
         stub.get('/error')        {|env| [500, {}, '']}
+        stub.get('/empty_get')    {|env| [204, {}, nil]}
       end
     end
   end
@@ -70,7 +71,7 @@ describe OAuth2::Client do
     end
   end
 
-  %w(authorize access_token).each do |url_type|
+  %w(authorize token).each do |url_type|
     describe ":#{url_type}_url option" do
       it "should default to a path of /oauth/#{url_type}" do
         subject.send("#{url_type}_url").should == "https://api.example.com/oauth/#{url_type}"
@@ -89,6 +90,10 @@ describe OAuth2::Client do
   end
 
   describe "#request" do
+    it "works with a null response body" do
+      subject.request(:get, 'empty_get').body.should == ''
+    end
+    
     it "returns on a successful response" do
       response = subject.request(:get, '/success')
       response.body.should == 'yay'
@@ -155,8 +160,8 @@ describe OAuth2::Client do
     end
   end
 
-  it '#web_server should instantiate a WebServer strategy with this client' do
-    subject.web_server.should be_kind_of(OAuth2::Strategy::WebServer)
+  it '#auth_code should instantiate a AuthCode strategy with this client' do
+    subject.auth_code.should be_kind_of(OAuth2::Strategy::AuthCode)
   end
 
   context 'with SSL options' do
