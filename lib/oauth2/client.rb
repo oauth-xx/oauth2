@@ -79,7 +79,7 @@ module OAuth2
           request(verb, response.headers['location'], args)
         when 400...599
           e = Error.new(response)
-          raise e if options[:raise_errors]
+          raise e if args[:raise_errors] || options[:raise_errors]
           response.error = e
           response
         else

@@ -15,7 +15,7 @@ describe AccessToken do
           stub.send(verb, "/token/query?oauth_token=#{token}") { |env| [200, {}, Addressable::URI.parse(env[:url]).query_values['oauth_token']] }
           stub.send(verb, '/token/body') { |env| [200, {}, env[:body]] }
         end
-        stub.post('/oauth/token') { |env| [200, {}, ]}
+        stub.post('/oauth/token') { |env| [200, {}, refresh_body]}
       end
     end
   end
