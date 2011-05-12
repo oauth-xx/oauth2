@@ -4,6 +4,12 @@ module OAuth2
     attr_accessor :options
 
     class << self
+      
+      # Initializes an AccessToken from a Hash
+      #
+      # @param [Client] the OAuth2::Client instance
+      # @param [Hash] a hash of AccessToken property values
+      # @return [AccessToken] the initialized instance
       def from_hash(client, hash)
         self.new(client, hash.delete('access_token') || hash.delete(:access_token), hash)
       end

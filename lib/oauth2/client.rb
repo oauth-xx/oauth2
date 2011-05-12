@@ -2,22 +2,24 @@ require 'faraday'
 
 module OAuth2
   class Client
-    attr_accessor :id, :secret, :site, :connection, :options
+    attr_reader :id, :secret
+    attr_accessor :site, :connection, :options
 
     # Instantiate a new OAuth 2.0 client using the
-    # client ID and client secret registered to your
+    # Client ID and Client Secret registered to your
     # application.
     #
-    # Options:
-    #
-    # <tt>:site</tt> :: Specify a base URL for your OAuth 2.0 client.
-    # <tt>:authorize_url</tt> :: Specify a full URL of the authorization endpoint.
-    # <tt>:token_url</tt> :: Specify the full URL of the access token endpoint.
-    # <tt>:token_method</tt> :: Specify the method to use for token endpoints, can be :get or :post
-    # (note: for Facebook this should be :get and for Google this should be :post)
-    # <tt>:raise_errors</tt> :: Default true. When false it will then return the error status and response instead of raising an exception.
-    # <tt>:ssl</tt> :: Specify SSL options for the connection.
-    # <tt>&block</tt> :: Faraday connection build block
+    # @param [String] client_id the client_id value
+    # @param [String] client_secret the client_secret value
+    # @params [Hash] opts the options to create the client with
+    # @options opts [String] :authorize_url absolute or relative URL path to the Authorization endpoint
+    # @options opts [String] :token_url absolute or relative URL path to the Token endpoint
+    # @options opts [Symbol] :token_method HTTP method to use to request token (:get or :post)
+    # @options opts [Hash] :connection_opts Hash of connection options to pass to initialize Faraday with
+    # @options opts [FixNum] :max_redirects maximum number of redirects to follow (default is 5)
+    # @options opts [Boolean] :raise_errors whether or not to raise an OAuth2::Error 
+    #  on responses with 400+ status codes
+    # @yield 
     def initialize(client_id, client_secret, opts={}, &block)
       @id = client_id
       @secret = client_secret
@@ -32,6 +34,7 @@ module OAuth2
                     :raise_errors     => true }.merge(opts)
       @options[:connection_opts][:ssl] = ssl if ssl
     end
+    
     
     def site=(value)
       @connection = nil
