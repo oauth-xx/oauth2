@@ -4,14 +4,29 @@ module OAuth2
     attr_accessor :options
 
     class << self
+      # Initializes an AccessToken from a Hash
+      #
+      # @param [Client] the OAuth2::Client instance
+      # @param [Hash] a hash of AccessToken property values
+      # @return [AccessToken] the initalized AccessToken
       def from_hash(client, hash)
         self.new(client, hash.delete('access_token') || hash.delete(:access_token), hash)
       end
 
+      # Initializes an AccessToken from a key/value application/x-www-form-urlencoded string
+      #
+      # @param [Client] client the OAuth2::Client instance
+      # @param [String] kvform the application/x-www-form-urlencoded string
+      # @return [AccessToken] the initalized AccessToken
       def from_kvform(client, kvform)
         from_hash(client, Rack::Utils.parse_query(kvform))
       end
 
+      # Initializes an AccessToken by making a request to the token endpoint
+      #
+      # @param [Client] client the OAuth2::Client instance
+      # @param [Hash] params a Hash of params for the token endpoint
+      # @return [AccessToken] the initalized AccessToken
       def from_token_params(client, params)
         response = client.options[:token_method] == :post ?
                   client.request(:post, client.token_url, :body => params, :raise_errors => true) :
@@ -21,33 +36,59 @@ module OAuth2
       end
     end
 
-    def initialize(client, token, args={})
+    # Initalize an AccessToken
+    #
+    # @param [Client] client the OAuth2::Client instance
+    # @param [String] token the Access Token value
+    # @param [Hash] opts the options to create the Access Token with
+    # @option opts [String] :refresh_token (nil) the refresh_token value
+    # @option opts [FixNum, String] :expires_in (nil) the number of seconds in which the AccessToken will expire
+    # @option opts [FixNum, String] :expires_at (nil) the epoch time in seconds in which AccessToken will expire
+    # @option opts [Symbol] :mode (:header) the transmission mode of the Access Token parameter value
+    #    one of :header, :body or :query
+    # @option opts [String] :header_format ('OAuth %s') the string format to use for the Authorization header
+    # @option opts [String] :param_name ('oauth_token') the parameter name to use for transmission of the 
+    #    Access Token value in :body or :query transmission mode
+    def initialize(client, token, opts={})
       @client = client
       @token = token.to_s
       [:refresh_token, :expires_in, :expires_at].each do |arg|
-        instance_variable_set("@#{arg}", args.delete(arg) || args.delete(arg.to_s))
+        instance_variable_set("@#{arg}", opts.delete(arg) || opts.delete(arg.to_s))
       end
-      @expires_in ||= args.delete('expires')
+      @expires_in ||= opts.delete('expires')
       @expires_in &&= @expires_in.to_i
       @expires_at ||= Time.now.to_i + @expires_in if @expires_in
-      @options = {  :mode           => args.delete(:mode) || :header,
-                    :header_format  => args.delete(:header_format) || 'OAuth %s',
-                    :param_name     => args.delete(:param_name) || 'oauth_token' }
-      @params = args
+      @options = {  :mode           => opts.delete(:mode) || :header,
+                    :header_format  => opts.delete(:header_format) || 'OAuth %s',
+                    :param_name     => opts.delete(:param_name) || 'oauth_token' }
+      @params = opts
     end
 
+    # Indexer to additional params present in token response
+    #
+    # @param [String] key entry key to Hash
     def [](key)
       @params[key]
     end
 
+    # Whether or not the token expires
+    # 
+    # @return [Boolean]
     def expires?
       !!@expires_at
     end
 
+    # Whether or not the token is expired
+    # 
+    # @return [Boolean]
     def expired?
       expires? && (expires_at < Time.now.to_i)
     end
 
+    # Refreshes the current Access Token
+    # 
+    # @return [AccessToken] a new AccessToken
+    # @note options should be carried over to the new AccessToken
     def refresh!(params={})
       raise "A refresh_token is not available" unless refresh_token
       params.merge! :client_id      => @client.id,
@@ -59,44 +100,62 @@ module OAuth2
       new_token
     end
 
-    def request(verb, path, args={}, &block)
-      set_token(args)
-      @client.request(verb, path, args, &block)
+    # Make a request with the Access Token
+    #
+    # @param [Symbol] verb the HTTP request method
+    # @param [String] path the HTTP URL path of the request
+    # @param [Hash] opts the options to make the request with
+    # @see Client#request
+    def request(verb, path, opts={}, &block)
+      set_token(opts)
+      @client.request(verb, path, opts, &block)
     end
 
-    def get(path, args={}, &block)
-      request(:get, path, args, &block)
+    # Make a GET request with the Access Token
+    #
+    # @see AccessToken#request
+    def get(path, opts={}, &block)
+      request(:get, path, opts, &block)
     end
 
-    def post(path, args={}, &block)
-      request(:post, path, args, &block)
+    # Make a POST request with the Access Token
+    #
+    # @see AccessToken#request
+    def post(path, opts={}, &block)
+      request(:post, path, opts, &block)
     end
 
-    def put(path, args={}, &block)
-      request(:put, path, args, &block)
+    # Make a PUT request with the Access Token
+    #
+    # @see AccessToken#request
+    def put(path, opts={}, &block)
+      request(:put, path, opts, &block)
     end
 
-    def delete(path, args={}, &block)
-      request(:delete, path, args, &block)
+    # Make a DELETE request with the Access Token
+    #
+    # @see AccessToken#request
+    def delete(path, opts={}, &block)
+      request(:delete, path, opts, &block)
     end
   
   private
-    def set_token(args)
+    def set_token(opts)
       case options[:mode]
       when :header
-        args[:headers] ||= {}
-        args[:headers]['Authorization'] = options[:header_format] % token
+        opts[:headers] ||= {}
+        opts[:headers]['Authorization'] = options[:header_format] % token
       when :query
-        args[:params] ||= {}
-        args[:params][options[:param_name]] = token
+        opts[:params] ||= {}
+        opts[:params][options[:param_name]] = token
       when :body
-        args[:body] ||= {}
-        if args[:body].is_a?(Hash)
-          args[:body][options[:param_name]] = token
+        opts[:body] ||= {}
+        if opts[:body].is_a?(Hash)
+          opts[:body][options[:param_name]] = token
         else
-          args[:body] << "&#{options[:param_name]}=#{token}"
+          opts[:body] << "&#{options[:param_name]}=#{token}"
         end
-        # TODO: support for multi-part (file uploads)
+        # @todo support for multi-part (file uploads)
       else
         raise "invalid :mode option of #{options[:mode]}"
       end
