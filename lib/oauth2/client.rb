@@ -1,6 +1,7 @@
 require 'faraday'
 
 module OAuth2
+  # The OAuth2::Client class
   class Client
     attr_reader :id, :secret
     attr_accessor :site, :connection, :options
@@ -11,15 +12,16 @@ module OAuth2
     #
     # @param [String] client_id the client_id value
     # @param [String] client_secret the client_secret value
-    # @params [Hash] opts the options to create the client with
-    # @options opts [String] :authorize_url absolute or relative URL path to the Authorization endpoint
-    # @options opts [String] :token_url absolute or relative URL path to the Token endpoint
-    # @options opts [Symbol] :token_method HTTP method to use to request token (:get or :post)
-    # @options opts [Hash] :connection_opts Hash of connection options to pass to initialize Faraday with
-    # @options opts [FixNum] :max_redirects maximum number of redirects to follow (default is 5)
-    # @options opts [Boolean] :raise_errors whether or not to raise an OAuth2::Error 
+    # @param [Hash] opts the options to create the client with
+    # @option opts [String] :site the OAuth2 provider site host
+    # @option opts [String] :authorize_url ('/oauth/authorize') absolute or relative URL path to the Authorization endpoint
+    # @option opts [String] :token_url ('/oauth/token') absolute or relative URL path to the Token endpoint
+    # @option opts [Symbol] :token_method (:post) HTTP method to use to request token (:get or :post)
+    # @option opts [Hash] :connection_opts ({}) Hash of connection options to pass to initialize Faraday with
+    # @option opts [FixNum] :max_redirects (5) maximum number of redirects to follow
+    # @option opts [Boolean] :raise_errors (true) whether or not to raise an OAuth2::Error 
     #  on responses with 400+ status codes
-    # @yield 
+    # @yield [builder] The Faraday connection builder
     def initialize(client_id, client_secret, opts={}, &block)
       @id = client_id
       @secret = client_secret
@@ -35,12 +37,15 @@ module OAuth2
       @options[:connection_opts][:ssl] = ssl if ssl
     end
     
-    
+    # Set the site host
+    #
+    # @param [String] the OAuth2 provider site host
     def site=(value)
       @connection = nil
       @site = value
     end
     
+    # The Faraday connection object
     def connection
       @connection ||= begin
         conn = Faraday.new(site, options[:connection_opts])
@@ -51,46 +56,73 @@ module OAuth2
       end
     end
 
+    # The authorize endpoint URL of the OAuth2 provider
+    # 
+    # @param [Hash] params additional query parameters
     def authorize_url(params=nil)
       connection.build_url(options[:authorize_url], params).to_s
     end
 
+    # The token endpoint URL of the OAuth2 provider
+    # 
+    # @param [Hash] params additional query parameters
     def token_url(params=nil)
       connection.build_url(options[:token_url], params).to_s
     end
 
     # Makes a request relative to the specified site root.
-    def request(verb, url, args={})
-      url = self.connection.build_url(url, args[:params]).to_s
+    #
+    # @param [Symbol] verb one of :get, :post, :put, :delete
+    # @param [String] url URL path of request
+    # @param [Hash] opts the options to make the request with
+    # @option opts [Hash] :params additional query parameters for the URL of the request
+    # @option opts [Hash, String] :body the body of the request
+    # @option opts [Hash] :headers http request headers
+    # @option opts [Boolean] :raise_errors whether or not to raise an OAuth2::Error on 400+ status
+    #   code response for this request.  Will default to client option
+    # @yield [req] The Faraday request
+    def request(verb, url, opts={})
+      url = self.connection.build_url(url, opts[:params]).to_s
       
-      response = connection.run_request(verb, url, args[:body], args[:headers]) do |req|
+      response = connection.run_request(verb, url, opts[:body], opts[:headers]) do |req|
         yield(req) if block_given?
       end
       response = Response.new(response)
       
       case response.status
-        when 200...299
-          response
-        when 300...307
-          args[:redirect_count] ||= 0
-          args[:redirect_count] += 1
-          return response if args[:redirect_count] > options[:max_redirects]
-          if response.status == 303
-            verb = :get
-            args.delete(:body)
-          end
-          request(verb, response.headers['location'], args)
-        when 400...599
-          e = Error.new(response)
-          raise e if args[:raise_errors] || options[:raise_errors]
-          response.error = e
-          response
-        else
-          raise Error.new(response), "Unhandled status code value of #{response.status}"
+      when 200...299
+        response
+      when 300...307
+        opts[:redirect_count] ||= 0
+        opts[:redirect_count] += 1
+        return response if opts[:redirect_count] > options[:max_redirects]
+        if response.status == 303
+          verb = :get
+          opts.delete(:body)
         end
+        request(verb, response.headers['location'], opts)
+      when 400...599
+        e = Error.new(response)
+        raise e if opts[:raise_errors] || options[:raise_errors]
+        response.error = e
+        response
+      else
+        raise Error.new(response), "Unhandled status code value of #{response.status}"
       end
     end
-
-    def auth_code; OAuth2::Strategy::AuthCode.new(self) end
-    def password; OAuth2::Strategy::Password.new(self) end
+    
+    # The Authorization Code strategy
+    #
+    # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.1
+    def auth_code
+      @auth_code ||= OAuth2::Strategy::AuthCode.new(self) 
+    end
+    
+    # The Resource Owner Password Credentials strategy
+    #
+    # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.3
+    def password
+      @password ||= OAuth2::Strategy::Password.new(self)
+    end
+  end
 end

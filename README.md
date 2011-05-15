@@ -16,67 +16,48 @@ Resources
 * Report Issues on GitHub (https://github.com/intridea/oauth2/issues)
 * Read More at the Wiki (https://wiki.github.com/intridea/oauth2)
 
-Web Server Example (Sinatra)
-----------------------------
-Below is a fully functional example of a Sinatra application that would authenticate to Facebook utilizing the OAuth 2.0 web server flow.
+Generic Client Example
+----------------------
 
-    require 'rubygems'
-    require 'sinatra'
     require 'oauth2'
-    require 'json'
+    OAuth2::Client.new('client_id', 'client_secret', :site => 'https://example.org')
     
-    def client
-      OAuth2::Client.new('app_id', 'app_secret', :site => 'https://graph.facebook.com')
-    end
+    client.auth_code.authorize_url(:redirect_uri => 'http://localhost:8080/oauth2/callback')
+    # => "https://example.org/oauth/authorization?response_type=code&client_id=client_id&redirect_uri=http://localhost:8080/oauth2/callback"
+
+    token = client.auth_code.get_token('authorization_code_value', :redirect_uri => 'http://localhost:8080/oauth2/callback')
+    response = token.get('/api/resource', :params => { 'query_foo' => 'bar' })
+    response.class.name
+    # => OAuth2::Response
+
+OAuth2::Response
+----------------
+The AccessToken methods #get, #post, #put and #delete and the generic #request will return an instance of the #OAuth2::Response class.
+This instance contains a #parsed method that will parse the response body and return a Hash if the Content-Type is application/x-www-form-urlencoded or if the body is a JSON object.  It will return an Array if the body is a JSON array.  Otherwise, it will return the original body string.
+
+The original response body, headers, and status can be accessed via their respective methods.
+
+OAuth2::AccessToken
+-------------------
+If you have an existing Access Token for a user, you can initialize an instance using various class methods including the standard new, from_hash (if you have a hash of the values), or from_kvform (if you have an application/x-www-form-urlencoded encoded string of the values).
+
+OAuth2::Error
+-------------
+On 400+ status code responses, an OAuth2::Error will be raised.  If it is a standard OAuth2 error response, the body will be parsed and #code and #description will contain the values provided from the error and error_description parameters.  The #response property of OAuth2::Error will always contain the OAuth2::Response instance.
+
+If you do not want an error to be raised, you may use :raise_errors => false option on initialization of the client.  In this case the OAuth2::Response instance will be returned as usual and on 400+ status code responses, the Response instance will contain the OAuth2::Error instance.
+
+Authorization Grants
+--------------------
+Currently the Authorization Code and Resource Owner Password Credentials authentication grant types have helper strategy classes that simplify client use.  They are available via the #auth_code and #password methods respectively.
+
+    auth_url = client.auth_code.authorization_url(:redirect_uri => 'http://localhost:8080/oauth/callback')
+    token = client.auth_code.get_token('code_value', :redirect_uri => 'http://localhost:8080/oauth/callback')
     
-    get '/auth/facebook' do
-      redirect client.web_server.authorize_url(
-        :redirect_uri => redirect_uri,
-        :scope => 'email,offline_access'
-      )
-    end
+    token = client.password.get_token('username', 'password')
     
-    get '/auth/facebook/callback' do
-      access_token = client.web_server.get_access_token(params[:code], :redirect_uri => redirect_uri)
-      user = JSON.parse(access_token.get('/me'))
-      user.inspect
-    end
-    
-    def redirect_uri
-      uri = URI.parse(request.url)
-      uri.path = '/auth/facebook/callback'
-      uri.query = nil
-      uri.to_s
-    end
+You can always use the #request method on the OAuth2::Client instance to make requests for tokens for any Authentication grant type.
 
-That's all there is to it! You can use the access token like you would with the
-OAuth gem, calling HTTP verbs on it etc. You can view more examples on the [OAuth2
-Wiki](http://wiki.github.com/intridea/oauth2/examples).
-
-JSON Parsing
-------------
-Because JSON has become the standard format of the OAuth 2.0 specification,
-the <tt>oauth2</tt> gem contains a mode that will perform automatic parsing
-of JSON response bodies, returning a hash instead of a string. To enable this
-mode, simply add the <tt>:parse_json</tt> option to your client initialization:
-
-    client = OAuth2::Client.new(
-      'app_id',
-      'app_secret',
-      :site => 'https://example.com',
-      :parse_json => true,
-    )
-    
-    # Obtain an access token using the client
-    token.get('/some/url.json') #=> {"some" => "hash"}
-
-Testing
--------
-To use the OAuth2 client for testing error conditions do:
-
-    my_client.raise_errors = false
-
-It will then return the error status and response instead of raising an exception.
 
 Note on Patches/Pull Requests
 -----------------------------
