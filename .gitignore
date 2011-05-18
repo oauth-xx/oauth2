@@ -33,3 +33,6 @@ coverage.data
 
 ## PROJECT::SPECIFIC
 .svn
+
+## Rubinius
+*.rbc
