@@ -46,8 +46,8 @@ module OAuth2
     # @option opts [FixNum, String] :expires_at (nil) the epoch time in seconds in which AccessToken will expire
     # @option opts [Symbol] :mode (:header) the transmission mode of the Access Token parameter value
     #    one of :header, :body or :query
-    # @option opts [String] :header_format ('OAuth %s') the string format to use for the Authorization header
-    # @option opts [String] :param_name ('oauth_token') the parameter name to use for transmission of the 
+    # @option opts [String] :header_format ('Bearer %s') the string format to use for the Authorization header
+    # @option opts [String] :param_name ('bearer_token') the parameter name to use for transmission of the
     #    Access Token value in :body or :query transmission mode
     def initialize(client, token, opts={})
       @client = client
@@ -59,8 +59,8 @@ module OAuth2
       @expires_in &&= @expires_in.to_i
       @expires_at ||= Time.now.to_i + @expires_in if @expires_in
       @options = {  :mode           => opts.delete(:mode) || :header,
-                    :header_format  => opts.delete(:header_format) || 'OAuth %s',
-                    :param_name     => opts.delete(:param_name) || 'oauth_token' }
+                    :header_format  => opts.delete(:header_format) || 'Bearer %s',
+                    :param_name     => opts.delete(:param_name) || 'bearer_token' }
       @params = opts
     end
 
@@ -72,21 +72,21 @@ module OAuth2
     end
 
     # Whether or not the token expires
-    # 
+    #
     # @return [Boolean]
     def expires?
       !!@expires_at
     end
 
     # Whether or not the token is expired
-    # 
+    #
     # @return [Boolean]
     def expired?
       expires? && (expires_at < Time.now.to_i)
     end
 
     # Refreshes the current Access Token
-    # 
+    #
     # @return [AccessToken] a new AccessToken
     # @note options should be carried over to the new AccessToken
     def refresh!(params={})
@@ -138,7 +138,7 @@ module OAuth2
     def delete(path, opts={}, &block)
       request(:delete, path, opts, &block)
     end
-  
+
   private
     def set_token(opts)
       case options[:mode]
