@@ -22,7 +22,7 @@ module OAuth2
         params = {  'grant_type'  => 'password',
                     'username'    => username,
                     'password'    => password }.merge(client_params).merge(params)
-        OAuth2::AccessToken.from_token_params(@client, params)
+        @client.get_token(params)
       end
     end
   end

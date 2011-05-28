@@ -111,6 +111,14 @@ module OAuth2
       end
     end
     
+    def get_token(params)
+      response = options[:token_method] == :post ?
+                request(:post, token_url, :body => params, :raise_errors => true) :
+                request(:get, token_url, :params => params, :raise_errors => true)
+      raise Error.new(response) unless response.parsed.is_a?(Hash)
+      AccessToken.from_hash(self, response.parsed)
+    end
+    
     # The Authorization Code strategy
     #
     # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.1
