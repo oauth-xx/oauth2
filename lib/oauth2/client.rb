@@ -111,6 +111,10 @@ module OAuth2
       end
     end
     
+    # Initializes an AccessToken by making a request to the token endpoint
+    #
+    # @param [Hash] params a Hash of params for the token endpoint
+    # @return [AccessToken] the initalized AccessToken
     def get_token(params)
       response = options[:token_method] == :post ?
                 request(:post, token_url, :body => params, :raise_errors => true) :
