@@ -21,19 +21,6 @@ module OAuth2
       def from_kvform(client, kvform)
         from_hash(client, Rack::Utils.parse_query(kvform))
       end
-
-      # Initializes an AccessToken by making a request to the token endpoint
-      #
-      # @param [Client] client the OAuth2::Client instance
-      # @param [Hash] params a Hash of params for the token endpoint
-      # @return [AccessToken] the initalized AccessToken
-      def from_token_params(client, params)
-        response = client.options[:token_method] == :post ?
-                  client.request(:post, client.token_url, :body => params, :raise_errors => true) :
-                  client.request(:get, client.token_url, :params => params, :raise_errors => true)
-        raise Error.new(response) unless response.parsed.is_a?(Hash)
-        from_hash(client, response.parsed)
-      end
     end
 
     # Initalize an AccessToken
@@ -95,7 +82,7 @@ module OAuth2
                     :client_secret  => @client_secret,
                     :grant_type     => 'refresh_token',
                     :refresh_token  => refresh_token
-      new_token = self.class.from_token_params(@client, params)
+      new_token = @client.get_token(params)
       new_token.options = options
       new_token
     end
