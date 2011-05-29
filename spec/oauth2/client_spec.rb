@@ -1,9 +1,9 @@
-require 'spec_helper'
+require 'helper'
 
 describe OAuth2::Client do
   let!(:error_value) {'invalid_token'}
   let!(:error_description_value) {'bad bad token'}
-  
+
   subject do
     OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com') do |builder|
       builder.adapter :test do |stub|
@@ -81,7 +81,7 @@ describe OAuth2::Client do
         subject.options[:"#{url_type}_url"] = '/oauth/custom'
         subject.send("#{url_type}_url").should == 'https://api.example.com/oauth/custom'
       end
-      
+
       it "allows a different host than the site" do
         subject.options[:"#{url_type}_url"] = 'https://api.foo.com/oauth/custom'
         subject.send("#{url_type}_url").should == 'https://api.foo.com/oauth/custom'
@@ -93,32 +93,32 @@ describe OAuth2::Client do
     it "works with a null response body" do
       subject.request(:get, 'empty_get').body.should == ''
     end
-    
+
     it "returns on a successful response" do
       response = subject.request(:get, '/success')
       response.body.should == 'yay'
       response.status.should == 200
       response.headers.should == {'Content-Type' => 'text/awesome'}
     end
-    
+
     it "posts a body" do
       response = subject.request(:post, '/reflect', :body => 'foo=bar')
       response.body.should == 'foo=bar'
     end
-    
+
     it "follows redirects properly" do
       response = subject.request(:get, '/redirect')
       response.body.should == 'yay'
       response.status.should == 200
       response.headers.should == {'Content-Type' => 'text/awesome'}
     end
-    
+
     it "redirects using GET on a 303" do
       response = subject.request(:post, '/redirect', :body => 'foo=bar')
       response.body.should be_empty
       response.status.should == 200
     end
-    
+
     it "obeys the :max_redirects option" do
       max_redirects = subject.options[:max_redirects]
       subject.options[:max_redirects] = 0
@@ -135,13 +135,13 @@ describe OAuth2::Client do
       response.headers.should == {'Content-Type' => 'text/plain'}
       response.error.should_not be_nil
     end
-    
+
     %w(/unauthorized /conflict /error).each do |error_path|
       it "raises OAuth2::Error on error response to path #{error_path}" do
         lambda {subject.request(:get, error_path)}.should raise_error(OAuth2::Error)
       end
     end
-    
+
     it 'parses OAuth2 standard error response' do
       begin
         subject.request(:get, '/unauthorized')

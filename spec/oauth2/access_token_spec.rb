@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'helper'
 
 VERBS = [:get, :post, :put, :delete]
 

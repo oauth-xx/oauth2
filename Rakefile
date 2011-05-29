@@ -9,7 +9,7 @@ RSpec::Core::RakeTask.new(:spec)
 task :default => :spec
 task :test => :spec
 
-require 'rake/rdoctask'
+require 'rdoc/task'
 Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_dir = 'rdoc'
   rdoc.title = "oauth2 #{OAuth2::VERSION}"

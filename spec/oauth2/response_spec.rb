@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'helper'
 
 describe OAuth2::Response do
 
@@ -40,8 +40,8 @@ describe OAuth2::Response do
         subject.parsed['answer'].should == 42
       end
     end
-    
-    it 'returns original body it cannot be parsed' do 
+
+    it 'returns original body it cannot be parsed' do
       body = 'blah'
       response = double('response', :body => body, :headers => {}, :status => 400)
       subject = Response.new(response)

@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'helper'
 
 describe OAuth2::Strategy::Base do
   it 'should initialize with a Client' do

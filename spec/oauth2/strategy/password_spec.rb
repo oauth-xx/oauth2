@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'helper'
 
 describe OAuth2::Strategy::Password do
   let(:client) do
