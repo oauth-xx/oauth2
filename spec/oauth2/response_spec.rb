@@ -19,29 +19,35 @@ describe OAuth2::Response do
   end
 
   describe '#parsed' do
-    it 'parses x-www-form-urlencoded body' do
-      headers = { 'Content-Type' => 'x-www-form-urlencoded' }
-      body = 'foo=bar&answer=42'
-      response = double('response', :headers => headers, :body => body)
-      subject = Response.new(response)
-      subject.parsed.keys.size.should == 2
-      subject.parsed['foo'].should == 'bar'
-      subject.parsed['answer'].should == '42'
+    %w(application/x-www-form-urlencoded).each do |content_type|
+      [:url, :automatic].each do |parse|
+        it "parses application/x-www-form-urlencoded body with a #{content_type} header and the parse option #{parse}" do
+          headers = { 'Content-Type' => 'application/x-www-form-urlencoded' }
+          body = 'foo=bar&answer=42'
+          response = double('response', :headers => headers, :body => body)
+          subject = Response.new(response)
+          subject.parsed.keys.size.should == 2
+          subject.parsed['foo'].should == 'bar'
+          subject.parsed['answer'].should == '42'
+        end
+      end
     end
 
     %w(application/json text/plain whatever).each do |content_type|
-      it "parses json body with a #{content_type} header" do
-        headers = { 'Content-Type' => content_type }
-        body = MultiJson.encode(:foo => 'bar', :answer => 42)
-        response = double('response', :headers => headers, :body => body)
-        subject = Response.new(response)
-        subject.parsed.keys.size.should == 2
-        subject.parsed['foo'].should == 'bar'
-        subject.parsed['answer'].should == 42
+      [:json, :automatic].each do |parse|
+        it "parses json body with a #{content_type} header and the parse option #{parse}" do
+          headers = { 'Content-Type' => content_type }
+          body = MultiJson.encode(:foo => 'bar', :answer => 42)
+          response = double('response', :headers => headers, :body => body)
+          subject = Response.new(response)
+          subject.parsed.keys.size.should == 2
+          subject.parsed['foo'].should == 'bar'
+          subject.parsed['answer'].should == 42
+        end
       end
     end
     
-    it 'returns original body it cannot be parsed' do 
+    it 'returns original body if it cannot be parsed' do 
       body = 'blah'
       response = double('response', :body => body, :headers => {}, :status => 400)
       subject = Response.new(response)
