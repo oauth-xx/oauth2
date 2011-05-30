@@ -10,7 +10,7 @@ module OAuth2
       #
       # @param [Hash] params additional query parameters
       def authorize_params(params={})
-        super(params).merge('response_type' => 'code')
+        params.merge('response_type' => 'code', 'client_id' => @client.id)
       end
 
       # The authorization URL endpoint of the provider

@@ -80,6 +80,7 @@ module OAuth2
     # @option opts [Hash] :headers http request headers
     # @option opts [Boolean] :raise_errors whether or not to raise an OAuth2::Error on 400+ status
     #   code response for this request.  Will default to client option
+    # @option opts [Symbol] :parse @see Response::initialize
     # @yield [req] The Faraday request
     def request(verb, url, opts={})
       url = self.connection.build_url(url, opts[:params]).to_s
@@ -87,7 +88,7 @@ module OAuth2
       response = connection.run_request(verb, url, opts[:body], opts[:headers]) do |req|
         yield(req) if block_given?
       end
-      response = Response.new(response)
+      response = Response.new(response, :parse => opts[:parse])
       
       case response.status
       when 200...299
@@ -116,10 +117,15 @@ module OAuth2
     # @param [Hash] params a Hash of params for the token endpoint
     # @return [AccessToken] the initalized AccessToken
     def get_token(params)
-      response = options[:token_method] == :post ?
-                request(:post, token_url, :body => params, :raise_errors => true) :
-                request(:get, token_url, :params => params, :raise_errors => true)
-      raise Error.new(response) unless response.parsed.is_a?(Hash)
+      opts = { :raise_errors => true, :parse => params.delete(:parse) }
+      if options[:token_method] == :post
+        opts[:body] = params
+        opts[:headers] =  { 'Content-Type' => 'application/x-www-form-urlencoded' }
+      else
+        opts[:params] = params
+      end
+      response = request(options[:token_method], token_url, opts)
+      raise Error.new(response) unless response.parsed.is_a?(Hash) && response.parsed['access_token']
       AccessToken.from_hash(self, response.parsed)
     end
     
