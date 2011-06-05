@@ -146,7 +146,7 @@ describe OAuth2::Client do
       begin
         subject.request(:get, '/unauthorized')
       rescue Exception => e
-        e.code.should == error_value.to_sym
+        e.code.should == error_value
         e.description.should == error_description_value
       end
     end

@@ -8,7 +8,7 @@ module OAuth2
       response.error = self
       @response = response
       if response.parsed.is_a?(Hash)
-        @code = response.parsed['error'].to_sym
+        @code = response.parsed['error']
         @description = response.parsed['error_description']
       end
     end
