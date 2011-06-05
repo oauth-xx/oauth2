@@ -10,7 +10,7 @@ describe OAuth2::Client do
         stub.get('/success')      {|env| [200, {'Content-Type' => 'text/awesome'}, 'yay']}
         stub.get('/reflect')      {|env| [200, {}, env[:body]]}
         stub.post('/reflect')     {|env| [200, {}, env[:body]]}
-        stub.get('/unauthorized') {|env| [401, {'Content-Type' => 'text/plain'}, MultiJson.encode(:error => error_value, :error_description => error_description_value)]}
+        stub.get('/unauthorized') {|env| [401, {'Content-Type' => 'application/json'}, MultiJson.encode(:error => error_value, :error_description => error_description_value)]}
         stub.get('/conflict')     {|env| [409, {'Content-Type' => 'text/plain'}, 'not authorized']}
         stub.get('/redirect')     {|env| [302, {'Content-Type' => 'text/plain', 'location' => '/success' }, '']}
         stub.post('/redirect')    {|env| [303, {'Content-Type' => 'text/plain', 'location' => '/reflect' }, '']}
@@ -132,7 +132,7 @@ describe OAuth2::Client do
       response = subject.request(:get, '/unauthorized')
 
       response.status.should == 401
-      response.headers.should == {'Content-Type' => 'text/plain'}
+      response.headers.should == {'Content-Type' => 'application/json'}
       response.error.should_not be_nil
     end
 

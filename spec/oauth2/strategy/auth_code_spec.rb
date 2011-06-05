@@ -1,10 +1,10 @@
 require 'helper'
 
 describe OAuth2::Strategy::AuthCode do
-  let(:code) { 'sushi' }
-  let(:kvform_token) { 'expires_in=600&access_token=salmon&refresh_token=trout&extra_param=steve' }
-  let(:facebook_token) { kvform_token.gsub('_in', '') }
-  let(:json_token) { MultiJson.encode(:expires_in => 600, :access_token => 'salmon', :refresh_token => 'trout', :extra_param => 'steve') }
+  let(:code) {'sushi'}
+  let(:kvform_token) {'expires_in=600&access_token=salmon&refresh_token=trout&extra_param=steve'}
+  let(:facebook_token) {kvform_token.gsub('_in', '')}
+  let(:json_token) {MultiJson.encode(:expires_in => 600, :access_token => 'salmon', :refresh_token => 'trout', :extra_param => 'steve')}
 
   let(:client) do
     OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com') do |builder|
@@ -12,28 +12,28 @@ describe OAuth2::Strategy::AuthCode do
         stub.get("/oauth/token?client_id=abc&client_secret=def&code=#{code}&grant_type=authorization_code") do |env|
           case @mode
           when "formencoded"
-            [200, {'Content-Type' => 'x-www-form-urlencoded'}, kvform_token]
+            [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, kvform_token]
           when "json"
-            [200, {}, json_token]
+            [200, {'Content-Type' => 'application/json'}, json_token]
           when "from_facebook"
-            [200, {'Content-Type' => 'x-www-form-urlencoded'}, facebook_token]
+            [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, facebook_token]
           end
         end
-        stub.post('/oauth/token', { 'client_id' => 'abc', 'client_secret' => 'def', 'code' => 'sushi', 'grant_type' => 'authorization_code' }) do |env|
+        stub.post('/oauth/token', {'client_id' => 'abc', 'client_secret' => 'def', 'code' => 'sushi', 'grant_type' => 'authorization_code'}) do |env|
           case @mode
           when "formencoded"
-            [200, {'Content-Type' => 'x-www-form-urlencoded'}, kvform_token]
+            [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, kvform_token]
           when "json"
-            [200, {}, json_token]
+            [200, {'Content-Type' => 'application/json'}, json_token]
           when "from_facebook"
-            [200, {'Content-Type' => 'x-www-form-urlencoded'}, facebook_token]
+            [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, facebook_token]
           end
         end
       end
     end
   end
 
-  subject { client.auth_code }
+  subject {client.auth_code}
 
   describe '#authorize_url' do
     it 'should include the client_id' do

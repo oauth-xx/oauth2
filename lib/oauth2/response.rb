@@ -37,18 +37,10 @@ module OAuth2
     #   application/json Content-Type response bodies
     def parsed
       @parsed ||= begin
-        case options[:parse]
-        when :url
-          Rack::Utils.parse_query(body)
-        when :json
-          MultiJson.decode(body)
+        if options[:parse] == :json || (response.headers.values_at('content-type', 'Content-Type').compact.first && response.headers.values_at('content-type', 'Content-Type').compact.first.match(%r{application/json}))
+          MultiJson.decode(body) rescue body
         else
-          if response.headers['Content-Type'] &&
-            response.headers['Content-Type'].include?('x-www-form-urlencoded')
-            Rack::Utils.parse_query(body)
-          else
-            MultiJson.decode(body) rescue body
-          end
+          Rack::Utils.parse_query(body)
         end
       end
     end

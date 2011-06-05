@@ -4,23 +4,23 @@ VERBS = [:get, :post, :put, :delete]
 
 describe AccessToken do
   let(:token) {'monkey'}
-  let(:token_body) { MultiJson.encode(:access_token => 'foo', :expires_in => 600, :refresh_token => 'bar') }
-  let(:refresh_body) { MultiJson.encode(:access_token => 'refreshed_foo', :expires_in => 600, :refresh_token => 'refresh_bar') }
+  let(:token_body) {MultiJson.encode(:access_token => 'foo', :expires_in => 600, :refresh_token => 'bar')}
+  let(:refresh_body) {MultiJson.encode(:access_token => 'refreshed_foo', :expires_in => 600, :refresh_token => 'refresh_bar')}
   let(:client) do
     Client.new('abc', 'def', :site => 'https://api.example.com') do |builder|
       builder.request :url_encoded
       builder.adapter :test do |stub|
         VERBS.each do |verb|
-          stub.send(verb, '/token/header') { |env| [200, {}, env[:request_headers]['Authorization']] }
-          stub.send(verb, "/token/query?bearer_token=#{token}") { |env| [200, {}, Addressable::URI.parse(env[:url]).query_values['bearer_token']] }
-          stub.send(verb, '/token/body') { |env| [200, {}, env[:body]] }
+          stub.send(verb, '/token/header') {|env| [200, {}, env[:request_headers]['Authorization']]}
+          stub.send(verb, "/token/query?bearer_token=#{token}") {|env| [200, {}, Addressable::URI.parse(env[:url]).query_values['bearer_token']]}
+          stub.send(verb, '/token/body') {|env| [200, {}, env[:body]]}
         end
-        stub.post('/oauth/token') { |env| [200, {}, refresh_body]}
+        stub.post('/oauth/token') {|env| [200, {'Content-Type' => 'application/json'}, refresh_body]}
       end
     end
   end
 
-  subject { AccessToken.new(client, token) }
+  subject {AccessToken.new(client, token)}
 
   describe '#initialize' do
     it 'assigns client and token' do
@@ -42,7 +42,7 @@ describe AccessToken do
     end
 
     it 'initializes with a Hash' do
-      hash = { :access_token => token, :expires_at => Time.now.to_i+200, 'foo' => 'bar' }
+      hash = {:access_token => token, :expires_at => Time.now.to_i + 200, 'foo' => 'bar'}
       target = AccessToken.from_hash(client, hash)
       assert_initialized_token(target)
     end

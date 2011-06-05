@@ -8,9 +8,9 @@ describe OAuth2::Strategy::Password do
         stub.post('/oauth/token') do |env|
           case @mode
             when "formencoded"
-              [200, {'Content-Type' => 'x-www-form-urlencoded'}, 'expires_in=600&access_token=salmon&refresh_token=trout']
+              [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, 'expires_in=600&access_token=salmon&refresh_token=trout']
             when "json"
-              [200, {}, '{"expires_in":600,"access_token":"salmon","refresh_token":"trout"}']
+              [200, {'Content-Type' => 'application/json'}, '{"expires_in":600,"access_token":"salmon","refresh_token":"trout"}']
           end
         end
       end
