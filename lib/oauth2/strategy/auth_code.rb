@@ -1,5 +1,3 @@
-require 'multi_json'
-
 module OAuth2
   module Strategy
     # The Authorization Code Strategy
@@ -26,7 +24,7 @@ module OAuth2
       # @param [Hash] params additional params
       # @note that you must also provide a :redirect_uri with most OAuth 2.0 providers
       def get_token(code, params={})
-        params = { 'grant_type' => 'authorization_code', 'code' => code }.merge(client_params).merge(params)
+        params = {'grant_type' => 'authorization_code', 'code' => code}.merge(client_params).merge(params)
         @client.get_token(params)
       end
     end

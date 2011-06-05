@@ -1,9 +1,11 @@
+require 'multi_json'
+
 module OAuth2
-  # OAuth2::Response class 
+  # OAuth2::Response class
   class Response
     attr_reader :response
     attr_accessor :error, :options
-    
+
     # Initializes a Response instance
     #
     # @param [Faraday::Response] response The Faraday response instance
@@ -12,24 +14,24 @@ module OAuth2
     #   :json, or :automatic (determined by Content-Type response header)
     def initialize(response, opts={})
       @response = response
-      @options = { :parse => :automatic }.merge(opts)
+      @options = {:parse => :automatic}.merge(opts)
     end
-    
+
     # The HTTP response headers
     def headers
       response.headers
     end
-    
+
     # The HTTP response status code
     def status
       response.status
     end
-    
+
     # The HTTP resposne body
     def body
       response.body || ''
     end
-    
+
     # The parsed response body.
     #   Will attempt to parse application/x-www-form-urlencoded and
     #   application/json Content-Type response bodies
@@ -41,8 +43,8 @@ module OAuth2
         when :json
           MultiJson.decode(body)
         else
-          if response.headers['Content-Type'] && 
-            response.headers['Content-Type'].include?('x-www-form-urlencoded') 
+          if response.headers['Content-Type'] &&
+            response.headers['Content-Type'].include?('x-www-form-urlencoded')
             Rack::Utils.parse_query(body)
           else
             MultiJson.decode(body) rescue body
@@ -50,6 +52,5 @@ module OAuth2
         end
       end
     end
-    
   end
 end

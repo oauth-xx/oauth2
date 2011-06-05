@@ -19,7 +19,7 @@ module OAuth2
     # @option opts [Symbol] :token_method (:post) HTTP method to use to request token (:get or :post)
     # @option opts [Hash] :connection_opts ({}) Hash of connection options to pass to initialize Faraday with
     # @option opts [FixNum] :max_redirects (5) maximum number of redirects to follow
-    # @option opts [Boolean] :raise_errors (true) whether or not to raise an OAuth2::Error 
+    # @option opts [Boolean] :raise_errors (true) whether or not to raise an OAuth2::Error
     #  on responses with 400+ status codes
     # @yield [builder] The Faraday connection builder
     def initialize(client_id, client_secret, opts={}, &block)
@@ -27,16 +27,16 @@ module OAuth2
       @secret = client_secret
       @site = opts.delete(:site)
       ssl = opts.delete(:ssl)
-      @options = {  :authorize_url    => '/oauth/authorize',
-                    :token_url        => '/oauth/token', 
-                    :token_method     => :post,
-                    :connection_opts  => {},
-                    :connection_build => block,
-                    :max_redirects    => 5,
-                    :raise_errors     => true }.merge(opts)
+      @options = {:authorize_url    => '/oauth/authorize',
+                  :token_url        => '/oauth/token',
+                  :token_method     => :post,
+                  :connection_opts  => {},
+                  :connection_build => block,
+                  :max_redirects    => 5,
+                  :raise_errors     => true}.merge(opts)
       @options[:connection_opts][:ssl] = ssl if ssl
     end
-    
+
     # Set the site host
     #
     # @param [String] the OAuth2 provider site host
@@ -44,7 +44,7 @@ module OAuth2
       @connection = nil
       @site = value
     end
-    
+
     # The Faraday connection object
     def connection
       @connection ||= begin
@@ -57,14 +57,14 @@ module OAuth2
     end
 
     # The authorize endpoint URL of the OAuth2 provider
-    # 
+    #
     # @param [Hash] params additional query parameters
     def authorize_url(params=nil)
       connection.build_url(options[:authorize_url], params).to_s
     end
 
     # The token endpoint URL of the OAuth2 provider
-    # 
+    #
     # @param [Hash] params additional query parameters
     def token_url(params=nil)
       connection.build_url(options[:token_url], params).to_s
@@ -84,16 +84,16 @@ module OAuth2
     # @yield [req] The Faraday request
     def request(verb, url, opts={})
       url = self.connection.build_url(url, opts[:params]).to_s
-      
+
       response = connection.run_request(verb, url, opts[:body], opts[:headers]) do |req|
         yield(req) if block_given?
       end
       response = Response.new(response, :parse => opts[:parse])
-      
+
       case response.status
-      when 200...299
+      when 200..299
         response
-      when 300...307
+      when 300..399
         opts[:redirect_count] ||= 0
         opts[:redirect_count] += 1
         return response if opts[:redirect_count] > options[:max_redirects]
@@ -102,7 +102,7 @@ module OAuth2
           opts.delete(:body)
         end
         request(verb, response.headers['location'], opts)
-      when 400...599
+      when 400..599
         e = Error.new(response)
         raise e if opts[:raise_errors] || options[:raise_errors]
         response.error = e
@@ -111,13 +111,13 @@ module OAuth2
         raise Error.new(response), "Unhandled status code value of #{response.status}"
       end
     end
-    
+
     # Initializes an AccessToken by making a request to the token endpoint
     #
     # @param [Hash] params a Hash of params for the token endpoint
     # @return [AccessToken] the initalized AccessToken
     def get_token(params)
-      opts = { :raise_errors => true, :parse => params.delete(:parse) }
+      opts = {:raise_errors => true, :parse => params.delete(:parse)}
       if options[:token_method] == :post
         opts[:body] = params
         opts[:headers] =  { 'Content-Type' => 'application/x-www-form-urlencoded' }
@@ -128,14 +128,14 @@ module OAuth2
       raise Error.new(response) unless response.parsed.is_a?(Hash) && response.parsed['access_token']
       AccessToken.from_hash(self, response.parsed)
     end
-    
+
     # The Authorization Code strategy
     #
     # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.1
     def auth_code
-      @auth_code ||= OAuth2::Strategy::AuthCode.new(self) 
+      @auth_code ||= OAuth2::Strategy::AuthCode.new(self)
     end
-    
+
     # The Resource Owner Password Credentials strategy
     #
     # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.3

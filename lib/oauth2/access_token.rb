@@ -45,9 +45,9 @@ module OAuth2
       @expires_in ||= opts.delete('expires')
       @expires_in &&= @expires_in.to_i
       @expires_at ||= Time.now.to_i + @expires_in if @expires_in
-      @options = {  :mode           => opts.delete(:mode) || :header,
-                    :header_format  => opts.delete(:header_format) || 'Bearer %s',
-                    :param_name     => opts.delete(:param_name) || 'bearer_token' }
+      @options = {:mode          => opts.delete(:mode) || :header,
+                  :header_format => opts.delete(:header_format) || 'Bearer %s',
+                  :param_name    => opts.delete(:param_name) || 'bearer_token'}
       @params = opts
     end
 
@@ -78,10 +78,10 @@ module OAuth2
     # @note options should be carried over to the new AccessToken
     def refresh!(params={})
       raise "A refresh_token is not available" unless refresh_token
-      params.merge! :client_id      => @client.id,
+      params.merge!(:client_id      => @client.id,
                     :client_secret  => @client_secret,
                     :grant_type     => 'refresh_token',
-                    :refresh_token  => refresh_token
+                    :refresh_token  => refresh_token)
       new_token = @client.get_token(params)
       new_token.options = options
       new_token
