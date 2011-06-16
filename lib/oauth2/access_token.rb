@@ -79,7 +79,7 @@ module OAuth2
     def refresh!(params={})
       raise "A refresh_token is not available" unless refresh_token
       params.merge!(:client_id      => @client.id,
-                    :client_secret  => @client_secret,
+                    :client_secret  => @client.secret,
                     :grant_type     => 'refresh_token',
                     :refresh_token  => refresh_token)
       new_token = @client.get_token(params)
