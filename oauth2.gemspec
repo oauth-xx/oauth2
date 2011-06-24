@@ -2,12 +2,11 @@
 require File.expand_path('../lib/oauth2/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.add_development_dependency 'ZenTest', '~> 4.5'
-  gem.add_development_dependency 'json_pure', '~> 1.5'
   gem.add_development_dependency 'rake', '~> 0.9'
   gem.add_development_dependency 'rspec', '~> 2.6'
   gem.add_development_dependency 'simplecov', '~> 0.4'
   gem.add_development_dependency 'yard', '~> 0.7'
+  gem.add_development_dependency 'ZenTest', '~> 4.5'
   gem.add_runtime_dependency 'faraday', ['>= 0.6.1', '< 0.8']
   gem.add_runtime_dependency 'multi_json', '~> 1.0.0'
   gem.authors = ["Michael Bleigh", "Erik Michaels-Ober"]
