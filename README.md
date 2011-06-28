@@ -20,7 +20,7 @@ Generic Client Example
 ----------------------
 
     require 'oauth2'
-    OAuth2::Client.new('client_id', 'client_secret', :site => 'https://example.org')
+    client = OAuth2::Client.new('client_id', 'client_secret', :site => 'https://example.org')
     
     client.auth_code.authorize_url(:redirect_uri => 'http://localhost:8080/oauth2/callback')
     # => "https://example.org/oauth/authorization?response_type=code&client_id=client_id&redirect_uri=http://localhost:8080/oauth2/callback"
