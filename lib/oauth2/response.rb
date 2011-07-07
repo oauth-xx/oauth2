@@ -40,10 +40,8 @@ module OAuth2
         content_type = (response.headers.values_at('content-type', 'Content-Type').compact.first || '').strip
 
         if options[:parse] == :json || (content_type == 'application/json')
-          puts "trying JSON"
           MultiJson.decode(body) rescue body
         elsif options[:parse] == :query || (content_type == 'application/x-www-form-urlencoded')
-          puts "trying Rack::Utils"
           Rack::Utils.parse_query(body)
         end
       end
