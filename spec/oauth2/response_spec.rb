@@ -37,5 +37,18 @@ describe OAuth2::Response do
       subject.parsed['foo'].should == 'bar'
       subject.parsed['answer'].should == 42
     end
+
+    it "doesn't try to parse other content-types" do
+      headers = {'Content-Type' => 'text/html'}
+      body = '<!DOCTYPE html><html><head></head><body></body></html>'
+
+      response = double('response', :headers => headers, :body => body)
+
+      MultiJson.should_not_receive(:decode)
+      Rack::Utils.should_not_receive(:parse_query)
+
+      subject = Response.new(response)
+      subject.parsed.should be_nil
+    end
   end
 end
