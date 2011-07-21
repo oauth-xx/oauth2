@@ -45,11 +45,6 @@ module OAuth2
       response.body || ''
     end
 
-    # The HTTP response body
-    def to_s
-      body
-    end
-
     # Procs that, when called, will parse a response body according
     # to the specified format.
     PARSERS = {
