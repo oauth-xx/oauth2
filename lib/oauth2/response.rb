@@ -61,6 +61,7 @@ module OAuth2
     # Content type assignments for various potential HTTP content types.
     CONTENT_TYPES = {
       'application/json' => :json,
+      'text/javascript' => :json,
       'application/x-www-form-urlencoded' => :query,
       'text/plain' => :text
     }
