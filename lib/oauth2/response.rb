@@ -71,7 +71,7 @@ module OAuth2
 
     # Attempts to determine the content type of the response.
     def content_type
-      (response.headers.values_at('content-type', 'Content-Type').compact.first || '').split(';').first.strip
+      ((response.headers.values_at('content-type', 'Content-Type').compact.first || '').split(';').first || '').strip
     end
 
     # Determines the parser that will be used to supply the content of #parsed
