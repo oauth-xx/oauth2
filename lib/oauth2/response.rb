@@ -85,3 +85,10 @@ module OAuth2
     end
   end
 end
+
+begin
+  require 'multi_xml'
+  OAuth2::Response.register_parser(:xml, ['text/xml', 'application/rss+xml', 'application/rdf+xml', 'application/atom+xml']) do |body|
+    MultiXml.parse(body) rescue body
+  end
+rescue LoadError; end

@@ -73,4 +73,18 @@ describe OAuth2::Response do
       subject.parsed.should be_nil
     end
   end
+
+  context 'xml parser registration' do
+    it 'should try to load multi_xml and use it' do
+      OAuth2::Response::PARSERS[:xml].should_not be_nil
+    end
+
+    it 'should be able to parse xml' do
+      headers = {'Content-Type' => 'text/xml'}
+      body = '<?xml version="1.0" standalone="yes" ?><foo><bar>baz</bar></foo>'
+
+      response = double('response', :headers => headers, :body => body)
+      OAuth2::Response.new(response).parsed.should == {"foo" => {"bar" => "baz"}}
+    end
+  end
 end
