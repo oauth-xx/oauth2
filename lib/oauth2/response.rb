@@ -6,6 +6,19 @@ module OAuth2
     attr_reader :response
     attr_accessor :error, :options
 
+    # Adds a new content type parser.
+    #
+    # @param [Symbol] key A descriptive symbol key such as :json or :query.
+    # @param [Array] One or more mime types to which this parser applies.
+    # @yield [String] A block returning parsed content.
+    def self.register_parser(key, mime_types, &block)
+      key = key.to_sym
+      PARSERS[key] = block
+      Array(mime_types).each do |mime_type|
+        CONTENT_TYPES[mime_type] = key
+      end
+    end
+
     # Initializes a Response instance
     #
     # @param [Faraday::Response] response The Faraday response instance
@@ -32,19 +45,43 @@ module OAuth2
       response.body || ''
     end
 
+    # The HTTP response body
+    def to_s
+      body
+    end
+
+    # Procs that, when called, will parse a response body according
+    # to the specified format.
+    PARSERS = {
+      :json => lambda{|body| MultiJson.decode(body) rescue body },
+      :query => lambda{|body| Rack::Utils.parse_query(body) },
+      :text => lambda{|body| body}
+    }
+
+    # Content type assignments for various potential HTTP content types.
+    CONTENT_TYPES = {
+      'application/json' => :json,
+      'application/x-www-form-urlencoded' => :query,
+      'text/plain' => :text
+    }
+
     # The parsed response body.
     #   Will attempt to parse application/x-www-form-urlencoded and
     #   application/json Content-Type response bodies
     def parsed
-      @parsed ||= begin
-        content_type = (response.headers.values_at('content-type', 'Content-Type').compact.first || '').strip
+      return nil unless PARSERS.key?(parser)
+      @parsed ||= PARSERS[parser].call(body)
+    end
 
-        if options[:parse] == :json || (content_type.include?('application/json'))
-          MultiJson.decode(body) rescue body
-        elsif options[:parse] == :query || (content_type.include?('application/x-www-form-urlencoded'))
-          Rack::Utils.parse_query(body)
-        end
-      end
+    # Attempts to determine the content type of the response.
+    def content_type
+      (response.headers.values_at('content-type', 'Content-Type').compact.first || '').strip
+    end
+
+    # Determines the parser that will be used to supply the content of #parsed
+    def parser
+      return options[:parse].to_sym if PARSERS.key?(options[:parse])
+      CONTENT_TYPES[content_type]
     end
   end
 end

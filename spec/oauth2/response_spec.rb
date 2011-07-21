@@ -17,6 +17,28 @@ describe OAuth2::Response do
     end
   end
 
+  describe '.register_parser' do
+    let(:response) {
+      double('response', :headers => {'Content-Type' => 'application/foo-bar'},
+                         :status => 200,
+                         :body => 'baz')
+    }
+    before do
+      OAuth2::Response.register_parser(:foobar, 'application/foo-bar') do |body|
+        "foobar #{body}"
+      end
+    end
+
+    it 'should add to the content types and parsers' do
+      OAuth2::Response::PARSERS.keys.should be_include(:foobar)
+      OAuth2::Response::CONTENT_TYPES.keys.should be_include('application/foo-bar')
+    end
+
+    it 'should be able to parse that content type automatically' do
+      OAuth2::Response.new(response).parsed.should == 'foobar baz'
+    end
+  end
+
   describe '#parsed' do
     it "parses application/x-www-form-urlencoded body" do
       headers = {'Content-Type' => 'application/x-www-form-urlencoded'}
