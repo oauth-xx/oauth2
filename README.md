@@ -8,7 +8,7 @@ Installation
 
 Continuous Integration
 ----------------------
-[![Build Status](http://travis-ci.org/intridea/oauth2.png)](http://travis-ci.org/intridea/oauth2)
+[![Build Status](https://secure.travis-ci.org/intridea/oauth2.png)](http://travis-ci.org/intridea/oauth2)
 
 Resources
 ---------
@@ -21,7 +21,7 @@ Generic Client Example
 
     require 'oauth2'
     client = OAuth2::Client.new('client_id', 'client_secret', :site => 'https://example.org')
-    
+
     client.auth_code.authorize_url(:redirect_uri => 'http://localhost:8080/oauth2/callback')
     # => "https://example.org/oauth/authorization?response_type=code&client_id=client_id&redirect_uri=http://localhost:8080/oauth2/callback"
 
@@ -53,9 +53,9 @@ Currently the Authorization Code and Resource Owner Password Credentials authent
 
     auth_url = client.auth_code.authorization_url(:redirect_uri => 'http://localhost:8080/oauth/callback')
     token = client.auth_code.get_token('code_value', :redirect_uri => 'http://localhost:8080/oauth/callback')
-    
+
     token = client.password.get_token('username', 'password')
-    
+
 You can always use the #request method on the OAuth2::Client instance to make requests for tokens for any Authentication grant type.
 
 
