@@ -70,6 +70,31 @@ Note on Patches/Pull Requests
 7. Commit and push your changes.
 8. Submit a pull request. Please do not include changes to the [gemspec](https://github.com/intridea/oauth2/blob/master/oauth2.gemspec), [version](https://github.com/intridea/oauth2/blob/master/lib/oauth2/version.rb), or [changelog](https://github.com/intridea/oauth2/blob/master/CHANGELOG.md) file. (If you want to create your own version for some reason, please do so in a separate commit.)
 
+Supported Rubies
+----------------
+This library aims to support and is [tested
+against](http://travis-ci.org/intridea/oauth2) the following Ruby
+implementations:
+
+* Ruby 1.8.7
+* Ruby 1.9.2
+* Ruby Enterprise Edition 1.8.7
+* JRuby 1.6
+
+If something doesn't work on one of these interpreters, it should be considered
+a bug.
+
+This library may inadvertently work (or seem to work) on other Ruby
+implementations, however support will only be provided for the versions listed
+above.
+
+If you would like this library to support another Ruby version, you may
+volunteer to be a maintainer. Being a maintainer entails making sure all tests
+run and pass on that implementation. When something breaks on your
+implementation, you will be personally responsible for providing patches in a
+timely fashion. If critical issues for a particular implementation exist at the
+time of a major release, support for that Ruby version may be dropped.
+
 Copyright
 ---------
 Copyright (c) 2011 Intridea, Inc. and Michael Bleigh.
