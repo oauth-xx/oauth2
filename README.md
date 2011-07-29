@@ -68,7 +68,7 @@ Note on Patches/Pull Requests
 5. Add specs for your feature or bug fix.
 6. Run <tt>bundle exec rake spec</tt>. If your changes are not 100% covered, go back to step 5.
 7. Commit and push your changes.
-8. Submit a pull request. Please do not include changes to the [gemspec](https://github.com/intridea/oauth2/blob/master/oauth2.gemspec), [version](https://github.com/intridea/oauth2/blob/master/lib/oauth2/version.rb), or [changelog](https://github.com/intridea/oauth2/blob/master/CHANGELOG.md) file. (If you want to create your own version for some reason, please do so in a separate commit.)
+8. Submit a pull request. Please do not include changes to the [gemspec](https://github.com/intridea/oauth2/blob/master/oauth2.gemspec), [version](https://github.com/intridea/oauth2/blob/master/lib/oauth2/version.rb), or [changelog](https://github.com/intridea/oauth2/wiki/Changelg) . (If you want to create your own version for some reason, please do so in a separate commit.)
 
 Supported Rubies
 ----------------
