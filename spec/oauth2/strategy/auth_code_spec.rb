@@ -76,7 +76,7 @@ describe OAuth2::Strategy::AuthCode do
         end
 
         it 'returns AccessToken with #expires_at' do
-          @access.expires_at.should be_kind_of(Fixnum)
+          @access.expires_at.should be_kind_of(Integer)
         end
 
         it 'returns AccessToken with params accessible via []' do
