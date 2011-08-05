@@ -23,7 +23,7 @@ module OAuth2
     #
     # @param [Faraday::Response] response The Faraday response instance
     # @param [Hash] opts options in which to initialize the instance
-    # @option opts [Symbol] :parse (:automatic) how to parse the response body.  one of :url (for x-www-form-urlencoded),
+    # @option opts [Symbol] :parse (:automatic) how to parse the response body.  one of :query (for x-www-form-urlencoded),
     #   :json, or :automatic (determined by Content-Type response header)
     def initialize(response, opts={})
       @response = response
