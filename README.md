@@ -1,24 +1,18 @@
-OAuth2
-======
+# OAuth2
 A Ruby wrapper for the OAuth 2.0 specification. This is a work in progress, being built first to solve the pragmatic process of connecting to existing OAuth 2.0 endpoints (a.k.a. Facebook) with the goal of building it up to meet the entire specification over time.
 
-<a name="installation">Installation</a>
-------------
+## <a name="installation">Installation</a>
     gem install oauth2
 
-<a name="ci">Continuous Integration</a>
-----------------------
+## <a name="ci">Continuous Integration</a>
 [![Build Status](https://secure.travis-ci.org/intridea/oauth2.png)](http://travis-ci.org/intridea/oauth2)
 
-Resources
----------
+## <a name="resources">Resources</a>
 * View Source on GitHub (https://github.com/intridea/oauth2)
 * Report Issues on GitHub (https://github.com/intridea/oauth2/issues)
 * Read More at the Wiki (https://wiki.github.com/intridea/oauth2)
 
-Generic Client Example
-----------------------
-
+## <a name="examples">Usage Examples</a>
     require 'oauth2'
     client = OAuth2::Client.new('client_id', 'client_secret', :site => 'https://example.org')
 
@@ -30,25 +24,21 @@ Generic Client Example
     response.class.name
     # => OAuth2::Response
 
-OAuth2::Response
-----------------
+## <a name="response">OAuth2::Response</a>
 The AccessToken methods #get, #post, #put and #delete and the generic #request will return an instance of the #OAuth2::Response class.
 This instance contains a #parsed method that will parse the response body and return a Hash if the Content-Type is application/x-www-form-urlencoded or if the body is a JSON object.  It will return an Array if the body is a JSON array.  Otherwise, it will return the original body string.
 
 The original response body, headers, and status can be accessed via their respective methods.
 
-OAuth2::AccessToken
--------------------
+## <a name="access_token">OAuth2::AccessToken</a>
 If you have an existing Access Token for a user, you can initialize an instance using various class methods including the standard new, from_hash (if you have a hash of the values), or from_kvform (if you have an application/x-www-form-urlencoded encoded string of the values).
 
-OAuth2::Error
--------------
+## <a name="error">OAuth2::Error</a>
 On 400+ status code responses, an OAuth2::Error will be raised.  If it is a standard OAuth2 error response, the body will be parsed and #code and #description will contain the values provided from the error and error_description parameters.  The #response property of OAuth2::Error will always contain the OAuth2::Response instance.
 
 If you do not want an error to be raised, you may use :raise_errors => false option on initialization of the client.  In this case the OAuth2::Response instance will be returned as usual and on 400+ status code responses, the Response instance will contain the OAuth2::Error instance.
 
-Authorization Grants
---------------------
+## <a name="authorization_grants">Authorization Grants</a>
 Currently the Authorization Code and Resource Owner Password Credentials authentication grant types have helper strategy classes that simplify client use.  They are available via the #auth_code and #password methods respectively.
 
     auth_url = client.auth_code.authorization_url(:redirect_uri => 'http://localhost:8080/oauth/callback')
@@ -58,9 +48,7 @@ Currently the Authorization Code and Resource Owner Password Credentials authent
 
 You can always use the #request method on the OAuth2::Client instance to make requests for tokens for any Authentication grant type.
 
-
-Note on Patches/Pull Requests
------------------------------
+## <a name="pulls">Submitting a Pull Request</a>
 1. Fork the project.
 2. Create a topic branch.
 3. Implement your feature or bug fix.
@@ -70,8 +58,7 @@ Note on Patches/Pull Requests
 7. Commit and push your changes.
 8. Submit a pull request. Please do not include changes to the [gemspec](https://github.com/intridea/oauth2/blob/master/oauth2.gemspec), [version](https://github.com/intridea/oauth2/blob/master/lib/oauth2/version.rb), or [changelog](https://github.com/intridea/oauth2/wiki/Changelg) . (If you want to create your own version for some reason, please do so in a separate commit.)
 
-<a name="rubies">Supported Rubies</a>
-----------------
+## <a name="rubies">Supported Rubies</a>
 This library aims to support and is [tested
 against](http://travis-ci.org/intridea/oauth2) the following Ruby
 implementations:
@@ -96,7 +83,6 @@ implementation, you will be personally responsible for providing patches in a
 timely fashion. If critical issues for a particular implementation exist at the
 time of a major release, support for that Ruby version may be dropped.
 
-<a name="copyright">Copyright</a>
----------
+## <a name="copyright">Copyright</a>
 Copyright (c) 2011 Intridea, Inc. and Michael Bleigh.
 See [LICENSE](https://github.com/intridea/oauth2/blob/master/LICENSE.md) for details.
