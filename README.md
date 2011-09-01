@@ -5,7 +5,7 @@ A Ruby wrapper for the OAuth 2.0 specification. This is a work in progress, bein
     gem install oauth2
 
 ## <a name="ci">Continuous Integration</a>
-[![Build Status](https://secure.travis-ci.org/intridea/oauth2.png)](http://travis-ci.org/intridea/oauth2)
+[![Build Status](https://travis-ci.org/intridea/oauth2.png)](http://travis-ci.org/intridea/oauth2)
 
 ## <a name="resources">Resources</a>
 * View Source on GitHub (https://github.com/intridea/oauth2)
