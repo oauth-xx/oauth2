@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'multi_json', '~> 1.0.0'
   gem.add_development_dependency 'multi_xml', '~> 0.3'
   gem.add_development_dependency 'rake', '~> 0.9'
-  gem.add_development_dependency 'rdoc', '~> 3.6'
+  gem.add_development_dependency 'rdoc', '~> 3.9'
   gem.add_development_dependency 'rspec', '~> 2.6'
   gem.add_development_dependency 'simplecov', '~> 0.4'
   gem.add_development_dependency 'yard', '~> 0.7'
