@@ -16,11 +16,11 @@ module OAuth2
       # @param [String] username the End User username
       # @param [String] password the End User password
       # @param [Hash] params additional params
-      def get_token(username, password, params={})
+      def get_token(username, password, params={}, opts={})
         params = {'grant_type' => 'password',
                   'username'   => username,
                   'password'   => password}.merge(client_params).merge(params)
-        @client.get_token(params)
+        @client.get_token(params, opts)
       end
     end
   end
