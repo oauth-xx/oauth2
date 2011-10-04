@@ -41,7 +41,7 @@ If you do not want an error to be raised, you may use :raise_errors => false opt
 ## <a name="authorization_grants">Authorization Grants</a>
 Currently the Authorization Code and Resource Owner Password Credentials authentication grant types have helper strategy classes that simplify client use.  They are available via the #auth_code and #password methods respectively.
 
-    auth_url = client.auth_code.authorization_url(:redirect_uri => 'http://localhost:8080/oauth/callback')
+    auth_url = client.auth_code.authorize_url(:redirect_uri => 'http://localhost:8080/oauth/callback')
     token = client.auth_code.get_token('code_value', :redirect_uri => 'http://localhost:8080/oauth/callback')
 
     token = client.password.get_token('username', 'password')
