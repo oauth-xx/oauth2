@@ -12,6 +12,11 @@ the entire specification over time.
 
 [ci]: http://travis-ci.org/intridea/oauth2
 
+## <a name="dependencies"></a>Dependency Status
+[![Dependency Status](https://gemnasium.com/intridea/oauth2.png)][gemnasium]
+
+[gemnasium]: https://gemnasium.com/intridea/oauth2
+
 ## <a name="resources"></a>Resources
 * [View Source on GitHub][code]
 * [Report Issues on GitHub][issues]
