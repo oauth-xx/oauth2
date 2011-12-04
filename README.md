@@ -13,7 +13,7 @@ the entire specification over time.
 [ci]: http://travis-ci.org/intridea/oauth2
 
 ## <a name="dependencies"></a>Dependency Status
-[![Dependency Status](https://gemnasium.com/intridea/oauth2.png)][gemnasium]
+[![Dependency Status](https://gemnasium.com/intridea/oauth2.png?travis)][gemnasium]
 
 [gemnasium]: https://gemnasium.com/intridea/oauth2
 
