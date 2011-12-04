@@ -7,10 +7,10 @@ the entire specification over time.
 ## <a name="installation"></a>Installation
     gem install oauth2
 
-## <a name="ci"></a>Continuous Integration
-[![Build Status](https://secure.travis-ci.org/intridea/oauth2.png)][ci]
+## <a name="build"></a>Build Status
+[![Build Status](https://secure.travis-ci.org/intridea/oauth2.png?branch=master)][travis]
 
-[ci]: http://travis-ci.org/intridea/oauth2
+[travis]: http://travis-ci.org/intridea/oauth2
 
 ## <a name="dependencies"></a>Dependency Status
 [![Dependency Status](https://gemnasium.com/intridea/oauth2.png?travis)][gemnasium]
@@ -99,7 +99,7 @@ requests for tokens for any Authentication grant type.
 [changelog]: https://github.com/intridea/oauth2/wiki/Changelog
 
 ## <a name="versions"></a>Supported Ruby Versions
-This library aims to support and is [tested against][ci] the following Ruby
+This library aims to support and is [tested against][travis] the following Ruby
 implementations:
 
 * Ruby 1.8.7
