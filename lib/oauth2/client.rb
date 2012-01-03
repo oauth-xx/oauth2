@@ -118,7 +118,7 @@ module OAuth2
     # @param [Hash] access token options, to pass to the AccessToken object
     # @return [AccessToken] the initalized AccessToken
     def get_token(params, access_token_opts={})
-      opts = {:raise_errors => true, :parse => params.delete(:parse)}
+      opts = {:raise_errors => options[:raise_errors], :parse => params.delete(:parse)}
       if options[:token_method] == :post
         opts[:body] = params
         opts[:headers] =  {'Content-Type' => 'application/x-www-form-urlencoded'}
@@ -126,7 +126,7 @@ module OAuth2
         opts[:params] = params
       end
       response = request(options[:token_method], token_url, opts)
-      raise Error.new(response) unless response.parsed.is_a?(Hash) && response.parsed['access_token']
+      raise Error.new(response) if options[:raise_errors] && !(response.parsed.is_a?(Hash) && response.parsed['access_token'])
       AccessToken.from_hash(self, response.parsed.merge(access_token_opts))
     end
 
