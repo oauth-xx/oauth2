@@ -62,14 +62,16 @@ instance will be returned as usual and on 400+ status code responses, the
 Response instance will contain the OAuth2::Error instance.
 
 ## <a name="authorization_grants"></a>Authorization Grants
-Currently the Authorization Code and Resource Owner Password Credentials
+Currently the Authorization Code, Resource Owner Password Credentials, and Client Credentials
 authentication grant types have helper strategy classes that simplify client
-use.  They are available via the #auth_code and #password methods respectively.
+use.  They are available via the #auth_code, #password, and #client_credentials methods respectively.
 
     auth_url = client.auth_code.authorize_url(:redirect_uri => 'http://localhost:8080/oauth/callback')
     token = client.auth_code.get_token('code_value', :redirect_uri => 'http://localhost:8080/oauth/callback')
 
     token = client.password.get_token('username', 'password')
+
+    token = client.client_credentials.get_token
 
 You can always use the #request method on the OAuth2::Client instance to make
 requests for tokens for any Authentication grant type.

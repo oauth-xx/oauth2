@@ -143,5 +143,12 @@ module OAuth2
     def password
       @password ||= OAuth2::Strategy::Password.new(self)
     end
+
+    # The Client Credentials strategy
+    #
+    # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.4
+    def client_credentials
+      @client_credentials ||= OAuth2::Strategy::ClientCredentials.new(self)
+    end
   end
 end
