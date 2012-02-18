@@ -7,6 +7,16 @@ describe OAuth2::Strategy::ClientCredentials do
   let(:client) do
     OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com') do |builder|
       builder.adapter :test do |stub|
+        stub.post('/oauth/token', {'grant_type' => 'client_credentials'}) do |env|
+          client_id, client_secret = HTTPAuth::Basic.unpack_authorization(env[:request_headers]['Authorization'])
+          client_id == 'abc' && client_secret == 'def' or raise Faraday::Adapter::Test::Stubs::NotFound.new 
+          case @mode
+          when "formencoded"
+            [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, kvform_token]
+          when "json"
+            [200, {'Content-Type' => 'application/json'}, json_token]
+          end
+        end
         stub.post('/oauth/token', {'client_id' => 'abc', 'client_secret' => 'def', 'grant_type' => 'client_credentials'}) do |env|
           case @mode
           when "formencoded"
@@ -28,32 +38,33 @@ describe OAuth2::Strategy::ClientCredentials do
   end
 
   %w(json formencoded).each do |mode|
-    describe "#get_token (#{mode})" do
-      before do
-        @mode = mode
-        @access = subject.get_token
-      end
+    %w(default basic_auth request_body).each do |auth_scheme|
+      describe "#get_token (#{mode}) (#{auth_scheme})" do
+        before do
+          @mode = mode
+          @access = subject.get_token({}, auth_scheme == 'default' ? {} : {'auth_scheme' => auth_scheme})
+        end
 
-      it 'returns AccessToken with same Client' do
-        @access.client.should == client
-      end
+        it 'returns AccessToken with same Client' do
+          @access.client.should == client
+        end
 
-      it 'returns AccessToken with #token' do
-        @access.token.should == 'salmon'
-      end
+        it 'returns AccessToken with #token' do
+          @access.token.should == 'salmon'
+        end
 
-      it 'returns AccessToken without #refresh_token' do
-        @access.refresh_token.should be_nil
-      end
+        it 'returns AccessToken without #refresh_token' do
+          @access.refresh_token.should be_nil
+        end
 
-      it 'returns AccessToken with #expires_in' do
-        @access.expires_in.should == 600
-      end
+        it 'returns AccessToken with #expires_in' do
+          @access.expires_in.should == 600
+        end
 
-      it 'returns AccessToken with #expires_at' do
-        @access.expires_at.should_not be_nil
+        it 'returns AccessToken with #expires_at' do
+          @access.expires_at.should_not be_nil
+        end
       end
     end
   end
-
 end
