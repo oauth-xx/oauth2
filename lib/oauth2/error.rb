@@ -10,9 +10,9 @@ module OAuth2
 
       message = []
 
-      if response.parsed.is_a?(Hash)
-        @code = response.parsed['error']
-        @description = response.parsed['error_description']
+      set_response_code(response)
+
+      if @code
         message << "#{@code}: #{@description}"
       end
 
@@ -20,5 +20,16 @@ module OAuth2
 
       super(message.join("\n"))
     end
+
+    ## Subclass should override this if repsonse use different keys for error code/description
+    ## E.g. https://github.com/acenqiu/weibo2/blob/master/lib/weibo2/error.rb
+    def set_response_code(response)
+      if response.parsed.is_a?(Hash)
+        @code = response.parsed['error']
+        @description = response.parsed['error_description']
+      end
+    end
+
+
   end
 end
