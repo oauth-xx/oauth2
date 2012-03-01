@@ -11,8 +11,8 @@ module OAuth2
       # @return [AccessToken] the initalized AccessToken
       def from_hash(client, hash)
         token = hash.delete('access_token') || hash.delete(:access_token)
-	if token.class == Hash
-	  token = token.delete('token') || token.delete(:token)
+        if token.class == Hash
+          token = token.delete('token') || token.delete(:token)
         end
         self.new(client, token, hash)
       end
