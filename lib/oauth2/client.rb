@@ -30,6 +30,7 @@ module OAuth2
       @options = {:authorize_url    => '/oauth/authorize',
                   :token_url        => '/oauth/token',
                   :token_method     => :post,
+                  :token_formatter  => nil,
                   :connection_opts  => {},
                   :connection_build => block,
                   :max_redirects    => 5,

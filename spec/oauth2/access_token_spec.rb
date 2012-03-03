@@ -47,6 +47,16 @@ describe AccessToken do
       assert_initialized_token(target)
     end
 
+    it 'standardize a weird hash with a formatter' do
+      client.options[:token_formatter] = lambda do |hash|
+        hash[:expires_in] = hash[:remind_in]
+      end
+      # :reminds_in stands for the actual time until expiration here
+      hash = {:access_token => token, :expires_in => 86400, :remind_in => 100}
+      token = AccessToken.from_hash(client, hash)
+      token.expires_in.should == 100
+    end
+
     it 'initalizes with a form-urlencoded key/value string' do
       kvform = "access_token=#{token}&expires_at=#{Time.now.to_i+200}&foo=bar"
       target = AccessToken.from_kvform(client, kvform)

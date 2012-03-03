@@ -10,6 +10,9 @@ module OAuth2
       # @param [Hash] a hash of AccessToken property values
       # @return [AccessToken] the initalized AccessToken
       def from_hash(client, hash)
+        if client.options[:token_formatter].respond_to?(:call)
+          client.options[:token_formatter].call(hash)
+        end
         self.new(client, hash.delete('access_token') || hash.delete(:access_token), hash)
       end
 
