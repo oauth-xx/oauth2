@@ -31,6 +31,7 @@ module OAuth2
       @options = {:authorize_url    => '/oauth/authorize',
                   :token_url        => '/oauth/token',
                   :token_method     => :post,
+                  :token_parser     => :automatic,
                   :token_formatter  => nil,
                   :connection_opts  => {},
                   :connection_build => block,
@@ -120,10 +121,10 @@ module OAuth2
     # @param [Hash] access token options, to pass to the AccessToken object
     # @return [AccessToken] the initalized AccessToken
     def get_token(params, access_token_opts={})
-      opts = {:raise_errors => options[:raise_errors], :parse => params.delete(:parse)}
+      opts = {:raise_errors => options[:raise_errors], :parse => options[:token_parser]}
       if options[:token_method] == :post
         opts[:body] = params
-        opts[:headers] =  {'Content-Type' => 'application/x-www-form-urlencoded'}
+        opts[:headers] = {'Content-Type' => 'application/x-www-form-urlencoded'}
       else
         opts[:params] = params
       end
