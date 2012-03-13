@@ -1,5 +1,7 @@
-require 'simplecov'
-SimpleCov.start
+unless ENV['CI']
+  require 'simplecov'
+  SimpleCov.start
+end
 require 'oauth2'
 require 'rspec'
 require 'rspec/autorun'
