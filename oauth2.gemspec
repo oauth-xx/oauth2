@@ -9,7 +9,6 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'rdoc'
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'simplecov'
-  gem.add_development_dependency 'yard'
   gem.authors = ["Michael Bleigh", "Erik Michaels-Ober"]
   gem.description = %q{A Ruby wrapper for the OAuth 2.0 protocol built with a similar style to the original OAuth gem.}
   gem.email = ['michael@intridea.com', 'sferik@gmail.com']
