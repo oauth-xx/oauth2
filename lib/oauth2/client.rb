@@ -91,7 +91,7 @@ module OAuth2
       response = Response.new(response, :parse => opts[:parse])
 
       case response.status
-      when 200..299
+      when 200..299, 304, 308
         response
       when 300..399
         opts[:redirect_count] ||= 0
