@@ -51,8 +51,7 @@ application/x-www-form-urlencoded encoded string of the values).
 
 ## <a name="error"></a>OAuth2::Error
 On 400+ status code responses, an OAuth2::Error will be raised.  If it is a
-standard OAuth2 error response, the body will be parsed and #code and
-#description will contain the values provided from the error and
+standard OAuth2 error response, the body will be parsed and #code and #description will contain the values provided from the error and
 error_description parameters.  The #response property of OAuth2::Error will
 always contain the OAuth2::Response instance.
 
