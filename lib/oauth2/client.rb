@@ -17,6 +17,7 @@ module OAuth2
     # @option opts [String] :authorize_url ('/oauth/authorize') absolute or relative URL path to the Authorization endpoint
     # @option opts [String] :token_url ('/oauth/token') absolute or relative URL path to the Token endpoint
     # @option opts [Symbol] :token_method (:post) HTTP method to use to request token (:get or :post)
+    # @option opts [Proc] :token_formatter (nil) Formatter to deal with parsed result hash of access token response
     # @option opts [Hash] :connection_opts ({}) Hash of connection options to pass to initialize Faraday with
     # @option opts [FixNum] :max_redirects (5) maximum number of redirects to follow
     # @option opts [Boolean] :raise_errors (true) whether or not to raise an OAuth2::Error
@@ -30,6 +31,8 @@ module OAuth2
       @options = {:authorize_url    => '/oauth/authorize',
                   :token_url        => '/oauth/token',
                   :token_method     => :post,
+                  :token_parser     => :automatic,
+                  :token_formatter  => nil,
                   :connection_opts  => {},
                   :connection_build => block,
                   :max_redirects    => 5,
@@ -118,10 +121,10 @@ module OAuth2
     # @param [Hash] access token options, to pass to the AccessToken object
     # @return [AccessToken] the initalized AccessToken
     def get_token(params, access_token_opts={})
-      opts = {:raise_errors => options[:raise_errors], :parse => params.delete(:parse)}
+      opts = {:raise_errors => options[:raise_errors], :parse => options[:token_parser]}
       if options[:token_method] == :post
         opts[:body] = params
-        opts[:headers] =  {'Content-Type' => 'application/x-www-form-urlencoded'}
+        opts[:headers] = {'Content-Type' => 'application/x-www-form-urlencoded'}
       else
         opts[:params] = params
       end
