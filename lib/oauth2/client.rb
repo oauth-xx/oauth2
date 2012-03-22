@@ -120,8 +120,10 @@ module OAuth2
     def get_token(params, access_token_opts={})
       opts = {:raise_errors => options[:raise_errors], :parse => params.delete(:parse)}
       if options[:token_method] == :post
+        headers = params.delete(:headers)
         opts[:body] = params
         opts[:headers] =  {'Content-Type' => 'application/x-www-form-urlencoded'}
+        opts[:headers].merge!(headers) if headers
       else
         opts[:params] = params
       end
@@ -142,6 +144,13 @@ module OAuth2
     # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.3
     def password
       @password ||= OAuth2::Strategy::Password.new(self)
+    end
+
+    # The Client Credentials strategy
+    #
+    # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.4
+    def client_credentials
+      @client_credentials ||= OAuth2::Strategy::ClientCredentials.new(self)
     end
   end
 end
