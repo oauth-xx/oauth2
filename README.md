@@ -26,7 +26,7 @@ the entire specification over time.
     client.auth_code.authorize_url(:redirect_uri => 'http://localhost:8080/oauth2/callback')
     # => "https://example.org/oauth/authorization?response_type=code&client_id=client_id&redirect_uri=http://localhost:8080/oauth2/callback"
 
-    token = client.auth_code.get_token('authorization_code_value', :redirect_uri => 'http://localhost:8080/oauth2/callback')
+    token = client.auth_code.get_token('authorization_code_value', :redirect_uri => 'http://localhost:8080/oauth2/callback', :headers => {'Authorization' => 'Basic some_password'})
     response = token.get('/api/resource', :params => { 'query_foo' => 'bar' })
     response.class.name
     # => OAuth2::Response
@@ -69,6 +69,11 @@ use.  They are available via the #auth_code and #password methods respectively.
     token = client.auth_code.get_token('code_value', :redirect_uri => 'http://localhost:8080/oauth/callback')
 
     token = client.password.get_token('username', 'password')
+
+If you want to specify additional headers to be sent out with the
+request, add a 'headers' hash under 'params':
+
+    token = client.auth_code.get_token('code_value', :redirect_uri => 'http://localhost:8080/oauth/callback', :headers => {'Some' => 'Header'})
 
 You can always use the #request method on the OAuth2::Client instance to make
 requests for tokens for any Authentication grant type.
