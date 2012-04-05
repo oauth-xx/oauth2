@@ -14,7 +14,7 @@ describe OAuth2::Client do
         stub.get('/conflict')     {|env| [409, {'Content-Type' => 'text/plain'}, 'not authorized']}
         stub.get('/redirect')     {|env| [302, {'Content-Type' => 'text/plain', 'location' => '/success' }, '']}
         stub.post('/redirect')    {|env| [303, {'Content-Type' => 'text/plain', 'location' => '/reflect' }, '']}
-        stub.get('/error')        {|env| [500, {}, '']}
+        stub.get('/error')        {|env| [500, {'Content-Type' => 'text/plain'}, 'unknown error']}
         stub.get('/empty_get')    {|env| [204, {}, nil]}
       end
     end
@@ -148,6 +148,8 @@ describe OAuth2::Client do
       rescue Exception => e
         e.code.should == error_value
         e.description.should == error_description_value
+        e.to_s.should match(/#{error_value}/)
+        e.to_s.should match(/#{error_description_value}/)
       end
     end
 
@@ -156,6 +158,7 @@ describe OAuth2::Client do
         subject.request(:get, '/error')
       rescue Exception => e
         e.response.should_not be_nil
+        e.to_s.should match(/unknown error/)
       end
     end
   end

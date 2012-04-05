@@ -7,11 +7,18 @@ module OAuth2
     def initialize(response)
       response.error = self
       @response = response
+
+      message = []
+
       if response.parsed.is_a?(Hash)
         @code = response.parsed['error']
         @description = response.parsed['error_description']
+        message << "#{@code}: #{@description}"
       end
-    end
 
+      message << response.body
+
+      super(message.join("\n"))
+    end
   end
 end
