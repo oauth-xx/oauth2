@@ -91,9 +91,7 @@ module OAuth2
       response = Response.new(response, :parse => opts[:parse])
 
       case response.status
-      when 200..299
-        response
-      when 300..399
+      when 301, 302, 303, 307
         opts[:redirect_count] ||= 0
         opts[:redirect_count] += 1
         return response if opts[:redirect_count] > options[:max_redirects]
@@ -102,6 +100,9 @@ module OAuth2
           opts.delete(:body)
         end
         request(verb, response.headers['location'], opts)
+      when 200..299, 300..399
+        # on non-redirecting 3xx statuses, just return the response
+        response
       when 400..599
         e = Error.new(response)
         raise e if opts[:raise_errors] || options[:raise_errors]
