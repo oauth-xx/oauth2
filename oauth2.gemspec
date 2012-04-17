@@ -3,7 +3,7 @@ require File.expand_path('../lib/oauth2/version', __FILE__)
 
 Gem::Specification.new do |gem|
   gem.add_dependency 'faraday', '~> 0.7'
-  gem.add_dependency 'multi_json', '~> 1.0'
+  gem.add_dependency 'multi_json', '~> 1.3'
   gem.add_dependency 'httpauth', '~> 0.1'
   gem.add_development_dependency 'multi_xml'
   gem.add_development_dependency 'rake'

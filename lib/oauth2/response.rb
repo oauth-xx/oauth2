@@ -48,7 +48,7 @@ module OAuth2
     # Procs that, when called, will parse a response body according
     # to the specified format.
     PARSERS = {
-      :json => lambda{|body| MultiJson.decode(body) rescue body },
+      :json => lambda{|body| MultiJson.load(body) rescue body },
       :query => lambda{|body| Rack::Utils.parse_query(body) },
       :text => lambda{|body| body}
     }
