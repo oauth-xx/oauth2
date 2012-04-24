@@ -3,6 +3,7 @@ unless ENV['CI']
   SimpleCov.start
 end
 require 'oauth2'
+require 'addressable/uri'
 require 'rspec'
 require 'rspec/autorun'
 
