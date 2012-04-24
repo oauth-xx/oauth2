@@ -1,4 +1,5 @@
 require 'multi_json'
+require 'rack'
 
 module OAuth2
   # OAuth2::Response class
