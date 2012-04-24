@@ -9,7 +9,7 @@ describe OAuth2::Strategy::ClientCredentials do
       builder.adapter :test do |stub|
         stub.post('/oauth/token', {'grant_type' => 'client_credentials'}) do |env|
           client_id, client_secret = HTTPAuth::Basic.unpack_authorization(env[:request_headers]['Authorization'])
-          client_id == 'abc' && client_secret == 'def' or raise Faraday::Adapter::Test::Stubs::NotFound.new 
+          client_id == 'abc' && client_secret == 'def' or raise Faraday::Adapter::Test::Stubs::NotFound.new
           case @mode
           when "formencoded"
             [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, kvform_token]
