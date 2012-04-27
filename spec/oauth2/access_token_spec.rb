@@ -4,8 +4,8 @@ VERBS = [:get, :post, :put, :delete]
 
 describe AccessToken do
   let(:token) {'monkey'}
-  let(:token_body) {MultiJson.dump(:access_token => 'foo', :expires_in => 600, :refresh_token => 'bar')}
-  let(:refresh_body) {MultiJson.dump(:access_token => 'refreshed_foo', :expires_in => 600, :refresh_token => 'refresh_bar')}
+  let(:token_body) {MultiJson.encode(:access_token => 'foo', :expires_in => 600, :refresh_token => 'bar')}
+  let(:refresh_body) {MultiJson.encode(:access_token => 'refreshed_foo', :expires_in => 600, :refresh_token => 'refresh_bar')}
   let(:client) do
     Client.new('abc', 'def', :site => 'https://api.example.com') do |builder|
       builder.request :url_encoded

@@ -52,7 +52,7 @@ describe OAuth2::Response do
 
     it "parses application/json body" do
       headers = {'Content-Type' => 'application/json'}
-      body = MultiJson.dump(:foo => 'bar', :answer => 42)
+      body = MultiJson.encode(:foo => 'bar', :answer => 42)
       response = double('response', :headers => headers, :body => body)
       subject = Response.new(response)
       subject.parsed.keys.size.should == 2
@@ -67,6 +67,7 @@ describe OAuth2::Response do
       response = double('response', :headers => headers, :body => body)
 
       MultiJson.should_not_receive(:decode)
+      MultiJson.should_not_receive(:load)
       Rack::Utils.should_not_receive(:parse_query)
 
       subject = Response.new(response)

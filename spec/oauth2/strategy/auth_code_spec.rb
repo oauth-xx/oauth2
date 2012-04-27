@@ -4,7 +4,7 @@ describe OAuth2::Strategy::AuthCode do
   let(:code) {'sushi'}
   let(:kvform_token) {'expires_in=600&access_token=salmon&refresh_token=trout&extra_param=steve'}
   let(:facebook_token) {kvform_token.gsub('_in', '')}
-  let(:json_token) {MultiJson.dump(:expires_in => 600, :access_token => 'salmon', :refresh_token => 'trout', :extra_param => 'steve')}
+  let(:json_token) {MultiJson.encode(:expires_in => 600, :access_token => 'salmon', :refresh_token => 'trout', :extra_param => 'steve')}
 
   let(:client) do
     OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com') do |builder|
