@@ -169,14 +169,14 @@ describe OAuth2::Client do
 
   context 'with SSL options' do
     subject do
-      cli = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :ssl => {:ca_file => 'foo.pem'})
+      cli = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :ssl => {'ca_file' => 'foo.pem'})
       cli.connection.build do |b|
         b.adapter :test
       end
       cli
     end
 
-    it 'should pass the SSL options along to Faraday::Connection#ssl' do
+    it 'should pass the symbolized SSL options along to Faraday::Connection#ssl' do
       subject.connection.ssl.should == {:ca_file => 'foo.pem'}
     end
   end

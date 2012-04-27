@@ -34,7 +34,7 @@ module OAuth2
                   :connection_build => block,
                   :max_redirects    => 5,
                   :raise_errors     => true}.merge(opts)
-      @options[:connection_opts][:ssl] = ssl if ssl
+      @options[:connection_opts][:ssl] = ssl.inject({}) {|h,(k,v)| h[k.to_sym] = v; h} if ssl
     end
 
     # Set the site host
