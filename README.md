@@ -7,10 +7,10 @@ the entire specification over time.
 [travis]: http://travis-ci.org/intridea/oauth2
 [gemnasium]: https://gemnasium.com/intridea/oauth2
 
-## <a name="installation"></a>Installation
+## Installation
     gem install oauth2
 
-## <a name="resources"></a>Resources
+## Resources
 * [View Source on GitHub][code]
 * [Report Issues on GitHub][issues]
 * [Read More at the Wiki][wiki]
@@ -19,7 +19,7 @@ the entire specification over time.
 [issues]: https://github.com/intridea/oauth2/issues
 [wiki]: https://wiki.github.com/intridea/oauth2
 
-## <a name="examples"></a>Usage Examples
+## Usage Examples
     require 'oauth2'
     client = OAuth2::Client.new('client_id', 'client_secret', :site => 'https://example.org')
 
@@ -31,7 +31,7 @@ the entire specification over time.
     response.class.name
     # => OAuth2::Response
 
-## <a name="response"></a>OAuth2::Response
+## OAuth2::Response
 The AccessToken methods #get, #post, #put and #delete and the generic #request
 will return an instance of the #OAuth2::Response class.
 
@@ -43,13 +43,13 @@ array.  Otherwise, it will return the original body string.
 The original response body, headers, and status can be accessed via their
 respective methods.
 
-## <a name="access_token"></a>OAuth2::AccessToken
+## OAuth2::AccessToken
 If you have an existing Access Token for a user, you can initialize an instance
 using various class methods including the standard new, from_hash (if you have
 a hash of the values), or from_kvform (if you have an
 application/x-www-form-urlencoded encoded string of the values).
 
-## <a name="error"></a>OAuth2::Error
+## OAuth2::Error
 On 400+ status code responses, an OAuth2::Error will be raised.  If it is a
 standard OAuth2 error response, the body will be parsed and #code and #description will contain the values provided from the error and
 error_description parameters.  The #response property of OAuth2::Error will
@@ -60,7 +60,7 @@ option on initialization of the client.  In this case the OAuth2::Response
 instance will be returned as usual and on 400+ status code responses, the
 Response instance will contain the OAuth2::Error instance.
 
-## <a name="authorization_grants"></a>Authorization Grants
+## Authorization Grants
 Currently the Authorization Code, Resource Owner Password Credentials, and Client Credentials
 authentication grant types have helper strategy classes that simplify client
 use.  They are available via the #auth_code, #password, and #client_credentials methods respectively.
@@ -80,7 +80,7 @@ request, add a 'headers' hash under 'params':
 You can always use the #request method on the OAuth2::Client instance to make
 requests for tokens for any Authentication grant type.
 
-## <a name="pulls"></a>Submitting a Pull Request
+## Submitting a Pull Request
 1. Fork the project.
 2. Create a topic branch.
 3. Implement your feature or bug fix.
@@ -97,7 +97,7 @@ requests for tokens for any Authentication grant type.
 [version]: https://github.com/intridea/oauth2/blob/master/lib/oauth2/version.rb
 [changelog]: https://github.com/intridea/oauth2/wiki/Changelog
 
-## <a name="versions"></a>Supported Ruby Versions
+## Supported Ruby Versions
 This library aims to support and is [tested against][travis] the following Ruby
 implementations:
 
@@ -124,7 +124,7 @@ implementation, you will be personally responsible for providing patches in a
 timely fashion. If critical issues for a particular implementation exist at the
 time of a major release, support for that Ruby version may be dropped.
 
-## <a name="copyright"></a>Copyright
+## Copyright
 Copyright (c) 2011 Intridea, Inc. and Michael Bleigh.
 See [LICENSE][] for details.
 [license]: https://github.com/intridea/oauth2/blob/master/LICENSE.md
