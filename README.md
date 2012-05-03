@@ -81,21 +81,20 @@ You can always use the #request method on the OAuth2::Client instance to make
 requests for tokens for any Authentication grant type.
 
 ## Submitting a Pull Request
-1. Fork the project.
-2. Create a topic branch.
-3. Implement your feature or bug fix.
-4. Add documentation for your feature or bug fix.
-5. Add specs for your feature or bug fix.
-6. Run `bundle exec rake spec`. If your changes are not 100% covered, go back
-   to step 5.
-7. Commit and push your changes.
-8. Submit a pull request. Please do not include changes to the [gemspec][],
-   [version][], or [changelog][]. (If you want to create your own version for
-   some reason, please do so in a separate commit.)
+1. [Fork the repository.][fork]
+2. [Create a topic branch.][branch]
+3. Add specs for your unimplemented feature or bug fix.
+4. Run `bundle exec rake spec`. If your specs pass, return to step 3.
+5. Implement your feature or bug fix.
+6. Run `bundle exec rake spec`. If your specs fail, return to step 5.
+7. Run `open coverage/index.html`. If your changes are not completely covered
+   by your tests, return to step 3.
+8. Add, commit, and push your changes.
+9. [Submit a pull request.][pr]
 
-[gemspec]: https://github.com/intridea/oauth2/blob/master/oauth2.gemspec
-[version]: https://github.com/intridea/oauth2/blob/master/lib/oauth2/version.rb
-[changelog]: https://github.com/intridea/oauth2/wiki/Changelog
+[fork]: http://help.github.com/fork-a-repo/
+[branch]: http://learn.github.com/p/branching.html
+[pr]: http://help.github.com/send-pull-requests/
 
 ## Supported Ruby Versions
 This library aims to support and is [tested against][travis] the following Ruby
