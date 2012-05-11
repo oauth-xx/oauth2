@@ -153,5 +153,9 @@ module OAuth2
     def client_credentials
       @client_credentials ||= OAuth2::Strategy::ClientCredentials.new(self)
     end
+
+    def assertion
+      @assertion ||= OAuth2::Strategy::Assertion.new(self)
+    end
   end
 end
