@@ -41,7 +41,7 @@ module OAuth2
       response.status
     end
 
-    # The HTTP resposne body
+    # The HTTP response body
     def body
       response.body || ''
     end
