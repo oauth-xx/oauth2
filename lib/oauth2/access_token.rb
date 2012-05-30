@@ -126,12 +126,17 @@ module OAuth2
       request(:delete, path, opts, &block)
     end
 
+    # Get the headers hash (includes Authorization token)
+    def headers
+      { 'Authorization' => options[:header_format] % token }
+    end
+
   private
     def set_token(opts)
       case options[:mode]
       when :header
         opts[:headers] ||= {}
-        opts[:headers]['Authorization'] = options[:header_format] % token
+        opts[:headers].merge!(headers)
       when :query
         opts[:params] ||= {}
         opts[:params][options[:param_name]] = token
