@@ -167,6 +167,10 @@ describe OAuth2::Client do
     subject.auth_code.should be_kind_of(OAuth2::Strategy::AuthCode)
   end
 
+  it '#implicit should instantiate a Implicit strategy with this client' do
+    subject.implicit.should be_kind_of(OAuth2::Strategy::Implicit)
+  end
+
   context 'with SSL options' do
     subject do
       cli = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :ssl => {:ca_file => 'foo.pem'})
