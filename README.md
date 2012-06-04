@@ -61,12 +61,16 @@ instance will be returned as usual and on 400+ status code responses, the
 Response instance will contain the OAuth2::Error instance.
 
 ## Authorization Grants
-Currently the Authorization Code, Resource Owner Password Credentials, Client Credentials, and Assertion
+Currently the Authorization Code, Implicit, Resource Owner Password Credentials, Client Credentials, and Assertion
 authentication grant types have helper strategy classes that simplify client
-use.  They are available via the #auth_code, #password, #client_credentials, and #assertion methods respectively.
+use.  They are available via the #auth_code, #implicit, #password, #client_credentials, and #assertion methods respectively.
 
     auth_url = client.auth_code.authorize_url(:redirect_uri => 'http://localhost:8080/oauth/callback')
     token = client.auth_code.get_token('code_value', :redirect_uri => 'http://localhost:8080/oauth/callback')
+
+    auth_url = client.implicit.authorize_url(:redirect_uri => 'http://localhost:8080/oauth/callback')
+    # get the token params in the callback and
+    token = OAuth2::AccessToken.from_kvform(client, query_string)
 
     token = client.password.get_token('username', 'password')
 

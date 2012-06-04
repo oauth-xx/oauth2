@@ -140,6 +140,13 @@ module OAuth2
       @auth_code ||= OAuth2::Strategy::AuthCode.new(self)
     end
 
+    # The Implicit strategy
+    #
+    # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-26#section-4.2
+    def implicit
+      @implicit ||= OAuth2::Strategy::Implicit.new(self)
+    end
+
     # The Resource Owner Password Credentials strategy
     #
     # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.3
