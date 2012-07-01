@@ -23,5 +23,5 @@ Gem::Specification.new do |gem|
   gem.required_rubygems_version = Gem::Requirement.new('>= 1.3.6')
   gem.summary = %q{A Ruby wrapper for the OAuth 2.0 protocol.}
   gem.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
-  gem.version = OAuth2::VERSION
+  gem.version = OAuth2::Version
 end

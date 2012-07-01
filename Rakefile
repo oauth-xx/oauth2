@@ -12,7 +12,7 @@ namespace :doc do
   require File.expand_path('../lib/oauth2/version', __FILE__)
   RDoc::Task.new do |rdoc|
     rdoc.rdoc_dir = 'rdoc'
-    rdoc.title = "oauth2 #{OAuth2::VERSION}"
+    rdoc.title = "oauth2 #{OAuth2::Version}"
     rdoc.main = 'README.md'
     rdoc.rdoc_files.include('README.md', 'LICENSE.md', 'lib/**/*.rb')
   end
