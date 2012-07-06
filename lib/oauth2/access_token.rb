@@ -119,6 +119,13 @@ module OAuth2
       request(:put, path, opts, &block)
     end
 
+    # Make a PATCH request with the Access Token
+    #
+    # @see AccessToken#request
+    def patch(path, opts={}, &block)
+      request(:patch, path, opts, &block)
+    end
+
     # Make a DELETE request with the Access Token
     #
     # @see AccessToken#request
