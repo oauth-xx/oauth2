@@ -72,6 +72,13 @@ module OAuth2
       expires? && (expires_at < Time.now.to_i)
     end
 
+    # Whether or not the token is expired in next 'seconds' seconds
+    #
+    # @return [Boolean]
+    def expired_in?(seconds)
+      expires? && (expires_at < Time.now.to_i + seconds.to_i)
+    end
+
     # Refreshes the current Access Token
     #
     # @return [AccessToken] a new AccessToken
