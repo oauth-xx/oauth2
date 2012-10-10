@@ -20,8 +20,8 @@ describe OAuth2::Strategy::Password do
   subject {client.password}
 
   describe "#authorize_url" do
-    it "should raise NotImplementedError" do
-      lambda {subject.authorize_url}.should raise_error(NotImplementedError)
+    it "raises NotImplementedError" do
+      expect{subject.authorize_url}.to raise_error(NotImplementedError)
     end
   end
 
@@ -32,24 +32,24 @@ describe OAuth2::Strategy::Password do
         @access = subject.get_token('username', 'password')
       end
 
-      it 'returns AccessToken with same Client' do
-        @access.client.should == client
+      it "returns AccessToken with same Client" do
+        expect(@access.client).to eq(client)
       end
 
-      it 'returns AccessToken with #token' do
-        @access.token.should == 'salmon'
+      it "returns AccessToken with #token" do
+        expect(@access.token).to eq('salmon')
       end
 
-      it 'returns AccessToken with #refresh_token' do
-        @access.refresh_token.should == 'trout'
+      it "returns AccessToken with #refresh_token" do
+        expect(@access.refresh_token).to eq('trout')
       end
 
-      it 'returns AccessToken with #expires_in' do
-        @access.expires_in.should == 600
+      it "returns AccessToken with #expires_in" do
+        expect(@access.expires_in).to eq(600)
       end
 
-      it 'returns AccessToken with #expires_at' do
-        @access.expires_at.should_not be_nil
+      it "returns AccessToken with #expires_at" do
+        expect(@access.expires_at).not_to be_nil
       end
     end
   end

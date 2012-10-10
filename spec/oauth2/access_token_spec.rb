@@ -22,123 +22,123 @@ describe AccessToken do
 
   subject {AccessToken.new(client, token)}
 
-  describe '#initialize' do
-    it 'assigns client and token' do
-      subject.client.should == client
-      subject.token.should  == token
+  describe "#initialize" do
+    it "assigns client and token" do
+      expect(subject.client).to eq(client)
+      expect(subject.token).to  eq(token)
     end
 
-    it 'assigns extra params' do
+    it "assigns extra params" do
       target = AccessToken.new(client, token, 'foo' => 'bar')
-      target.params.should include('foo')
-      target.params['foo'].should == 'bar'
+      expect(target.params).to include('foo')
+      expect(target.params['foo']).to eq('bar')
     end
 
     def assert_initialized_token(target)
-      target.token.should eq(token)
-      target.should be_expires
-      target.params.keys.should include('foo')
-      target.params['foo'].should == 'bar'
+      expect(target.token).to eq(token)
+      expect(target).to be_expires
+      expect(target.params.keys).to include('foo')
+      expect(target.params['foo']).to eq('bar')
     end
 
-    it 'initializes with a Hash' do
+    it "initializes with a Hash" do
       hash = {:access_token => token, :expires_at => Time.now.to_i + 200, 'foo' => 'bar'}
       target = AccessToken.from_hash(client, hash)
       assert_initialized_token(target)
     end
 
-    it 'initalizes with a form-urlencoded key/value string' do
+    it "initalizes with a form-urlencoded key/value string" do
       kvform = "access_token=#{token}&expires_at=#{Time.now.to_i+200}&foo=bar"
       target = AccessToken.from_kvform(client, kvform)
       assert_initialized_token(target)
     end
 
-    it 'sets options' do
+    it "sets options" do
       target = AccessToken.new(client, token, :param_name => 'foo', :header_format => 'Bearer %', :mode => :body)
-      target.options[:param_name].should == 'foo'
-      target.options[:header_format].should == 'Bearer %'
-      target.options[:mode].should == :body
+      expect(target.options[:param_name]).to eq('foo')
+      expect(target.options[:header_format]).to eq('Bearer %')
+      expect(target.options[:mode]).to eq(:body)
     end
   end
 
-  describe '#request' do
-    context ':mode => :header' do
+  describe "#request" do
+    context ":mode => :header" do
       before :all do
         subject.options[:mode] = :header
       end
 
       VERBS.each do |verb|
         it "sends the token in the Authorization header for a #{verb.to_s.upcase} request" do
-          subject.post('/token/header').body.should include(token)
+          expect(subject.post('/token/header').body).to include(token)
         end
       end
     end
 
-    context ':mode => :query' do
+    context ":mode => :query" do
       before :all do
         subject.options[:mode] = :query
       end
 
       VERBS.each do |verb|
         it "sends the token in the Authorization header for a #{verb.to_s.upcase} request" do
-          subject.post('/token/query').body.should == token
+          expect(subject.post('/token/query').body).to eq(token)
         end
       end
     end
 
-    context ':mode => :body' do
+    context ":mode => :body" do
       before :all do
         subject.options[:mode] = :body
       end
 
       VERBS.each do |verb|
         it "sends the token in the Authorization header for a #{verb.to_s.upcase} request" do
-          subject.post('/token/body').body.split('=').last.should == token
+          expect(subject.post('/token/body').body.split('=').last).to eq(token)
         end
       end
     end
   end
 
-  describe '#expires?' do
-    it 'should be false if there is no expires_at' do
-      AccessToken.new(client, token).should_not be_expires
+  describe "#expires?" do
+    it "is false if there is no expires_at" do
+      expect(AccessToken.new(client, token)).not_to be_expires
     end
 
-    it 'should be true if there is an expires_in' do
-      AccessToken.new(client, token, :refresh_token => 'abaca', :expires_in => 600).should be_expires
+    it "is true if there is an expires_in" do
+      expect(AccessToken.new(client, token, :refresh_token => 'abaca', :expires_in => 600)).to be_expires
     end
 
-    it 'should be true if there is an expires_at' do
-      AccessToken.new(client, token, :refresh_token => 'abaca', :expires_in => Time.now.getutc.to_i+600).should be_expires
+    it "is true if there is an expires_at" do
+      expect(AccessToken.new(client, token, :refresh_token => 'abaca', :expires_in => Time.now.getutc.to_i+600)).to be_expires
     end
   end
 
-  describe '#expired?' do
-    it 'should be false if there is no expires_in or expires_at' do
-      AccessToken.new(client, token).should_not be_expired
+  describe "#expired?" do
+    it "is false if there is no expires_in or expires_at" do
+      expect(AccessToken.new(client, token)).not_to be_expired
     end
 
-    it 'should be false if expires_in is in the future' do
-      AccessToken.new(client, token, :refresh_token => 'abaca', :expires_in => 10800).should_not be_expired
+    it "is false if expires_in is in the future" do
+      expect(AccessToken.new(client, token, :refresh_token => 'abaca', :expires_in => 10800)).not_to be_expired
     end
 
-    it 'should be true if expires_at is in the past' do
+    it "is true if expires_at is in the past" do
       access = AccessToken.new(client, token, :refresh_token => 'abaca', :expires_in => 600)
       @now = Time.now + 10800
       Time.stub!(:now).and_return(@now)
-      access.should be_expired
+      expect(access).to be_expired
     end
 
   end
 
-  describe '#refresh!' do
-    it 'returns a refresh token with appropriate values carried over' do
+  describe "#refresh!" do
+    it "returns a refresh token with appropriate values carried over" do
       access = AccessToken.new(client, token, :refresh_token  => 'abaca',
                                               :expires_in     => 600,
                                               :param_name     => 'o_param')
       refreshed = access.refresh!
-      access.client.should == refreshed.client
-      access.options[:param_name].should == refreshed.options[:param_name]
+      expect(access.client).to eq(refreshed.client)
+      expect(access.options[:param_name]).to eq(refreshed.options[:param_name])
     end
   end
 end

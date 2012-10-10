@@ -35,18 +35,18 @@ describe OAuth2::Strategy::AuthCode do
 
   subject {client.auth_code}
 
-  describe '#authorize_url' do
-    it 'should include the client_id' do
-      subject.authorize_url.should be_include('client_id=abc')
+  describe "#authorize_url" do
+    it "includes the client_id" do
+      expect(subject.authorize_url).to include('client_id=abc')
     end
 
-    it 'should include the type' do
-      subject.authorize_url.should be_include('response_type=code')
+    it "includes the type" do
+      expect(subject.authorize_url).to include('response_type=code')
     end
 
-    it 'should include passed in options' do
+    it "includes passed in options" do
       cb = 'http://myserver.local/oauth/callback'
-      subject.authorize_url(:redirect_uri => cb).should be_include("redirect_uri=#{Rack::Utils.escape(cb)}")
+      expect(subject.authorize_url(:redirect_uri => cb)).to include("redirect_uri=#{Rack::Utils.escape(cb)}")
     end
   end
 
@@ -59,28 +59,28 @@ describe OAuth2::Strategy::AuthCode do
           @access = subject.get_token(code)
         end
 
-        it 'returns AccessToken with same Client' do
-          @access.client.should == client
+        it "returns AccessToken with same Client" do
+          expect(@access.client).to eq(client)
         end
 
-        it 'returns AccessToken with #token' do
-          @access.token.should == 'salmon'
+        it "returns AccessToken with #token" do
+          expect(@access.token).to eq('salmon')
         end
 
-        it 'returns AccessToken with #refresh_token' do
-          @access.refresh_token.should == 'trout'
+        it "returns AccessToken with #refresh_token" do
+          expect(@access.refresh_token).to eq('trout')
         end
 
-        it 'returns AccessToken with #expires_in' do
-          @access.expires_in.should == 600
+        it "returns AccessToken with #expires_in" do
+          expect(@access.expires_in).to eq(600)
         end
 
-        it 'returns AccessToken with #expires_at' do
-          @access.expires_at.should be_kind_of(Integer)
+        it "returns AccessToken with #expires_at" do
+          expect(@access.expires_at).to be_kind_of(Integer)
         end
 
-        it 'returns AccessToken with params accessible via []' do
-          @access['extra_param'].should == 'steve'
+        it "returns AccessToken with params accessible via []" do
+          expect(@access['extra_param']).to eq('steve')
         end
       end
     end

@@ -20,25 +20,25 @@ describe OAuth2::Client do
     end
   end
 
-  describe '#initialize' do
-    it 'should assign id and secret' do
-      subject.id.should == 'abc'
-      subject.secret.should == 'def'
+  describe "#initialize" do
+    it "assigns id and secret" do
+      expect(subject.id).to eq('abc')
+      expect(subject.secret).to eq('def')
     end
 
-    it 'should assign site from the options hash' do
-      subject.site.should == 'https://api.example.com'
+    it "assigns site from the options hash" do
+      expect(subject.site).to eq('https://api.example.com')
     end
 
-    it 'should assign Faraday::Connection#host' do
-      subject.connection.host.should == 'api.example.com'
+    it "assigns Faraday::Connection#host" do
+      expect(subject.connection.host).to eq('api.example.com')
     end
 
-    it 'should leave Faraday::Connection#ssl unset' do
-      subject.connection.ssl.should == {}
+    it "leaves Faraday::Connection#ssl unset" do
+      expect(subject.connection.ssl).to eq({})
     end
 
-    it "should be able to pass a block to configure the connection" do
+    it "is able to pass a block to configure the connection" do
       connection = stub('connection')
       session = stub('session', :to_ary => nil)
       builder = stub('builder')
@@ -53,77 +53,77 @@ describe OAuth2::Client do
     end
 
     it "defaults raise_errors to true" do
-      subject.options[:raise_errors].should be_true
+      expect(subject.options[:raise_errors]).to be_true
     end
 
     it "allows true/false for raise_errors option" do
       client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :raise_errors => false)
-      client.options[:raise_errors].should be_false
+      expect(client.options[:raise_errors]).to be_false
       client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :raise_errors => true)
-      client.options[:raise_errors].should be_true
+      expect(client.options[:raise_errors]).to be_true
     end
 
     it "allows get/post for access_token_method option" do
       client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :access_token_method => :get)
-      client.options[:access_token_method].should == :get
+      expect(client.options[:access_token_method]).to eq(:get)
       client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :access_token_method => :post)
-      client.options[:access_token_method].should == :post
+      expect(client.options[:access_token_method]).to eq(:post)
     end
   end
 
   %w(authorize token).each do |url_type|
     describe ":#{url_type}_url option" do
-      it "should default to a path of /oauth/#{url_type}" do
-        subject.send("#{url_type}_url").should == "https://api.example.com/oauth/#{url_type}"
+      it "defaults to a path of /oauth/#{url_type}" do
+        expect(subject.send("#{url_type}_url")).to eq("https://api.example.com/oauth/#{url_type}")
       end
 
-      it "should be settable via the :#{url_type}_url option" do
+      it "is settable via the :#{url_type}_url option" do
         subject.options[:"#{url_type}_url"] = '/oauth/custom'
-        subject.send("#{url_type}_url").should == 'https://api.example.com/oauth/custom'
+        expect(subject.send("#{url_type}_url")).to eq('https://api.example.com/oauth/custom')
       end
 
       it "allows a different host than the site" do
         subject.options[:"#{url_type}_url"] = 'https://api.foo.com/oauth/custom'
-        subject.send("#{url_type}_url").should == 'https://api.foo.com/oauth/custom'
+        expect(subject.send("#{url_type}_url")).to eq('https://api.foo.com/oauth/custom')
       end
     end
   end
 
   describe "#request" do
     it "works with a null response body" do
-      subject.request(:get, 'empty_get').body.should == ''
+      expect(subject.request(:get, 'empty_get').body).to eq('')
     end
 
     it "returns on a successful response" do
       response = subject.request(:get, '/success')
-      response.body.should == 'yay'
-      response.status.should == 200
-      response.headers.should == {'Content-Type' => 'text/awesome'}
+      expect(response.body).to eq('yay')
+      expect(response.status).to eq(200)
+      expect(response.headers).to eq({'Content-Type' => 'text/awesome'})
     end
 
     it "posts a body" do
       response = subject.request(:post, '/reflect', :body => 'foo=bar')
-      response.body.should == 'foo=bar'
+      expect(response.body).to eq('foo=bar')
     end
 
     it "follows redirects properly" do
       response = subject.request(:get, '/redirect')
-      response.body.should == 'yay'
-      response.status.should == 200
-      response.headers.should == {'Content-Type' => 'text/awesome'}
+      expect(response.body).to eq('yay')
+      expect(response.status).to eq(200)
+      expect(response.headers).to eq({'Content-Type' => 'text/awesome'})
     end
 
     it "redirects using GET on a 303" do
       response = subject.request(:post, '/redirect', :body => 'foo=bar')
-      response.body.should be_empty
-      response.status.should == 200
+      expect(response.body).to be_empty
+      expect(response.status).to eq(200)
     end
 
     it "obeys the :max_redirects option" do
       max_redirects = subject.options[:max_redirects]
       subject.options[:max_redirects] = 0
       response = subject.request(:get, '/redirect')
-      response.status.should == 302
+      expect(response.status).to eq(302)
       subject.options[:max_redirects] = max_redirects
     end
 
@@ -131,25 +131,25 @@ describe OAuth2::Client do
       subject.options[:raise_errors] = false
       response = subject.request(:get, '/unauthorized')
 
-      response.status.should == 401
-      response.headers.should == {'Content-Type' => 'application/json'}
-      response.error.should_not be_nil
+      expect(response.status).to eq(401)
+      expect(response.headers).to eq({'Content-Type' => 'application/json'})
+      expect(response.error).not_to be_nil
     end
 
     %w(/unauthorized /conflict /error).each do |error_path|
       it "raises OAuth2::Error on error response to path #{error_path}" do
-        lambda {subject.request(:get, error_path)}.should raise_error(OAuth2::Error)
+        expect{subject.request(:get, error_path)}.to raise_error(OAuth2::Error)
       end
     end
 
-    it 'parses OAuth2 standard error response' do
+    it "parses OAuth2 standard error response" do
       begin
         subject.request(:get, '/unauthorized')
       rescue Exception => e
-        e.code.should == error_value
-        e.description.should == error_description_value
-        e.to_s.should match(/#{error_value}/)
-        e.to_s.should match(/#{error_description_value}/)
+        expect(e.code).to eq(error_value)
+        expect(e.description).to eq(error_description_value)
+        expect(e.to_s).to match(/#{error_value}/)
+        expect(e.to_s).to match(/#{error_description_value}/)
       end
     end
 
@@ -157,21 +157,21 @@ describe OAuth2::Client do
       begin
         subject.request(:get, '/error')
       rescue Exception => e
-        e.response.should_not be_nil
-        e.to_s.should match(/unknown error/)
+        expect(e.response).not_to be_nil
+        expect(e.to_s).to match(/unknown error/)
       end
     end
   end
 
-  it '#auth_code should instantiate a AuthCode strategy with this client' do
-    subject.auth_code.should be_kind_of(OAuth2::Strategy::AuthCode)
+  it "instantiates an AuthCode strategy with this client" do
+    expect(subject.auth_code).to be_kind_of(OAuth2::Strategy::AuthCode)
   end
 
-  it '#implicit should instantiate a Implicit strategy with this client' do
-    subject.implicit.should be_kind_of(OAuth2::Strategy::Implicit)
+  it "instantiates an Implicit strategy with this client" do
+    expect(subject.implicit).to be_kind_of(OAuth2::Strategy::Implicit)
   end
 
-  context 'with SSL options' do
+  context "with SSL options" do
     subject do
       cli = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :ssl => {:ca_file => 'foo.pem'})
       cli.connection.build do |b|
@@ -180,8 +180,8 @@ describe OAuth2::Client do
       cli
     end
 
-    it 'should pass the SSL options along to Faraday::Connection#ssl' do
-      subject.connection.ssl.should == {:ca_file => 'foo.pem'}
+    it "passes the SSL options along to Faraday::Connection#ssl" do
+      expect(subject.connection.ssl).to eq({:ca_file => 'foo.pem'})
     end
   end
 end
