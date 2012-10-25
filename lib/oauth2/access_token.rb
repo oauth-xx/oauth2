@@ -1,7 +1,7 @@
 module OAuth2
   class AccessToken
-    attr_reader :client, :token, :refresh_token, :expires_in, :expires_at, :params
-    attr_accessor :options
+    attr_reader :client, :token, :expires_in, :expires_at, :params
+    attr_accessor :options, :refresh_token
 
     class << self
       # Initializes an AccessToken from a Hash
@@ -84,6 +84,7 @@ module OAuth2
                     :refresh_token  => refresh_token)
       new_token = @client.get_token(params)
       new_token.options = options
+      new_token.refresh_token = refresh_token unless new_token.refresh_token
       new_token
     end
 
