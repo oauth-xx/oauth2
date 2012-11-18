@@ -3,8 +3,9 @@ require 'faraday'
 module OAuth2
   # The OAuth2::Client class
   class Client
-    attr_reader :id, :secret
-    attr_accessor :site, :connection, :options
+    attr_reader :id, :secret, :site
+    attr_accessor :options
+    attr_writer :connection
 
     # Instantiate a new OAuth 2.0 client using the
     # Client ID and Client Secret registered to your
