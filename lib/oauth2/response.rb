@@ -49,19 +49,19 @@ module OAuth2
     # Procs that, when called, will parse a response body according
     # to the specified format.
     PARSERS = {
-      # Can't reliably detect whether MultiJson responds to load, since it's
-      # a reserved word. Use adapter as a proxy for new features.
-      :json  => lambda{ |body| MultiJson.respond_to?(:adapter) ? MultiJson.load(body) : MultiJson.decode(body) rescue body },
-      :query => lambda{ |body| Rack::Utils.parse_query(body) },
-      :text  => lambda{ |body| body }
+        # Can't reliably detect whether MultiJson responds to load, since it's
+        # a reserved word. Use adapter as a proxy for new features.
+        :json => lambda { |body| MultiJson.respond_to?(:adapter) ? MultiJson.load(body) : MultiJson.decode(body) rescue body },
+        :query => lambda { |body| Rack::Utils.parse_query(body) },
+        :text => lambda { |body| body }
     }
 
     # Content type assignments for various potential HTTP content types.
     CONTENT_TYPES = {
-      'application/json' => :json,
-      'text/javascript' => :json,
-      'application/x-www-form-urlencoded' => :query,
-      'text/plain' => :text
+        'application/json' => :json,
+        'text/javascript' => :json,
+        'application/x-www-form-urlencoded' => :query,
+        'text/plain' => :text
     }
 
     # The parsed response body.
@@ -74,7 +74,14 @@ module OAuth2
 
     # Attempts to determine the content type of the response.
     def content_type
-      ((response.headers.values_at('content-type', 'Content-Type').compact.first || '').split(';').first || '').strip
+      @content_type ||= ((response.headers.values_at('content-type', 'Content-Type').compact.first || '').split(';').first || '').strip
+
+      # provider might return a url query as text/plain content type
+      if @content_type.eql?('text/plain')
+        @content_type = response.body.match(/([a-zA-Z0-9_]+\=[a-zA-Z0-9_]+\&*)+/) ? 'application/x-www-form-urlencoded' : 'text/plain'
+      else
+        @content_type
+      end
     end
 
     # Determines the parser that will be used to supply the content of #parsed
@@ -90,4 +97,5 @@ begin
   OAuth2::Response.register_parser(:xml, ['text/xml', 'application/rss+xml', 'application/rdf+xml', 'application/atom+xml']) do |body|
     MultiXml.parse(body) rescue body
   end
-rescue LoadError; end
+rescue LoadError;
+end

@@ -60,6 +60,25 @@ describe OAuth2::Response do
       expect(subject.parsed['answer']).to eq(42)
     end
 
+    it "parses url query with content type of text/plain" do
+      headers = {'Content-Type' => 'text/plain'}
+      body = 'foo=bar&answer=42'
+      response = double('response', :headers => headers, :body => body)
+      subject = Response.new(response)
+      expect(subject.content_type).to eq('application/x-www-form-urlencoded')
+      expect(subject.parsed.keys.size).to eq(2)
+      expect(subject.parsed['foo']).to eq('bar')
+      expect(subject.parsed['answer']).to eq('42')
+    end
+
+    it "parses text/plain that isn't a url query" do
+      headers = {'Content-Type' => 'text/plain'}
+      body = 'foo equals bar'
+      response = double('response', :headers => headers, :body => body)
+      subject = Response.new(response)
+      expect(subject.content_type).to eq('text/plain')
+    end
+
     it "doesn't try to parse other content-types" do
       headers = {'Content-Type' => 'text/html'}
       body = '<!DOCTYPE html><html><head></head><body></body></html>'
