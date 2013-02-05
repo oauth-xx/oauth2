@@ -34,7 +34,7 @@ module OAuth2
     # @option opts [Symbol] :mode (:header) the transmission mode of the Access Token parameter value
     #    one of :header, :body or :query
     # @option opts [String] :header_format ('Bearer %s') the string format to use for the Authorization header
-    # @option opts [String] :param_name ('bearer_token') the parameter name to use for transmission of the
+    # @option opts [String] :param_name ('access_token') the parameter name to use for transmission of the
     #    Access Token value in :body or :query transmission mode
     def initialize(client, token, opts={})
       @client = client
@@ -47,7 +47,7 @@ module OAuth2
       @expires_at ||= Time.now.to_i + @expires_in if @expires_in
       @options = {:mode          => opts.delete(:mode) || :header,
                   :header_format => opts.delete(:header_format) || 'Bearer %s',
-                  :param_name    => opts.delete(:param_name) || 'bearer_token'}
+                  :param_name    => opts.delete(:param_name) || 'access_token'}
       @params = opts
     end
 
