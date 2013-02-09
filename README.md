@@ -116,4 +116,4 @@ of a major release, support for that Ruby version may be dropped.
 ## Copyright
 Copyright (c) 2011 Intridea, Inc. and Michael Bleigh.
 See [LICENSE][] for details.
-[license]: https://github.com/intridea/oauth2/blob/master/LICENSE.md
+[license]: LICENSE.md
