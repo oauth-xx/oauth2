@@ -93,10 +93,11 @@ implementations:
 * Ruby 1.8.7
 * Ruby 1.9.2
 * Ruby 1.9.3
+* Ruby 2.0.0
 * [JRuby][]
 * [Rubinius][]
 
-[jruby]: http://www.jruby.org/
+[jruby]: http://jruby.org/
 [rubinius]: http://rubini.us/
 
 If something doesn't work on one of these interpreters, it should be considered
