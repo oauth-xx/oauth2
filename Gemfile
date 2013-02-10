@@ -1,10 +1,7 @@
 source :rubygems
 
 gem 'rake'
-
-group :development do
-  gem 'rdoc'
-end
+gem 'rdoc'
 
 group :test do
   gem 'addressable'
