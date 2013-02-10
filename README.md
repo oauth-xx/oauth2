@@ -2,10 +2,12 @@
 [![Gem Version](https://badge.fury.io/rb/oauth2.png)][gem]
 [![Build Status](https://secure.travis-ci.org/intridea/oauth2.png?branch=master)][travis]
 [![Dependency Status](https://gemnasium.com/intridea/oauth2.png?travis)][gemnasium]
+[![Code Climate](https://codeclimate.com/github/intridea/oauth2.png)][codeclimate]
 
 [gem]: https://rubygems.org/gems/oauth2
 [travis]: http://travis-ci.org/intridea/oauth2
 [gemnasium]: https://gemnasium.com/intridea/oauth2
+[codeclimate]: https://codeclimate.com/github/intridea/oauth2
 
 A Ruby wrapper for the OAuth 2.0 specification. This is a work in progress,
 being built first to solve the pragmatic process of connecting to existing
