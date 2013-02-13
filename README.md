@@ -120,7 +120,8 @@ implementation, you will be responsible for providing patches in a timely
 fashion. If critical issues for a particular implementation exist at the time
 of a major release, support for that Ruby version may be dropped.
 
-## Copyright
-Copyright (c) 2011 Intridea, Inc. and Michael Bleigh.
-See [LICENSE][] for details.
+## License
+Copyright (c) 2011-2013 Michael Bleigh and Intridea, Inc. See [LICENSE][] for
+details.
+
 [license]: LICENSE.md
