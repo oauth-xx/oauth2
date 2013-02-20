@@ -59,6 +59,13 @@ describe AccessToken do
       target.options[:header_format].should == 'Bearer %'
       target.options[:mode].should == :body
     end
+    
+    it "initializes with a string expires_at" do
+      hash = {:access_token => token, :expires_at => '1361396829', 'foo' => 'bar'}
+      target = AccessToken.from_hash(client, hash)
+      assert_initialized_token(target)
+      expect(target.expires_at).to be_a(Integer)
+    end
   end
 
   describe '#request' do
