@@ -44,6 +44,7 @@ module OAuth2
       end
       @expires_in ||= opts.delete('expires')
       @expires_in &&= @expires_in.to_i
+      @expires_at &&= @expires_at.to_i
       @expires_at ||= Time.now.to_i + @expires_in if @expires_in
       @options = {:mode          => opts.delete(:mode) || :header,
                   :header_format => opts.delete(:header_format) || 'Bearer %s',
