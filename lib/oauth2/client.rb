@@ -118,8 +118,9 @@ module OAuth2
     #
     # @param [Hash] params a Hash of params for the token endpoint
     # @param [Hash] access token options, to pass to the AccessToken object
+    # @param [Class] class of access token for easier subclassing OAuth2::AccessToken
     # @return [AccessToken] the initalized AccessToken
-    def get_token(params, access_token_opts={})
+    def get_token(params, access_token_opts={}, access_token_class = AccessToken)
       opts = {:raise_errors => options[:raise_errors], :parse => params.delete(:parse)}
       if options[:token_method] == :post
         headers = params.delete(:headers)
@@ -131,7 +132,7 @@ module OAuth2
       end
       response = request(options[:token_method], token_url, opts)
       raise Error.new(response) if options[:raise_errors] && !(response.parsed.is_a?(Hash) && response.parsed['access_token'])
-      AccessToken.from_hash(self, response.parsed.merge(access_token_opts))
+      access_token_class.from_hash(self, response.parsed.merge(access_token_opts))
     end
 
     # The Authorization Code strategy
