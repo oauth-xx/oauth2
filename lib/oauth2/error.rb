@@ -4,11 +4,13 @@ module OAuth2
 
     # standard error values include:
     # :invalid_request, :invalid_client, :invalid_token, :invalid_grant, :unsupported_grant_type, :invalid_scope
-    def initialize(response)
+    def initialize(url, response)
       response.error = self
       @response = response
 
       message = []
+
+      message << "Error communicating with endpoint #{url}"
 
       if response.parsed.is_a?(Hash)
         @code = response.parsed['error']
