@@ -105,12 +105,12 @@ module OAuth2
         # on non-redirecting 3xx statuses, just return the response
         response
       when 400..599
-        e = Error.new(url, response)
+        e = Error.new(url, opts, response)
         raise e if opts[:raise_errors] || options[:raise_errors]
         response.error = e
         response
       else
-        raise Error.new(url, response), "Unhandled status code value of #{response.status}"
+        raise Error.new(url, opts, response), "Unhandled status code value of #{response.status}"
       end
     end
 
