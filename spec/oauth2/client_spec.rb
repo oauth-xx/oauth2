@@ -81,6 +81,13 @@ describe OAuth2::Client do
       client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :access_token_method => :post)
       expect(client.options[:access_token_method]).to eq(:post)
     end
+
+    it 'does not mutate the opts hash argument' do
+      opts = { site: 'http://example.com/' }
+      opts2 = opts.dup
+      OAuth2::Client.new 'abc', 'def', opts
+      expect(opts).to eq(opts2)
+    end
   end
 
   %w(authorize token).each do |url_type|
