@@ -89,6 +89,13 @@ module OAuth2
       new_token
     end
 
+    # Convert AccessToken to a hash which can be used to rebuild itself with AccessToken.from_hash
+    #
+    # @return [Hash] a hash of AccessToken property values
+    def to_hash
+      params.merge({:access_token => token, :refresh_token => refresh_token, :expires_at => expires_at})
+    end
+
     # Make a request with the Access Token
     #
     # @param [Symbol] verb the HTTP request method

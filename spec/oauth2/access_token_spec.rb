@@ -161,4 +161,12 @@ describe AccessToken do
       end
     end
   end
+
+  describe '#to_hash' do
+    it 'return a hash equals to the hash used to initialize access token' do
+      hash = {:access_token => token, :refresh_token => 'foobar', :expires_at => Time.now.to_i + 200, 'foo' => 'bar'}
+      access_token = AccessToken.from_hash(client, hash.clone)
+      expect(access_token.to_hash).to eq(hash)
+    end
+  end
 end
