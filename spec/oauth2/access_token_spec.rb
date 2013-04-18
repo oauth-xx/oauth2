@@ -59,7 +59,7 @@ describe AccessToken do
       expect(target.options[:header_format]).to eq('Bearer %')
       expect(target.options[:mode]).to eq(:body)
     end
-    
+
     it "initializes with a string expires_at" do
       hash = {:access_token => token, :expires_at => '1361396829', 'foo' => 'bar'}
       target = AccessToken.from_hash(client, hash)
@@ -70,7 +70,7 @@ describe AccessToken do
 
   describe "#request" do
     context ":mode => :header" do
-      before :all do
+      before do
         subject.options[:mode] = :header
       end
 
@@ -82,7 +82,7 @@ describe AccessToken do
     end
 
     context ":mode => :query" do
-      before :all do
+      before do
         subject.options[:mode] = :query
       end
 
@@ -94,7 +94,7 @@ describe AccessToken do
     end
 
     context ":mode => :body" do
-      before :all do
+      before do
         subject.options[:mode] = :body
       end
 

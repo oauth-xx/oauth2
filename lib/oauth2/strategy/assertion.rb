@@ -50,7 +50,7 @@ module OAuth2
 
       def build_request(params)
         assertion = build_assertion(params)
-        {:grant_type     => "assertion", 
+        {:grant_type     => "assertion",
          :assertion_type => "urn:ietf:params:oauth:grant-type:jwt-bearer",
          :assertion      => assertion,
          :scope          => params[:scope]
