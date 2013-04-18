@@ -63,6 +63,18 @@ describe OAuth2::Client do
       expect(client.options[:raise_errors]).to be_true
     end
 
+    it "allows override of raise_errors option" do
+      client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :raise_errors => true) do |builder|
+        builder.adapter :test do |stub|
+          stub.get('/notfound') {|env| [404, {}, nil]}
+        end
+      end
+      expect(client.options[:raise_errors]).to be_true
+      expect{client.request(:get, '/notfound')}.to raise_error(OAuth2::Error)
+      response = client.request(:get, '/notfound', :raise_errors => false)
+      expect(response.status).to eq(404)
+    end
+
     it "allows get/post for access_token_method option" do
       client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :access_token_method => :get)
       expect(client.options[:access_token_method]).to eq(:get)
