@@ -40,17 +40,19 @@ Then, install the gem with the high security trust policy:
 [wiki]: https://wiki.github.com/intridea/oauth2
 
 ## Usage Examples
-    require 'oauth2'
-    client = OAuth2::Client.new('client_id', 'client_secret', :site => 'https://example.org')
 
-    client.auth_code.authorize_url(:redirect_uri => 'http://localhost:8080/oauth2/callback')
-    # => "https://example.org/oauth/authorization?response_type=code&client_id=client_id&redirect_uri=http://localhost:8080/oauth2/callback"
+```ruby
+require 'oauth2'
+client = OAuth2::Client.new('client_id', 'client_secret', :site => 'https://example.org')
 
-    token = client.auth_code.get_token('authorization_code_value', :redirect_uri => 'http://localhost:8080/oauth2/callback', :headers => {'Authorization' => 'Basic some_password'})
-    response = token.get('/api/resource', :params => { 'query_foo' => 'bar' })
-    response.class.name
-    # => OAuth2::Response
+client.auth_code.authorize_url(:redirect_uri => 'http://localhost:8080/oauth2/callback')
+# => "https://example.org/oauth/authorization?response_type=code&client_id=client_id&redirect_uri=http://localhost:8080/oauth2/callback"
 
+token = client.auth_code.get_token('authorization_code_value', :redirect_uri => 'http://localhost:8080/oauth2/callback', :headers => {'Authorization' => 'Basic some_password'})
+response = token.get('/api/resource', :params => { 'query_foo' => 'bar' })
+response.class.name
+# => OAuth2::Response
+```
 ## OAuth2::Response
 The AccessToken methods #get, #post, #put and #delete and the generic #request
 will return an instance of the #OAuth2::Response class.
@@ -85,23 +87,27 @@ Currently the Authorization Code, Implicit, Resource Owner Password Credentials,
 authentication grant types have helper strategy classes that simplify client
 use.  They are available via the #auth_code, #implicit, #password, #client_credentials, and #assertion methods respectively.
 
-    auth_url = client.auth_code.authorize_url(:redirect_uri => 'http://localhost:8080/oauth/callback')
-    token = client.auth_code.get_token('code_value', :redirect_uri => 'http://localhost:8080/oauth/callback')
+```ruby
+auth_url = client.auth_code.authorize_url(:redirect_uri => 'http://localhost:8080/oauth/callback')
+token = client.auth_code.get_token('code_value', :redirect_uri => 'http://localhost:8080/oauth/callback')
 
-    auth_url = client.implicit.authorize_url(:redirect_uri => 'http://localhost:8080/oauth/callback')
-    # get the token params in the callback and
-    token = OAuth2::AccessToken.from_kvform(client, query_string)
+auth_url = client.implicit.authorize_url(:redirect_uri => 'http://localhost:8080/oauth/callback')
+# get the token params in the callback and
+token = OAuth2::AccessToken.from_kvform(client, query_string)
 
-    token = client.password.get_token('username', 'password')
+token = client.password.get_token('username', 'password')
 
-    token = client.client_credentials.get_token
+token = client.client_credentials.get_token
 
-    token = client.assertion.get_token(assertion_params)
+token = client.assertion.get_token(assertion_params)
+```
 
 If you want to specify additional headers to be sent out with the
 request, add a 'headers' hash under 'params':
 
-    token = client.auth_code.get_token('code_value', :redirect_uri => 'http://localhost:8080/oauth/callback', :headers => {'Some' => 'Header'})
+```ruby
+token = client.auth_code.get_token('code_value', :redirect_uri => 'http://localhost:8080/oauth/callback', :headers => {'Some' => 'Header'})
+```
 
 You can always use the #request method on the OAuth2::Client instance to make
 requests for tokens for any Authentication grant type.
