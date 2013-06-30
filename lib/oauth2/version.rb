@@ -2,7 +2,7 @@ module OAuth2
   class Version
     MAJOR = 0 unless defined? MAJOR
     MINOR = 9 unless defined? MINOR
-    PATCH = 1 unless defined? PATCH
+    PATCH = 2 unless defined? PATCH
     PRE = nil unless defined? PRE
 
     class << self
