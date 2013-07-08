@@ -1,4 +1,3 @@
-require 'httpauth'
 require 'jwt'
 
 module OAuth2
