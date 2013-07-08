@@ -8,7 +8,7 @@ describe OAuth2::Strategy::ClientCredentials do
     OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com') do |builder|
       builder.adapter :test do |stub|
         stub.post('/oauth/token', {'grant_type' => 'client_credentials'}) do |env|
-          client_id, client_secret = HTTPAuth::Basic.unpack_authorization(env[:request_headers]['Authorization'])
+          client_id, client_secret = Base64.decode64(env[:request_headers]['Authorization'].split(' ', 2)[1]).split(':', 2)
           client_id == 'abc' && client_secret == 'def' or raise Faraday::Adapter::Test::Stubs::NotFound.new
           case @mode
           when "formencoded"
@@ -34,6 +34,17 @@ describe OAuth2::Strategy::ClientCredentials do
   describe "#authorize_url" do
     it "raises NotImplementedError" do
       expect{subject.authorize_url}.to raise_error(NotImplementedError)
+    end
+  end
+
+  describe "#authorization" do
+    it "generates an Authorization header value for HTTP Basic Authentication" do
+      [
+        ['abc', 'def', 'Basic YWJjOmRlZg=='],
+        ['xxx', 'secret', 'Basic eHh4OnNlY3JldA==']
+      ].each do |client_id, client_secret, expected|
+        expect(subject.authorization(client_id, client_secret)).to eq(expected)
+      end
     end
   end
 
