@@ -45,7 +45,7 @@ describe OAuth2::Client do
       connection.stub(:build).and_yield(builder)
       Faraday::Connection.stub(:new => connection)
 
-      builder.should_receive(:adapter).with(:test)
+      expect(builder).to receive(:adapter).with(:test)
 
       OAuth2::Client.new('abc', 'def') do |builder|
         builder.adapter :test

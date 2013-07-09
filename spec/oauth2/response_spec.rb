@@ -66,9 +66,9 @@ describe OAuth2::Response do
 
       response = double('response', :headers => headers, :body => body)
 
-      MultiJson.should_not_receive(:decode)
-      MultiJson.should_not_receive(:load)
-      Rack::Utils.should_not_receive(:parse_query)
+      expect(MultiJson).not_to receive(:decode)
+      expect(MultiJson).not_to receive(:load)
+      expect(Rack::Utils).not_to receive(:parse_query)
 
       subject = Response.new(response)
       expect(subject.parsed).to be_nil
