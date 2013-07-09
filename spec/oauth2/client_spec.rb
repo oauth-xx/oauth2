@@ -42,8 +42,8 @@ describe OAuth2::Client do
       connection = double('connection')
       session = double('session', :to_ary => nil)
       builder = double('builder')
-      connection.stub(:build).and_yield(builder)
-      Faraday::Connection.stub(:new => connection)
+      allow(connection).to receive(:build).and_yield(builder)
+      allow(Faraday::Connection).to receive(:new).and_return(connection)
 
       expect(builder).to receive(:adapter).with(:test)
 

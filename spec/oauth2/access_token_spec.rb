@@ -132,7 +132,7 @@ describe AccessToken do
     it "is true if expires_at is in the past" do
       access = AccessToken.new(client, token, :refresh_token => 'abaca', :expires_in => 600)
       @now = Time.now + 10800
-      Time.stub(:now).and_return(@now)
+      allow(Time).to receive(:now).and_return(@now)
       expect(access).to be_expired
     end
 
