@@ -39,9 +39,9 @@ describe OAuth2::Client do
     end
 
     it "is able to pass a block to configure the connection" do
-      connection = stub('connection')
-      session = stub('session', :to_ary => nil)
-      builder = stub('builder')
+      connection = double('connection')
+      session = double('session', :to_ary => nil)
+      builder = double('builder')
       connection.stub(:build).and_yield(builder)
       Faraday::Connection.stub(:new => connection)
 
