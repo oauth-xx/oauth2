@@ -83,7 +83,7 @@ describe OAuth2::Client do
     end
 
     it 'does not mutate the opts hash argument' do
-      opts = { site: 'http://example.com/' }
+      opts = {:site => 'http://example.com/'}
       opts2 = opts.dup
       OAuth2::Client.new 'abc', 'def', opts
       expect(opts).to eq(opts2)
