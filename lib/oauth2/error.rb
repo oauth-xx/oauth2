@@ -11,8 +11,8 @@ module OAuth2
       message = []
 
       if response.parsed.is_a?(Hash)
-        @code = response.parsed['error']
-        @description = response.parsed['error_description']
+        @code = response.parsed['error'] || response.parsed['code'] 
+        @description = response.parsed['error_description'] || response.parsed['message'] 
         message << "#{@code}: #{@description}"
       end
 
