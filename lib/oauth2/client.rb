@@ -85,7 +85,7 @@ module OAuth2
     # @option opts [Symbol] :parse @see Response::initialize
     # @yield [req] The Faraday request
     def request(verb, url, opts={})
-      connection.response :logger if ENV['DEBUG']
+      connection.response :logger if (ENV['OAUTH_DEBUG'] == 'true')
 
       url = self.connection.build_url(url, opts[:params]).to_s
 
