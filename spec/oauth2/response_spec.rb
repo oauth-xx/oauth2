@@ -110,10 +110,10 @@ describe OAuth2::Response do
       body      = '<!DOCTYPE html><html><head></head><body></body></html>'
       response  = double('response', :headers => headers, :body => body)
 
-      OAuth2::Response.register_parser(:arity_3, []) do |passed_body, passed_response, empty = nil|
+      OAuth2::Response.register_parser(:arity_3, []) do |passed_body, passed_response, *args|
         expect(passed_body).to eq(body)
         expect(passed_response).to eq(response)
-        expect(empty).to be_nil
+        expect(args).to eq([])
 
         "a-ok"
       end
