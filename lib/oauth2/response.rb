@@ -67,8 +67,13 @@ module OAuth2
     #   Will attempt to parse application/x-www-form-urlencoded and
     #   application/json Content-Type response bodies
     def parsed
-      return nil unless @@parsers.key?(parser)
-      @parsed ||= @@parsers[parser].call(body)
+      defined?(@parsed) ? @parsed : @parsed = begin
+        parser.respond_to?(:call) ? case parser.arity
+          when 0 then parser.call
+          when 1 then parser.call(body)
+          else        parser.call(body, response)
+        end : nil
+      end
     end
 
     # Attempts to determine the content type of the response.
@@ -78,8 +83,8 @@ module OAuth2
 
     # Determines the parser that will be used to supply the content of #parsed
     def parser
-      return options[:parse].to_sym if @@parsers.key?(options[:parse])
-      @@content_types[content_type]
+      parser = options[:parse] && options[:parse].to_sym
+      @parser ||= @@parsers[parser] || @@parsers[@@content_types[content_type]]
     end
   end
 end
