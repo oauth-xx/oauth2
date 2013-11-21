@@ -122,6 +122,16 @@ describe OAuth2::Response do
 
       expect(subject.parsed).to eq("a-ok")
     end
+
+    it "supports directly passed parsers" do
+      headers   = {'Content-Type' => 'text/html'}
+      body      = '<!DOCTYPE html><html><head></head><body></body></html>'
+      response  = double('response', :headers => headers, :body => body)
+
+      subject = Response.new(response, :parse => lambda { "a-ok" })
+
+      expect(subject.parsed).to eq("a-ok")
+    end
   end
 
   context 'xml parser registration' do

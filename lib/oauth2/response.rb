@@ -83,8 +83,15 @@ module OAuth2
 
     # Determines the parser that will be used to supply the content of #parsed
     def parser
-      parser = options[:parse] && options[:parse].to_sym
-      @parser ||= @@parsers[parser] || @@parsers[@@content_types[content_type]]
+      defined?(@parser) ? @parser : @parser = begin
+        parser = if options[:parse].respond_to?(:call)
+          options[:parse]
+        elsif options[:parse]
+          @@parsers[options[:parse].to_sym]
+        end
+
+        parser || @@parsers[@@content_types[content_type]]
+      end
     end
   end
 end
