@@ -39,13 +39,13 @@ describe OAuth2::Client do
     end
 
     it "is able to pass a block to configure the connection" do
-      connection = stub('connection')
-      session = stub('session', :to_ary => nil)
-      builder = stub('builder')
-      connection.stub(:build).and_yield(builder)
-      Faraday::Connection.stub(:new => connection)
+      connection = double('connection')
+      session = double('session', :to_ary => nil)
+      builder = double('builder')
+      allow(connection).to receive(:build).and_yield(builder)
+      allow(Faraday::Connection).to receive(:new).and_return(connection)
 
-      builder.should_receive(:adapter).with(:test)
+      expect(builder).to receive(:adapter).with(:test)
 
       OAuth2::Client.new('abc', 'def') do |builder|
         builder.adapter :test
@@ -63,11 +63,30 @@ describe OAuth2::Client do
       expect(client.options[:raise_errors]).to be_true
     end
 
+    it "allows override of raise_errors option" do
+      client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :raise_errors => true) do |builder|
+        builder.adapter :test do |stub|
+          stub.get('/notfound') {|env| [404, {}, nil]}
+        end
+      end
+      expect(client.options[:raise_errors]).to be_true
+      expect{client.request(:get, '/notfound')}.to raise_error(OAuth2::Error)
+      response = client.request(:get, '/notfound', :raise_errors => false)
+      expect(response.status).to eq(404)
+    end
+
     it "allows get/post for access_token_method option" do
       client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :access_token_method => :get)
       expect(client.options[:access_token_method]).to eq(:get)
       client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :access_token_method => :post)
       expect(client.options[:access_token_method]).to eq(:post)
+    end
+
+    it 'does not mutate the opts hash argument' do
+      opts = {:site => 'http://example.com/'}
+      opts2 = opts.dup
+      OAuth2::Client.new 'abc', 'def', opts
+      expect(opts).to eq(opts2)
     end
   end
 

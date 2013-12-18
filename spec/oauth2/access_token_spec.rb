@@ -12,7 +12,7 @@ describe AccessToken do
       builder.adapter :test do |stub|
         VERBS.each do |verb|
           stub.send(verb, '/token/header') {|env| [200, {}, env[:request_headers]['Authorization']]}
-          stub.send(verb, "/token/query?bearer_token=#{token}") {|env| [200, {}, Addressable::URI.parse(env[:url]).query_values['bearer_token']]}
+          stub.send(verb, "/token/query?access_token=#{token}") {|env| [200, {}, Addressable::URI.parse(env[:url]).query_values['access_token']]}
           stub.send(verb, '/token/body') {|env| [200, {}, env[:body]]}
         end
         stub.post('/oauth/token') {|env| [200, {'Content-Type' => 'application/json'}, refresh_body]}
@@ -59,11 +59,18 @@ describe AccessToken do
       expect(target.options[:header_format]).to eq('Bearer %')
       expect(target.options[:mode]).to eq(:body)
     end
+
+    it "initializes with a string expires_at" do
+      hash = {:access_token => token, :expires_at => '1361396829', 'foo' => 'bar'}
+      target = AccessToken.from_hash(client, hash)
+      assert_initialized_token(target)
+      expect(target.expires_at).to be_a(Integer)
+    end
   end
 
   describe "#request" do
     context ":mode => :header" do
-      before :all do
+      before do
         subject.options[:mode] = :header
       end
 
@@ -75,7 +82,7 @@ describe AccessToken do
     end
 
     context ":mode => :query" do
-      before :all do
+      before do
         subject.options[:mode] = :query
       end
 
@@ -87,7 +94,7 @@ describe AccessToken do
     end
 
     context ":mode => :body" do
-      before :all do
+      before do
         subject.options[:mode] = :body
       end
 
@@ -125,7 +132,7 @@ describe AccessToken do
     it "is true if expires_at is in the past" do
       access = AccessToken.new(client, token, :refresh_token => 'abaca', :expires_in => 600)
       @now = Time.now + 10800
-      Time.stub!(:now).and_return(@now)
+      allow(Time).to receive(:now).and_return(@now)
       expect(access).to be_expired
     end
 
@@ -152,6 +159,14 @@ describe AccessToken do
 
         expect(refreshed.refresh_token).to eq(access.refresh_token)
       end
+    end
+  end
+
+  describe '#to_hash' do
+    it 'return a hash equals to the hash used to initialize access token' do
+      hash = {:access_token => token, :refresh_token => 'foobar', :expires_at => Time.now.to_i + 200, 'foo' => 'bar'}
+      access_token = AccessToken.from_hash(client, hash.clone)
+      expect(access_token.to_hash).to eq(hash)
     end
   end
 end

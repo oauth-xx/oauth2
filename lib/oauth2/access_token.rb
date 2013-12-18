@@ -34,7 +34,7 @@ module OAuth2
     # @option opts [Symbol] :mode (:header) the transmission mode of the Access Token parameter value
     #    one of :header, :body or :query
     # @option opts [String] :header_format ('Bearer %s') the string format to use for the Authorization header
-    # @option opts [String] :param_name ('bearer_token') the parameter name to use for transmission of the
+    # @option opts [String] :param_name ('access_token') the parameter name to use for transmission of the
     #    Access Token value in :body or :query transmission mode
     def initialize(client, token, opts={})
       @client = client
@@ -44,10 +44,11 @@ module OAuth2
       end
       @expires_in ||= opts.delete('expires')
       @expires_in &&= @expires_in.to_i
+      @expires_at &&= @expires_at.to_i
       @expires_at ||= Time.now.to_i + @expires_in if @expires_in
       @options = {:mode          => opts.delete(:mode) || :header,
                   :header_format => opts.delete(:header_format) || 'Bearer %s',
-                  :param_name    => opts.delete(:param_name) || 'bearer_token'}
+                  :param_name    => opts.delete(:param_name) || 'access_token'}
       @params = opts
     end
 
@@ -86,6 +87,13 @@ module OAuth2
       new_token.options = options
       new_token.refresh_token = refresh_token unless new_token.refresh_token
       new_token
+    end
+
+    # Convert AccessToken to a hash which can be used to rebuild itself with AccessToken.from_hash
+    #
+    # @return [Hash] a hash of AccessToken property values
+    def to_hash
+      params.merge({:access_token => token, :refresh_token => refresh_token, :expires_at => expires_at})
     end
 
     # Make a request with the Access Token

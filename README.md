@@ -1,14 +1,34 @@
-# OAuth2 [![Build Status](https://secure.travis-ci.org/intridea/oauth2.png?branch=master)][travis] [![Dependency Status](https://gemnasium.com/intridea/oauth2.png?travis)][gemnasium]
-A Ruby wrapper for the OAuth 2.0 specification. This is a work in progress,
-being built first to solve the pragmatic process of connecting to existing
-OAuth 2.0 endpoints (a.k.a. Facebook) with the goal of building it up to meet
-the entire specification over time.
+# OAuth2
 
+[![Gem Version](https://badge.fury.io/rb/oauth2.png)][gem]
+[![Build Status](https://secure.travis-ci.org/intridea/oauth2.png?branch=master)][travis]
+[![Dependency Status](https://gemnasium.com/intridea/oauth2.png?travis)][gemnasium]
+[![Code Climate](https://codeclimate.com/github/intridea/oauth2.png)][codeclimate]
+[![Coverage Status](https://coveralls.io/repos/intridea/oauth2/badge.png?branch=master)][coveralls]
+
+[gem]: https://rubygems.org/gems/oauth2
 [travis]: http://travis-ci.org/intridea/oauth2
 [gemnasium]: https://gemnasium.com/intridea/oauth2
+[codeclimate]: https://codeclimate.com/github/intridea/oauth2
+[coveralls]: https://coveralls.io/r/intridea/oauth2
+
+A Ruby wrapper for the OAuth 2.0 specification. This is a work in progress,
+being built first to solve the pragmatic process of connecting to existing
+OAuth 2.0 endpoints (e.g. Facebook) with the goal of building it up to meet
+the entire specification over time.
 
 ## Installation
     gem install oauth2
+
+To ensure the code you're installing hasn't been tampered with, it's
+recommended that you verify the signature. To do this, you need to add my
+public key as a trusted certificate (you only need to do this once):
+
+    gem cert --add <(curl -Ls https://raw.github.com/intridea/oauth2/master/certs/sferik.pem)
+
+Then, install the gem with the high security trust policy:
+
+    gem install oauth2 -P HighSecurity
 
 ## Resources
 * [View Source on GitHub][code]
@@ -20,17 +40,19 @@ the entire specification over time.
 [wiki]: https://wiki.github.com/intridea/oauth2
 
 ## Usage Examples
-    require 'oauth2'
-    client = OAuth2::Client.new('client_id', 'client_secret', :site => 'https://example.org')
 
-    client.auth_code.authorize_url(:redirect_uri => 'http://localhost:8080/oauth2/callback')
-    # => "https://example.org/oauth/authorization?response_type=code&client_id=client_id&redirect_uri=http://localhost:8080/oauth2/callback"
+```ruby
+require 'oauth2'
+client = OAuth2::Client.new('client_id', 'client_secret', :site => 'https://example.org')
 
-    token = client.auth_code.get_token('authorization_code_value', :redirect_uri => 'http://localhost:8080/oauth2/callback', :headers => {'Authorization' => 'Basic some_password'})
-    response = token.get('/api/resource', :params => { 'query_foo' => 'bar' })
-    response.class.name
-    # => OAuth2::Response
+client.auth_code.authorize_url(:redirect_uri => 'http://localhost:8080/oauth2/callback')
+# => "https://example.org/oauth/authorization?response_type=code&client_id=client_id&redirect_uri=http://localhost:8080/oauth2/callback"
 
+token = client.auth_code.get_token('authorization_code_value', :redirect_uri => 'http://localhost:8080/oauth2/callback', :headers => {'Authorization' => 'Basic some_password'})
+response = token.get('/api/resource', :params => { 'query_foo' => 'bar' })
+response.class.name
+# => OAuth2::Response
+```
 ## OAuth2::Response
 The AccessToken methods #get, #post, #put and #delete and the generic #request
 will return an instance of the #OAuth2::Response class.
@@ -65,42 +87,30 @@ Currently the Authorization Code, Implicit, Resource Owner Password Credentials,
 authentication grant types have helper strategy classes that simplify client
 use.  They are available via the #auth_code, #implicit, #password, #client_credentials, and #assertion methods respectively.
 
-    auth_url = client.auth_code.authorize_url(:redirect_uri => 'http://localhost:8080/oauth/callback')
-    token = client.auth_code.get_token('code_value', :redirect_uri => 'http://localhost:8080/oauth/callback')
+```ruby
+auth_url = client.auth_code.authorize_url(:redirect_uri => 'http://localhost:8080/oauth/callback')
+token = client.auth_code.get_token('code_value', :redirect_uri => 'http://localhost:8080/oauth/callback')
 
-    auth_url = client.implicit.authorize_url(:redirect_uri => 'http://localhost:8080/oauth/callback')
-    # get the token params in the callback and
-    token = OAuth2::AccessToken.from_kvform(client, query_string)
+auth_url = client.implicit.authorize_url(:redirect_uri => 'http://localhost:8080/oauth/callback')
+# get the token params in the callback and
+token = OAuth2::AccessToken.from_kvform(client, query_string)
 
-    token = client.password.get_token('username', 'password')
+token = client.password.get_token('username', 'password')
 
-    token = client.client_credentials.get_token
+token = client.client_credentials.get_token
 
-    token = client.assertion.get_token(assertion_params)
+token = client.assertion.get_token(assertion_params)
+```
 
 If you want to specify additional headers to be sent out with the
 request, add a 'headers' hash under 'params':
 
-    token = client.auth_code.get_token('code_value', :redirect_uri => 'http://localhost:8080/oauth/callback', :headers => {'Some' => 'Header'})
+```ruby
+token = client.auth_code.get_token('code_value', :redirect_uri => 'http://localhost:8080/oauth/callback', :headers => {'Some' => 'Header'})
+```
 
 You can always use the #request method on the OAuth2::Client instance to make
 requests for tokens for any Authentication grant type.
-
-## Submitting a Pull Request
-1. [Fork the repository.][fork]
-2. [Create a topic branch.][branch]
-3. Add specs for your unimplemented feature or bug fix.
-4. Run `bundle exec rake spec`. If your specs pass, return to step 3.
-5. Implement your feature or bug fix.
-6. Run `bundle exec rake spec`. If your specs fail, return to step 5.
-7. Run `open coverage/index.html`. If your changes are not completely covered
-   by your tests, return to step 3.
-8. Add, commit, and push your changes.
-9. [Submit a pull request.][pr]
-
-[fork]: http://help.github.com/fork-a-repo/
-[branch]: http://learn.github.com/p/branching.html
-[pr]: http://help.github.com/send-pull-requests/
 
 ## Supported Ruby Versions
 This library aims to support and is [tested against][travis] the following Ruby
@@ -109,14 +119,14 @@ implementations:
 * Ruby 1.8.7
 * Ruby 1.9.2
 * Ruby 1.9.3
+* Ruby 2.0.0
 * [JRuby][]
 * [Rubinius][]
 
-[jruby]: http://www.jruby.org/
+[jruby]: http://jruby.org/
 [rubinius]: http://rubini.us/
 
-If something doesn't work on one of these interpreters, it should be considered
-a bug.
+If something doesn't work on one of these interpreters, it's a bug.
 
 This library may inadvertently work (or seem to work) on other Ruby
 implementations, however support will only be provided for the versions listed
@@ -125,11 +135,12 @@ above.
 If you would like this library to support another Ruby version, you may
 volunteer to be a maintainer. Being a maintainer entails making sure all tests
 run and pass on that implementation. When something breaks on your
-implementation, you will be personally responsible for providing patches in a
-timely fashion. If critical issues for a particular implementation exist at the
-time of a major release, support for that Ruby version may be dropped.
+implementation, you will be responsible for providing patches in a timely
+fashion. If critical issues for a particular implementation exist at the time
+of a major release, support for that Ruby version may be dropped.
 
-## Copyright
-Copyright (c) 2011 Intridea, Inc. and Michael Bleigh.
-See [LICENSE][] for details.
-[license]: https://github.com/intridea/oauth2/blob/master/LICENSE.md
+## License
+Copyright (c) 2011-2013 Michael Bleigh and Intridea, Inc. See [LICENSE][] for
+details.
+
+[license]: LICENSE.md
