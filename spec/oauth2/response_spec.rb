@@ -101,7 +101,7 @@ describe OAuth2::Response do
       end
       compressed = str_io.string
     end
-    let(:response) { double('response', status: 200, headers: headers, body: body) }
+    let(:response) { double('response', :status => 200, :headers => headers, :body => body) }
     specify { OAuth2::Response.new(response).parsed.should eq original_data }
   end
 end
