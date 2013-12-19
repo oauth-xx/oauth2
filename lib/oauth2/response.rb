@@ -43,7 +43,7 @@ module OAuth2
 
     # The HTTP response body
     def body
-      response.body || ''
+      @body ||= preprocessing_of_body(response.body)
     end
 
     # Procs that, when called, will parse a response body according
@@ -82,6 +82,19 @@ module OAuth2
       return options[:parse].to_sym if PARSERS.key?(options[:parse])
       CONTENT_TYPES[content_type]
     end
+
+    private
+
+    def content_encoding
+      ((response.headers.values_at('content-encoding', 'Content-Encoding').compact.first || '').split(';').first || '').strip
+    end
+
+    def preprocessing_of_body(resp_body)
+      return '' if resp_body.nil? || resp_body.empty?
+
+      content_encoding == 'gzip' ? Zlib::GzipReader.new(StringIO.new(resp_body)).read : resp_body
+    end
+
   end
 end
 
