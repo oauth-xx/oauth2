@@ -49,9 +49,7 @@ module OAuth2
     # Procs that, when called, will parse a response body according
     # to the specified format.
     PARSERS = {
-      # Can't reliably detect whether MultiJson responds to load, since it's
-      # a reserved word. Use adapter as a proxy for new features.
-      :json  => lambda{ |body| MultiJson.respond_to?(:adapter) ? MultiJson.load(body) : MultiJson.decode(body) rescue body },
+      :json  => lambda{ |body| MultiJson.load(body) rescue body },
       :query => lambda{ |body| Rack::Utils.parse_query(body) },
       :text  => lambda{ |body| body }
     }
