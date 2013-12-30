@@ -20,16 +20,6 @@ the entire specification over time.
 ## Installation
     gem install oauth2
 
-To ensure the code you're installing hasn't been tampered with, it's
-recommended that you verify the signature. To do this, you need to add my
-public key as a trusted certificate (you only need to do this once):
-
-    gem cert --add <(curl -Ls https://raw.github.com/intridea/oauth2/master/certs/sferik.pem)
-
-Then, install the gem with the high security trust policy:
-
-    gem install oauth2 -P HighSecurity
-
 ## Resources
 * [View Source on GitHub][code]
 * [Report Issues on GitHub][issues]
