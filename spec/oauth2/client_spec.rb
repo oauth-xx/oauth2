@@ -53,14 +53,14 @@ describe OAuth2::Client do
     end
 
     it "defaults raise_errors to true" do
-      expect(subject.options[:raise_errors]).to be_true
+      expect(subject.options[:raise_errors]).to be true
     end
 
     it "allows true/false for raise_errors option" do
       client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :raise_errors => false)
       expect(client.options[:raise_errors]).to be_false
       client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :raise_errors => true)
-      expect(client.options[:raise_errors]).to be_true
+      expect(client.options[:raise_errors]).to be true
     end
 
     it "allows override of raise_errors option" do
@@ -69,7 +69,7 @@ describe OAuth2::Client do
           stub.get('/notfound') {|env| [404, {}, nil]}
         end
       end
-      expect(client.options[:raise_errors]).to be_true
+      expect(client.options[:raise_errors]).to be true
       expect{client.request(:get, '/notfound')}.to raise_error(OAuth2::Error)
       response = client.request(:get, '/notfound', :raise_errors => false)
       expect(response.status).to eq(404)
