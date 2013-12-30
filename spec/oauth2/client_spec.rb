@@ -58,7 +58,7 @@ describe OAuth2::Client do
 
     it "allows true/false for raise_errors option" do
       client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :raise_errors => false)
-      expect(client.options[:raise_errors]).to be_false
+      expect(client.options[:raise_errors]).to be false
       client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :raise_errors => true)
       expect(client.options[:raise_errors]).to be true
     end
