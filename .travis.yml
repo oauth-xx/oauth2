@@ -11,3 +11,9 @@ rvm:
   - jruby-20mode
   - jruby-21mode
   - rbx
+  - ruby-head
+matrix:
+  allow_failures:
+    - rvm: jruby-head
+    - rvm: ruby-head
+  fast_finish: true
