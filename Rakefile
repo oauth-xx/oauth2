@@ -4,7 +4,6 @@ Bundler::GemHelper.install_tasks
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 
-task :default => :spec
 task :test => :spec
 
 namespace :doc do
@@ -17,3 +16,14 @@ namespace :doc do
     rdoc.rdoc_files.include('README.md', 'LICENSE.md', 'lib/**/*.rb')
   end
 end
+
+begin
+  require 'rubocop/rake_task'
+  Rubocop::RakeTask.new
+rescue LoadError
+  task :rubocop do
+    $stderr.puts 'Rubocop is disabled'
+  end
+end
+
+task :default => [:spec, :rubocop]
