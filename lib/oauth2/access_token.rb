@@ -10,7 +10,7 @@ module OAuth2
       # @param [Hash] a hash of AccessToken property values
       # @return [AccessToken] the initalized AccessToken
       def from_hash(client, hash)
-        self.new(client, hash.delete('access_token') || hash.delete(:access_token), hash)
+        new(client, hash.delete('access_token') || hash.delete(:access_token), hash)
       end
 
       # Initializes an AccessToken from a key/value application/x-www-form-urlencoded string
@@ -36,7 +36,7 @@ module OAuth2
     # @option opts [String] :header_format ('Bearer %s') the string format to use for the Authorization header
     # @option opts [String] :param_name ('access_token') the parameter name to use for transmission of the
     #    Access Token value in :body or :query transmission mode
-    def initialize(client, token, opts={})
+    def initialize(client, token, opts = {})
       @client = client
       @token = token.to_s
       [:refresh_token, :expires_in, :expires_at].each do |arg|
@@ -77,8 +77,8 @@ module OAuth2
     #
     # @return [AccessToken] a new AccessToken
     # @note options should be carried over to the new AccessToken
-    def refresh!(params={})
-      raise "A refresh_token is not available" unless refresh_token
+    def refresh!(params = {})
+      fail('A refresh_token is not available') unless refresh_token
       params.merge!(:client_id      => @client.id,
                     :client_secret  => @client.secret,
                     :grant_type     => 'refresh_token',
@@ -93,7 +93,7 @@ module OAuth2
     #
     # @return [Hash] a hash of AccessToken property values
     def to_hash
-      params.merge({:access_token => token, :refresh_token => refresh_token, :expires_at => expires_at})
+      params.merge(:access_token => token, :refresh_token => refresh_token, :expires_at => expires_at)
     end
 
     # Make a request with the Access Token
@@ -102,53 +102,54 @@ module OAuth2
     # @param [String] path the HTTP URL path of the request
     # @param [Hash] opts the options to make the request with
     # @see Client#request
-    def request(verb, path, opts={}, &block)
-      set_token(opts)
+    def request(verb, path, opts = {}, &block)
+      self.token = opts
       @client.request(verb, path, opts, &block)
     end
 
     # Make a GET request with the Access Token
     #
     # @see AccessToken#request
-    def get(path, opts={}, &block)
+    def get(path, opts = {}, &block)
       request(:get, path, opts, &block)
     end
 
     # Make a POST request with the Access Token
     #
     # @see AccessToken#request
-    def post(path, opts={}, &block)
+    def post(path, opts = {}, &block)
       request(:post, path, opts, &block)
     end
 
     # Make a PUT request with the Access Token
     #
     # @see AccessToken#request
-    def put(path, opts={}, &block)
+    def put(path, opts = {}, &block)
       request(:put, path, opts, &block)
     end
 
     # Make a PATCH request with the Access Token
     #
     # @see AccessToken#request
-    def patch(path, opts={}, &block)
+    def patch(path, opts = {}, &block)
       request(:patch, path, opts, &block)
     end
 
     # Make a DELETE request with the Access Token
     #
     # @see AccessToken#request
-    def delete(path, opts={}, &block)
+    def delete(path, opts = {}, &block)
       request(:delete, path, opts, &block)
     end
 
     # Get the headers hash (includes Authorization token)
     def headers
-      { 'Authorization' => options[:header_format] % token }
+      {'Authorization' => options[:header_format] % token}
     end
 
   private
-    def set_token(opts)
+
+    def token=(opts) # rubocop:disable MethodLength
       case options[:mode]
       when :header
         opts[:headers] ||= {}
@@ -165,7 +166,7 @@ module OAuth2
         end
         # @todo support for multi-part (file uploads)
       else
-        raise "invalid :mode option of #{options[:mode]}"
+        fail("invalid :mode option of #{options[:mode]}")
       end
     end
   end

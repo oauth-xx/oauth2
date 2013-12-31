@@ -10,14 +10,14 @@ module OAuth2
       #
       # @raise [NotImplementedError]
       def authorize_url
-        raise NotImplementedError, "The authorization endpoint is not used in this strategy"
+        fail(NotImplementedError, 'The authorization endpoint is not used in this strategy')
       end
 
       # Retrieve an access token given the specified client.
       #
       # @param [Hash] params additional params
       # @param [Hash] opts options
-      def get_token(params={}, opts={})
+      def get_token(params = {}, opts = {})
         request_body = opts.delete('auth_scheme') == 'request_body'
         params.merge!('grant_type' => 'client_credentials')
         params.merge!(request_body ? client_params : {:headers => {'Authorization' => authorization(client_params['client_id'], client_params['client_secret'])}})

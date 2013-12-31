@@ -23,7 +23,7 @@ module OAuth2
     # @option opts [Boolean] :raise_errors (true) whether or not to raise an OAuth2::Error
     #  on responses with 400+ status codes
     # @yield [builder] The Faraday connection builder
-    def initialize(client_id, client_secret, opts={}, &block)
+    def initialize(client_id, client_secret, opts = {}, &block)
       _opts = opts.dup
       @id = client_id
       @secret = client_secret
@@ -61,14 +61,14 @@ module OAuth2
     # The authorize endpoint URL of the OAuth2 provider
     #
     # @param [Hash] params additional query parameters
-    def authorize_url(params=nil)
+    def authorize_url(params = nil)
       connection.build_url(options[:authorize_url], params).to_s
     end
 
     # The token endpoint URL of the OAuth2 provider
     #
     # @param [Hash] params additional query parameters
-    def token_url(params=nil)
+    def token_url(params = nil)
       connection.build_url(options[:token_url], params).to_s
     end
 
@@ -84,8 +84,8 @@ module OAuth2
     #   code response for this request.  Will default to client option
     # @option opts [Symbol] :parse @see Response::initialize
     # @yield [req] The Faraday request
-    def request(verb, url, opts={})
-      url = self.connection.build_url(url, opts[:params]).to_s
+    def request(verb, url, opts = {}) # rubocop:disable CyclomaticComplexity, MethodLength
+      url = connection.build_url(url, opts[:params]).to_s
 
       response = connection.run_request(verb, url, opts[:body], opts[:headers]) do |req|
         yield(req) if block_given?
@@ -106,12 +106,13 @@ module OAuth2
         # on non-redirecting 3xx statuses, just return the response
         response
       when 400..599
-        e = Error.new(response)
-        raise e if opts.fetch(:raise_errors, options[:raise_errors])
-        response.error = e
+        error = Error.new(response)
+        fail(error) if opts.fetch(:raise_errors, options[:raise_errors])
+        response.error = error
         response
       else
-        raise Error.new(response), "Unhandled status code value of #{response.status}"
+        error = Error.new(response)
+        fail(error, "Unhandled status code value of #{response.status}")
       end
     end
 
@@ -121,7 +122,7 @@ module OAuth2
     # @param [Hash] access token options, to pass to the AccessToken object
     # @param [Class] class of access token for easier subclassing OAuth2::AccessToken
     # @return [AccessToken] the initalized AccessToken
-    def get_token(params, access_token_opts={}, access_token_class = AccessToken)
+    def get_token(params, access_token_opts = {}, access_token_class = AccessToken)
       opts = {:raise_errors => options[:raise_errors], :parse => params.delete(:parse)}
       if options[:token_method] == :post
         headers = params.delete(:headers)
@@ -132,7 +133,8 @@ module OAuth2
         opts[:params] = params
       end
       response = request(options[:token_method], token_url, opts)
-      raise Error.new(response) if options[:raise_errors] && !(response.parsed.is_a?(Hash) && response.parsed['access_token'])
+      error = Error.new(response)
+      fail(error) if options[:raise_errors] && !(response.parsed.is_a?(Hash) && response.parsed['access_token'])
       access_token_class.from_hash(self, response.parsed.merge(access_token_opts))
     end
 
