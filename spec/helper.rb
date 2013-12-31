@@ -5,7 +5,11 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
   SimpleCov::Formatter::HTMLFormatter,
   Coveralls::SimpleCov::Formatter
 ]
-SimpleCov.start
+
+SimpleCov.start do
+  add_filter '/spec/'
+  minimum_coverage(95.67)
+end
 
 require 'oauth2'
 require 'addressable/uri'
