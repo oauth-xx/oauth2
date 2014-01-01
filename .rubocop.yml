@@ -65,5 +65,14 @@ AccessModifierIndentation:
 EmptyLinesAroundAccessModifier:
   Enabled: true
 
+# Align ends correctly
+EndAlignment:
+  AlignWith: variable
+
+# Indentation of when/else
+CaseIndentation:
+  IndentWhenRelativeTo: end
+  IndentOneStep: false
+
 Lambda:
   Enabled: false
