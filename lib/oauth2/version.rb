@@ -1,9 +1,9 @@
 module OAuth2
   class Version
-    MAJOR = 0 unless defined? MAJOR
-    MINOR = 9 unless defined? MINOR
-    PATCH = 2 unless defined? PATCH
-    PRE = nil unless defined? PRE
+    MAJOR = 0
+    MINOR = 9
+    PATCH = 3
+    PRE = nil
 
     class << self
       # @return [String]
