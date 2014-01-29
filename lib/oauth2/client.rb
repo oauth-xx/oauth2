@@ -84,10 +84,10 @@ module OAuth2
     #   code response for this request.  Will default to client option
     # @option opts [Symbol] :parse @see Response::initialize
     # @yield [req] The Faraday request
-    def request(verb, url, opts={})
-      connection.response :logger if (ENV['OAUTH_DEBUG'] == 'true')
+    def request(verb, url, opts = {}) # rubocop:disable CyclomaticComplexity, MethodLength
+      connection.response :logger if ENV['OAUTH_DEBUG'] == 'true'
 
-      url = self.connection.build_url(url, opts[:params]).to_s
+      url = connection.build_url(url, opts[:params]).to_s
 
       response = connection.run_request(verb, url, opts[:body], opts[:headers]) do |req|
         yield(req) if block_given?

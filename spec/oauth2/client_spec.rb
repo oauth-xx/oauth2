@@ -119,16 +119,16 @@ describe OAuth2::Client do
       expect(response.headers).to eq('Content-Type' => 'text/awesome')
     end
 
-    it "outputs to STDOUT when OAUTH_DEBUG=true" do
+    it 'outputs to STDOUT when OAUTH_DEBUG=true' do
       ENV.stub(:[]).with('http_proxy').and_return(nil)
       ENV.stub(:[]).with('OAUTH_DEBUG').and_return('true')
-      STDOUT.sync = true      
+      STDOUT.sync = true
       @orig_stdout_constant = STDOUT
       STDOUT  = StringIO.new
 
       subject.request(:get, '/success')
 
-      expect(STDOUT.string).to include 'INFO -- : get https://api.example.com/success', "INFO -- : get https://api.example.com/success"
+      expect(STDOUT.string).to include 'INFO -- : get https://api.example.com/success', 'INFO -- : get https://api.example.com/success'
 
       STDOUT  = @orig_stdout_constant
     end
