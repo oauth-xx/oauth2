@@ -112,14 +112,32 @@ describe OAuth2::Client do
       expect(subject.request(:get, 'empty_get').body).to eq('')
     end
 
-    it 'returns on a successful response' do
+    it "outputs to STDOUT when DEBUG=true" do
+      pending
+      ENV.stub(:[]).with('http_proxy').and_return(nil)
+      ENV.stub(:[]).with('DEBUG').and_return('true')
+
+      response = subject.request(:get, '/success')
+      expect(response.body).to eq('yay')
+      expect(response.status).to eq(200)
+      expect(response.headers).to eq({'Content-Type' => 'text/awesome'})
+
+      expect($stdout.string).to eq <<-eos
+I, [2013-10-08T08:54:25.658162 #15010]  INFO -- : get https://api.example.com/empty_get
+D, [2013-10-08T08:54:25.672948 #15010] DEBUG -- request: User-Agent: "Faraday v0.8.8"
+I, [2013-10-08T08:54:25.673033 #15010]  INFO -- Status: 204
+D, [2013-10-08T08:54:25.673070 #15010] DEBUG -- response:
+      eos
+    end
+
+    it "returns on a successful response" do
       response = subject.request(:get, '/success')
       expect(response.body).to eq('yay')
       expect(response.status).to eq(200)
       expect(response.headers).to eq('Content-Type' => 'text/awesome')
     end
 
-    it 'posts a body' do
+    it "posts a body" do
       response = subject.request(:post, '/reflect', :body => 'foo=bar')
       expect(response.body).to eq('foo=bar')
     end
