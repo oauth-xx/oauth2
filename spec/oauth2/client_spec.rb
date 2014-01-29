@@ -112,6 +112,13 @@ describe OAuth2::Client do
       expect(subject.request(:get, 'empty_get').body).to eq('')
     end
 
+    it 'returns on a successful response' do
+      response = subject.request(:get, '/success')
+      expect(response.body).to eq('yay')
+      expect(response.status).to eq(200)
+      expect(response.headers).to eq('Content-Type' => 'text/awesome')
+    end
+
     it "outputs to STDOUT when OAUTH_DEBUG=true" do
       ENV.stub(:[]).with('http_proxy').and_return(nil)
       ENV.stub(:[]).with('OAUTH_DEBUG').and_return('true')
@@ -126,14 +133,7 @@ describe OAuth2::Client do
       STDOUT  = @orig_stdout_constant
     end
 
-    it "returns on a successful response" do
-      response = subject.request(:get, '/success')
-      expect(response.body).to eq('yay')
-      expect(response.status).to eq(200)
-      expect(response.headers).to eq('Content-Type' => 'text/awesome')
-    end
-
-    it "posts a body" do
+    it 'posts a body' do
       response = subject.request(:post, '/reflect', :body => 'foo=bar')
       expect(response.body).to eq('foo=bar')
     end
