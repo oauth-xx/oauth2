@@ -4,7 +4,7 @@ module OAuth2
   module Strategy
     # The Client Assertion Strategy
     #
-    # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-10#section-4.1.3
+    # @see http://tools.ietf.org/html/draft-ietf-oauth-jwt-bearer-07#section-3.1
     #
     # Sample usage:
     #   client = OAuth2::Client.new(client_id, client_secret,
@@ -13,7 +13,7 @@ module OAuth2
     #   params = {:hmac_secret => "some secret",
     #             # or :private_key => "private key string",
     #             :iss => "http://localhost:3001",
-    #             :prn => "me@here.com",
+    #             :sub => "me@here.com",
     #             :exp => Time.now.utc.to_i + 3600}
     #
     #   access = client.assertion.get_token(params)
@@ -38,7 +38,7 @@ module OAuth2
       #
       #   params :iss, issuer
       #   params :aud, audience, optional
-      #   params :prn, principal, current user
+      #   params :sub, principal, current user
       #   params :exp, expired at, in seconds, like Time.now.utc.to_i + 3600
       #
       # @param [Hash] opts options
@@ -49,8 +49,7 @@ module OAuth2
 
       def build_request(params)
         assertion = build_assertion(params)
-        {:grant_type     => 'assertion',
-         :assertion_type => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+        {:grant_type     => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
          :assertion      => assertion,
          :scope          => params[:scope]
         }.merge(client_params)
@@ -59,13 +58,13 @@ module OAuth2
       def build_assertion(params)
         claims = {:iss => params[:iss],
                   :aud => params[:aud],
-                  :prn => params[:prn],
+                  :sub => params[:sub],
                   :exp => params[:exp]
                  }
         if params[:hmac_secret]
-          JWT.encode(claims, params[:hmac_secret], 'HS256')
+          JWT.encode(claims, params[:hmac_secret], params[:algorithm] || 'HS256')
         elsif params[:private_key]
-          JWT.encode(claims, params[:private_key], 'RS256')
+          JWT.encode(claims, params[:private_key], params[:algorithm] || 'RS256')
         end
       end
     end
