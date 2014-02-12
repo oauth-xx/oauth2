@@ -1,4 +1,5 @@
 require 'faraday'
+require 'logger'
 
 module OAuth2
   # The OAuth2::Client class
@@ -85,6 +86,8 @@ module OAuth2
     # @option opts [Symbol] :parse @see Response::initialize
     # @yield [req] The Faraday request
     def request(verb, url, opts = {}) # rubocop:disable CyclomaticComplexity, MethodLength
+      connection.response :logger, ::Logger.new($stdout) if ENV['OAUTH_DEBUG'] == 'true'
+
       url = connection.build_url(url, opts[:params]).to_s
 
       response = connection.run_request(verb, url, opts[:body], opts[:headers]) do |req|
