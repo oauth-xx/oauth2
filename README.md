@@ -1,10 +1,10 @@
 # OAuth2
 
-[![Gem Version](https://badge.fury.io/rb/oauth2.png)][gem]
-[![Build Status](https://secure.travis-ci.org/intridea/oauth2.png?branch=master)][travis]
-[![Dependency Status](https://gemnasium.com/intridea/oauth2.png?travis)][gemnasium]
-[![Code Climate](https://codeclimate.com/github/intridea/oauth2.png)][codeclimate]
-[![Coverage Status](https://coveralls.io/repos/intridea/oauth2/badge.png?branch=master)][coveralls]
+[![Gem Version](http://img.shields.io/gem/v/oauth2.svg)][gem]
+[![Build Status](http://img.shields.io/travis/intridea/oauth2.svg)][travis]
+[![Dependency Status](http://img.shields.io/gemnasium/intridea/oauth2.svg)][gemnasium]
+[![Code Climate](http://img.shields.io/codeclimate/github/intridea/oauth2.svg)][codeclimate]
+[![Coverage Status](http://img.shields.io/coveralls/intridea/oauth2.svg)][coveralls]
 
 [gem]: https://rubygems.org/gems/oauth2
 [travis]: http://travis-ci.org/intridea/oauth2
