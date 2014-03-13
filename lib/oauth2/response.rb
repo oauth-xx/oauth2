@@ -63,9 +63,10 @@ module OAuth2
       response.body || ''
     end
 
-    # The parsed response body.
-    #   Will attempt to parse application/x-www-form-urlencoded and
-    #   application/json Content-Type response bodies
+    # The {#response} {#body} as parsed by {#parser}.
+    #
+    # @return [Object] As returned by {#parser} if it is #call-able.
+    # @return [nil] If the {#parser} is not #call-able.
     def parsed
       return @parsed if defined?(@parsed)
 
@@ -89,7 +90,22 @@ module OAuth2
       ((response.headers.values_at('content-type', 'Content-Type').compact.first || '').split(';').first || '').strip
     end
 
-    # Determines the parser that will be used to supply the content of #parsed
+    # Determines the parser (a Proc or other Object which responds to #call)
+    # that will be passed the {#body} (and optionall {#response}) to supply
+    # {#parsed}.
+    #
+    # The parser can be supplied as the +:parse+ option in the form of a Proc
+    # (or other Object responding to #call) or a Symbol. In the latter case,
+    # the actual parser will be looked up in {PARSERS} by the supplied Symbol.
+    #
+    # If no +:parse+ option is supplied, the lookup Symbol will be determined
+    # by looking up {#content_type} in {CONTENT_TYPES}.
+    #
+    # If {#parser} is a Proc, it will be called with no arguments, just
+    # {#body}, or {#body} and {#response}, depending on the Proc's arity.
+    #
+    # @return [Proc, #call] If a parser was found.
+    # @return [nil] If no parser was found.
     def parser
       defined?(@parser) ? @parser : @parser = begin
         parser =
