@@ -63,7 +63,7 @@ module OAuth2
     #
     # @return [Boolean]
     def expires?
-      !!@expires_at
+      !!@expires_at # rubocop:disable DoubleNegation
     end
 
     # Whether or not the token is expired
