@@ -138,7 +138,7 @@ describe AccessToken do
 
   end
 
-  describe '#refresh!' do
+  describe '#refresh' do
     let(:access) do
       AccessToken.new(client, token, :refresh_token  => 'abaca',
                                      :expires_in     => 600,
@@ -146,7 +146,7 @@ describe AccessToken do
     end
 
     it 'returns a refresh token with appropriate values carried over' do
-      refreshed = access.refresh!
+      refreshed = access.refresh
       expect(access.client).to eq(refreshed.client)
       expect(access.options[:param_name]).to eq(refreshed.options[:param_name])
     end
@@ -155,7 +155,7 @@ describe AccessToken do
       let(:refresh_body) { MultiJson.encode(:access_token => 'refreshed_foo', :expires_in => 600, :refresh_token => nil) }
 
       it 'copies the refresh_token from the original token' do
-        refreshed = access.refresh!
+        refreshed = access.refresh
 
         expect(refreshed.refresh_token).to eq(access.refresh_token)
       end
