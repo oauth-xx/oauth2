@@ -25,18 +25,18 @@ module OAuth2
     #  on responses with 400+ status codes
     # @yield [builder] The Faraday connection builder
     def initialize(client_id, client_secret, opts = {}, &block)
-      _opts = opts.dup
+      dup_opts = opts.dup
       @id = client_id
       @secret = client_secret
-      @site = _opts.delete(:site)
-      ssl = _opts.delete(:ssl)
+      @site = dup_opts.delete(:site)
+      ssl = dup_opts.delete(:ssl)
       @options = {:authorize_url    => '/oauth/authorize',
                   :token_url        => '/oauth/token',
                   :token_method     => :post,
                   :connection_opts  => {},
                   :connection_build => block,
                   :max_redirects    => 5,
-                  :raise_errors     => true}.merge(_opts)
+                  :raise_errors     => true}.merge(dup_opts)
       @options[:connection_opts][:ssl] = ssl if ssl
     end
 

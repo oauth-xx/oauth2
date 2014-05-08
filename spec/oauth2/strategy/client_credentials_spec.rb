@@ -17,7 +17,7 @@ describe OAuth2::Strategy::ClientCredentials do
             [200, {'Content-Type' => 'application/json'}, json_token]
           end
         end
-        stub.post('/oauth/token', 'client_id' => 'abc', 'client_secret' => 'def', 'grant_type' => 'client_credentials') do |env|
+        stub.post('/oauth/token', 'client_id' => 'abc', 'client_secret' => 'def', 'grant_type' => 'client_credentials') do
           case @mode
           when 'formencoded'
             [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, kvform_token]
