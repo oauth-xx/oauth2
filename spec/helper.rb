@@ -24,7 +24,7 @@ end
 
 Faraday.default_adapter = :test
 
-RSpec.configure do |conf|
+RSpec.configure do
   include OAuth2
 end
 

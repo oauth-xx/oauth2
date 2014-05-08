@@ -5,7 +5,7 @@ describe OAuth2::Strategy::Assertion do
     cli = OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com')
     cli.connection.build do |b|
       b.adapter :test do |stub|
-        stub.post('/oauth/token') do |env|
+        stub.post('/oauth/token') do
           case @mode
           when 'formencoded'
             [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, 'expires_in=600&access_token=salmon&refresh_token=trout']

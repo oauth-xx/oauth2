@@ -7,15 +7,15 @@ describe OAuth2::Client do
   subject do
     OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com') do |builder|
       builder.adapter :test do |stub|
-        stub.get('/success')      { |env| [200, {'Content-Type' => 'text/awesome'}, 'yay'] }
+        stub.get('/success')      { [200, {'Content-Type' => 'text/awesome'}, 'yay'] }
         stub.get('/reflect')      { |env| [200, {}, env[:body]] }
         stub.post('/reflect')     { |env| [200, {}, env[:body]] }
-        stub.get('/unauthorized') { |env| [401, {'Content-Type' => 'application/json'}, MultiJson.encode(:error => error_value, :error_description => error_description_value)] }
-        stub.get('/conflict')     { |env| [409, {'Content-Type' => 'text/plain'}, 'not authorized'] }
-        stub.get('/redirect')     { |env| [302, {'Content-Type' => 'text/plain', 'location' => '/success'}, ''] }
-        stub.post('/redirect')    { |env| [303, {'Content-Type' => 'text/plain', 'location' => '/reflect'}, ''] }
-        stub.get('/error')        { |env| [500, {'Content-Type' => 'text/plain'}, 'unknown error'] }
-        stub.get('/empty_get')    { |env| [204, {}, nil] }
+        stub.get('/unauthorized') { [401, {'Content-Type' => 'application/json'}, MultiJson.encode(:error => error_value, :error_description => error_description_value)] }
+        stub.get('/conflict')     { [409, {'Content-Type' => 'text/plain'}, 'not authorized'] }
+        stub.get('/redirect')     { [302, {'Content-Type' => 'text/plain', 'location' => '/success'}, ''] }
+        stub.post('/redirect')    { [303, {'Content-Type' => 'text/plain', 'location' => '/reflect'}, ''] }
+        stub.get('/error')        { [500, {'Content-Type' => 'text/plain'}, 'unknown error'] }
+        stub.get('/empty_get')    { [204, {}, nil] }
       end
     end
   end
@@ -65,7 +65,7 @@ describe OAuth2::Client do
     it 'allows override of raise_errors option' do
       client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :raise_errors => true) do |builder|
         builder.adapter :test do |stub|
-          stub.get('/notfound') { |env| [404, {}, nil] }
+          stub.get('/notfound') { [404, {}, nil] }
         end
       end
       expect(client.options[:raise_errors]).to be true
