@@ -5,6 +5,7 @@ describe OAuth2::Strategy::AuthCode do
   let(:kvform_token) { 'expires_in=600&access_token=salmon&refresh_token=trout&extra_param=steve' }
   let(:facebook_token) { kvform_token.gsub('_in', '') }
   let(:json_token) { MultiJson.encode(:expires_in => 600, :access_token => 'salmon', :refresh_token => 'trout', :extra_param => 'steve') }
+  let(:basic_auth) { 'Basic ' + Base64.encode64('abc:def').strip }
 
   let(:client) do
     OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com') do |builder|
@@ -28,6 +29,16 @@ describe OAuth2::Strategy::AuthCode do
           when 'from_facebook'
             [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, facebook_token]
           end
+        end
+      end
+    end
+  end
+
+  let(:strict_client) do
+    OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com') do |builder|
+      builder.adapter :test do |stub|
+        stub.post('/oauth/token', {'code' => 'sushi', 'grant_type' => 'authorization_code'}, {"Content-Type"=>"application/x-www-form-urlencoded", 'Authorization' => basic_auth}) do |env|
+          [200, {'Content-Type' => 'application/json'}, json_token]
         end
       end
     end
@@ -83,6 +94,13 @@ describe OAuth2::Strategy::AuthCode do
           expect(@access['extra_param']).to eq('steve')
         end
       end
+    end
+  end
+
+  describe "#get_token with Authorization header" do
+    it 'does not include the client_id and client_secret' do
+      @access = strict_client.auth_code.get_token(code, :headers => {'Authorization' => basic_auth})
+      expect(@access.token).to eq('salmon')
     end
   end
 end
