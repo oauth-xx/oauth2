@@ -76,3 +76,7 @@ CaseIndentation:
 
 Lambda:
   Enabled: false
+
+UnusedBlockArgument:
+  Enabled: false
+

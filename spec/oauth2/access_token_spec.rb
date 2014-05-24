@@ -25,7 +25,7 @@ describe AccessToken do
   describe '#initialize' do
     it 'assigns client and token' do
       expect(subject.client).to eq(client)
-      expect(subject.token).to  eq(token)
+      expect(subject.token).to eq(token)
     end
 
     it 'assigns extra params' do

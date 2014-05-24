@@ -2,7 +2,7 @@ module OAuth2
   class Version
     MAJOR = 0
     MINOR = 9
-    PATCH = 3
+    PATCH = 4
     PRE = nil
 
     class << self
