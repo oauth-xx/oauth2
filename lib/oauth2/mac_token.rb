@@ -1,7 +1,7 @@
 require 'base64'
-require 'securerandom'
-require 'openssl'
 require 'digest'
+require 'openssl'
+require 'securerandom'
 
 module OAuth2
   class MACToken < AccessToken
@@ -92,7 +92,7 @@ module OAuth2
         '', nil
       ].join("\n")
 
-      Base64.strict_encode64(OpenSSL::HMAC.digest(@algorithm, secret, signature))
+      strict_encode64(OpenSSL::HMAC.digest(@algorithm, secret, signature))
     end
 
     # Set the HMAC algorithm
@@ -114,6 +114,11 @@ module OAuth2
     # No-op since we need the verb and path
     # and the MAC always goes in a header
     def token=(_)
+    end
+
+    # Base64.strict_encode64 is not available on Ruby 1.8.7
+    def strict_encode64(str)
+      Base64.encode64(str).gsub("\n", '')
     end
   end
 end
