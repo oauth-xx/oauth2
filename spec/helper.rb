@@ -38,3 +38,5 @@ def capture_output(&block)
   end
   result
 end
+
+VERBS = [:get, :post, :put, :delete]
