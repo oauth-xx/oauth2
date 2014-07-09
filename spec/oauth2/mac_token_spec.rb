@@ -40,16 +40,14 @@ describe MACToken do
     end
 
     it 'raises on improper algorithm' do
-      expect {
-        MACToken.new(client, token, 'abc123', :algorithm => 'invalid-sha')
-      }.to raise_error(ArgumentError)
+      expect { MACToken.new(client, token, 'abc123', :algorithm => 'invalid-sha') }.to raise_error(ArgumentError)
     end
   end
 
   describe '#request' do
     VERBS.each do |verb|
       it "sends the token in the Authorization header for a #{verb.to_s.upcase} request" do
-        expect(subject.post('/token/header').body).to include(%|MAC id="#{token}"|)
+        expect(subject.post('/token/header').body).to include("MAC id=\"#{token}\"")
       end
     end
   end
@@ -64,13 +62,11 @@ describe MACToken do
 
     it 'generates the proper format' do
       header = subject.header('get', 'https://www.example.com/hello?a=1')
-      expect(header).to match(%r{MAC id="#{token}", ts="[0-9]+", nonce="[^"]+", mac="[^"]+"})
+      expect(header).to match(/MAC id="#{token}", ts="[0-9]+", nonce="[^"]+", mac="[^"]+"/)
     end
 
     it 'passes ArgumentError with an invalid url' do
-      expect {
-        subject.header('get', 'this-is-not-valid')
-      }.to raise_error(ArgumentError)
+      expect { subject.header('get', 'this-is-not-valid') }.to raise_error(ArgumentError)
     end
 
     it 'passes URI::InvalidURIError through' do
@@ -93,7 +89,8 @@ describe MACToken do
 
   describe '.from_access_token' do
     let(:access_token) do
-      AccessToken.new(client, token,
+      AccessToken.new(
+        client, token,
         :expires_at => 1,
         :expires_in => 1,
         :refresh_token => 'abc',
