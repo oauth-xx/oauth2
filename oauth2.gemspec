@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rack', '~> 1.2'
   spec.add_development_dependency 'bundler', '~> 1.0'
   spec.authors       = ['Michael Bleigh', 'Erik Michaels-Ober']
-  spec.description   = %q(A Ruby wrapper for the OAuth 2.0 protocol built with a similar style to the original OAuth spec.)
+  spec.description   = 'A Ruby wrapper for the OAuth 2.0 protocol built with a similar style to the original OAuth spec.'
   spec.email         = ['michael@intridea.com', 'sferik@gmail.com']
   spec.files         = %w(.document CONTRIBUTING.md LICENSE.md README.md Rakefile oauth2.gemspec)
   spec.files        += Dir.glob('lib/**/*.rb')
@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'oauth2'
   spec.require_paths = %w(lib)
   spec.required_rubygems_version = '>= 1.3.5'
-  spec.summary       = %q(A Ruby wrapper for the OAuth 2.0 protocol.)
+  spec.summary       = 'A Ruby wrapper for the OAuth 2.0 protocol.'
   spec.test_files    = Dir.glob('spec/**/*')
   spec.version       = OAuth2::Version
 end
