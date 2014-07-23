@@ -44,6 +44,10 @@ module OAuth2
       end
       @expires_in ||= opts.delete('expires')
       @expires_in &&= @expires_in.to_i
+      
+      if @expires_at.kind_of?(String) && !(@expires_at =~ /^[1-9]\d*(\.\d+)?$/)
+        @expires_at = Time.parse(@expires_at)
+      end
       @expires_at &&= @expires_at.to_i
       @expires_at ||= Time.now.to_i + @expires_in if @expires_in
       @options = {:mode          => opts.delete(:mode) || :header,
