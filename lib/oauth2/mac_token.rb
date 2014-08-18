@@ -12,11 +12,7 @@ module OAuth2
     # @param [Hash] opts the options to create the Access Token with
     # @see MACToken#initialize
     def self.from_access_token(token, secret, options = {})
-      new(token.client, token.token, secret, token.params.merge(
-        :refresh_token => token.refresh_token,
-        :expires_in => token.expires_in,
-        :expires_at => token.expires_at
-      ).merge(options))
+      new(token.client, token.token, secret, token.params.merge(:refresh_token => token.refresh_token, :expires_in => token.expires_in, :expires_at => token.expires_at).merge(options))
     end
 
     attr_reader :secret, :algorithm
@@ -99,7 +95,8 @@ module OAuth2
     #
     # @param [String] alg the algorithm to use (one of 'hmac-sha-1', 'hmac-sha-256')
     def algorithm=(alg)
-      @algorithm = case alg.to_s
+      @algorithm = begin
+        case alg.to_s
         when 'hmac-sha-1'
           OpenSSL::Digest::SHA1.new
         when 'hmac-sha-256'
@@ -107,6 +104,7 @@ module OAuth2
         else
           fail(ArgumentError, 'Unsupported algorithm')
         end
+      end
     end
 
   private

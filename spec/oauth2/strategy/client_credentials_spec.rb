@@ -41,7 +41,7 @@ describe OAuth2::Strategy::ClientCredentials do
     it 'generates an Authorization header value for HTTP Basic Authentication' do
       [
         ['abc', 'def', 'Basic YWJjOmRlZg=='],
-        ['xxx', 'secret', 'Basic eHh4OnNlY3JldA==']
+        ['xxx', 'secret', 'Basic eHh4OnNlY3JldA=='],
       ].each do |client_id, client_secret, expected|
         expect(subject.authorization(client_id, client_secret)).to eq(expected)
       end

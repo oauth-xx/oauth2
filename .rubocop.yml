@@ -1,82 +1,55 @@
-AllCops:
-  Include:
-    - 'Gemfile'
-    - 'Rakefile'
-    - 'oauth2.gemspec'
+Metrics/BlockNesting:
+  Max: 2
 
-# Avoid long parameter lists
-ParameterLists:
-  Max: 4
-  CountKeywordArgs: true
+Metrics/LineLength:
+  AllowURI: true
+  Enabled: false
 
-MethodLength:
+Metrics/MethodLength:
   CountComments: false
   Max: 15
 
-# Avoid more than `Max` levels of nesting.
-BlockNesting:
-  Max: 3
+Metrics/ParameterLists:
+  Max: 4
+  CountKeywordArgs: true
 
-# Align with the style guide.
-CollectionMethods:
+Lint/UnusedBlockArgument:
+  Exclude:
+    - 'spec/**/*.rb'
+
+Style/AccessModifierIndentation:
+  EnforcedStyle: outdent
+
+Style/CollectionMethods:
   PreferredMethods:
-    collect:  'map'
-    inject:   'reduce'
+    map:      'collect'
+    reduce:   'inject'
     find:     'detect'
     find_all: 'select'
 
-# Do not force public/protected/private keyword to be indented at the same
-# level as the def keyword. My personal preference is to outdent these keywords
-# because I think when scanning code it makes it easier to identify the
-# sections of code and visually separate them. When the keyword is at the same
-# level I think it sort of blends in with the def keywords and makes it harder
-# to scan the code and see where the sections are.
-AccessModifierIndentation:
+Style/Documentation:
   Enabled: false
 
-# Limit line length
-LineLength:
+Style/DotPosition:
+  EnforcedStyle: trailing
+
+Style/DoubleNegation:
   Enabled: false
 
-# Disable documentation checking until a class needs to be documented once
-Documentation:
+Style/EachWithObject:
   Enabled: false
 
-# Enforce Ruby 1.8-compatible hash syntax
-HashSyntax:
+Style/Encoding:
+  Enabled: false
+
+Style/HashSyntax:
   EnforcedStyle: hash_rockets
 
-# No spaces inside hash literals
-SpaceInsideHashLiteralBraces:
+Style/Lambda:
+  Enabled: false
+
+Style/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
 
-# Allow dots at the end of lines
-DotPosition:
-  Enabled: false
-
-# Don't require magic comment at the top of every file
-Encoding:
-  Enabled: false
-
-# Enforce outdenting of access modifiers (i.e. public, private, protected)
-AccessModifierIndentation:
-  EnforcedStyle: outdent
-
-EmptyLinesAroundAccessModifier:
-  Enabled: true
-
-# Align ends correctly
-EndAlignment:
-  AlignWith: variable
-
-# Indentation of when/else
-CaseIndentation:
-  IndentWhenRelativeTo: end
-  IndentOneStep: false
-
-Lambda:
-  Enabled: false
-
-UnusedBlockArgument:
-  Enabled: false
-
+Style/TrailingComma:
+  EnforcedStyleForMultiline: 'comma'
