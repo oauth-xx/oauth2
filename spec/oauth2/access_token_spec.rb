@@ -133,6 +133,13 @@ describe AccessToken do
       expect(access).to be_expired
     end
 
+    it 'is true if expires_at is now' do
+      @now = Time.now
+      access = AccessToken.new(client, token, :refresh_token => 'abaca', :expires_at => @now.to_i)
+      allow(Time).to receive(:now).and_return(@now)
+      expect(access).to be_expired
+    end
+
   end
 
   describe '#refresh!' do

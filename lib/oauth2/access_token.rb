@@ -70,7 +70,7 @@ module OAuth2
     #
     # @return [Boolean]
     def expired?
-      expires? && (expires_at < Time.now.to_i)
+      expires? && (expires_at <= Time.now.to_i)
     end
 
     # Refreshes the current Access Token
