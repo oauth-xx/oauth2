@@ -12,7 +12,7 @@ module OAuth2
         case @client.options[:auth_scheme]
         when :request_body
           {'client_id' => @client.id, 'client_secret' => @client.secret}
-        when :basic_auth
+        else
           {:headers => {'Authorization' => authorization(@client.id, @client.secret)}}
         end
       end
