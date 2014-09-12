@@ -1,6 +1,5 @@
 require 'faraday'
 require 'logger'
-require 'byebug'
 
 module OAuth2
   # The OAuth2::Client class
