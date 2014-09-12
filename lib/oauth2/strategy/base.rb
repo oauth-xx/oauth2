@@ -9,7 +9,12 @@ module OAuth2
       #
       # @return [Hash]
       def client_params
-        {'client_id' => @client.id, 'client_secret' => @client.secret}
+        case @client.options[:auth_scheme]
+        when :request_body
+          {'client_id' => @client.id, 'client_secret' => @client.secret}
+        when :basic_auth
+          {:headers => {'Authorization' => authorization(@client.id, @client.secret)}}
+        end
       end
 
       # Returns the Authorization header value for Basic Authentication

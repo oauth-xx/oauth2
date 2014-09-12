@@ -49,11 +49,12 @@ describe OAuth2::Strategy::ClientCredentials do
   end
 
   %w(json formencoded).each do |mode|
-    %w(default basic_auth request_body).each do |auth_scheme|
+    [:basic_auth, :request_body].each do |auth_scheme|
       describe "#get_token (#{mode}) (#{auth_scheme})" do
         before do
           @mode = mode
-          @access = subject.get_token({}, auth_scheme == 'default' ? {} : {'auth_scheme' => auth_scheme})
+          client.options[:auth_scheme] = auth_scheme
+          @access = subject.get_token
         end
 
         it 'returns AccessToken with same Client' do

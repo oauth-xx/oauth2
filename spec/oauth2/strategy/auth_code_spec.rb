@@ -75,13 +75,14 @@ describe OAuth2::Strategy::AuthCode do
   end
 
   %w(json formencoded from_facebook).each do |mode|
-    %w(default basic_auth request_body).each do |auth_scheme|
+    [:basic_auth, :request_body].each do |auth_scheme|
       [:get, :post].each do |verb|
         describe "#get_token (#{mode}, access_token_method=#{verb}, auth_scheme=#{auth_scheme})" do
           before do
             @mode = mode
             client.options[:token_method] = verb
-            @access = subject.get_token(code, {}, auth_scheme == 'default' ? {} : {'auth_scheme' => auth_scheme})
+            client.options[:auth_scheme] = auth_scheme
+            @access = subject.get_token(code, {})
           end
 
           it 'returns AccessToken with same Client' do
