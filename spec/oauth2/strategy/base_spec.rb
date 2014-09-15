@@ -16,16 +16,16 @@ describe OAuth2::Strategy::Base do
       expect(subject.client_params).to eq(basic_auth)
     end
 
-    context "with auth_scheme=basic_auth" do
-      let(:client) { OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com', auth_scheme: :basic_auth) }
+    context 'with auth_scheme=basic_auth' do
+      let(:client) { OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com', :auth_scheme => :basic_auth) }
 
       it 'generates header values' do
         expect(subject.client_params).to eq(basic_auth)
       end
     end
 
-    context "with auth_scheme=request_body" do
-      let(:client) { OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com', auth_scheme: :request_body) }
+    context 'with auth_scheme=request_body' do
+      let(:client) { OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com', :auth_scheme => :request_body) }
 
       it 'generates body values' do
         expect(subject.client_params).to eq(request_body)
