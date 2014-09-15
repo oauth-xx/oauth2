@@ -37,17 +37,6 @@ describe OAuth2::Strategy::ClientCredentials do
     end
   end
 
-  describe '#authorization' do
-    it 'generates an Authorization header value for HTTP Basic Authentication' do
-      [
-        ['abc', 'def', 'Basic YWJjOmRlZg=='],
-        ['xxx', 'secret', 'Basic eHh4OnNlY3JldA=='],
-      ].each do |client_id, client_secret, expected|
-        expect(subject.authorization(client_id, client_secret)).to eq(expected)
-      end
-    end
-  end
-
   %w(json formencoded).each do |mode|
     [:basic_auth, :request_body].each do |auth_scheme|
       describe "#get_token (#{mode}) (#{auth_scheme})" do
