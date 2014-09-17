@@ -38,7 +38,7 @@ module OAuth2
       #
       #   params :iss, issuer
       #   params :aud, audience, optional
-      #   params :prn, principal, current user
+      #   params :sub, principal, current user
       #   params :exp, expired at, in seconds, like Time.now.utc.to_i + 3600
       #
       # @param [Hash] opts options
@@ -47,6 +47,7 @@ module OAuth2
         @client.get_token(hash, opts.merge('refresh_token' => nil))
       end
 
+      # Build request payload with grant_type set to assertion
       def build_request(params)
         assertion = build_assertion(params)
         {:grant_type     => 'assertion',
@@ -56,16 +57,37 @@ module OAuth2
         }.merge(client_params)
       end
 
+      # Build a JSON Web Token (JWT). A JWT is composed of three parts: a header, a claim set, and a signature.
+      # The header and claim set are JSON objects. These JSON objects are serialized to UTF-8 bytes, then encoded
+      # using the Base64url encoding. This encoding provides resilience against encoding changes due to repeated
+      # encoding operations. The header, claim set, and signature are concatenated together with a period (.) character.
+      #
+      # @param [Hash] params claim set to sign with given secret (or key). It may contain following values plus
+      #                      any other value that will be part of final JWT
+      #
+      # @option params [String] :iss claim that contains a unique identifier for the entity that issued the JWT
+      # @option params [String] :sub claim identifying the principal that is the subject of the JWT
+      # @option params [String] :aud claim containing a value that identifies the authorization
+      #                              server as an intended audience.
+      # @option params [Integer] :exp claim that limits the time window during which the JWT can be used
+      # @option params [Integer] :nbf claim that identifies the time before which the token MUST NOT be
+      #                               accepted for processing
+      # @option params [Integer] :iat claim that identifies the time at which the JWT was issued
+      # @option params [Integer] :jti claim that provides a unique identifier for the token
+      #
+      # @return [String] the signed JWT as a base64 encoded string
+      #
+      # @see http://tools.ietf.org/html/draft-ietf-oauth-jwt-bearer-07#section-3
       def build_assertion(params)
-        claims = {:iss => params[:iss],
-                  :aud => params[:aud],
-                  :prn => params[:prn],
-                  :exp => params[:exp],
-                 }
-        if params[:hmac_secret]
-          JWT.encode(claims, params[:hmac_secret], 'HS256')
-        elsif params[:private_key]
-          JWT.encode(claims, params[:private_key], 'RS256')
+        hmac_secret = params.delete(:hmac_secret)
+        private_key = params.delete(:private_key)
+        # Check required params for signing
+        fail(ArgumentError, 'You must provide either :private_key or :hmac_secret value') unless hmac_secret || private_key
+        # Encode remaining payload according to given secret
+        if hmac_secret
+          JWT.encode(params, hmac_secret, 'HS256')
+        elsif private_key
+          JWT.encode(params, private_key, 'RS256')
         end
       end
     end
