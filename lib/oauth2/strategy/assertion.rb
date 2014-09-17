@@ -83,12 +83,24 @@ module OAuth2
         private_key = params.delete(:private_key)
         # Check required params for signing
         fail(ArgumentError, 'You must provide either :private_key or :hmac_secret value') unless hmac_secret || private_key
+        # If requested validate parameters according to spec
+        validate_required_params!(params) if params.delete(:validate)
         # Encode remaining payload according to given secret
         if hmac_secret
           JWT.encode(params, hmac_secret, 'HS256')
         elsif private_key
           JWT.encode(params, private_key, 'RS256')
         end
+      end
+
+    private
+
+      # Validate required params according to JWT spec
+      # @param [Hash] params claim set to sign
+      # @raise ArgumentError if required values are not present in claim set
+      def validate_required_params!(params)
+        required_keys = [:iss, :sub, :aud, :exp]
+        fail(ArgumentError, "You must provide values for all of #{required_keys}") unless required_keys.all? { |k| params[k] }
       end
     end
   end

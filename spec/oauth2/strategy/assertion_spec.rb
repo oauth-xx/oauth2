@@ -78,6 +78,10 @@ describe OAuth2::Strategy::Assertion do
       expect { subject.build_assertion(claim) }.to raise_error ArgumentError, /:private_key or :hmac_secret/
     end
 
+    it 'raises with :validate => true' do
+      expect { subject.build_assertion(:hmac_secret => secret, :validate => true) }.to raise_error ArgumentError, /You must provide values for all/
+    end
+
   end
 
 end
