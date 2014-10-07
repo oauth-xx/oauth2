@@ -79,7 +79,7 @@ module OAuth2
     # Determines the parser that will be used to supply the content of #parsed
     def parser
       return options[:parse].to_sym if PARSERS.key?(options[:parse])
-      CONTENT_TYPES[content_type]
+      CONTENT_TYPES[content_type.downcase]
     end
   end
 end
