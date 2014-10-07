@@ -68,7 +68,17 @@ module OAuth2
     #   application/json Content-Type response bodies
     def parsed
       return nil unless PARSERS.key?(parser)
-      @parsed ||= PARSERS[parser].call(body)
+      @parsed ||= begin
+        @raw = PARSERS[parser].call(body)
+        if @raw.is_a?(Hash)
+          @snake_cased = {}
+          @raw.each_pair do |key, val|
+            @snake_cased[to_snake_case(key)] = val
+          end
+          @raw = @snake_cased
+        end
+        @raw
+      end
     end
 
     # Attempts to determine the content type of the response.
@@ -80,6 +90,15 @@ module OAuth2
     def parser
       return options[:parse].to_sym if PARSERS.key?(options[:parse])
       CONTENT_TYPES[content_type.downcase]
+    end
+
+    # Convert body keys to snake ase
+    def to_snake_case(string)
+      string.gsub(/::/, '/').
+      gsub(/([A-Z]+)([A-Z][a-z])/,'\1_\2').
+      gsub(/([a-z\d])([A-Z])/,'\1_\2').
+      tr("-", "_").
+      downcase
     end
   end
 end

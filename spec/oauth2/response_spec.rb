@@ -60,6 +60,17 @@ describe OAuth2::Response do
       expect(subject.parsed['answer']).to eq(42)
     end
 
+    # Test camelcase content type, happening in some providers
+    it "parses application/Json body" do
+      headers = {'Content-Type' => 'application/Json'}
+      body = MultiJson.encode(:foo => 'bar', :answer => 42)
+      response = double('response', :headers => headers, :body => body)
+      subject = Response.new(response)
+      expect(subject.parsed.keys.size).to eq(2)
+      expect(subject.parsed['foo']).to eq('bar')
+      expect(subject.parsed['answer']).to eq(42)
+    end
+
     it "doesn't try to parse other content-types" do
       headers = {'Content-Type' => 'text/html'}
       body = '<!DOCTYPE html><html><head></head><body></body></html>'
@@ -72,6 +83,16 @@ describe OAuth2::Response do
 
       subject = Response.new(response)
       expect(subject.parsed).to be_nil
+    end
+
+    it "should snakecase json keys when parsing" do
+      headers = {'Content-Type' => 'application/Json'}
+      body = MultiJson.encode("accessToken" => 'bar', "MiGever" => "Ani")
+      response = double('response', :headers => headers, :body => body)
+      subject = Response.new(response)
+      expect(subject.parsed.keys.size).to eq(2)
+      expect(subject.parsed['access_token']).to eq('bar')
+      expect(subject.parsed['mi_gever']).to eq("Ani")
     end
   end
 
