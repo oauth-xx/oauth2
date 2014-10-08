@@ -13,15 +13,12 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Michael Bleigh', 'Erik Michaels-Ober']
   spec.description   = 'A Ruby wrapper for the OAuth 2.0 protocol built with a similar style to the original OAuth spec.'
   spec.email         = ['michael@intridea.com', 'sferik@gmail.com']
-  spec.files         = %w(.document CONTRIBUTING.md LICENSE.md README.md Rakefile oauth2.gemspec)
-  spec.files        += Dir.glob('lib/**/*.rb')
-  spec.files        += Dir.glob('spec/**/*')
+  spec.files         = %w(.document CONTRIBUTING.md LICENSE.md README.md oauth2.gemspec) + Dir['lib/**/*.rb']
   spec.homepage      = 'http://github.com/intridea/oauth2'
   spec.licenses      = %w(MIT)
   spec.name          = 'oauth2'
   spec.require_paths = %w(lib)
   spec.required_rubygems_version = '>= 1.3.5'
   spec.summary       = 'A Ruby wrapper for the OAuth 2.0 protocol.'
-  spec.test_files    = Dir.glob('spec/**/*')
   spec.version       = OAuth2::Version
 end
