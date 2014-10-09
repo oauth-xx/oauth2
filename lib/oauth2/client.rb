@@ -19,6 +19,7 @@ module OAuth2
     # @option opts [String] :authorize_url ('/oauth/authorize') absolute or relative URL path to the Authorization endpoint
     # @option opts [String] :token_url ('/oauth/token') absolute or relative URL path to the Token endpoint
     # @option opts [Symbol] :token_method (:post) HTTP method to use to request token (:get or :post)
+    # @option opts [Symbol] :auth_scheme (:basic_auth) HTTP method to use to authorize request (:basic_auth or :request_body)
     # @option opts [Hash] :connection_opts ({}) Hash of connection options to pass to initialize Faraday with
     # @option opts [FixNum] :max_redirects (5) maximum number of redirects to follow
     # @option opts [Boolean] :raise_errors (true) whether or not to raise an OAuth2::Error
@@ -33,6 +34,7 @@ module OAuth2
       @options = {:authorize_url    => '/oauth/authorize',
                   :token_url        => '/oauth/token',
                   :token_method     => :post,
+                  :auth_scheme      => :basic_auth,
                   :connection_opts  => {},
                   :connection_build => block,
                   :max_redirects    => 5,
@@ -127,14 +129,15 @@ module OAuth2
     # @return [AccessToken] the initalized AccessToken
     def get_token(params, access_token_opts = {}, access_token_class = AccessToken)
       opts = {:raise_errors => options[:raise_errors], :parse => params.delete(:parse)}
+      headers = params.delete(:headers)
       if options[:token_method] == :post
-        headers = params.delete(:headers)
         opts[:body] = params
-        opts[:headers] =  {'Content-Type' => 'application/x-www-form-urlencoded'}
-        opts[:headers].merge!(headers) if headers
+        opts[:headers] = {'Content-Type' => 'application/x-www-form-urlencoded'}
       else
         opts[:params] = params
+        opts[:headers] = {}
       end
+      opts[:headers].merge!(headers) if headers
       response = request(options[:token_method], token_url, opts)
       error = Error.new(response)
       fail(error) if options[:raise_errors] && !(response.parsed.is_a?(Hash) && response.parsed['access_token'])
