@@ -60,6 +60,14 @@ describe OAuth2::Response do
       expect(subject.parsed['answer']).to eq(42)
     end
 
+    it 'parses application/vnd.collection+json body' do
+      headers = {'Content-Type' => 'application/vnd.collection+json'}
+      body = MultiJson.encode(:collection => {})
+      response = double('response', :headers => headers, :body => body)
+      subject = Response.new(response)
+      expect(subject.parsed.keys.size).to eq(1)
+    end
+
     it "doesn't try to parse other content-types" do
       headers = {'Content-Type' => 'text/html'}
       body = '<!DOCTYPE html><html><head></head><body></body></html>'

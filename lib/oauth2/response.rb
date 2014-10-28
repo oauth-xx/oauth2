@@ -59,6 +59,7 @@ module OAuth2
     CONTENT_TYPES = {
       'application/json' => :json,
       'text/javascript' => :json,
+      'application/vnd.collection+json' => :json,
       'application/x-www-form-urlencoded' => :query,
       'text/plain' => :text,
     }
