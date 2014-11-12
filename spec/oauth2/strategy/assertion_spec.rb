@@ -53,4 +53,35 @@ describe OAuth2::Strategy::Assertion do
     end
   end
 
+  describe '#build_assertion' do
+
+    # Claim base params
+    let(:claim) do
+      {
+        :iss => 'some issuer',
+        :aud => 'some audience',
+        :prn => 'some principal',
+        :exp => Time.now.utc.to_i + 3600,
+      }
+    end
+
+    let(:secret) { 'secret string' }
+    let(:params) { claim.merge(:hmac_secret => secret) }
+    let(:other_params) { {:iat => Time.now.utc.to_i - 60} }
+
+    it 'builds the assertion with all params but secret' do
+      expect(JWT).to receive(:encode).with(claim, secret, 'HS256')
+      subject.build_assertion(params)
+    end
+
+    it 'raises without :private_key or :hmac_secret' do
+      expect { subject.build_assertion(claim) }.to raise_error ArgumentError, /:private_key or :hmac_secret/
+    end
+
+    it 'raises with :validate => true' do
+      expect { subject.build_assertion(:hmac_secret => secret, :validate => true) }.to raise_error ArgumentError, /You must provide values for all/
+    end
+
+  end
+
 end
