@@ -1,6 +1,6 @@
 module OAuth2
   class AccessToken
-    attr_reader :client, :token, :expires_in, :expires_at, :params
+    attr_reader :client, :token, :expires_at, :params
     attr_accessor :options, :refresh_token
 
     class << self
@@ -39,13 +39,13 @@ module OAuth2
     def initialize(client, token, opts = {})
       @client = client
       @token = token.to_s
-      [:refresh_token, :expires_in, :expires_at].each do |arg|
+      [:refresh_token, :expires_at].each do |arg|
         instance_variable_set("@#{arg}", opts.delete(arg) || opts.delete(arg.to_s))
       end
-      @expires_in ||= opts.delete('expires')
-      @expires_in &&= @expires_in.to_i
+      expires_in  ||= opts.delete(:expires_in) || opts.delete('expires_in') || opts.delete('expires')
+      expires_in  &&= expires_in.to_i
+      @expires_at ||= Time.now.to_i + expires_in if expires_in
       @expires_at &&= @expires_at.to_i
-      @expires_at ||= Time.now.to_i + @expires_in if @expires_in
       @options = {:mode          => opts.delete(:mode) || :header,
                   :header_format => opts.delete(:header_format) || 'Bearer %s',
                   :param_name    => opts.delete(:param_name) || 'access_token'}
@@ -71,6 +71,13 @@ module OAuth2
     # @return [Boolean]
     def expired?
       expires? && (expires_at < Time.now.to_i)
+    end
+
+    # How long until the token expires
+    #
+    # @return [Integer]
+    def expires_in
+      expires_at - Time.now.to_i
     end
 
     # Refreshes the current Access Token

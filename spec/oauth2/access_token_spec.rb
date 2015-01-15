@@ -132,7 +132,16 @@ describe AccessToken do
       allow(Time).to receive(:now).and_return(@now)
       expect(access).to be_expired
     end
+  end
 
+  describe '#expires_in' do
+    before { allow(Time).to receive(:now).and_return(Time.parse('Jan 1 2000')) }
+
+    it 'returns the seconds left until the token expires' do
+      @then = Time.now.to_i + 1800
+      access = AccessToken.new(client, token, :refresh_token => 'abaca', :expires_at => @then)
+      expect(access.expires_in).to eq(1800)
+    end
   end
 
   describe '#refresh!' do
