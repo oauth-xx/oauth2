@@ -39,13 +39,11 @@ module OAuth2
     def initialize(client, token, opts = {})
       @client = client
       @token = token.to_s
-      [:refresh_token, :expires_at].each do |arg|
+      [:refresh_token, :expires_in, :expires_at].each do |arg|
         instance_variable_set("@#{arg}", opts.delete(arg) || opts.delete(arg.to_s))
       end
-      expires_in  ||= opts.delete(:expires_in) || opts.delete('expires_in') || opts.delete('expires')
-      expires_in  &&= expires_in.to_i
-      @expires_at ||= Time.now.to_i + expires_in if expires_in
-      @expires_at &&= @expires_at.to_i
+      @expires_in ||= opts.delete('expires')
+      set_expiration_vars
       @options = {:mode          => opts.delete(:mode) || :header,
                   :header_format => opts.delete(:header_format) || 'Bearer %s',
                   :param_name    => opts.delete(:param_name) || 'access_token'}
@@ -157,7 +155,13 @@ module OAuth2
 
   private
 
-    def token=(opts) # rubocop:disable MethodLength
+    def set_expiration_vars
+      @expires_in &&= @expires_in.to_i
+      @expires_at &&= @expires_at.to_i
+      @expires_at ||= Time.now.to_i + @expires_in if @expires_in
+    end
+
+    def token=(opts) # rubocop:disable MethodLength, Metrics/AbcSize
       case options[:mode]
       when :header
         opts[:headers] ||= {}

@@ -31,7 +31,7 @@ describe AccessToken do
       expect(target.params['foo']).to eq('bar')
     end
 
-    def assert_initialized_token(target)
+    def assert_initialized_token(target) # rubocop:disable Metrics/AbcSize
       expect(target.token).to eq(token)
       expect(target).to be_expires
       expect(target.params.keys).to include('foo')
