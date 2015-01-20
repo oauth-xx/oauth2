@@ -75,9 +75,10 @@ module OAuth2
 
     # How long until the token expires
     #
-    # @return [Integer]
+    # @return [FixNum] seconds until expiration
+    # @return [Nil] if the token will not expire
     def expires_in
-      expires_at - Time.now.to_i
+      (expires_at - Time.now.to_i) if expires?
     end
 
     # Refreshes the current Access Token

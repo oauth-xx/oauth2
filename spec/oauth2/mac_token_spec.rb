@@ -88,7 +88,7 @@ describe MACToken do
   end
 
   describe '.from_access_token' do
-    let(:one_second_later) { Time.now.to_i + 1}
+    let(:one_second_later) { Time.now.to_i + 1 }
 
     let(:access_token) do
       AccessToken.new(
