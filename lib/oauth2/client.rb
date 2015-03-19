@@ -130,7 +130,7 @@ module OAuth2
       headers = params.delete(:headers) || {}
       if options[:token_method] == :post
         opts[:body] = params
-        headers.merge!({'Content-Type' => 'application/x-www-form-urlencoded'})
+        headers.merge!('Content-Type' => 'application/x-www-form-urlencoded')
       else
         opts[:params] = params
       end
