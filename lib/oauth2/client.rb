@@ -127,14 +127,14 @@ module OAuth2
     # @return [AccessToken] the initalized AccessToken
     def get_token(params, access_token_opts = {}, access_token_class = AccessToken)
       opts = {:raise_errors => options[:raise_errors], :parse => params.delete(:parse)}
+      headers = params.delete(:headers) || {}
       if options[:token_method] == :post
-        headers = params.delete(:headers)
         opts[:body] = params
-        opts[:headers] =  {'Content-Type' => 'application/x-www-form-urlencoded'}
-        opts[:headers].merge!(headers) if headers
+        headers.merge!({'Content-Type' => 'application/x-www-form-urlencoded'})
       else
         opts[:params] = params
       end
+      opts[:headers] = headers unless headers.empty?
       response = request(options[:token_method], token_url, opts)
       error = Error.new(response)
       fail(error) if options[:raise_errors] && !(response.parsed.is_a?(Hash) && response.parsed['access_token'])
