@@ -116,7 +116,7 @@ module OAuth2
 
     # Base64.strict_encode64 is not available on Ruby 1.8.7
     def strict_encode64(str)
-      Base64.encode64(str).gsub("\n", '')
+      Base64.encode64(str).delete("\n")
     end
   end
 end

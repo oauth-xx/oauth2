@@ -36,7 +36,7 @@ module OAuth2
     # @option opts [String] :header_format ('Bearer %s') the string format to use for the Authorization header
     # @option opts [String] :param_name ('access_token') the parameter name to use for transmission of the
     #    Access Token value in :body or :query transmission mode
-    def initialize(client, token, opts = {})
+    def initialize(client, token, opts = {}) # rubocop:disable Metrics/AbcSize
       @client = client
       @token = token.to_s
       [:refresh_token, :expires_in, :expires_at].each do |arg|
@@ -63,7 +63,7 @@ module OAuth2
     #
     # @return [Boolean]
     def expires?
-      !!@expires_at # rubocop:disable DoubleNegation
+      !!@expires_at
     end
 
     # Whether or not the token is expired
@@ -149,7 +149,7 @@ module OAuth2
 
   private
 
-    def token=(opts) # rubocop:disable MethodLength
+    def token=(opts) # rubocop:disable MethodLength, Metrics/AbcSize
       case options[:mode]
       when :header
         opts[:headers] ||= {}
