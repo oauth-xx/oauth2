@@ -2,7 +2,7 @@
 *~
 .bundle
 .rvmrc
-Gemfile.lock
+Gemfile*.lock
 coverage/*
 log/*
 measurement/*
