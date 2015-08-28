@@ -16,7 +16,8 @@ module OAuth2
         message << "#{@code}: #{@description}"
       end
 
-      message << response.body
+      #https://github.com/intridea/oauth2/issues/155
+      message << response.body.force_encoding("UTF-8")
 
       super(message.join("\n"))
     end

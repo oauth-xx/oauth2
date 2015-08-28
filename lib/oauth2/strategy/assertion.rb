@@ -49,23 +49,28 @@ module OAuth2
 
       def build_request(params)
         assertion = build_assertion(params)
-        {:grant_type     => 'assertion',
-         :assertion_type => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
-         :assertion      => assertion,
-         :scope          => params[:scope],
-        }.merge(client_params)
+        request_hash = {}
+        request_hash[:grant_type] = params[:grant_type] || 'urn:ietf:params:oauth:grant-type:jwt-bearer'
+        request_hash[:assertion] = assertion
+        request_hash.merge!(client_params)
       end
 
       def build_assertion(params)
         claims = {:iss => params[:iss],
                   :aud => params[:aud],
-                  :prn => params[:prn],
                   :exp => params[:exp],
-                 }
+                  :scope => params[:scope],
+                  :iat => params[:iat]
+        }
+
+        claims[:prn] = params[:prn] if params.has_key?(:prn)
+
         if params[:hmac_secret]
           JWT.encode(claims, params[:hmac_secret], 'HS256')
         elsif params[:private_key]
           JWT.encode(claims, params[:private_key], 'RS256')
+        else
+          raise ArgumentError.new 'Either hmac_secret or private_key is required for JWT encoding!'
         end
       end
     end
