@@ -37,6 +37,7 @@ module OAuth2
     # @option opts [String] :param_name ('access_token') the parameter name to use for transmission of the
     #    Access Token value in :body or :query transmission mode
     def initialize(client, token, opts = {})
+      opts = opts.dup
       @client = client
       @token = token.to_s
       [:refresh_token, :expires_in, :expires_at].each do |arg|
