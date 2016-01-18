@@ -8,7 +8,7 @@ group :development do
 end
 
 group :test do
-  gem 'addressable'
+  gem 'addressable' '>= 2.3.8'
   gem 'backports'
   gem 'coveralls'
   gem 'mime-types', '~> 1.25', :platforms => [:jruby, :ruby_18]
