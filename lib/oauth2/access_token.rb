@@ -149,7 +149,7 @@ module OAuth2
 
   private
 
-    def token=(opts) # rubocop:disable MethodLength
+    def token=(opts)
       case options[:mode]
       when :header
         opts[:headers] ||= {}
