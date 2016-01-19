@@ -107,6 +107,8 @@ implementations:
 * Ruby 1.9.3
 * Ruby 2.0.0
 * Ruby 2.1.0
+* Ruby 2.2.0
+* Ruby 2.3.0
 * [JRuby][]
 * [Rubinius][]
 
@@ -127,7 +129,7 @@ fashion. If critical issues for a particular implementation exist at the time
 of a major release, support for that Ruby version may be dropped.
 
 ## License
-Copyright (c) 2011-2013 Michael Bleigh and Intridea, Inc. See [LICENSE][] for
+Copyright (c) 2011-2016 Michael Bleigh and Intridea, Inc. See [LICENSE][] for
 details.
 
 [license]: LICENSE.md

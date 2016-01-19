@@ -51,5 +51,32 @@ Style/Lambda:
 Style/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
 
-Style/TrailingComma:
+Style/TrailingCommaInLiteral:
   EnforcedStyleForMultiline: 'comma'
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: 'comma'
+
+Metrics/AbcSize:
+  Description: A calculated magnitude based on number of assignments,
+    branches, and conditions.
+  Reference: http://c2.com/cgi/wiki?AbcMetric
+  Enabled: false
+  Max: 15
+
+Metrics/CyclomaticComplexity:
+  Description: A complexity metric that is strongly correlated to
+    the number of test cases needed to validate a method.
+  Enabled: false
+  Max: 6
+
+Metrics/MethodLength:
+  Description: Avoid methods longer than 10 lines of code.
+  StyleGuide: https://github.com/bbatsov/ruby-style-guide#short-methods
+  Enabled: false
+  CountComments: false
+  Max: 15
+
+Style/MutableConstant:
+  Description: Do not assign mutable objects to constants.
+  Enabled: false

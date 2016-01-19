@@ -132,7 +132,6 @@ describe AccessToken do
       allow(Time).to receive(:now).and_return(@now)
       expect(access).to be_expired
     end
-
   end
 
   describe '#refresh!' do
