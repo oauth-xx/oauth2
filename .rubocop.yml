@@ -1,5 +1,7 @@
 Metrics/BlockNesting:
   Max: 2
+Metrics/AbcSize:
+  Enabled: false
 
 Metrics/LineLength:
   AllowURI: true
@@ -51,5 +53,9 @@ Style/Lambda:
 Style/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
 
-Style/TrailingComma:
+Style/TrailingCommaInLiteral:
   EnforcedStyleForMultiline: 'comma'
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: 'comma'
+
+
