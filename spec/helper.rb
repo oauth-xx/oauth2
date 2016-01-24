@@ -26,11 +26,11 @@ RSpec.configure do |conf|
   include OAuth2
 end
 
-def capture_output(&block)
+def capture_output
   begin
     old_stdout = $stdout
     $stdout = StringIO.new
-    block.call
+    yield
     result = $stdout.string
   ensure
     $stdout = old_stdout
