@@ -38,4 +38,4 @@ def capture_output
   result
 end
 
-VERBS = [:get, :post, :put, :delete]
+VERBS = [:get, :post, :put, :delete].freeze
