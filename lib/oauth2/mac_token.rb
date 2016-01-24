@@ -44,7 +44,7 @@ module OAuth2
       url = client.connection.build_url(path, opts[:params]).to_s
 
       opts[:headers] ||= {}
-      opts[:headers].merge!('Authorization' => header(verb, url))
+      opts[:headers]['Authorization'] = header(verb, url)
 
       @client.request(verb, path, opts, &block)
     end
