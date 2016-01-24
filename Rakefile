@@ -18,8 +18,15 @@ namespace :doc do
 end
 
 begin
+  # we only need to do style check once
   require 'rubocop/rake_task'
-  RuboCop::RakeTask.new
+  if Kernel.const_defined?(:RUBY_ENGINE) && Kernel.const_get(:RUBY_ENGINE) == 'ruby'
+    RuboCop::RakeTask.new
+  else
+    task :rubocop do
+      $stdout.puts 'Rubocop is disable for this platform'
+    end
+  end
 rescue LoadError
   task :rubocop do
     $stderr.puts 'RuboCop is disabled'
