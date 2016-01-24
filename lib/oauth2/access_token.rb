@@ -63,7 +63,7 @@ module OAuth2
     #
     # @return [Boolean]
     def expires?
-      !!@expires_at # rubocop:disable DoubleNegation
+      !!@expires_at
     end
 
     # Whether or not the token is expired
@@ -79,10 +79,10 @@ module OAuth2
     # @note options should be carried over to the new AccessToken
     def refresh!(params = {})
       fail('A refresh_token is not available') unless refresh_token
-      params.merge!(:client_id      => @client.id,
-                    :client_secret  => @client.secret,
-                    :grant_type     => 'refresh_token',
-                    :refresh_token  => refresh_token)
+      params[:client_id] = @client.id
+      params[:client_secret] = @client.secret
+      params[:grant_type] = 'refresh_token'
+      params[:refresh_token] = refresh_token
       new_token = @client.get_token(params)
       new_token.options = options
       new_token.refresh_token = refresh_token unless new_token.refresh_token

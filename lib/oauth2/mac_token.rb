@@ -44,7 +44,7 @@ module OAuth2
       url = client.connection.build_url(path, opts[:params]).to_s
 
       opts[:headers] ||= {}
-      opts[:headers].merge!('Authorization' => header(verb, url))
+      opts[:headers]['Authorization'] = header(verb, url)
 
       @client.request(verb, path, opts, &block)
     end
@@ -116,7 +116,7 @@ module OAuth2
 
     # Base64.strict_encode64 is not available on Ruby 1.8.7
     def strict_encode64(str)
-      Base64.encode64(str).gsub("\n", '')
+      Base64.encode64(str).delete("\n")
     end
   end
 end

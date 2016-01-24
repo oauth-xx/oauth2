@@ -8,7 +8,7 @@ group :development do
 end
 
 group :test do
-  gem 'addressable'
+  gem 'addressable', '< 2.4.0' # 2.4.0 does not support ruby 1.8.7
   gem 'backports'
   gem 'coveralls'
   gem 'mime-types', '~> 1.25', :platforms => [:jruby, :ruby_18]

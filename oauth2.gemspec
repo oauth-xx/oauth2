@@ -5,10 +5,10 @@ require 'oauth2/version'
 
 Gem::Specification.new do |spec|
   spec.add_dependency 'faraday', ['>= 0.8', '< 0.10']
-  spec.add_dependency 'jwt', '~> 1.0'
+  spec.add_dependency 'jwt', ['>= 1.0', '< 1.5.2'] # 1.5.2 dropped ruby 1.8.7 support
   spec.add_dependency 'multi_json', '~> 1.3'
   spec.add_dependency 'multi_xml', '~> 0.5'
-  spec.add_dependency 'rack', '~> 1.2'
+  spec.add_dependency 'rack', '>= 1.2'
   spec.add_development_dependency 'bundler', '~> 1.0'
   spec.authors       = ['Michael Bleigh', 'Erik Michaels-Ober']
   spec.description   = 'A Ruby wrapper for the OAuth 2.0 protocol built with a similar style to the original OAuth spec.'
