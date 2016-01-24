@@ -20,6 +20,9 @@ Lint/UnusedBlockArgument:
 Style/AccessModifierIndentation:
   EnforcedStyle: outdent
 
+Style/ClassVars:
+  Enabled: false
+
 Style/CollectionMethods:
   PreferredMethods:
     map:      'collect'

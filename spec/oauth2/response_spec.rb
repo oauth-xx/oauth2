@@ -30,8 +30,8 @@ describe OAuth2::Response do
     end
 
     it 'adds to the content types and parsers' do
-      expect(OAuth2::Response::PARSERS.keys).to include(:foobar)
-      expect(OAuth2::Response::CONTENT_TYPES.keys).to include('application/foo-bar')
+      expect(OAuth2::Response.send(:class_variable_get, :@@parsers).keys).to include(:foobar)
+      expect(OAuth2::Response.send(:class_variable_get, :@@content_types).keys).to include('application/foo-bar')
     end
 
     it 'is able to parse that content type automatically' do
@@ -77,7 +77,7 @@ describe OAuth2::Response do
 
   context 'xml parser registration' do
     it 'tries to load multi_xml and use it' do
-      expect(OAuth2::Response::PARSERS[:xml]).not_to be_nil
+      expect(OAuth2::Response.send(:class_variable_get, :@@parsers)[:xml]).not_to be_nil
     end
 
     it 'is able to parse xml' do
