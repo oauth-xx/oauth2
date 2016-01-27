@@ -49,6 +49,8 @@ module OAuth2
         @client.get_token(hash, opts.merge('refresh_token' => nil))
       end
 
+    private
+
       def build_request(params)
         assertion = build_assertion(params)
         {:grant_type => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
