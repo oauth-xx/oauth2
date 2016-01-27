@@ -1,6 +1,6 @@
 require 'faraday'
 require 'logger'
-
+# rubocop:disable ClassLength
 module OAuth2
   # The OAuth2::Client class
   class Client

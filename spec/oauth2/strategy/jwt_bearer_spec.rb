@@ -2,15 +2,15 @@ require 'helper'
 
 describe OAuth2::Strategy::JWTBearer do
   let(:client) do
-    cli = OAuth2::Client.new('abc', 'def', site: 'http://api.example.com')
+    cli = OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com')
     cli.connection.build do |b|
       b.adapter :test do |stub|
         stub.post('/oauth/token') do |_env|
           case @mode
-            when 'formencoded'
-              [200, { 'Content-Type' => 'application/x-www-form-urlencoded' }, 'expires_in=600&access_token=salmon&refresh_token=trout']
-            when 'json'
-              [200, { 'Content-Type' => 'application/json' }, '{"expires_in":600,"access_token":"salmon","refresh_token":"trout"}']
+          when 'formencoded'
+            [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, 'expires_in=600&access_token=salmon&refresh_token=trout']
+          when 'json'
+            [200, {'Content-Type' => 'application/json'}, '{"expires_in":600,"access_token":"salmon","refresh_token":"trout"}']
           end
         end
       end
@@ -28,7 +28,7 @@ describe OAuth2::Strategy::JWTBearer do
 
   %w(json formencoded).each do |mode|
     describe "#get_token (#{mode}) HS256" do
-      let(:params) { { hmac_secret: 'foo' } }
+      let(:params) { {:hmac_secret => 'foo'} }
 
       before do
         @mode = mode
@@ -55,7 +55,7 @@ describe OAuth2::Strategy::JWTBearer do
 
   %w(json formencoded).each do |mode|
     describe "#get_token (#{mode}) HS512" do
-      let(:params) { { hmac_secret: 'foo', algorithm: 'HS512' } }
+      let(:params) { {:hmac_secret => 'foo', :algorithm => 'HS512'} }
 
       before do
         @mode = mode
@@ -82,7 +82,7 @@ describe OAuth2::Strategy::JWTBearer do
 
   %w(json formencoded).each do |mode|
     describe "#get_token (#{mode}) RS256" do
-      let(:params) { { private_key: OpenSSL::PKey::RSA.generate(512) } }
+      let(:params) { {:private_key => OpenSSL::PKey::RSA.generate(512)} }
 
       before do
         @mode = mode
@@ -109,7 +109,7 @@ describe OAuth2::Strategy::JWTBearer do
 
   %w(json formencoded).each do |mode|
     describe "#get_token (#{mode}) RS512" do
-      let(:params) { { private_key: OpenSSL::PKey::RSA.generate(1024), algorithm: 'RS512' } }
+      let(:params) { {:private_key => OpenSSL::PKey::RSA.generate(1024), :algorithm => 'RS512'} }
 
       before do
         @mode = mode
