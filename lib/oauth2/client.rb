@@ -169,6 +169,20 @@ module OAuth2
       @client_credentials ||= OAuth2::Strategy::ClientCredentials.new(self)
     end
 
+    # The JWT Bearer Assertion strategy
+    #
+    # @see http://tools.ietf.org/html/draft-ietf-oauth-jwt-bearer-06#section-2.1
+    def jwt_bearer
+      @jwt_bearer ||= OAuth2::Strategy::JWTBearer.new(self)
+    end
+
+    # The SAML strategy
+    #
+    # @see https://tools.ietf.org/html/draft-ietf-oauth-saml2-bearer-23
+    def saml_assertion
+      @saml_assertion ||= OAuth2::Strategy::SamlAssertion.new(self)
+    end
+
     def assertion
       @assertion ||= OAuth2::Strategy::Assertion.new(self)
     end
