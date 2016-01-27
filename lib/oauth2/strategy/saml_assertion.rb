@@ -9,6 +9,7 @@ module OAuth2
     #                               :token_url => 'http://api.example.com/token')
     #
     #   params = {:grant_type  => 'urn:ietf:params:oauth:grant-type:saml2-bearer',
+    #             :assertion => '<saml:Assertion>stuff</saml:Assertion>'
     #             :scope => 'scope1,scope2'}
     #   access = client.saml_assertion.get_token(params, 'auth_scheme' => 'request_body')
     #   access.token                 # actual access_token string
