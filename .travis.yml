@@ -16,6 +16,11 @@ rvm:
   - rbx-2
   - ruby-head
 matrix:
+  include:
+    - rvm: 2.2.4
+      gemfile: Gemfile.rack2
+    - rvm: 2.3.0
+      gemfile: Gemfile.rack2
   allow_failures:
     - rvm: jruby-head
     - rvm: ruby-head
