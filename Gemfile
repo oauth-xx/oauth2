@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 gem 'rake'
 gem 'rdoc'
 
+gem 'jwt', '< 1.5.2', :platforms => [:jruby_18, :ruby_18]
+
 group :development do
   gem 'pry'
 end
