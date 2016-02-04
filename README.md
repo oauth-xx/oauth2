@@ -108,10 +108,8 @@ implementations:
 * Ruby 2.0.0
 * Ruby 2.1.0
 * [JRuby][]
-* [Rubinius][]
 
 [jruby]: http://jruby.org/
-[rubinius]: http://rubini.us/
 
 If something doesn't work on one of these interpreters, it's a bug.
 
