@@ -78,7 +78,7 @@ module OAuth2
     # @return [AccessToken] a new AccessToken
     # @note options should be carried over to the new AccessToken
     def refresh!(params = {})
-      fail('A refresh_token is not available') unless refresh_token
+      raise('A refresh_token is not available') unless refresh_token
       params[:client_id] = @client.id
       params[:client_secret] = @client.secret
       params[:grant_type] = 'refresh_token'
@@ -166,7 +166,7 @@ module OAuth2
         end
         # @todo support for multi-part (file uploads)
       else
-        fail("invalid :mode option of #{options[:mode]}")
+        raise("invalid :mode option of #{options[:mode]}")
       end
     end
   end

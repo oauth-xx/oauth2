@@ -22,7 +22,7 @@ module OAuth2
       #
       # @raise [NotImplementedError]
       def get_token(*)
-        fail(NotImplementedError, 'The token is accessed differently in this strategy')
+        raise(NotImplementedError, 'The token is accessed differently in this strategy')
       end
     end
   end

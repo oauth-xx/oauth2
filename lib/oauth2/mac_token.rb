@@ -64,7 +64,7 @@ module OAuth2
 
       uri = URI.parse(url)
 
-      fail(ArgumentError, "could not parse \"#{url}\" into URI") unless uri.is_a?(URI::HTTP)
+      raise(ArgumentError, "could not parse \"#{url}\" into URI") unless uri.is_a?(URI::HTTP)
 
       mac = signature(timestamp, nonce, verb, uri)
 
@@ -102,7 +102,7 @@ module OAuth2
         when 'hmac-sha-256'
           OpenSSL::Digest::SHA256.new
         else
-          fail(ArgumentError, 'Unsupported algorithm')
+          raise(ArgumentError, 'Unsupported algorithm')
         end
       end
     end

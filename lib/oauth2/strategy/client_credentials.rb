@@ -10,7 +10,7 @@ module OAuth2
       #
       # @raise [NotImplementedError]
       def authorize_url
-        fail(NotImplementedError, 'The authorization endpoint is not used in this strategy')
+        raise(NotImplementedError, 'The authorization endpoint is not used in this strategy')
       end
 
       # Retrieve an access token given the specified client.

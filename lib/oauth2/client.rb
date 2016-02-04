@@ -110,12 +110,12 @@ module OAuth2
         response
       when 400..599
         error = Error.new(response)
-        fail(error) if opts.fetch(:raise_errors, options[:raise_errors])
+        raise(error) if opts.fetch(:raise_errors, options[:raise_errors])
         response.error = error
         response
       else
         error = Error.new(response)
-        fail(error, "Unhandled status code value of #{response.status}")
+        raise(error, "Unhandled status code value of #{response.status}")
       end
     end
 
@@ -137,7 +137,7 @@ module OAuth2
       end
       response = request(options[:token_method], token_url, opts)
       error = Error.new(response)
-      fail(error) if options[:raise_errors] && !(response.parsed.is_a?(Hash) && response.parsed['access_token'])
+      raise(error) if options[:raise_errors] && !(response.parsed.is_a?(Hash) && response.parsed['access_token'])
       access_token_class.from_hash(self, response.parsed.merge(access_token_opts))
     end
 
