@@ -1,5 +1,6 @@
 source 'https://rubygems.org'
 
+gem 'jwt', '< 1.5.2', :platforms => [:jruby_18, :ruby_18]
 gem 'rake'
 gem 'rdoc'
 
