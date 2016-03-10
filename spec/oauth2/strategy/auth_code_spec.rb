@@ -8,6 +8,7 @@ RSpec.describe OAuth2::Strategy::AuthCode do
   let(:facebook_token) { kvform_token.gsub('_in', '') }
   let(:json_token) { MultiJson.encode(:expires_in => 600, :access_token => 'salmon', :refresh_token => 'trout', :extra_param => 'steve') }
   let(:redirect_uri) { 'http://example.com/redirect_uri' }
+  let(:microsoft_token) { 'id_token=jwt' }
 
   let(:client) do
     OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com') do |builder|
@@ -20,6 +21,8 @@ RSpec.describe OAuth2::Strategy::AuthCode do
             [200, {'Content-Type' => 'application/json'}, json_token]
           when 'from_facebook'
             [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, facebook_token]
+          when 'from_microsoft'
+            [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, microsoft_token]
           end
         end
         stub.post('/oauth/token', 'client_id' => 'abc', 'client_secret' => 'def', 'code' => 'sushi', 'grant_type' => 'authorization_code') do |env|
@@ -84,6 +87,16 @@ RSpec.describe OAuth2::Strategy::AuthCode do
       expect(OAuth2::Error).not_to receive(:new)
 
       subject.get_token(code)
+    end
+  end
+
+  describe '#get_token' do
+    it "doesn't treat an OpenID Connect token with only an id_token (like from Microsoft) as invalid" do
+      @mode = 'from_microsoft'
+      client.options[:token_method] = :get
+      client.options[:auth_scheme] = :request_body
+      @access = subject.get_token(code)
+      expect(@access['id_token']).to eq('jwt')
     end
   end
 
