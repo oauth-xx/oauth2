@@ -85,7 +85,7 @@ module OAuth2
     #   code response for this request.  Will default to client option
     # @option opts [Symbol] :parse @see Response::initialize
     # @yield [req] The Faraday request
-    def request(verb, url, opts = {}) # rubocop:disable CyclomaticComplexity, MethodLength
+    def request(verb, url, opts = {}) # rubocop:disable CyclomaticComplexity, MethodLength, Metrics/AbcSize
       connection.response :logger, ::Logger.new($stdout) if ENV['OAUTH_DEBUG'] == 'true'
 
       url = connection.build_url(url, opts[:params]).to_s
@@ -110,12 +110,12 @@ module OAuth2
         response
       when 400..599
         error = Error.new(response)
-        fail(error) if opts.fetch(:raise_errors, options[:raise_errors])
+        raise(error) if opts.fetch(:raise_errors, options[:raise_errors])
         response.error = error
         response
       else
         error = Error.new(response)
-        fail(error, "Unhandled status code value of #{response.status}")
+        raise(error, "Unhandled status code value of #{response.status}")
       end
     end
 
@@ -125,19 +125,19 @@ module OAuth2
     # @param [Hash] access token options, to pass to the AccessToken object
     # @param [Class] class of access token for easier subclassing OAuth2::AccessToken
     # @return [AccessToken] the initalized AccessToken
-    def get_token(params, access_token_opts = {}, access_token_class = AccessToken)
+    def get_token(params, access_token_opts = {}, access_token_class = AccessToken) # rubocop:disable Metrics/AbcSize
       opts = {:raise_errors => options[:raise_errors], :parse => params.delete(:parse)}
       if options[:token_method] == :post
         headers = params.delete(:headers)
         opts[:body] = params
-        opts[:headers] =  {'Content-Type' => 'application/x-www-form-urlencoded'}
+        opts[:headers] = {'Content-Type' => 'application/x-www-form-urlencoded'}
         opts[:headers].merge!(headers) if headers
       else
         opts[:params] = params
       end
       response = request(options[:token_method], token_url, opts)
       error = Error.new(response)
-      fail(error) if options[:raise_errors] && !(response.parsed.is_a?(Hash) && response.parsed['access_token'])
+      raise(error) if options[:raise_errors] && !(response.parsed.is_a?(Hash) && response.parsed['access_token'])
       access_token_class.from_hash(self, response.parsed.merge(access_token_opts))
     end
 

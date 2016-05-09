@@ -8,6 +8,8 @@ rvm:
   - 1.9.3
   - 2.0.0
   - 2.1
+  - 2.2
+  - 2.3.0
   - jruby-18mode
   - jruby-19mode
   - jruby-head
@@ -16,6 +18,7 @@ rvm:
 matrix:
   allow_failures:
     - rvm: jruby-head
+    - rvm: rbx-2
     - rvm: ruby-head
   fast_finish: true
 sudo: false

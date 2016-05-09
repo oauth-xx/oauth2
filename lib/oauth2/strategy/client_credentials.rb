@@ -10,7 +10,7 @@ module OAuth2
       #
       # @raise [NotImplementedError]
       def authorize_url
-        fail(NotImplementedError, 'The authorization endpoint is not used in this strategy')
+        raise(NotImplementedError, 'The authorization endpoint is not used in this strategy')
       end
 
       # Retrieve an access token given the specified client.
@@ -20,11 +20,8 @@ module OAuth2
       # @option opts [String] :header_format ('Basic') the string format to use for the Authorization header
       def get_token(params = {}, opts = {})
         request_body = opts.delete('auth_scheme') == 'request_body'
-        params.merge!('grant_type' => 'client_credentials')
-        params.merge!(request_body ? client_params : {:headers => {'Authorization' =>
-          authorization(client_params['client_id'],
-          client_params['client_secret'],
-          opts.delete(:header_format) || 'Basic')}})
+        params['grant_type'] = 'client_credentials'
+        params.merge!(request_body ? client_params : {:headers => {'Authorization' => authorization(client_params['client_id'], client_params['client_secret'], opts.delete(:header_format) || 'Basic')}})
         @client.get_token(params, opts.merge('refresh_token' => nil))
       end
 
@@ -34,7 +31,7 @@ module OAuth2
       # @param [String] the client secret
       # @param [String] the authorization header string format
       def authorization(client_id, client_secret, header_format)
-        header_format + ' ' + Base64.encode64(client_id + ':' + client_secret).gsub("\n", '')
+        header_format + ' ' + Base64.encode64(client_id + ':' + client_secret).delete("\n")
       end
     end
   end
