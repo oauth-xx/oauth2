@@ -13,10 +13,10 @@ module OAuth2
       if response.parsed.is_a?(Hash)
         @code = response.parsed['error']
         @description = response.parsed['error_description']
-        message << "#{@code}: #{@description}"
+        message << "#{@code}: #{@description}".force_encoding("UTF-8")
       end
 
-      message << response.body
+      message << response.body.force_encoding("UTF-8")
 
       super(message.join("\n"))
     end
