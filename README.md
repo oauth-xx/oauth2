@@ -84,8 +84,7 @@ token = OAuth2::AccessToken.from_kvform(client, query_string)
 
 token = client.password.get_token('username', 'password')
 
-# :header_format - the string format to use for the Authorization header
-token = client.client_credentials.get_token({'client_id' => client_id, 'client_secret' => client_secret}, {:header_format' => 'Basic'})
+token = client.client_credentials.get_token
 
 token = client.assertion.get_token(assertion_params)
 ```
