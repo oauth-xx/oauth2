@@ -16,7 +16,7 @@ module OAuth2
         message << "#{@code}: #{@description}"
       end
 
-      message << response.body
+      message << response.body.force_encoding(__ENCODING__)
 
       super(message.join("\n"))
     end
