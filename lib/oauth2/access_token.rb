@@ -10,6 +10,7 @@ module OAuth2
       # @param [Hash] a hash of AccessToken property values
       # @return [AccessToken] the initalized AccessToken
       def from_hash(client, hash)
+        hash = hash.dup
         new(client, hash.delete('access_token') || hash.delete(:access_token), hash)
       end
 
@@ -39,6 +40,7 @@ module OAuth2
     def initialize(client, token, opts = {}) # rubocop:disable Metrics/AbcSize
       @client = client
       @token = token.to_s
+      opts = opts.dup
       [:refresh_token, :expires_in, :expires_at].each do |arg|
         instance_variable_set("@#{arg}", opts.delete(arg) || opts.delete(arg.to_s))
       end
