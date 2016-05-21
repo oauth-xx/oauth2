@@ -1,6 +1,6 @@
 # coding: utf-8
 require 'helper'
-require 'kconv'
+require 'nkf'
 
 describe OAuth2::Client do
   let!(:error_value) { 'invalid_token' }
@@ -18,7 +18,7 @@ describe OAuth2::Client do
         stub.post('/redirect')          { |env| [303, {'Content-Type' => 'text/plain', 'location' => '/reflect'}, ''] }
         stub.get('/error')              { |env| [500, {'Content-Type' => 'text/plain'}, 'unknown error'] }
         stub.get('/empty_get')          { |env| [204, {}, nil] }
-        stub.get('/different_encoding') { |env| [500, {'Content-Type' => 'application/json'}, MultiJson.encode(:error => error_value, :error_description => "∞").kconv(Kconv::EUC, Kconv::UTF8)] }
+        stub.get('/different_encoding') { |env| [500, {'Content-Type' => 'application/json'}, NKF.nkf('-We', MultiJson.encode(:error => error_value, :error_description => "∞"))] }
       end
     end
   end
