@@ -8,17 +8,33 @@ module OAuth2
       response.error = self
       @response = response
 
-      message = []
-
       if response.parsed.is_a?(Hash)
         @code = response.parsed['error']
         @description = response.parsed['error_description']
-        message << "#{@code}: #{@description}"
+        error_description = "#{@code}: #{@description}"
       end
 
-      message << response.body.force_encoding(__ENCODING__)
+      super(error_message(response.body, :error_description => error_description))
+    end
 
-      super(message.join("\n"))
+    # Makes a error message
+    # @param [String] response_body response body of request
+    # @param [String] opts :error_description error description to show first line
+    def error_message(response_body, opts = {})
+      message = []
+
+      opts[:error_description] && message << opts[:error_description]
+
+      error_message = if opts[:error_description] && opts[:error_description].respond_to?(:encoding)
+                        script_encoding = opts[:error_description].encoding
+                        response_body.encode(script_encoding)
+                      else
+                        response_body
+                      end
+
+      message << error_message
+
+      message.join("\n")
     end
   end
 end

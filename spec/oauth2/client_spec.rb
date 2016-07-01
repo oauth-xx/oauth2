@@ -1,4 +1,6 @@
+# coding: utf-8
 require 'helper'
+require 'nkf'
 
 describe OAuth2::Client do
   let!(:error_value) { 'invalid_token' }
@@ -7,16 +9,16 @@ describe OAuth2::Client do
   subject do
     OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com') do |builder|
       builder.adapter :test do |stub|
-        stub.get('/success')          { |env| [200, {'Content-Type' => 'text/awesome'}, 'yay'] }
-        stub.get('/reflect')          { |env| [200, {}, env[:body]] }
-        stub.post('/reflect')         { |env| [200, {}, env[:body]] }
-        stub.get('/unauthorized')     { |env| [401, {'Content-Type' => 'application/json'}, MultiJson.encode(:error => error_value, :error_description => error_description_value)] }
-        stub.get('/conflict')         { |env| [409, {'Content-Type' => 'text/plain'}, 'not authorized'] }
-        stub.get('/redirect')         { |env| [302, {'Content-Type' => 'text/plain', 'location' => '/success'}, ''] }
-        stub.post('/redirect')        { |env| [303, {'Content-Type' => 'text/plain', 'location' => '/reflect'}, ''] }
-        stub.get('/error')            { |env| [500, {'Content-Type' => 'text/plain'}, 'unknown error'] }
-        stub.get('/empty_get')        { |env| [204, {}, nil] }
-        stub.get('/invalid_encoding') { |env| [500, {'Content-Type' => 'application/json'}, MultiJson.encode(:error => error_value, :error_description => "\xE2\x88\x9E").force_encoding('ASCII-8BIT')] }
+        stub.get('/success')            { |env| [200, {'Content-Type' => 'text/awesome'}, 'yay'] }
+        stub.get('/reflect')            { |env| [200, {}, env[:body]] }
+        stub.post('/reflect')           { |env| [200, {}, env[:body]] }
+        stub.get('/unauthorized')       { |env| [401, {'Content-Type' => 'application/json'}, MultiJson.encode(:error => error_value, :error_description => error_description_value)] }
+        stub.get('/conflict')           { |env| [409, {'Content-Type' => 'text/plain'}, 'not authorized'] }
+        stub.get('/redirect')           { |env| [302, {'Content-Type' => 'text/plain', 'location' => '/success'}, ''] }
+        stub.post('/redirect')          { |env| [303, {'Content-Type' => 'text/plain', 'location' => '/reflect'}, ''] }
+        stub.get('/error')              { |env| [500, {'Content-Type' => 'text/plain'}, 'unknown error'] }
+        stub.get('/empty_get')          { |env| [204, {}, nil] }
+        stub.get('/different_encoding') { |env| [500, {'Content-Type' => 'application/json'}, NKF.nkf('-We', MultiJson.encode(:error => error_value, :error_description => "∞"))] }
       end
     end
   end
@@ -165,7 +167,7 @@ describe OAuth2::Client do
       expect(response.error).not_to be_nil
     end
 
-    %w(/unauthorized /conflict /error /invalid_encoding).each do |error_path|
+    %w(/unauthorized /conflict /error /different_encoding).each do |error_path|
       it "raises OAuth2::Error on error response to path #{error_path}" do
         expect { subject.request(:get, error_path) }.to raise_error(OAuth2::Error)
       end
