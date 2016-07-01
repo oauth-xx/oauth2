@@ -110,10 +110,8 @@ implementations:
 * Ruby 2.2
 * Ruby 2.3
 * [JRuby][]
-* [Rbx][]
 
 [jruby]: http://jruby.org/
-[rbx]: http://rubinius.com/
 
 If something doesn't work on one of these interpreters, it's a bug.
 

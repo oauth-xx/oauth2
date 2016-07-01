@@ -13,13 +13,10 @@ rvm:
   - jruby-18mode
   - jruby-19mode
   - jruby-head
-  - rbx-2
-  - rbx
   - ruby-head
 matrix:
   allow_failures:
     - rvm: jruby-head
-    - rvm: rbx
     - rvm: ruby-head
   fast_finish: true
 sudo: false
