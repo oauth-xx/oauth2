@@ -25,7 +25,7 @@ module OAuth2
 
       opts[:error_description] && message << opts[:error_description]
 
-      error_message = if opts[:error_description] && opts[:error_description].respond_to?(:encoding)
+      error_message = if response_body.respond_to?(:encode) && opts[:error_description] && opts[:error_description].respond_to?(:encoding)
                         script_encoding = opts[:error_description].encoding
                         response_body.encode(script_encoding)
                       else
