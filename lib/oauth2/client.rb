@@ -89,8 +89,14 @@ module OAuth2
       connection.response :logger, ::Logger.new($stdout) if ENV['OAUTH_DEBUG'] == 'true'
 
       url = connection.build_url(url, opts[:params]).to_s
-
-      response = connection.run_request(verb, url, opts[:body], opts[:headers]) do |req|
+      body = nil
+      if opts[:body]
+        opts[:body][:redirect_uri] = opts[:body][:redirect_uri].split("?").first
+        body = URI.encode_www_form(opts[:body])
+      else
+        body = opts
+      end
+      response = connection.run_request(verb, url, body, opts[:headers]) do |req|
         yield(req) if block_given?
       end
       response = Response.new(response, :parse => opts[:parse])
