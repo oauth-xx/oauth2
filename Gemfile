@@ -19,6 +19,7 @@ group :test do
   gem 'rubocop', '>= 0.37', :platforms => [:ruby_19, :ruby_20, :ruby_21]
   gem 'simplecov', '>= 0.9'
   gem 'yardstick'
+  gem 'json', '~> 1.8', :platforms => [:ruby_18, :ruby_19]
 end
 
 gemspec
