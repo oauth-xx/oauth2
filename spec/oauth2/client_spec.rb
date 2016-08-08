@@ -19,6 +19,7 @@ describe OAuth2::Client do
         stub.get('/error')              { |env| [500, {'Content-Type' => 'text/plain'}, 'unknown error'] }
         stub.get('/empty_get')          { |env| [204, {}, nil] }
         stub.get('/different_encoding') { |env| [500, {'Content-Type' => 'application/json'}, NKF.nkf('-We', MultiJson.encode(:error => error_value, :error_description => '∞'))] }
+        stub.get('/invalid_encoding')   { |env| [500, {'Content-Type' => 'application/json'}, MultiJson.encode(:error => 'invalid_request', :error_description => 'é').force_encoding('ASCII-8BIT')] }
       end
     end
   end
@@ -167,7 +168,7 @@ describe OAuth2::Client do
       expect(response.error).not_to be_nil
     end
 
-    %w(/unauthorized /conflict /error /different_encoding).each do |error_path|
+    %w(/unauthorized /conflict /error /different_encoding /invalid_encoding).each do |error_path|
       it "raises OAuth2::Error on error response to path #{error_path}" do
         expect { subject.request(:get, error_path) }.to raise_error(OAuth2::Error)
       end
