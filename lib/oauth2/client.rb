@@ -1,4 +1,3 @@
-require 'uri'
 require 'base64'
 require 'faraday'
 require 'logger'
@@ -193,8 +192,7 @@ module OAuth2
       when :request_body
         {'client_id' => id, 'client_secret' => secret}.merge(params)
       else
-        client_id, client_secret = URI.encode_www_form_component(id), URI.encode_www_form_component(secret)
-        header = 'Basic ' + Base64.encode64(client_id + ':' + client_secret).delete("\n")
+        header = 'Basic ' + Base64.encode64(id + ':' + secret).delete("\n")
         params.merge(:headers => {'Authorization' => header}.merge(params.fetch(:headers, {})))
       end
     end
