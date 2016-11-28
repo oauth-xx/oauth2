@@ -1,3 +1,5 @@
+require 'uri'
+require 'base64'
 require 'faraday'
 require 'logger'
 
@@ -128,8 +130,9 @@ module OAuth2
     # @param [Class] class of access token for easier subclassing OAuth2::AccessToken
     # @return [AccessToken] the initalized AccessToken
     def get_token(params, access_token_opts = {}, access_token_class = AccessToken) # rubocop:disable Metrics/AbcSize
+      params = apply_auth_to_params(params)
       opts = {:raise_errors => options[:raise_errors], :parse => params.delete(:parse)}
-      headers = params.delete(:headers)
+      headers = params.delete(:headers) || {}
       if options[:token_method] == :post
         opts[:body] = params
         opts[:headers] = {'Content-Type' => 'application/x-www-form-urlencoded'}
@@ -137,7 +140,7 @@ module OAuth2
         opts[:params] = params
         opts[:headers] = {}
       end
-      opts[:headers].merge!(headers) if headers
+      opts[:headers].merge!(headers)
       response = request(options[:token_method], token_url, opts)
       error = Error.new(response)
       raise(error) if options[:raise_errors] && !(response.parsed.is_a?(Hash) && response.parsed['access_token'])
@@ -174,6 +177,26 @@ module OAuth2
 
     def assertion
       @assertion ||= OAuth2::Strategy::Assertion.new(self)
+    end
+
+    # The request credentials used to authenticate to the Authorization Server
+    #
+    # Depending on configuration, this might be as request params or as an
+    # Authorization header.
+    #
+    # User-provided params and header takes precedence.
+    #
+    # @param [Hash] params a Hash of params for the token endpoint
+    # @return [Hash] params amended with appropriate authentication details
+    def apply_auth_to_params(params)
+      case options[:auth_scheme]
+      when :request_body
+        {'client_id' => id, 'client_secret' => secret}.merge(params)
+      else
+        client_id, client_secret = URI.encode_www_form_component(id), URI.encode_www_form_component(secret)
+        header = 'Basic ' + Base64.encode64(client_id + ':' + client_secret).delete("\n")
+        params.merge(:headers => {'Authorization' => header}.merge(params.fetch(:headers, {})))
+      end
     end
   end
 end

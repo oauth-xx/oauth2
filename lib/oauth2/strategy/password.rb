@@ -19,7 +19,7 @@ module OAuth2
       def get_token(username, password, params = {}, opts = {})
         params = {'grant_type' => 'password',
                   'username'   => username,
-                  'password'   => password}.merge(client_params).merge(params)
+                  'password'   => password}.merge(params)
         @client.get_token(params, opts)
       end
     end

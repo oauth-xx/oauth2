@@ -1,5 +1,3 @@
-require 'base64'
-
 module OAuth2
   module Strategy
     # The Client Credentials Strategy
@@ -18,7 +16,7 @@ module OAuth2
       # @param [Hash] params additional params
       # @param [Hash] opts options
       def get_token(params = {}, opts = {})
-        params = client_params.merge(params).merge('grant_type' => 'client_credentials')
+        params = params.merge('grant_type' => 'client_credentials')
         @client.get_token(params, opts.merge('refresh_token' => nil))
       end
     end
