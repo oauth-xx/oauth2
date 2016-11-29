@@ -84,13 +84,6 @@ describe OAuth2::Client do
       expect(client.options[:access_token_method]).to eq(:post)
     end
 
-    it 'allows basic_auth/request_body for auth_scheme option' do
-      client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :auth_scheme => :basic_auth)
-      expect(client.options[:auth_scheme]).to eq(:basic_auth)
-      client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :auth_scheme => :request_body)
-      expect(client.options[:auth_scheme]).to eq(:request_body)
-    end
-
     it 'does not mutate the opts hash argument' do
       opts = {:site => 'http://example.com/'}
       opts2 = opts.dup

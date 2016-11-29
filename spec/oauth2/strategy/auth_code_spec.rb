@@ -29,30 +29,6 @@ describe OAuth2::Strategy::AuthCode do
             [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, facebook_token]
           end
         end
-        stub.get("/oauth/token?code=#{code}&grant_type=authorization_code") do |env|
-          client_id, client_secret = Base64.decode64(env[:request_headers]['Authorization'].split(' ', 2)[1]).split(':', 2)
-          client_id == 'abc' && client_secret == 'def' || fail(Faraday::Adapter::Test::Stubs::NotFound)
-          case @mode
-          when 'formencoded'
-            [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, kvform_token]
-          when 'json'
-            [200, {'Content-Type' => 'application/json'}, json_token]
-          when 'from_facebook'
-            [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, facebook_token]
-          end
-        end
-        stub.post('/oauth/token', 'code' => 'sushi', 'grant_type' => 'authorization_code') do |env|
-          client_id, client_secret = Base64.decode64(env[:request_headers]['Authorization'].split(' ', 2)[1]).split(':', 2)
-          client_id == 'abc' && client_secret == 'def' || fail(Faraday::Adapter::Test::Stubs::NotFound)
-          case @mode
-          when 'formencoded'
-            [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, kvform_token]
-          when 'json'
-            [200, {'Content-Type' => 'application/json'}, json_token]
-          when 'from_facebook'
-            [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, facebook_token]
-          end
-        end
       end
     end
   end
@@ -75,39 +51,36 @@ describe OAuth2::Strategy::AuthCode do
   end
 
   %w(json formencoded from_facebook).each do |mode|
-    [:basic_auth, :request_body].each do |auth_scheme|
-      [:get, :post].each do |verb|
-        describe "#get_token (#{mode}, access_token_method=#{verb}, auth_scheme=#{auth_scheme})" do
-          before do
-            @mode = mode
-            client.options[:token_method] = verb
-            client.options[:auth_scheme] = auth_scheme
-            @access = subject.get_token(code, {})
-          end
+    [:get, :post].each do |verb|
+      describe "#get_token (#{mode}, access_token_method=#{verb}" do
+        before do
+          @mode = mode
+          client.options[:token_method] = verb
+          @access = subject.get_token(code)
+        end
 
-          it 'returns AccessToken with same Client' do
-            expect(@access.client).to eq(client)
-          end
+        it 'returns AccessToken with same Client' do
+          expect(@access.client).to eq(client)
+        end
 
-          it 'returns AccessToken with #token' do
-            expect(@access.token).to eq('salmon')
-          end
+        it 'returns AccessToken with #token' do
+          expect(@access.token).to eq('salmon')
+        end
 
-          it 'returns AccessToken with #refresh_token' do
-            expect(@access.refresh_token).to eq('trout')
-          end
+        it 'returns AccessToken with #refresh_token' do
+          expect(@access.refresh_token).to eq('trout')
+        end
 
-          it 'returns AccessToken with #expires_in' do
-            expect(@access.expires_in).to eq(600)
-          end
+        it 'returns AccessToken with #expires_in' do
+          expect(@access.expires_in).to eq(600)
+        end
 
-          it 'returns AccessToken with #expires_at' do
-            expect(@access.expires_at).to be_kind_of(Integer)
-          end
+        it 'returns AccessToken with #expires_at' do
+          expect(@access.expires_at).to be_kind_of(Integer)
+        end
 
-          it 'returns AccessToken with params accessible via []' do
-            expect(@access['extra_param']).to eq('steve')
-          end
+        it 'returns AccessToken with params accessible via []' do
+          expect(@access['extra_param']).to eq('steve')
         end
       end
     end
