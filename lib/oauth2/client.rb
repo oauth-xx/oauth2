@@ -16,6 +16,7 @@ module OAuth2
     # @param [String] client_secret the client_secret value
     # @param [Hash] opts the options to create the client with
     # @option opts [String] :site the OAuth2 provider site host
+    # @option opts [String] :redirect_uri the absolute URI to the Redirection Endpoint for use in authorization grants and token exchange
     # @option opts [String] :authorize_url ('/oauth/authorize') absolute or relative URL path to the Authorization endpoint
     # @option opts [String] :token_url ('/oauth/token') absolute or relative URL path to the Token endpoint
     # @option opts [Symbol] :token_method (:post) HTTP method to use to request token (:get or :post)
@@ -66,7 +67,8 @@ module OAuth2
     # The authorize endpoint URL of the OAuth2 provider
     #
     # @param [Hash] params additional query parameters
-    def authorize_url(params = nil)
+    def authorize_url(params = {})
+      params = (params || {}).merge(redirection_params)
       connection.build_url(options[:authorize_url], params).to_s
     end
 
@@ -179,6 +181,27 @@ module OAuth2
 
     def assertion
       @assertion ||= OAuth2::Strategy::Assertion.new(self)
+    end
+
+    # The redirect_uri parameters, if configured.
+    #
+    # The redirect_uri query parameter is OPTIONAL (though encouraged) when
+    # requesting authorization. If it is provided at authorization time it MUST
+    # also be provided with the token exchange request.
+    #
+    # Providing the :redirect_uri to the OAuth2::Client instantiation will take
+    # care of managing this.
+    #
+    # @see https://tools.ietf.org/html/rfc6749#section-4.1
+    # @see https://tools.ietf.org/html/rfc6749#section-4.1.3
+    # @see https://tools.ietf.org/html/rfc6749#section-4.2.1
+    # @see https://tools.ietf.org/html/rfc6749#section-10.6
+    def redirection_params
+      if options[:redirect_uri]
+        {'redirect_uri' => options[:redirect_uri]}
+      else
+        {}
+      end
     end
   end
 end
