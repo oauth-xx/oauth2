@@ -192,8 +192,9 @@ module OAuth2
       when :request_body
         {'client_id' => id, 'client_secret' => secret}.merge(params)
       else
-        header = 'Basic ' + Base64.encode64(id + ':' + secret).delete("\n")
-        params.merge(:headers => {'Authorization' => header}.merge(params.fetch(:headers, {})))
+        existing_headers = params.fetch(:headers, {})
+        auth_headers = {'Authorization' => 'Basic ' + Base64.encode64(id + ':' + secret).delete("\n")}
+        params.merge(:headers => auth_headers.merge(existing_headers))
       end
     end
   end
