@@ -35,7 +35,7 @@ module OAuth2
       @options = {:authorize_url    => '/oauth/authorize',
                   :token_url        => '/oauth/token',
                   :token_method     => :post,
-                  :auth_scheme      => :basic_auth,
+                  :auth_scheme      => :request_body,
                   :connection_opts  => {},
                   :connection_build => block,
                   :max_redirects    => 5,
