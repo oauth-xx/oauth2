@@ -201,6 +201,49 @@ describe OAuth2::Client do
     end
   end
 
+  describe '#get_token' do
+    it 'returns a configured AccessToken' do
+      client = stubbed_client do |stub|
+        stub.post('/oauth/token') do
+          [200, {'Content-Type' => 'application/json'}, MultiJson.encode('access_token' => 'the-token')]
+        end
+      end
+
+      token = client.get_token({})
+      expect(token).to be_a OAuth2::AccessToken
+      expect(token.token).to eq('the-token')
+    end
+
+    it 'authenticates with request parameters' do
+      client = stubbed_client(:auth_scheme => :request_body) do |stub|
+        stub.post('/oauth/token', 'client_id' => 'abc', 'client_secret' => 'def') do |env|
+          [200, {'Content-Type' => 'application/json'}, MultiJson.encode('access_token' => 'the-token')]
+        end
+      end
+      client.get_token({})
+    end
+
+    it 'authenticates with Basic auth' do
+      client = stubbed_client(:auth_scheme => :basic_auth) do |stub|
+        stub.post('/oauth/token') do |env|
+          if env[:request_headers]['Authorization'] == 'Basic ' + Base64.encode64('abc:def').delete("\n")
+            [200, {'Content-Type' => 'application/json'}, MultiJson.encode('access_token' => 'the-token')]
+          else
+            raise Faraday::Adapter::Test::Stubs::NotFound
+          end
+        end
+      end
+      client.get_token({})
+    end
+
+    def stubbed_client(params = {}, &stubs)
+      params = {:site => 'https://api.example.com'}.merge(params)
+      OAuth2::Client.new('abc', 'def', params) do |builder|
+        builder.adapter :test, &stubs
+      end
+    end
+  end
+
   it 'instantiates an AuthCode strategy with this client' do
     expect(subject.auth_code).to be_kind_of(OAuth2::Strategy::AuthCode)
   end
