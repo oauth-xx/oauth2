@@ -43,7 +43,18 @@ describe OAuth2::Strategy::ClientCredentials do
         ['abc', 'def', 'Basic YWJjOmRlZg=='],
         ['xxx', 'secret', 'Basic eHh4OnNlY3JldA=='],
       ].each do |client_id, client_secret, expected|
-        expect(subject.authorization(client_id, client_secret)).to eq(expected)
+        expect(subject.authorization(client_id, client_secret, 'Basic')).to eq(expected)
+      end
+    end
+  end
+
+  describe '#authorization bearer' do
+    it 'generates an Authorization header value for Bearer Authentication' do
+      [
+        ['abc', 'def', 'Bearer YWJjOmRlZg=='],
+        ['xxx', 'secret', 'Bearer eHh4OnNlY3JldA=='],
+      ].each do |client_id, client_secret, expected|
+        expect(subject.authorization(client_id, client_secret, 'Bearer')).to eq(expected)
       end
     end
   end
