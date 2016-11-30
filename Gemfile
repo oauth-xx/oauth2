@@ -22,8 +22,8 @@ group :test do
 
   platforms :ruby_18, :ruby_19 do
     gem 'json', '< 2.0'
-    gem 'tins', '< 1.7'
     gem 'term-ansicolor', '< 1.4.0'
+    gem 'tins', '< 1.7'
   end
 end
 
