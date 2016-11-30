@@ -52,9 +52,11 @@ module OAuth2
     def connection
       @connection ||= begin
         conn = Faraday.new(site, options[:connection_opts])
-        conn.build do |b|
-          options[:connection_build].call(b)
-        end if options[:connection_build]
+        if options[:connection_build]
+          conn.build do |b|
+            options[:connection_build].call(b)
+          end
+        end
         conn
       end
     end
