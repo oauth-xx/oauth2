@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'helper'
 
 describe OAuth2::Strategy::AuthCode do
@@ -47,6 +49,25 @@ describe OAuth2::Strategy::AuthCode do
     it 'includes passed in options' do
       cb = 'http://myserver.local/oauth/callback'
       expect(subject.authorize_url(:redirect_uri => cb)).to include("redirect_uri=#{Rack::Utils.escape(cb)}")
+    end
+  end
+
+  describe '#get_token (handling utf-8 data)' do
+    let(:json_token) { MultiJson.encode(:expires_in => 600, :access_token => 'salmon', :refresh_token => 'trout', :extra_param => 'André') }
+
+    before do
+      @mode = 'json'
+      client.options[:token_method] = :post
+    end
+
+    it 'should not raise an error' do
+      expect { subject.get_token(code) }.to_not raise_error
+    end
+
+    it 'should not create an error instance' do
+      expect(OAuth2::Error).to_not receive(:new)
+
+      subject.get_token(code)
     end
   end
 
