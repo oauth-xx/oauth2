@@ -111,6 +111,53 @@ describe OAuth2::Client do
     end
   end
 
+  describe ':redirect_uri option' do
+    let(:auth_code_params) do
+      {
+        'client_id' => 'abc',
+        'client_secret' => 'def',
+        'code' => 'code',
+        'grant_type' => 'authorization_code',
+      }
+    end
+
+    context 'when blank' do
+      it 'there is no redirect_uri param added to authorization URL' do
+        expect(subject.authorize_url('a' => 'b')).to eq('https://api.example.com/oauth/authorize?a=b')
+      end
+
+      it 'does not add the redirect_uri param to the auth_code token exchange request' do
+        client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com') do |builder|
+          builder.adapter :test do |stub|
+            stub.post('/oauth/token', auth_code_params) do
+              [200, {'Content-Type' => 'application/json'}, '{"access_token":"token"}']
+            end
+          end
+        end
+        client.auth_code.get_token('code')
+      end
+    end
+
+    context 'when set' do
+      before { subject.options[:redirect_uri] = 'https://site.com/oauth/callback' }
+
+      it 'adds the redirect_uri param to authorization URL' do
+        expect(subject.authorize_url('a' => 'b')).to eq('https://api.example.com/oauth/authorize?a=b&redirect_uri=https%3A%2F%2Fsite.com%2Foauth%2Fcallback')
+      end
+
+      it 'adds the redirect_uri param to the auth_code token exchange request' do
+        client = OAuth2::Client.new('abc', 'def', :redirect_uri => 'https://site.com/oauth/callback', :site => 'https://api.example.com') do |builder|
+          builder.adapter :test do |stub|
+            stub.post('/oauth/token', auth_code_params.merge('redirect_uri' => 'https://site.com/oauth/callback')) do
+              [200, {'Content-Type' => 'application/json'}, '{"access_token":"token"}']
+            end
+          end
+        end
+        client.auth_code.get_token('code')
+      end
+    end
+  end
+
   describe '#request' do
     it 'works with a null response body' do
       expect(subject.request(:get, 'empty_get').body).to eq('')
