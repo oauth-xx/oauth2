@@ -183,7 +183,7 @@ module OAuth2
       @assertion ||= OAuth2::Strategy::Assertion.new(self)
     end
 
-    # The redirect_uri parameters, if configured.
+    # The redirect_uri parameters, if configured
     #
     # The redirect_uri query parameter is OPTIONAL (though encouraged) when
     # requesting authorization. If it is provided at authorization time it MUST
@@ -192,10 +192,13 @@ module OAuth2
     # Providing the :redirect_uri to the OAuth2::Client instantiation will take
     # care of managing this.
     #
+    # @api semipublic
+    #
     # @see https://tools.ietf.org/html/rfc6749#section-4.1
     # @see https://tools.ietf.org/html/rfc6749#section-4.1.3
     # @see https://tools.ietf.org/html/rfc6749#section-4.2.1
     # @see https://tools.ietf.org/html/rfc6749#section-10.6
+    # @return [Hash] the params to add to a request or URL
     def redirection_params
       if options[:redirect_uri]
         {'redirect_uri' => options[:redirect_uri]}
