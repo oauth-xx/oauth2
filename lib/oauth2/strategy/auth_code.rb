@@ -26,6 +26,7 @@ module OAuth2
       # @note that you must also provide a :redirect_uri with most OAuth 2.0 providers
       def get_token(code, params = {}, opts = {})
         params = {'grant_type' => 'authorization_code', 'code' => code}.merge(client_params).merge(params)
+        params = {'grant_type' => 'authorization_code', 'code' => code, 'response_type' => 'token'}.merge(client_params).merge(params)
         @client.get_token(params, opts)
       end
     end
