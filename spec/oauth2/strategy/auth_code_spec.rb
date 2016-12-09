@@ -106,4 +106,26 @@ describe OAuth2::Strategy::AuthCode do
       end
     end
   end
+
+  # With the :http_basic client authentication method
+
+  let(:basic_auth) { 'Basic ' + Base64.encode64('abc:def') }
+
+  let(:strict_client) do
+    OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com', :client_auth => :http_basic) do |builder|
+      builder.adapter :test do |stub|
+        stub.post('/oauth/token', {'code' => 'sushi', 'grant_type' => 'authorization_code'}, {'Authorization' => basic_auth}) do |env|
+          [200, {'Content-Type' => 'application/json'}, json_token]
+        end
+      end
+    end
+  end
+
+  describe "#get_token with a strict server" do
+    subject { strict_client.auth_code }
+    it 'does not send client_id and client_secret as params' do
+      @access = subject.get_token(code)
+      expect(@access.token).to eq('salmon')
+    end
+  end
 end
