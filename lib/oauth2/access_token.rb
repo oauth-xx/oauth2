@@ -81,8 +81,6 @@ module OAuth2
     # @note options should be carried over to the new AccessToken
     def refresh!(params = {})
       raise('A refresh_token is not available') unless refresh_token
-      params[:client_id] = @client.id
-      params[:client_secret] = @client.secret
       params[:grant_type] = 'refresh_token'
       params[:refresh_token] = refresh_token
       new_token = @client.get_token(params)
