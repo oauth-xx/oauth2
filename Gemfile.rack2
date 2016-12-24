@@ -1,0 +1,23 @@
+source 'https://rubygems.org'
+
+gem 'rake'
+gem 'rdoc'
+
+group :development do
+  gem 'pry'
+end
+
+group :test do
+  gem 'addressable'
+  gem 'backports'
+  gem 'coveralls'
+  gem 'mime-types'
+  gem 'rack', '~> 2.0.0.alpha'
+  gem 'rest-client'
+  gem 'rspec', '>= 3'
+  gem 'rubocop', '>= 0.36'
+  gem 'simplecov', '>= 0.9'
+  gem 'yardstick'
+end
+
+gemspec

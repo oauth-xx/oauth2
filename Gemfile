@@ -4,6 +4,8 @@ gem 'jwt', '< 1.5.2', :platforms => [:jruby_18, :ruby_18]
 gem 'rake', '< 11.0'
 gem 'rdoc'
 
+gem 'jwt', '< 1.5.2', :platforms => [:jruby_18, :ruby_18]
+
 group :development do
   gem 'pry'
 end

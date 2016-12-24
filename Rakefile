@@ -4,6 +4,12 @@ Bundler::GemHelper.install_tasks
 require 'rspec/core/rake_task'
 RSpec::Core::RakeTask.new(:spec)
 
+begin
+  require 'wwtd/tasks'
+rescue LoadError => _e
+  nil # It's OK, wwtd isn't installed
+end
+
 task :test => :spec
 
 namespace :doc do
