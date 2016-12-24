@@ -42,6 +42,9 @@ Style/DoubleNegation:
 Style/EachWithObject:
   Enabled: false
 
+Style/EmptyMethod:
+  EnforcedStyle: expanded
+
 Style/Encoding:
   Enabled: false
 
