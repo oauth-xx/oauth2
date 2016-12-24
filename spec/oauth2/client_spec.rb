@@ -229,11 +229,8 @@ describe OAuth2::Client do
     it 'authenticates with Basic auth' do
       client = stubbed_client(:auth_scheme => :basic_auth) do |stub|
         stub.post('/oauth/token') do |env|
-          if env[:request_headers]['Authorization'] == OAuth2::Authenticator.encode_basic_auth('abc', 'def')
-            [200, {'Content-Type' => 'application/json'}, MultiJson.encode('access_token' => 'the-token')]
-          else
-            raise Faraday::Adapter::Test::Stubs::NotFound
-          end
+          raise Faraday::Adapter::Test::Stubs::NotFound unless env[:request_headers]['Authorization'] == OAuth2::Authenticator.encode_basic_auth('abc', 'def')
+          [200, {'Content-Type' => 'application/json'}, MultiJson.encode('access_token' => 'the-token')]
         end
       end
       client.get_token({})

@@ -3,7 +3,7 @@ require 'logger'
 
 module OAuth2
   # The OAuth2::Client class
-  class Client
+  class Client # rubocop:disable Metrics/ClassLength
     attr_reader :id, :secret, :site
     attr_accessor :options
     attr_writer :connection
@@ -54,9 +54,11 @@ module OAuth2
     def connection
       @connection ||= begin
         conn = Faraday.new(site, options[:connection_opts])
-        conn.build do |b|
-          options[:connection_build].call(b)
-        end if options[:connection_build]
+        if options[:connection_build]
+          conn.build do |b|
+            options[:connection_build].call(b)
+          end
+        end
         conn
       end
     end
@@ -127,7 +129,7 @@ module OAuth2
     # @param [Hash] access token options, to pass to the AccessToken object
     # @param [Class] class of access token for easier subclassing OAuth2::AccessToken
     # @return [AccessToken] the initalized AccessToken
-    def get_token(params, access_token_opts = {}, access_token_class = AccessToken) # rubocop:disable Metrics/AbcSize
+    def get_token(params, access_token_opts = {}, access_token_class = AccessToken) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       params = Authenticator.new(id, secret, options[:auth_scheme]).apply(params)
       opts = {:raise_errors => options[:raise_errors], :parse => params.delete(:parse)}
       headers = params.delete(:headers) || {}

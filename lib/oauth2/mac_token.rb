@@ -111,8 +111,7 @@ module OAuth2
 
     # No-op since we need the verb and path
     # and the MAC always goes in a header
-    def token=(_)
-    end
+    def token=(_); end
 
     # Base64.strict_encode64 is not available on Ruby 1.8.7
     def strict_encode64(str)
