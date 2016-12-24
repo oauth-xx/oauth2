@@ -103,7 +103,7 @@ module OAuth2
     # @param [Hash] opts the options to make the request with
     # @see Client#request
     def request(verb, path, opts = {}, &block)
-      self.token = opts
+      configure_authentication!(opts)
       @client.request(verb, path, opts, &block)
     end
 
@@ -149,7 +149,7 @@ module OAuth2
 
   private
 
-    def token=(opts) # rubocop:disable MethodLength, Metrics/AbcSize
+    def configure_authentication!(opts) # rubocop:disable MethodLength, Metrics/AbcSize
       case options[:mode]
       when :header
         opts[:headers] ||= {}
