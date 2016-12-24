@@ -93,12 +93,16 @@ module OAuth2
       connection.response :logger, ::Logger.new($stdout) if ENV['OAUTH_DEBUG'] == 'true'
 
       url = connection.build_url(url, opts[:params]).to_s
-
-      response = connection.run_request(verb, url, opts[:body], opts[:headers]) do |req|
+      body = if opts[:body] && opts[:body].is_a?(Hash) && opts[:body][:redirect_uri]   
+        opts[:body][:redirect_uri] = sanitize_querystring_on_body_rediect_uri(opts)
+        URI.encode_www_form(opts[:body])
+      else
+        opts[:body]
+      end      
+      response = connection.run_request(verb, url, body, opts[:headers]) do |req|
         yield(req) if block_given?
       end
       response = Response.new(response, :parse => opts[:parse])
-
       case response.status
       when 301, 302, 303, 307
         opts[:redirect_count] ||= 0
@@ -180,5 +184,11 @@ module OAuth2
     def assertion
       @assertion ||= OAuth2::Strategy::Assertion.new(self)
     end
+
+    private
+
+      def sanitize_querystring_on_body_rediect_uri(opts)
+        opts[:body][:redirect_uri].split("?").first
+      end
   end
 end
