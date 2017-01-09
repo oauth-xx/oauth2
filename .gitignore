@@ -1,35 +1,10 @@
-.rvmrc
-/live
-
-## TEXTMATE
-*.tmproj
-tmtags
-
-## EMACS
-*~
-\#*
-.\#*
-
-## VIM
-*.swp
-
-## PROJECT::GENERAL
-coverage
-doc
-rdoc
-log
-
-## BUNDLER
 *.gem
+*~
 .bundle
-pkg
+.rvmrc
 Gemfile.lock
-
-## RCOV
-coverage.data
-
-## PROJECT::SPECIFIC
-.svn
-
-## Rubinius
-*.rbc
+coverage/*
+log/*
+measurement/*
+pkg/*
+rdoc/*

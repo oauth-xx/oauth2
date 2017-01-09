@@ -1,12 +1,12 @@
 require 'helper'
 
 describe OAuth2::Response do
-  describe "#initialize" do
-    let(:status) {200}
-    let(:headers) {{'foo' => 'bar'}}
-    let(:body) {'foo'}
+  describe '#initialize' do
+    let(:status) { 200 }
+    let(:headers) { {'foo' => 'bar'} }
+    let(:body) { 'foo' }
 
-    it "returns the status, headers and body" do
+    it 'returns the status, headers and body' do
       response = double('response', :headers => headers,
                                     :status  => status,
                                     :body    => body)
@@ -17,30 +17,30 @@ describe OAuth2::Response do
     end
   end
 
-  describe ".register_parser" do
-    let(:response) {
+  describe '.register_parser' do
+    let(:response) do
       double('response', :headers => {'Content-Type' => 'application/foo-bar'},
                          :status => 200,
                          :body => 'baz')
-    }
+    end
     before do
       OAuth2::Response.register_parser(:foobar, 'application/foo-bar') do |body|
         "foobar #{body}"
       end
     end
 
-    it "adds to the content types and parsers" do
-      expect(OAuth2::Response::PARSERS.keys).to include(:foobar)
-      expect(OAuth2::Response::CONTENT_TYPES.keys).to include('application/foo-bar')
+    it 'adds to the content types and parsers' do
+      expect(OAuth2::Response.send(:class_variable_get, :@@parsers).keys).to include(:foobar)
+      expect(OAuth2::Response.send(:class_variable_get, :@@content_types).keys).to include('application/foo-bar')
     end
 
-    it "is able to parse that content type automatically" do
+    it 'is able to parse that content type automatically' do
       expect(OAuth2::Response.new(response).parsed).to eq('foobar baz')
     end
   end
 
-  describe "#parsed" do
-    it "parses application/x-www-form-urlencoded body" do
+  describe '#parsed' do
+    it 'parses application/x-www-form-urlencoded body' do
       headers = {'Content-Type' => 'application/x-www-form-urlencoded'}
       body = 'foo=bar&answer=42'
       response = double('response', :headers => headers, :body => body)
@@ -50,7 +50,7 @@ describe OAuth2::Response do
       expect(subject.parsed['answer']).to eq('42')
     end
 
-    it "parses application/json body" do
+    it 'parses application/json body' do
       headers = {'Content-Type' => 'application/json'}
       body = MultiJson.encode(:foo => 'bar', :answer => 42)
       response = double('response', :headers => headers, :body => body)
@@ -75,17 +75,17 @@ describe OAuth2::Response do
     end
   end
 
-  context "xml parser registration" do
-    it "tries to load multi_xml and use it" do
-      expect(OAuth2::Response::PARSERS[:xml]).not_to be_nil
+  context 'xml parser registration' do
+    it 'tries to load multi_xml and use it' do
+      expect(OAuth2::Response.send(:class_variable_get, :@@parsers)[:xml]).not_to be_nil
     end
 
-    it "is able to parse xml" do
+    it 'is able to parse xml' do
       headers = {'Content-Type' => 'text/xml'}
       body = '<?xml version="1.0" standalone="yes" ?><foo><bar>baz</bar></foo>'
 
       response = double('response', :headers => headers, :body => body)
-      expect(OAuth2::Response.new(response).parsed).to eq({"foo" => {"bar" => "baz"}})
+      expect(OAuth2::Response.new(response).parsed).to eq('foo' => {'bar' => 'baz'})
     end
   end
 end

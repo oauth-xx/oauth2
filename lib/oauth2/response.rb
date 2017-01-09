@@ -1,4 +1,5 @@
 require 'multi_json'
+require 'multi_xml'
 require 'rack'
 
 module OAuth2
@@ -7,16 +8,32 @@ module OAuth2
     attr_reader :response
     attr_accessor :error, :options
 
+    # Procs that, when called, will parse a response body according
+    # to the specified format.
+    @@parsers = {
+      :json  => lambda { |body| MultiJson.load(body) rescue body }, # rubocop:disable RescueModifier
+      :query => lambda { |body| Rack::Utils.parse_query(body) },
+      :text  => lambda { |body| body },
+    }
+
+    # Content type assignments for various potential HTTP content types.
+    @@content_types = {
+      'application/json' => :json,
+      'text/javascript' => :json,
+      'application/x-www-form-urlencoded' => :query,
+      'text/plain' => :text,
+    }
+
     # Adds a new content type parser.
     #
     # @param [Symbol] key A descriptive symbol key such as :json or :query.
-    # @param [Array] One or more mime types to which this parser applies.
+    # @param [Array] mime_types One or more mime types to which this parser applies.
     # @yield [String] A block returning parsed content.
     def self.register_parser(key, mime_types, &block)
       key = key.to_sym
-      PARSERS[key] = block
+      @@parsers[key] = block
       Array(mime_types).each do |mime_type|
-        CONTENT_TYPES[mime_type] = key
+        @@content_types[mime_type] = key
       end
     end
 
@@ -26,7 +43,7 @@ module OAuth2
     # @param [Hash] opts options in which to initialize the instance
     # @option opts [Symbol] :parse (:automatic) how to parse the response body.  one of :query (for x-www-form-urlencoded),
     #   :json, or :automatic (determined by Content-Type response header)
-    def initialize(response, opts={})
+    def initialize(response, opts = {})
       @response = response
       @options = {:parse => :automatic}.merge(opts)
     end
@@ -46,30 +63,12 @@ module OAuth2
       response.body || ''
     end
 
-    # Procs that, when called, will parse a response body according
-    # to the specified format.
-    PARSERS = {
-      # Can't reliably detect whether MultiJson responds to load, since it's
-      # a reserved word. Use adapter as a proxy for new features.
-      :json  => lambda{ |body| MultiJson.respond_to?(:adapter) ? MultiJson.load(body) : MultiJson.decode(body) rescue body },
-      :query => lambda{ |body| Rack::Utils.parse_query(body) },
-      :text  => lambda{ |body| body }
-    }
-
-    # Content type assignments for various potential HTTP content types.
-    CONTENT_TYPES = {
-      'application/json' => :json,
-      'text/javascript' => :json,
-      'application/x-www-form-urlencoded' => :query,
-      'text/plain' => :text
-    }
-
     # The parsed response body.
     #   Will attempt to parse application/x-www-form-urlencoded and
     #   application/json Content-Type response bodies
     def parsed
-      return nil unless PARSERS.key?(parser)
-      @parsed ||= PARSERS[parser].call(body)
+      return nil unless @@parsers.key?(parser)
+      @parsed ||= @@parsers[parser].call(body)
     end
 
     # Attempts to determine the content type of the response.
@@ -79,15 +78,12 @@ module OAuth2
 
     # Determines the parser that will be used to supply the content of #parsed
     def parser
-      return options[:parse].to_sym if PARSERS.key?(options[:parse])
-      CONTENT_TYPES[content_type]
+      return options[:parse].to_sym if @@parsers.key?(options[:parse])
+      @@content_types[content_type]
     end
   end
 end
 
-begin
-  require 'multi_xml'
-  OAuth2::Response.register_parser(:xml, ['text/xml', 'application/rss+xml', 'application/rdf+xml', 'application/atom+xml']) do |body|
-    MultiXml.parse(body) rescue body
-  end
-rescue LoadError; end
+OAuth2::Response.register_parser(:xml, ['text/xml', 'application/rss+xml', 'application/rdf+xml', 'application/atom+xml']) do |body|
+  MultiXml.parse(body) rescue body # rubocop:disable RescueModifier
+end

@@ -25,7 +25,7 @@ module OAuth2
       #
       # @raise [NotImplementedError]
       def authorize_url
-        raise NotImplementedError, "The authorization endpoint is not used in this strategy"
+        raise(NotImplementedError, 'The authorization endpoint is not used in this strategy')
       end
 
       # Retrieve an access token given the specified client.
@@ -42,33 +42,34 @@ module OAuth2
       #   params :exp, expired at, in seconds, like Time.now.utc.to_i + 3600
       #
       # @param [Hash] opts options
-      def get_token(params={}, opts={})
+      def get_token(params = {}, opts = {})
         hash = build_request(params)
         @client.get_token(hash, opts.merge('refresh_token' => nil))
       end
 
       def build_request(params)
         assertion = build_assertion(params)
-        {:grant_type     => "assertion",
-         :assertion_type => "urn:ietf:params:oauth:grant-type:jwt-bearer",
-         :assertion      => assertion,
-         :scope          => params[:scope]
-        }.merge(client_params)
+        {
+          :grant_type     => 'assertion',
+          :assertion_type => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+          :assertion      => assertion,
+          :scope          => params[:scope],
+        }
       end
 
       def build_assertion(params)
-        claims = {:iss => params[:iss],
-                  :aud => params[:aud],
-                  :prn => params[:prn],
-                  :exp => params[:exp]
-                 }
+        claims = {
+          :iss => params[:iss],
+          :aud => params[:aud],
+          :prn => params[:prn],
+          :exp => params[:exp],
+        }
         if params[:hmac_secret]
-          jwt_assertion = JWT.encode(claims, params[:hmac_secret], "HS256")
+          JWT.encode(claims, params[:hmac_secret], 'HS256')
         elsif params[:private_key]
-          jwt_assertion = JWT.encode(claims, params[:private_key], "RS256")
+          JWT.encode(claims, params[:private_key], 'RS256')
         end
       end
     end
   end
 end
-

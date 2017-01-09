@@ -1,10 +1,10 @@
 # OAuth2
 
-[![Gem Version](https://badge.fury.io/rb/oauth2.png)][gem]
-[![Build Status](https://secure.travis-ci.org/intridea/oauth2.png?branch=master)][travis]
-[![Dependency Status](https://gemnasium.com/intridea/oauth2.png?travis)][gemnasium]
-[![Code Climate](https://codeclimate.com/github/intridea/oauth2.png)][codeclimate]
-[![Coverage Status](https://coveralls.io/repos/intridea/oauth2/badge.png?branch=master)][coveralls]
+[![Gem Version](http://img.shields.io/gem/v/oauth2.svg)][gem]
+[![Build Status](http://img.shields.io/travis/intridea/oauth2.svg)][travis]
+[![Dependency Status](http://img.shields.io/gemnasium/intridea/oauth2.svg)][gemnasium]
+[![Code Climate](http://img.shields.io/codeclimate/github/intridea/oauth2.svg)][codeclimate]
+[![Coverage Status](http://img.shields.io/coveralls/intridea/oauth2.svg)][coveralls]
 
 [gem]: https://rubygems.org/gems/oauth2
 [travis]: http://travis-ci.org/intridea/oauth2
@@ -12,23 +12,10 @@
 [codeclimate]: https://codeclimate.com/github/intridea/oauth2
 [coveralls]: https://coveralls.io/r/intridea/oauth2
 
-A Ruby wrapper for the OAuth 2.0 specification. This is a work in progress,
-being built first to solve the pragmatic process of connecting to existing
-OAuth 2.0 endpoints (e.g. Facebook) with the goal of building it up to meet
-the entire specification over time.
+A Ruby wrapper for the OAuth 2.0 specification.
 
 ## Installation
     gem install oauth2
-
-To ensure the code you're installing hasn't been tampered with, it's
-recommended that you verify the signature. To do this, you need to add my
-public key as a trusted certificate (you only need to do this once):
-
-    gem cert --add <(curl -Ls https://raw.github.com/intridea/oauth2/master/certs/sferik.pem)
-
-Then, install the gem with the high security trust policy:
-
-    gem install oauth2 -P HighSecurity
 
 ## Resources
 * [View Source on GitHub][code]
@@ -117,14 +104,14 @@ This library aims to support and is [tested against][travis] the following Ruby
 implementations:
 
 * Ruby 1.8.7
-* Ruby 1.9.2
 * Ruby 1.9.3
 * Ruby 2.0.0
-* [JRuby][]
-* [Rubinius][]
+* Ruby 2.1
+* Ruby 2.2
+* Ruby 2.3
+* [JRuby 9K][]
 
 [jruby]: http://jruby.org/
-[rubinius]: http://rubini.us/
 
 If something doesn't work on one of these interpreters, it's a bug.
 

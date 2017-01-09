@@ -1,14 +1,32 @@
+before_install:
+  - gem update bundler
+
 bundler_args: --without development
+
+cache: bundler
+
+env:
+  global:
+    - JRUBY_OPTS="$JRUBY_OPTS --debug"
+
 language: ruby
-matrix:
-  allow_failures:
-    - rvm: jruby-18mode
+
 rvm:
-  - rbx-18mode
-  - rbx-19mode
-  - jruby-18mode
-  - jruby-19mode
   - 1.8.7
-  - 1.9.2
   - 1.9.3
   - 2.0.0
+  - 2.1
+  - 2.2
+  - 2.3.0
+  - jruby-9.0.5.0
+  - jruby-head
+  - ruby-head
+
+matrix:
+  allow_failures:
+    - rvm: 1.8.7
+    - rvm: jruby-head
+    - rvm: ruby-head
+  fast_finish: true
+
+sudo: false
