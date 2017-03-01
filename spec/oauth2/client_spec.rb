@@ -160,15 +160,19 @@ describe OAuth2::Client do
   end
 
   describe '#connection' do
-    it 'works smoothly for succeeding requests when OAUTH_DEBUG=true' do
+    it 'smoothly handles succeeding requests when OAUTH_DEBUG=true' do
       allow(ENV).to receive(:[]).with('http_proxy').and_return(nil)
       allow(ENV).to receive(:[]).with('OAUTH_DEBUG').and_return('true')
 
-      # first request always succeeds
-      subject.request(:get, '/success')
+      capture_output do
+        # first request (always goes smoothly)
+        subject.request(:get, '/success')
+      end
 
-      # second request
-      expect(subject.request(:get, '/success')).not_to raise Faraday::RackBuilder::StackLocked
+      expect do
+        # second request (used to throw Faraday::RackBuilder::StackLocked)
+        subject.request(:get, '/success')
+      end.not_to raise_error
     end
   end
 
