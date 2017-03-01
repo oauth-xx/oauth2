@@ -159,6 +159,19 @@ describe OAuth2::Client do
     end
   end
 
+  describe '#connection' do
+    it 'works smoothly for succeeding requests when OAUTH_DEBUG=true' do
+      allow(ENV).to receive(:[]).with('http_proxy').and_return(nil)
+      allow(ENV).to receive(:[]).with('OAUTH_DEBUG').and_return('true')
+
+      # first request always succeeds
+      subject.request(:get, '/success')
+
+      # second request
+      expect(subject.request(:get, '/success')).not_to raise Faraday::RackBuilder::StackLocked
+    end
+  end
+
   describe '#request' do
     it 'works with a null response body' do
       expect(subject.request(:get, 'empty_get').body).to eq('')
