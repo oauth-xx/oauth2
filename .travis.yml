@@ -18,6 +18,7 @@ rvm:
   - 2.1
   - 2.2
   - 2.3.0
+  - 2.4.0
   - jruby-9.0.5.0
   - jruby-head
   - ruby-head
