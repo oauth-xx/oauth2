@@ -109,7 +109,8 @@ implementations:
 * Ruby 2.1
 * Ruby 2.2
 * Ruby 2.3
-* [JRuby 9K][]
+* Ruby 2.4
+* [JRuby 9K][jruby]
 
 [jruby]: http://jruby.org/
 
