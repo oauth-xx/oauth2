@@ -1,3 +1,7 @@
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
+
 Metrics/BlockNesting:
   Max: 2
 
