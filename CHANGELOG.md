@@ -1,6 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [unreleased]
+- No significant changes.
+
 ## [1.3.0] - 2016-12-28
 
 - Add support for header-based authentication to the `Client` so it can be used across the library (@bjeanes)
@@ -30,9 +33,6 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 - Fix Base64.strict_encode64 incompatibility with Ruby 1.8.7.
 
-## [unreleased]
-- No significant changes.
-
 ## [0.5.0] - 2011-07-29
 
 ### Changed
@@ -42,6 +42,10 @@ All notable changes to this project will be documented in this file.
 - [breaking] `access_token_method` Client option renamed to `token_method`.
 - [breaking] `web_server` renamed to `auth_code`.
 
-[unreleased]: https://github.com/intridea/oauth2/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/intridea/oauth2/compare/v0.9.4...v1.0.0
 [0.5.0]: https://github.com/intridea/oauth2/compare/v0.4.1...v0.5.0
+[1.0.0]: https://github.com/intridea/oauth2/compare/v0.9.4...v1.0.0
+[1.1.0]: https://github.com/intridea/oauth2/compare/v1.0.0...v1.1.0
+[1.2.0]: https://github.com/intridea/oauth2/compare/v1.1.0...v1.2.0
+[1.3.0]: https://github.com/intridea/oauth2/compare/v1.2.0...v1.3.0
+[unreleased]: https://github.com/intridea/oauth2/compare/v1.3.0...HEAD
+
