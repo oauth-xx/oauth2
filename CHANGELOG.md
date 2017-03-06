@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 ## [unreleased]
 - Set the response object on the access token on Client#get_token (@cpetschnig)
 
+## [1.3.1] - 2017-03-03
+
+- Add support for Faraday 0.12 (@mcfiredrill, @rhymes, @pschambacher)
+
 ## [1.3.0] - 2016-12-28
 
 - Add support for header-based authentication to the `Client` so it can be used across the library (@bjeanes)
