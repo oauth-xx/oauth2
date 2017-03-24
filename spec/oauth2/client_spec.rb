@@ -284,6 +284,18 @@ describe OAuth2::Client do
       client.get_token({})
     end
 
+    it 'sets the response object on the access token' do
+      client = stubbed_client do |stub|
+        stub.post('/oauth/token') do
+          [200, {'Content-Type' => 'application/json'}, MultiJson.encode('access_token' => 'the-token')]
+        end
+      end
+
+      token = client.get_token({})
+      expect(token.response).to be_a OAuth2::Response
+      expect(token.response.parsed).to eq('access_token' => 'the-token')
+    end
+
     def stubbed_client(params = {}, &stubs)
       params = {:site => 'https://api.example.com'}.merge(params)
       OAuth2::Client.new('abc', 'def', params) do |builder|

@@ -148,7 +148,9 @@ module OAuth2
         error = Error.new(response)
         raise(error)
       end
-      access_token_class.from_hash(self, response.parsed.merge(access_token_opts))
+      access_token_class.from_hash(self, response.parsed.merge(access_token_opts)).tap do |access_token|
+        access_token.response = response if access_token.respond_to?(:response=)
+      end
     end
 
     # The Authorization Code strategy
