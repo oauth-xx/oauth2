@@ -130,9 +130,9 @@ module OAuth2
     # @param [Hash] params a Hash of params for the token endpoint
     # @param [Hash] access token options, to pass to the AccessToken object
     # @param [Class] class of access token for easier subclassing OAuth2::AccessToken
-    # @return [AccessToken] the initalized AccessToken
+    # @return [AccessToken] the initialized AccessToken
     def get_token(params, access_token_opts = {}, access_token_class = AccessToken) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-      params = Authenticator.new(id, secret, options[:auth_scheme]).apply(params)
+      params = authenticator.apply(params)
       opts = {:raise_errors => options[:raise_errors], :parse => params.delete(:parse)}
       headers = params.delete(:headers) || {}
       if options[:token_method] == :post
@@ -148,9 +148,7 @@ module OAuth2
         error = Error.new(response)
         raise(error)
       end
-      access_token_class.from_hash(self, response.parsed.merge(access_token_opts)).tap do |access_token|
-        access_token.response = response if access_token.respond_to?(:response=)
-      end
+      build_access_token(response, access_token_opts, access_token_class)
     end
 
     # The Authorization Code strategy
@@ -206,6 +204,24 @@ module OAuth2
         {'redirect_uri' => options[:redirect_uri]}
       else
         {}
+      end
+    end
+
+  private
+
+    # Returns the authenticator object
+    #
+    # @return [Authenticator] the initialized Authenticator
+    def authenticator
+      Authenticator.new(id, secret, options[:auth_scheme])
+    end
+
+    # Builds the access token from the response of the HTTP call
+    #
+    # @return [AccessToken] the initialized AccessToken
+    def build_access_token(response, access_token_opts, access_token_class)
+      access_token_class.from_hash(self, response.parsed.merge(access_token_opts)).tap do |access_token|
+        access_token.response = response if access_token.respond_to?(:response=)
       end
     end
   end
