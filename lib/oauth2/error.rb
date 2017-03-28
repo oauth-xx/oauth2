@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OAuth2
   class Error < StandardError
     attr_reader :response, :code, :description

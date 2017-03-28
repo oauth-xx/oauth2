@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 
 gem 'faraday', '~> 0.9.2', :platforms => [:jruby_18, :ruby_18]
