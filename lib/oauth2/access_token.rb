@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OAuth2
   class AccessToken
     attr_reader :client, :token, :expires_in, :expires_at, :params

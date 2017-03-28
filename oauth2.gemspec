@@ -1,4 +1,6 @@
 # coding: utf-8
+# frozen_string_literal: true
+
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'oauth2/version'
@@ -13,11 +15,11 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Michael Bleigh', 'Erik Michaels-Ober']
   spec.description   = 'A Ruby wrapper for the OAuth 2.0 protocol built with a similar style to the original OAuth spec.'
   spec.email         = ['michael@intridea.com', 'sferik@gmail.com']
-  spec.files         = %w(.document CONTRIBUTING.md LICENSE.md README.md oauth2.gemspec) + Dir['lib/**/*.rb']
+  spec.files         = %w[.document CONTRIBUTING.md LICENSE.md README.md oauth2.gemspec] + Dir['lib/**/*.rb']
   spec.homepage      = 'http://github.com/intridea/oauth2'
-  spec.licenses      = %w(MIT)
+  spec.licenses      = %w[MIT]
   spec.name          = 'oauth2'
-  spec.require_paths = %w(lib)
+  spec.require_paths = %w[lib]
   spec.required_rubygems_version = '>= 1.3.5'
   spec.summary       = 'A Ruby wrapper for the OAuth 2.0 protocol.'
   spec.version       = OAuth2::Version

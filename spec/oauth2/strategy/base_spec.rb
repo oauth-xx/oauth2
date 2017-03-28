@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'helper'
 
 describe OAuth2::Strategy::Base do
