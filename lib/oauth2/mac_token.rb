@@ -19,7 +19,7 @@ module OAuth2
 
     attr_reader :secret, :algorithm
 
-    # Initalize a MACToken
+    # Initialize a MACToken
     #
     # @param [Client] client the OAuth2::Client instance
     # @param [String] token the Access Token value

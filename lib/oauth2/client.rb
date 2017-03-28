@@ -132,7 +132,7 @@ module OAuth2
     # @param [Hash] params a Hash of params for the token endpoint
     # @param [Hash] access token options, to pass to the AccessToken object
     # @param [Class] class of access token for easier subclassing OAuth2::AccessToken
-    # @return [AccessToken] the initalized AccessToken
+    # @return [AccessToken] the initialized AccessToken
     def get_token(params, access_token_opts = {}, access_token_class = AccessToken) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       params = Authenticator.new(id, secret, options[:auth_scheme]).apply(params)
       opts = {:raise_errors => options[:raise_errors], :parse => params.delete(:parse)}
