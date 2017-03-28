@@ -77,6 +77,14 @@ describe AccessToken do
       assert_initialized_token(target)
       expect(target.expires_at).to be_a(Integer)
     end
+
+    it 'initializes with a iso8601 string expires_at' do
+      expires = Time.now
+      hash = {:access_token => token, :expires_at => expires.iso8601, 'foo' => 'bar'}
+      target = AccessToken.from_hash(client, hash)
+      assert_initialized_token(target)
+      expect(target.expires_at).to eq(expires.to_i)
+    end
   end
 
   describe '#request' do
