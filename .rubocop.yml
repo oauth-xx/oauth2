@@ -1,3 +1,6 @@
+AllCops:
+  DisplayCopNames: true # Display the name of the failing cops
+
 Metrics/BlockNesting:
   Max: 2
 

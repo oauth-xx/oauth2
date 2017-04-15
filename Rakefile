@@ -19,9 +19,7 @@ end
 
 begin
   require 'rubocop/rake_task'
-  RuboCop::RakeTask.new do |task|
-    task.options = ['-D'] # Display the name of the failing cops
-  end
+  RuboCop::RakeTask.new
 rescue LoadError
   task :rubocop do
     $stderr.puts 'RuboCop is disabled'
