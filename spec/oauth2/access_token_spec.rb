@@ -194,11 +194,20 @@ RSpec.describe AccessToken do
                                          :expires_in     => 600,
                                          :param_name     => 'o_param')
     end
+    let(:new_access) do
+      NewAccessToken = Class.new(AccessToken)
+      NewAccessToken.new(client, token, :refresh_token  => 'abaca')
+    end
 
     it 'returns a refresh token with appropriate values carried over' do
       refreshed = access.refresh
       expect(access.client).to eq(refreshed.client)
       expect(access.options[:param_name]).to eq(refreshed.options[:param_name])
+    end
+
+    it 'returns a refresh token of the same access token class' do
+      refreshed = new_access.refresh!
+      expect(new_access.class).to eq(refreshed.class)
     end
 
     context 'with a nil refresh_token in the response' do
