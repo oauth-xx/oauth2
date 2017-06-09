@@ -13,14 +13,14 @@ module OAuth2
     #
     # @return [Integer]
     def minor
-      3
+      4
     end
 
     # The patch version
     #
     # @return [Integer]
     def patch
-      1
+      0
     end
 
     # The pre-release version, if any
