@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'helper'
 
 describe OAuth2::Strategy::Password do
@@ -25,7 +27,7 @@ describe OAuth2::Strategy::Password do
     end
   end
 
-  %w(json formencoded).each do |mode|
+  %w[json formencoded].each do |mode|
     describe "#get_token (#{mode})" do
       before do
         @mode = mode

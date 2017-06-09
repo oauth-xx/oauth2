@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'helper'
 
 describe AccessToken do
@@ -51,7 +53,7 @@ describe AccessToken do
       expect(hash).to eq(hash_before)
     end
 
-    it 'initalizes with a form-urlencoded key/value string' do
+    it 'initializes with a form-urlencoded key/value string' do
       kvform = "access_token=#{token}&expires_at=#{Time.now.to_i + 200}&foo=bar"
       target = AccessToken.from_kvform(client, kvform)
       assert_initialized_token(target)
