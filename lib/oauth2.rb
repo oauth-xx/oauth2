@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'oauth2/error'
 require 'oauth2/authenticator'
 require 'oauth2/client'

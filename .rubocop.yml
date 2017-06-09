@@ -1,3 +1,6 @@
+AllCops:
+  DisplayCopNames: true # Display the name of the failing cops
+
 Metrics/BlockNesting:
   Max: 2
 
@@ -56,6 +59,10 @@ Style/Lambda:
 
 Style/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
+
+# Disable for Ruby 1.9.3 compatibility
+Style/SymbolArray:
+  Enabled: false
 
 Style/TrailingCommaInLiteral:
   EnforcedStyleForMultiline: 'comma'
