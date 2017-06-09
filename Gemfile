@@ -17,7 +17,6 @@ group :test do
   gem 'rspec', '>= 3'
   gem 'rubocop', '>= 0.37', :platforms => [:ruby_20, :ruby_21, :ruby_22, :ruby_23, :ruby_24]
   gem 'simplecov', '>= 0.9'
-  gem 'yardstick'
 
   platforms :jruby_18, :ruby_18 do
     gem 'mime-types', '~> 1.25'

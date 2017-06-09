@@ -28,14 +28,4 @@ rescue LoadError
   end
 end
 
-require 'yardstick/rake/measurement'
-Yardstick::Rake::Measurement.new do |measurement|
-  measurement.output = 'measurement/report.txt'
-end
-
-require 'yardstick/rake/verify'
-Yardstick::Rake::Verify.new do |verify|
-  verify.threshold = 59.1
-end
-
-task :default => [:spec, :rubocop, :verify_measurements]
+task :default => [:spec, :rubocop]
