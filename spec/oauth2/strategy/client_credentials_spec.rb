@@ -37,7 +37,7 @@ describe OAuth2::Strategy::ClientCredentials do
     end
   end
 
-  %w(json formencoded).each do |mode|
+  %w[json formencoded].each do |mode|
     [:basic_auth, :request_body].each do |auth_scheme|
       describe "#get_token (#{mode}) (#{auth_scheme})" do
         before do

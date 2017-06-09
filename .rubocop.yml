@@ -13,12 +13,18 @@ Metrics/ParameterLists:
   Max: 4
   CountKeywordArgs: true
 
+Layout/AccessModifierIndentation:
+  EnforcedStyle: outdent
+
+Layout/DotPosition:
+  EnforcedStyle: trailing
+
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
 Lint/UnusedBlockArgument:
   Exclude:
     - 'spec/**/*.rb'
-
-Style/AccessModifierIndentation:
-  EnforcedStyle: outdent
 
 Style/ClassVars:
   Enabled: false
@@ -32,9 +38,6 @@ Style/CollectionMethods:
 
 Style/Documentation:
   Enabled: false
-
-Style/DotPosition:
-  EnforcedStyle: trailing
 
 Style/DoubleNegation:
   Enabled: false
@@ -54,8 +57,8 @@ Style/HashSyntax:
 Style/Lambda:
   Enabled: false
 
-Style/SpaceInsideHashLiteralBraces:
-  EnforcedStyle: no_space
+Style/SymbolArray:
+  Enabled: false
 
 Style/TrailingCommaInLiteral:
   EnforcedStyleForMultiline: 'comma'

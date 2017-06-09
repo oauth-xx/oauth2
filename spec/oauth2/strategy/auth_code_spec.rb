@@ -71,7 +71,7 @@ describe OAuth2::Strategy::AuthCode do
     end
   end
 
-  %w(json formencoded from_facebook).each do |mode|
+  %w[json formencoded from_facebook].each do |mode|
     [:get, :post].each do |verb|
       describe "#get_token (#{mode}, access_token_method=#{verb}" do
         before do

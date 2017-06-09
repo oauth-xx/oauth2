@@ -1,4 +1,5 @@
 # coding: utf-8
+
 require 'helper'
 require 'nkf'
 
@@ -93,7 +94,7 @@ describe OAuth2::Client do
     end
   end
 
-  %w(authorize token).each do |url_type|
+  %w[authorize token].each do |url_type|
     describe ":#{url_type}_url option" do
       it "defaults to a path of /oauth/#{url_type}" do
         expect(subject.send("#{url_type}_url")).to eq("https://api.example.com/oauth/#{url_type}")
@@ -215,7 +216,7 @@ describe OAuth2::Client do
       expect(response.error).not_to be_nil
     end
 
-    %w(/unauthorized /conflict /error /different_encoding /ascii_8bit_encoding).each do |error_path|
+    %w[/unauthorized /conflict /error /different_encoding /ascii_8bit_encoding].each do |error_path|
       it "raises OAuth2::Error on error response to path #{error_path}" do
         expect { subject.request(:get, error_path) }.to raise_error(OAuth2::Error)
       end
