@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [unreleased]
-- No significant changes.
+- Add support for Faraday 0.12 (@rhymes, @josephpage)
 
 ## [1.3.0] - 2016-12-28
 
