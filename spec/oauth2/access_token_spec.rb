@@ -196,7 +196,7 @@ RSpec.describe AccessToken do
     end
     let(:new_access) do
       NewAccessToken = Class.new(AccessToken)
-      NewAccessToken.new(client, token, :refresh_token  => 'abaca')
+      NewAccessToken.new(client, token, :refresh_token => 'abaca')
     end
 
     it 'returns a refresh token with appropriate values carried over' do
