@@ -8,6 +8,13 @@ All notable changes to this project will be documented in this file.
 
 - Add support for Faraday 0.12 (@mcfiredrill, @rhymes, @pschambacher)
 
+## [1.4.0] - 2017-06-09
+
+- Drop Ruby 1.8.7 support
+- Update faraday dependency to < 0.13 
+- Fix RuboCop offenses
+- Remove Yardstick
+
 ## [1.3.0] - 2016-12-28
 
 - Add support for header-based authentication to the `Client` so it can be used across the library (@bjeanes)
