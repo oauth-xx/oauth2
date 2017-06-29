@@ -58,6 +58,7 @@ describe OAuth2::Strategy::AuthCode do
     before do
       @mode = 'json'
       client.options[:token_method] = :post
+      client.options[:auth_scheme] = :request_body
     end
 
     it 'should not raise an error' do
@@ -77,6 +78,7 @@ describe OAuth2::Strategy::AuthCode do
         before do
           @mode = mode
           client.options[:token_method] = verb
+          client.options[:auth_scheme] = :request_body
           @access = subject.get_token(code)
         end
 
