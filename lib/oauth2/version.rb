@@ -13,7 +13,7 @@ module OAuth2
     #
     # @return [Integer]
     def minor
-      4
+      5
     end
 
     # The patch version

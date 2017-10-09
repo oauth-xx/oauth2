@@ -172,6 +172,7 @@ describe OAuth2::Client do
     end
 
     it 'outputs to $stdout when OAUTH_DEBUG=true' do
+      allow(ENV).to receive(:[]).and_call_original
       allow(ENV).to receive(:[]).with('http_proxy').and_return(nil)
       allow(ENV).to receive(:[]).with('OAUTH_DEBUG').and_return('true')
       output = capture_output do
