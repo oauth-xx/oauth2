@@ -11,6 +11,7 @@ module OAuth2
     # Procs that, when called, will parse a response body according
     # to the specified format.
     @@parsers = {
+      # rubocop:disable Lint/RescueWithoutErrorClass
       :json  => lambda { |body| MultiJson.load(body) rescue body }, # rubocop:disable RescueModifier
       :query => lambda { |body| Rack::Utils.parse_query(body) },
       :text  => lambda { |body| body },
