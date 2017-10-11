@@ -15,7 +15,7 @@ group :test do
   gem 'coveralls'
   gem 'rack', '~> 1.2', :platforms => [:jruby_18, :jruby_19, :ruby_18, :ruby_19, :ruby_20, :ruby_21]
   gem 'rspec', '>= 3'
-  gem 'rubocop', '~> 0.50.0', :platforms => [:ruby_20, :ruby_21, :ruby_22, :ruby_23, :ruby_24]
+  gem 'rubocop', '~> 0.50.0', :platforms => [:ruby_20, :ruby_21, :ruby_22, :ruby_23, :ruby_24] if RUBY_VERSION >= '2.0'
   gem 'simplecov', '>= 0.9'
 
   platforms :jruby_18, :ruby_18 do
