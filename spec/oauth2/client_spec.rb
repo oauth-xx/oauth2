@@ -284,6 +284,15 @@ describe OAuth2::Client do
       client.get_token({})
     end
 
+    it 'forwards given token parameters' do
+      client = stubbed_client(:auth_scheme => :request_body) do |stub|
+        stub.post('/oauth/token', 'arbitrary' => 'parameter', 'client_id' => 'abc', 'client_secret' => 'def') do |env|
+          [200, {'Content-Type' => 'application/json'}, MultiJson.encode('access_token' => 'the-token')]
+        end
+      end
+      client.get_token('arbitrary' => 'parameter')
+    end
+
     def stubbed_client(params = {}, &stubs)
       params = {:site => 'https://api.example.com'}.merge(params)
       OAuth2::Client.new('abc', 'def', params) do |builder|
