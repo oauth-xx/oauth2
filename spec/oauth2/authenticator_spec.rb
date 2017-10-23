@@ -40,7 +40,7 @@ RSpec.describe OAuth2::Authenticator do
 
     context 'with Basic authentication' do
       let(:mode) { :basic_auth }
-      let(:header) { 'Basic ' + Base64.encode64("#{client_id}:#{client_secret}").delete("\n") }
+      let(:header) { 'Basic ' + Base64.strict_encode64("#{client_id}:#{client_secret}") }
 
       it 'encodes credentials in headers' do
         output = subject.apply({})
