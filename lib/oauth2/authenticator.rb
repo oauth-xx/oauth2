@@ -31,7 +31,7 @@ module OAuth2
     end
 
     def self.encode_basic_auth(user, password)
-      'Basic ' + Base64.encode64(user + ':' + password).delete("\n")
+      'Basic ' + Base64.strict_encode64(user + ':' + password)
     end
 
   private
