@@ -243,6 +243,7 @@ describe OAuth2::Client do
       rescue OAuth2::Error => ex
         expect(ex.message.encoding.name).to eq('UTF-8')
         expect(ex.message).to eq("invalid_request: é\n{\"error\":\"invalid_request\",\"error_description\":\"��\"}")
+        expect(ex.message.encoding.name).to eq('UTF-8')
       end
     end
 
