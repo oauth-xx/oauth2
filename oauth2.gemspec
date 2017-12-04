@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
   spec.description   = 'A Ruby wrapper for the OAuth 2.0 protocol built with a similar style to the original OAuth spec.'
   spec.email         = ['michael@intridea.com', 'sferik@gmail.com']
   spec.files         = %w[.document CONTRIBUTING.md LICENSE.md README.md oauth2.gemspec] + Dir['lib/**/*.rb']
-  spec.homepage      = 'http://github.com/intridea/oauth2'
+  spec.homepage      = 'https://github.com/intridea/oauth2'
   spec.licenses      = %w[MIT]
   spec.name          = 'oauth2'
   spec.require_paths = %w[lib]
