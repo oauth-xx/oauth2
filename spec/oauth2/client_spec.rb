@@ -225,7 +225,7 @@ describe OAuth2::Client do
     it 're-encodes response body in the error message' do
       begin
         subject.request(:get, '/ascii_8bit_encoding')
-      rescue => ex
+      rescue StandardError => ex
         expect(ex.message.encoding.name).to eq('UTF-8')
         expect(ex.message).to eq("invalid_request: é\n{\"error\":\"invalid_request\",\"error_description\":\"��\"}")
       end
