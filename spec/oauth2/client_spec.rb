@@ -171,14 +171,29 @@ describe OAuth2::Client do
       expect(response.headers).to eq('Content-Type' => 'text/awesome')
     end
 
-    it 'outputs to $stdout when OAUTH_DEBUG=true' do
-      allow(ENV).to receive(:[]).with('http_proxy').and_return(nil)
-      allow(ENV).to receive(:[]).with('OAUTH_DEBUG').and_return('true')
-      output = capture_output do
-        subject.request(:get, '/success')
+    context 'when OAUTH_DEBUG=true' do
+      around do |example|
+        begin
+          original = ENV['OAUTH_DEBUG']
+          ENV['OAUTH_DEBUG'] = 'true'
+
+          example.call
+        ensure
+          if original.nil?
+            ENV.delete('OAUTH_DEBUG')
+          else
+            ENV['OAUTH_DEBUG'] = original
+          end
+        end
       end
 
-      expect(output).to include 'INFO -- : get https://api.example.com/success', 'INFO -- : get https://api.example.com/success'
+      it 'outputs to $stdout when OAUTH_DEBUG=true' do
+        output = capture_output do
+          subject.request(:get, '/success')
+        end
+
+        expect(output).to include 'INFO -- : get https://api.example.com/success', 'INFO -- : get https://api.example.com/success'
+      end
     end
 
     it 'posts a body' do
@@ -228,6 +243,7 @@ describe OAuth2::Client do
       rescue OAuth2::Error => ex
         expect(ex.message.encoding.name).to eq('UTF-8')
         expect(ex.message).to eq("invalid_request: é\n{\"error\":\"invalid_request\",\"error_description\":\"��\"}")
+        expect(ex.message.encoding.name).to eq('UTF-8')
       end
     end
 

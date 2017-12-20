@@ -24,7 +24,7 @@ begin
   end
 rescue LoadError
   task :rubocop do
-    $stderr.puts 'RuboCop is disabled'
+    warn 'RuboCop is disabled'
   end
 end
 
