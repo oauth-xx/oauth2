@@ -44,10 +44,10 @@ describe OAuth2::Client do
     end
 
     it 'is able to pass a block to configure the connection' do
-      connection = double('connection')
       builder = double('builder')
-      allow(connection).to receive(:build).and_yield(builder)
-      allow(Faraday::Connection).to receive(:new).and_return(connection)
+
+      allow(Faraday).to receive(:new).and_yield(builder)
+      allow(builder).to receive(:response)
 
       expect(builder).to receive(:adapter).with(:test)
 
