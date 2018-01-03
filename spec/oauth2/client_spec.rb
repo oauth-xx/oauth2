@@ -128,7 +128,7 @@ describe OAuth2::Client do
       end
 
       it 'does not add the redirect_uri param to the auth_code token exchange request' do
-        client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com') do |builder|
+        client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :auth_scheme => :request_body) do |builder|
           builder.adapter :test do |stub|
             stub.post('/oauth/token', auth_code_params) do
               [200, {'Content-Type' => 'application/json'}, '{"access_token":"token"}']
@@ -147,7 +147,7 @@ describe OAuth2::Client do
       end
 
       it 'adds the redirect_uri param to the auth_code token exchange request' do
-        client = OAuth2::Client.new('abc', 'def', :redirect_uri => 'https://site.com/oauth/callback', :site => 'https://api.example.com') do |builder|
+        client = OAuth2::Client.new('abc', 'def', :redirect_uri => 'https://site.com/oauth/callback', :site => 'https://api.example.com', :auth_scheme => :request_body) do |builder|
           builder.adapter :test do |stub|
             stub.post('/oauth/token', auth_code_params.merge('redirect_uri' => 'https://site.com/oauth/callback')) do
               [200, {'Content-Type' => 'application/json'}, '{"access_token":"token"}']
