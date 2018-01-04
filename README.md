@@ -9,7 +9,7 @@
 [travis]: http://travis-ci.org/oauth-xx/oauth2
 [coveralls]: https://coveralls.io/r/intridea/oauth2
 
-## OmniAuth is looking for a new home.  If you are interested in taking over this project please contact jason@mobomo.com
+### Oauth2 gem is looking for new maintainers. See oauth-xx/oauth2#307.
 
 A Ruby wrapper for the OAuth 2.0 specification.
 
