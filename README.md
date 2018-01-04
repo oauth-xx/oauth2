@@ -9,7 +9,7 @@
 [travis]: http://travis-ci.org/oauth-xx/oauth2
 [coveralls]: https://coveralls.io/r/intridea/oauth2
 
-### Oauth2 gem is looking for new maintainers. See oauth-xx/oauth2#307.
+### Oauth2 gem is looking for new maintainers. See [#307](https://github.com/oauth-xx/oauth2/issues/307).
 
 A Ruby wrapper for the OAuth 2.0 specification.
 
