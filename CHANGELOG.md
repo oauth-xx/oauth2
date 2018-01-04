@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 
 ## [unreleased]
-- No significant changes.
+- Set the response object on the access token on Client#get_token (@cpetschnig)
 
 ## [1.3.0] - 2016-12-28
 
