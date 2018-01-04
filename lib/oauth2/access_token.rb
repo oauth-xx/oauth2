@@ -37,7 +37,11 @@ module OAuth2
     # @option opts [String] :header_format ('Bearer %s') the string format to use for the Authorization header
     # @option opts [String] :param_name ('access_token') the parameter name to use for transmission of the
     #    Access Token value in :body or :query transmission mode
-    def initialize(client, token, opts = {}) # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/PerceivedComplexity
+    def initialize(client, token, opts = {})
       @client = client
       @token = token.to_s
       opts = opts.dup
@@ -47,12 +51,20 @@ module OAuth2
       @expires_in ||= opts.delete('expires')
       @expires_in &&= @expires_in.to_i
       @expires_at &&= @expires_at.to_i
-      @expires_at ||= Time.now.to_i + @expires_in if @expires_in
+      if @expires_in && @expires_in.to_i > 0
+        @expires_at ||= Time.now.to_i + @expires_in
+      else
+        @expires_at = @expires_at
+      end
       @options = {:mode          => opts.delete(:mode) || :header,
                   :header_format => opts.delete(:header_format) || 'Bearer %s', # rubocop:disable FormatStringToken
                   :param_name    => opts.delete(:param_name) || 'access_token'}
       @params = opts
     end
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/AbcSize
+    # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/PerceivedComplexity
 
     # Indexer to additional params present in token response
     #
@@ -65,7 +77,7 @@ module OAuth2
     #
     # @return [Boolean]
     def expires?
-      !!@expires_at
+      !!@expires_at && @expires_at > 0
     end
 
     # Whether or not the token is expired
