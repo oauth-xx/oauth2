@@ -42,7 +42,7 @@ group :test do
   gem 'rack', '~> 1.2' if ruby_version < Gem::Version.new('2.2')
 
   # Rubocop only works on new ruby
-  gem 'rubocop', '>= 0.37' if ruby_version >= Gem::Version.new('2.1')
+  gem 'rubocop', '~> 0.52.1' if ruby_version >= Gem::Version.new('2.1')
 end
 
 gemspec
