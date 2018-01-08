@@ -161,8 +161,8 @@ describe OAuth2::Client do
 
   describe '#connection' do
     it 'smoothly handles succeeding requests when OAUTH_DEBUG=true' do
-      allow(ENV).to receive(:[]).with('http_proxy').and_return(nil)
-      allow(ENV).to receive(:[]).with('OAUTH_DEBUG').and_return('true')
+      env = double('ENV')
+      allow(env).to receive(:[]).with('OAUTH_DEBUG').and_return('true')
 
       capture_output do
         # first request (always goes smoothly)
