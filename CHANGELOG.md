@@ -2,18 +2,24 @@
 All notable changes to this project will be documented in this file.
 
 ## [unreleased]
+
 - Set the response object on the access token on Client#get_token (@cpetschnig)
-
-## [1.3.1] - 2017-03-03
-
-- Add support for Faraday 0.12 (@mcfiredrill, @rhymes, @pschambacher)
+- Set `:basic_auth` as default for `:auth_scheme` instead of `:request_body` (@tetsuya)
+- Fix "Unexpected middleware set" issue with Faraday when `OAUTH_DEBUG=true` (@spectator)
+- _Dependency_: Upgrade Faraday to 0.13.x (@zacharywelch)
+- _Dependency_: Upgrade jwt to 2.x.x (@travisofthenorth)
 
 ## [1.4.0] - 2017-06-09
 
-- Drop Ruby 1.8.7 support
-- Update faraday dependency to < 0.13 
-- Fix RuboCop offenses
-- Remove Yardstick
+- Drop Ruby 1.8.7 support (@sferik)
+- Add support for Faraday 0.12 (@sferik)
+- Fix some RuboCop offenses (@sferik)
+- Remove Yardstick (@sferik)
+
+## [1.3.1] - 2017-03-03
+
+- Add support for Faraday 0.11 (@mcfiredrill, @rhymes, @pschambacher)
+- Add support for Ruby 2.4.0 (@pschambacher)
 
 ## [1.3.0] - 2016-12-28
 
