@@ -3,9 +3,9 @@ All notable changes to this project will be documented in this file.
 
 ## [unreleased]
 
-- **Breaking**: Set `:basic_auth` as default for `:auth_scheme` instead of `:request_body`. This was default behavior before 1.3.0. See #285 (@tetsuya, @wy193777)
+- **Breaking**: Set `:basic_auth` as default for `:auth_scheme` instead of `:request_body`. This was default behavior before 1.3.0. See [#285](oauth-xx/oauth2#285) (@tetsuya, @wy193777)
 - Set the response object on the access token on Client#get_token (@cpetschnig)
-- Fix "Unexpected middleware set" issue with Faraday when `OAUTH_DEBUG=true` (@spectator)
+- Fix "Unexpected middleware set" issue with Faraday when `OAUTH_DEBUG=true` (@spectator, @gafrom)
 - _Dependency_: Upgrade Faraday to 0.13.x (@zacharywelch)
 - _Dependency_: Upgrade jwt to 2.x.x (@travisofthenorth)
 
