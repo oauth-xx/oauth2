@@ -1,7 +1,7 @@
 module OAuth2
   class AccessToken
     attr_reader :client, :token, :expires_in, :expires_at, :params
-    attr_accessor :options, :refresh_token
+    attr_accessor :options, :refresh_token, :response
 
     class << self
       # Initializes an AccessToken from a Hash
@@ -49,7 +49,7 @@ module OAuth2
       @expires_at &&= @expires_at.to_i
       @expires_at ||= Time.now.to_i + @expires_in if @expires_in
       @options = {:mode          => opts.delete(:mode) || :header,
-                  :header_format => opts.delete(:header_format) || 'Bearer %s',
+                  :header_format => opts.delete(:header_format) || 'Bearer %s', # rubocop:disable FormatStringToken
                   :param_name    => opts.delete(:param_name) || 'access_token'}
       @params = opts
     end
@@ -81,8 +81,6 @@ module OAuth2
     # @note options should be carried over to the new AccessToken
     def refresh!(params = {})
       raise('A refresh_token is not available') unless refresh_token
-      params[:client_id] = @client.id
-      params[:client_secret] = @client.secret
       params[:grant_type] = 'refresh_token'
       params[:refresh_token] = refresh_token
       new_token = @client.get_token(params)
@@ -105,7 +103,7 @@ module OAuth2
     # @param [Hash] opts the options to make the request with
     # @see Client#request
     def request(verb, path, opts = {}, &block)
-      self.token = opts
+      configure_authentication!(opts)
       @client.request(verb, path, opts, &block)
     end
 
@@ -151,7 +149,7 @@ module OAuth2
 
   private
 
-    def token=(opts) # rubocop:disable MethodLength, Metrics/AbcSize
+    def configure_authentication!(opts) # rubocop:disable MethodLength, Metrics/AbcSize
       case options[:mode]
       when :header
         opts[:headers] ||= {}

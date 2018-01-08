@@ -27,7 +27,7 @@ module OAuth2
     # Adds a new content type parser.
     #
     # @param [Symbol] key A descriptive symbol key such as :json or :query.
-    # @param [Array] One or more mime types to which this parser applies.
+    # @param [Array] mime_types One or more mime types to which this parser applies.
     # @yield [String] A block returning parsed content.
     def self.register_parser(key, mime_types, &block)
       key = key.to_sym
