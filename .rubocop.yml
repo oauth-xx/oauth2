@@ -1,20 +1,21 @@
 AllCops:
   DisplayCopNames: true # Display the name of the failing cops
+  TargetRubyVersion: 2.1
+
+Metrics/BlockLength:
+  Enabled: false
 
 Metrics/BlockNesting:
   Max: 2
 
 Metrics/LineLength:
-  AllowURI: true
   Enabled: false
 
 Metrics/MethodLength:
-  CountComments: false
   Max: 15
 
 Metrics/ParameterLists:
   Max: 4
-  CountKeywordArgs: true
 
 Layout/AccessModifierIndentation:
   EnforcedStyle: outdent
@@ -64,7 +65,4 @@ Style/SymbolArray:
   Enabled: false
 
 Style/TrailingCommaInLiteral:
-  EnforcedStyleForMultiline: 'comma'
-
-Metrics/BlockLength:
-  Enabled: false
+  EnforcedStyleForMultiline: comma
