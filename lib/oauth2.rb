@@ -1,3 +1,7 @@
+# includes modules from stdlib
+require 'cgi'
+
+# includes gem files
 require 'oauth2/error'
 require 'oauth2/authenticator'
 require 'oauth2/client'
