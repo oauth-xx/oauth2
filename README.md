@@ -1,7 +1,7 @@
 # OAuth2
 
 [![Gem Version](http://img.shields.io/gem/v/oauth2.svg)][gem]
-![Total Downloads](https://img.shields.io/gem/dt/oauth2.svg)
+[![Total Downloads](https://img.shields.io/gem/dt/oauth2.svg)][gem]
 [![Build Status](http://img.shields.io/travis/oauth-xx/oauth2.svg)][travis]
 [![Coverage Status](http://img.shields.io/coveralls/intridea/oauth2.svg)][coveralls]
 [![Maintainability](https://api.codeclimate.com/v1/badges/688c612528ff90a46955/maintainability)](https://codeclimate.com/github/oauth-xx/oauth2/maintainability)
