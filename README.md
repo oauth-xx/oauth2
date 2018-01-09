@@ -5,6 +5,7 @@
 [![Build Status](http://img.shields.io/travis/oauth-xx/oauth2.svg)][travis]
 [![Coverage Status](http://img.shields.io/coveralls/intridea/oauth2.svg)][coveralls]
 [![Maintainability](https://api.codeclimate.com/v1/badges/688c612528ff90a46955/maintainability)](https://codeclimate.com/github/oauth-xx/oauth2/maintainability)
+
 [gem]: https://rubygems.org/gems/oauth2
 [travis]: http://travis-ci.org/oauth-xx/oauth2
 [coveralls]: https://coveralls.io/r/intridea/oauth2
