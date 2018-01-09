@@ -48,7 +48,7 @@ describe OAuth2::Strategy::AuthCode do
 
     it 'includes passed in options' do
       cb = 'http://myserver.local/oauth/callback'
-      expect(subject.authorize_url(:redirect_uri => cb)).to include("redirect_uri=#{Rack::Utils.escape(cb)}")
+      expect(subject.authorize_url(:redirect_uri => cb)).to include("redirect_uri=#{CGI.escape(cb)}")
     end
   end
 
