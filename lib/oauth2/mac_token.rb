@@ -44,7 +44,7 @@ module OAuth2
       url = client.connection.build_url(path, opts[:params]).to_s
 
       opts[:headers] ||= {}
-      opts[:headers].merge!('Authorization' => header(verb, url))
+      opts[:headers]['Authorization'] = header(verb, url)
 
       @client.request(verb, path, opts, &block)
     end
@@ -64,7 +64,7 @@ module OAuth2
 
       uri = URI.parse(url)
 
-      fail(ArgumentError, "could not parse \"#{url}\" into URI") unless uri.is_a?(URI::HTTP)
+      raise(ArgumentError, "could not parse \"#{url}\" into URI") unless uri.is_a?(URI::HTTP)
 
       mac = signature(timestamp, nonce, verb, uri)
 
@@ -102,7 +102,7 @@ module OAuth2
         when 'hmac-sha-256'
           OpenSSL::Digest::SHA256.new
         else
-          fail(ArgumentError, 'Unsupported algorithm')
+          raise(ArgumentError, 'Unsupported algorithm')
         end
       end
     end
@@ -116,7 +116,7 @@ module OAuth2
 
     # Base64.strict_encode64 is not available on Ruby 1.8.7
     def strict_encode64(str)
-      Base64.encode64(str).gsub("\n", '')
+      Base64.encode64(str).delete("\n")
     end
   end
 end

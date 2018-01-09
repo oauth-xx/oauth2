@@ -28,7 +28,7 @@ describe OAuth2::Strategy::Assertion do
     end
   end
 
-  %w(json formencoded).each do |mode|
+  %w[json formencoded].each do |mode|
     describe "#get_token (#{mode})" do
       before do
         @mode = mode
@@ -52,5 +52,4 @@ describe OAuth2::Strategy::Assertion do
       end
     end
   end
-
 end

@@ -9,7 +9,7 @@ describe OAuth2::Strategy::ClientCredentials do
       builder.adapter :test do |stub|
         stub.post('/oauth/token', 'grant_type' => 'client_credentials') do |env|
           client_id, client_secret = Base64.decode64(env[:request_headers]['Authorization'].split(' ', 2)[1]).split(':', 2)
-          client_id == 'abc' && client_secret == 'def' || fail(Faraday::Adapter::Test::Stubs::NotFound)
+          client_id == 'abc' && client_secret == 'def' || raise(Faraday::Adapter::Test::Stubs::NotFound)
           case @mode
           when 'formencoded'
             [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, kvform_token]
@@ -37,23 +37,13 @@ describe OAuth2::Strategy::ClientCredentials do
     end
   end
 
-  describe '#authorization' do
-    it 'generates an Authorization header value for HTTP Basic Authentication' do
-      [
-        ['abc', 'def', 'Basic YWJjOmRlZg=='],
-        ['xxx', 'secret', 'Basic eHh4OnNlY3JldA=='],
-      ].each do |client_id, client_secret, expected|
-        expect(subject.authorization(client_id, client_secret)).to eq(expected)
-      end
-    end
-  end
-
-  %w(json formencoded).each do |mode|
-    %w(default basic_auth request_body).each do |auth_scheme|
+  %w[json formencoded].each do |mode|
+    [:basic_auth, :request_body].each do |auth_scheme|
       describe "#get_token (#{mode}) (#{auth_scheme})" do
         before do
           @mode = mode
-          @access = subject.get_token({}, auth_scheme == 'default' ? {} : {'auth_scheme' => auth_scheme})
+          client.options[:auth_scheme] = auth_scheme
+          @access = subject.get_token
         end
 
         it 'returns AccessToken with same Client' do

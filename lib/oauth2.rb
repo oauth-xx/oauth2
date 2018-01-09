@@ -1,4 +1,5 @@
 require 'oauth2/error'
+require 'oauth2/authenticator'
 require 'oauth2/client'
 require 'oauth2/strategy/base'
 require 'oauth2/strategy/auth_code'

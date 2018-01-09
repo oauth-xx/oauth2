@@ -31,7 +31,7 @@ describe AccessToken do
       expect(target.params['foo']).to eq('bar')
     end
 
-    def assert_initialized_token(target)
+    def assert_initialized_token(target) # rubocop:disable Metrics/AbcSize
       expect(target.token).to eq(token)
       expect(target).to be_expires
       expect(target.params.keys).to include('foo')
@@ -42,6 +42,13 @@ describe AccessToken do
       hash = {:access_token => token, :expires_at => Time.now.to_i + 200, 'foo' => 'bar'}
       target = AccessToken.from_hash(client, hash)
       assert_initialized_token(target)
+    end
+
+    it 'does not modify opts hash' do
+      hash = {:access_token => token, :expires_at => Time.now.to_i}
+      hash_before = hash.dup
+      AccessToken.from_hash(client, hash)
+      expect(hash).to eq(hash_before)
     end
 
     it 'initalizes with a form-urlencoded key/value string' do
@@ -55,6 +62,13 @@ describe AccessToken do
       expect(target.options[:param_name]).to eq('foo')
       expect(target.options[:header_format]).to eq('Bearer %')
       expect(target.options[:mode]).to eq(:body)
+    end
+
+    it 'does not modify opts hash' do
+      opts = {:param_name => 'foo', :header_format => 'Bearer %', :mode => :body}
+      opts_before = opts.dup
+      AccessToken.new(client, token, opts)
+      expect(opts).to eq(opts_before)
     end
 
     it 'initializes with a string expires_at' do
@@ -139,7 +153,6 @@ describe AccessToken do
       allow(Time).to receive(:now).and_return(@now)
       expect(access).to be_expired
     end
-
   end
 
   describe '#refresh!' do
