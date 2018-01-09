@@ -8,7 +8,7 @@ cache: bundler
 
 env:
   global:
-    - JRUBY_OPTS="$JRUBY_OPTS --debug"
+    - JRUBY_OPTS="$JRUBY_OPTS -Xcli.debug=true --debug"
 
 language: ruby
 
