@@ -1,18 +1,15 @@
 # OAuth2
 
 [![Gem Version](http://img.shields.io/gem/v/oauth2.svg)][gem]
-[![Build Status](http://img.shields.io/travis/intridea/oauth2.svg)][travis]
-[![Dependency Status](http://img.shields.io/gemnasium/intridea/oauth2.svg)][gemnasium]
-[![Code Climate](http://img.shields.io/codeclimate/github/intridea/oauth2.svg)][codeclimate]
+[![Total Downloads](https://img.shields.io/gem/dt/oauth2.svg)][gem]
+[![Build Status](http://img.shields.io/travis/oauth-xx/oauth2.svg)][travis]
 [![Coverage Status](http://img.shields.io/coveralls/intridea/oauth2.svg)][coveralls]
-
+[![Maintainability](https://api.codeclimate.com/v1/badges/688c612528ff90a46955/maintainability)](https://codeclimate.com/github/oauth-xx/oauth2/maintainability)
 [gem]: https://rubygems.org/gems/oauth2
-[travis]: http://travis-ci.org/intridea/oauth2
-[gemnasium]: https://gemnasium.com/intridea/oauth2
-[codeclimate]: https://codeclimate.com/github/intridea/oauth2
+[travis]: http://travis-ci.org/oauth-xx/oauth2
 [coveralls]: https://coveralls.io/r/intridea/oauth2
 
-## OmniAuth is looking for a new home.  If you are interested in taking over this project please contact jason@mobomo.com
+### Oauth2 gem is looking for new maintainers. See [#307](https://github.com/oauth-xx/oauth2/issues/307).
 
 A Ruby wrapper for the OAuth 2.0 specification.
 
@@ -24,9 +21,9 @@ A Ruby wrapper for the OAuth 2.0 specification.
 * [Report Issues on GitHub][issues]
 * [Read More at the Wiki][wiki]
 
-[code]: https://github.com/intridea/oauth2
-[issues]: https://github.com/intridea/oauth2/issues
-[wiki]: https://wiki.github.com/intridea/oauth2
+[code]: https://github.com/oauth-xx/oauth2
+[issues]: https://github.com/oauth-xx/oauth2/issues
+[wiki]: https://github.com/oauth-xx/oauth2/wiki
 
 ## Usage Examples
 
