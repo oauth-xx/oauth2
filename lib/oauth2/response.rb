@@ -84,6 +84,6 @@ module OAuth2
   end
 end
 
-OAuth2::Response.register_parser(:xml, ['text/xml', 'application/rss+xml', 'application/rdf+xml', 'application/atom+xml']) do |body|
+OAuth2::Response.register_parser(:xml, ['text/xml', 'application/rss+xml', 'application/rdf+xml', 'application/atom+xml', 'application/xml']) do |body|
   MultiXml.parse(body) rescue body # rubocop:disable RescueModifier
 end
