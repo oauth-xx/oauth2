@@ -87,5 +87,13 @@ describe OAuth2::Response do
       response = double('response', :headers => headers, :body => body)
       expect(OAuth2::Response.new(response).parsed).to eq('foo' => {'bar' => 'baz'})
     end
+
+    it 'is able to parse application/xml' do
+      headers = {'Content-Type' => 'application/xml'}
+      body = '<?xml version="1.0" standalone="yes" ?><foo><bar>baz</bar></foo>'
+
+      response = double('response', :headers => headers, :body => body)
+      expect(OAuth2::Response.new(response).parsed).to eq('foo' => {'bar' => 'baz'})
+    end
   end
 end
