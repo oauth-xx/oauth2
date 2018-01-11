@@ -1,6 +1,6 @@
 AllCops:
   DisplayCopNames: true # Display the name of the failing cops
-  TargetRubyVersion: 2.1
+  TargetRubyVersion: 1.9
 
 Metrics/BlockLength:
   Enabled: false
