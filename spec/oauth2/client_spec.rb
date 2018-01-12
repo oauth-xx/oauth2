@@ -92,6 +92,17 @@ describe OAuth2::Client do
       OAuth2::Client.new 'abc', 'def', opts
       expect(opts).to eq(opts2)
     end
+
+    it 'allows to specify the oauth path for the provider' do
+      client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :access_token_method => :get, :path => '/somethingelse')
+      expect(client.options[:authorize_url]).to eq('/somethingelse/authorize')
+      expect(client.options[:token_url]).to eq('/somethingelse/token')
+
+      # path should have default '/oauth'
+      client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :access_token_method => :get)
+      expect(client.options[:authorize_url]).to eq('/oauth/authorize')
+      expect(client.options[:token_url]).to eq('/oauth/token')
+    end
   end
 
   %w[authorize token].each do |url_type|
