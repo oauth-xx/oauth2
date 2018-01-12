@@ -55,7 +55,12 @@ module OAuth2
     def connection
       @connection ||= Faraday.new(site, options[:connection_opts]) do |builder|
         builder.response(:logger, ::Logger.new($stdout)) if ENV['OAUTH_DEBUG'] == 'true'
-        options[:connection_build].call(builder) if options[:connection_build]
+        if options[:connection_build]
+          options[:connection_build].call(builder)
+        else
+          builder.request :url_encoded             # form-encode POST params
+          builder.adapter Faraday.default_adapter  # make requests with Net::HTTP
+        end
       end
     end
 
