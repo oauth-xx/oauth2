@@ -355,4 +355,19 @@ describe OAuth2::Client do
       expect(subject.connection.ssl.fetch(:ca_file)).to eq('foo.pem')
     end
   end
+
+  describe '#redirection_params' do
+    let(:uri) { 'http://test.com' }
+    let(:options) { {:redirect_uri => uri} }
+    subject { OAuth2::Client.new('abc', 'def', options) }
+    it 'mutates options' do
+      expect { subject.redirection_params }.to change { subject.options }
+    end
+
+    it 'remove the redirect_uri key in options' do
+      expect(subject.options).to include(:redirect_uri)
+      subject.redirection_params
+      expect(subject.options).to_not include(:redirect_uri)
+    end
+  end
 end

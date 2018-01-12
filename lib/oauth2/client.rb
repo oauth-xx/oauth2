@@ -194,7 +194,7 @@ module OAuth2
     # @return [Hash] the params to add to a request or URL
     def redirection_params
       if options[:redirect_uri]
-        {'redirect_uri' => options[:redirect_uri]}
+        {'redirect_uri' => options.delete(:redirect_uri)}
       else
         {}
       end
