@@ -80,8 +80,6 @@ module OAuth2
           else
             parser.call(body, response)
           end
-        else
-          nil
         end
     end
 
