@@ -105,16 +105,16 @@ module OAuth2
     # @return [Proc, #call] If a parser was found.
     # @return [nil] If no parser was found.
     def parser
-      defined?(@parser) ? @parser : @parser = begin
-        parser =
-          if options[:parse].respond_to?(:call)
-            options[:parse]
-          elsif options[:parse]
-            @@parsers[options[:parse].to_sym]
-          end
+      return @parser if defined?(@parser)
 
-        parser || @@parsers[@@content_types[content_type]]
-      end
+      @parser =
+        if options[:parse].respond_to?(:call)
+          options[:parse]
+        elsif options[:parse]
+          @@parsers[options[:parse].to_sym]
+        end
+
+      @parser ||= @@parsers[@@content_types[content_type]]
     end
   end
 end
