@@ -63,12 +63,24 @@ module OAuth2
       response.body || ''
     end
 
-    # The parsed response body.
-    #   Will attempt to parse application/x-www-form-urlencoded and
-    #   application/json Content-Type response bodies
+    # The {#response} {#body} as parsed by {#parser}.
+    #
+    # @return [Object] As returned by {#parser} if it is #call-able.
+    # @return [nil] If the {#parser} is not #call-able.
     def parsed
-      return nil unless @@parsers.key?(parser)
-      @parsed ||= @@parsers[parser].call(body)
+      return @parsed if defined?(@parsed)
+
+      @parsed =
+        if parser.respond_to?(:call)
+          case parser.arity
+          when 0
+            parser.call
+          when 1
+            parser.call(body)
+          else
+            parser.call(body, response)
+          end
+        end
     end
 
     # Attempts to determine the content type of the response.
@@ -76,10 +88,33 @@ module OAuth2
       ((response.headers.values_at('content-type', 'Content-Type').compact.first || '').split(';').first || '').strip
     end
 
-    # Determines the parser that will be used to supply the content of #parsed
+    # Determines the parser (a Proc or other Object which responds to #call)
+    # that will be passed the {#body} (and optionall {#response}) to supply
+    # {#parsed}.
+    #
+    # The parser can be supplied as the +:parse+ option in the form of a Proc
+    # (or other Object responding to #call) or a Symbol. In the latter case,
+    # the actual parser will be looked up in {PARSERS} by the supplied Symbol.
+    #
+    # If no +:parse+ option is supplied, the lookup Symbol will be determined
+    # by looking up {#content_type} in {CONTENT_TYPES}.
+    #
+    # If {#parser} is a Proc, it will be called with no arguments, just
+    # {#body}, or {#body} and {#response}, depending on the Proc's arity.
+    #
+    # @return [Proc, #call] If a parser was found.
+    # @return [nil] If no parser was found.
     def parser
-      return options[:parse].to_sym if @@parsers.key?(options[:parse])
-      @@content_types[content_type]
+      return @parser if defined?(@parser)
+
+      @parser =
+        if options[:parse].respond_to?(:call)
+          options[:parse]
+        elsif options[:parse]
+          @@parsers[options[:parse].to_sym]
+        end
+
+      @parser ||= @@parsers[@@content_types[content_type]]
     end
   end
 end

@@ -73,6 +73,65 @@ describe OAuth2::Response do
       subject = Response.new(response)
       expect(subject.parsed).to be_nil
     end
+
+    it 'supports registered parsers with arity == 0; passing nothing' do
+      OAuth2::Response.register_parser(:arity_0, []) do
+        'a-ok'
+      end
+
+      headers   = {'Content-Type' => 'text/html'}
+      body      = '<!DOCTYPE html><html><head></head><body></body></html>'
+      response  = double('response', :headers => headers, :body => body)
+
+      subject = Response.new(response, :parse => :arity_0)
+
+      expect(subject.parsed).to eq('a-ok')
+    end
+
+    it 'supports registered parsers with arity == 2; passing body and response' do
+      headers   = {'Content-Type' => 'text/html'}
+      body      = '<!DOCTYPE html><html><head></head><body></body></html>'
+      response  = double('response', :headers => headers, :body => body)
+
+      OAuth2::Response.register_parser(:arity_2, []) do |passed_body, passed_response|
+        expect(passed_body).to eq(body)
+        expect(passed_response).to eq(response)
+
+        'a-ok'
+      end
+
+      subject = Response.new(response, :parse => :arity_2)
+
+      expect(subject.parsed).to eq('a-ok')
+    end
+
+    it 'supports registered parsers with arity > 2; passing body and response' do
+      headers   = {'Content-Type' => 'text/html'}
+      body      = '<!DOCTYPE html><html><head></head><body></body></html>'
+      response  = double('response', :headers => headers, :body => body)
+
+      OAuth2::Response.register_parser(:arity_3, []) do |passed_body, passed_response, *args|
+        expect(passed_body).to eq(body)
+        expect(passed_response).to eq(response)
+        expect(args).to eq([])
+
+        'a-ok'
+      end
+
+      subject = Response.new(response, :parse => :arity_3)
+
+      expect(subject.parsed).to eq('a-ok')
+    end
+
+    it 'supports directly passed parsers' do
+      headers   = {'Content-Type' => 'text/html'}
+      body      = '<!DOCTYPE html><html><head></head><body></body></html>'
+      response  = double('response', :headers => headers, :body => body)
+
+      subject = Response.new(response, :parse => lambda { 'a-ok' })
+
+      expect(subject.parsed).to eq('a-ok')
+    end
   end
 
   context 'xml parser registration' do
