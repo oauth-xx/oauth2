@@ -94,10 +94,10 @@ module OAuth2
     #
     # The parser can be supplied as the +:parse+ option in the form of a Proc
     # (or other Object responding to #call) or a Symbol. In the latter case,
-    # the actual parser will be looked up in {PARSERS} by the supplied Symbol.
+    # the actual parser will be looked up in {@@parsers} by the supplied Symbol.
     #
     # If no +:parse+ option is supplied, the lookup Symbol will be determined
-    # by looking up {#content_type} in {CONTENT_TYPES}.
+    # by looking up {#content_type} in {@@content_types}.
     #
     # If {#parser} is a Proc, it will be called with no arguments, just
     # {#body}, or {#body} and {#response}, depending on the Proc's arity.
