@@ -355,4 +355,13 @@ describe OAuth2::Client do
       expect(subject.connection.ssl.fetch(:ca_file)).to eq('foo.pem')
     end
   end
+
+  context 'without a connection-configuration block' do
+    subject do
+      OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com')
+    end
+    fit 'applies default faraday middleware to the connection' do
+      expect(subject.connection.builder.handlers).to eq([Faraday::Request::UrlEncoded, Faraday::Adapter::Test])
+    end
+  end
 end
