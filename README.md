@@ -148,11 +148,11 @@ of a major release, support for that Ruby version may be dropped.
 
 ## License 
 
-MIT
+[MIT][license]
 
-Copyright (c) 2011-2013 Michael Bleigh and Intridea, Inc.
-Copyright (c) 2017-2018 [oauth-xx Github organization][oauth-xx]
-See [LICENSE][license] for details.
+- Copyright (c) 2011-2013 Michael Bleigh and Intridea, Inc.
+- Copyright (c) 2017-2018 [oauth-xx organization][oauth-xx]
+- See [LICENSE][license] for details.
 
 [license]: LICENSE.md
 [oauth-xx]: https://github.com/oauth-xx
