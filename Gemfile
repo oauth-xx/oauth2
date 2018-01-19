@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
+
 # RUBY_ENGINE is not defined on ruby 1.8.7
 ruby_engine = if defined? RUBY_ENGINE
                 RUBY_ENGINE
@@ -15,20 +17,11 @@ if ruby_version < Gem::Version.new('1.9')
   gem 'jwt', '< 1.5.2'
 end
 
-gem 'rake', '< 11.0'
-gem 'rdoc', '~> 4.2.2'
-
 group :development do
   gem 'pry'
 end
 
 group :test do
-  gem 'addressable', '~> 2.3.8'
-  gem 'backports'
-  gem 'coveralls'
-  gem 'rspec', '>= 3'
-  gem 'simplecov', '>= 0.9'
-
   # For old ruby, restrict these gems to old version
   if ruby_version < Gem::Version.new('1.9')
     gem 'mime-types', '~> 1.25'
@@ -45,4 +38,5 @@ group :test do
   gem 'rubocop', '~> 0.52.1' if ruby_version >= Gem::Version.new('2.1')
 end
 
+# Specify non-special dependencies in oauth2.gemspec
 gemspec
