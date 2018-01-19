@@ -1,7 +1,5 @@
 # encoding: utf-8
 
-require 'helper'
-
 describe OAuth2::Strategy::AuthCode do
   let(:code) { 'sushi' }
   let(:kvform_token) { 'expires_in=600&access_token=salmon&refresh_token=trout&extra_param=steve' }

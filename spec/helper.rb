@@ -10,15 +10,7 @@ if RUBY_VERSION >= '1.9'
   end
 end
 
-require 'oauth2'
 require 'addressable/uri'
-require 'rspec'
-
-RSpec.configure do |config|
-  config.expect_with :rspec do |c|
-    c.syntax = :expect
-  end
-end
 
 Faraday.default_adapter = :test
 

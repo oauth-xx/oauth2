@@ -1,6 +1,5 @@
 # coding: utf-8
 
-require 'helper'
 require 'nkf'
 
 describe OAuth2::Client do

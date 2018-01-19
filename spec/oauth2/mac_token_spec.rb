@@ -1,5 +1,3 @@
-require 'helper'
-
 describe MACToken do
   let(:token) { 'monkey' }
   let(:client) do

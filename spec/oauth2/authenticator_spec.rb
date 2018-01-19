@@ -1,5 +1,3 @@
-require 'helper'
-
 describe OAuth2::Authenticator do
   let(:client_id) { 'foo' }
   let(:client_secret) { 'bar' }

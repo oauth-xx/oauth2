@@ -1,5 +1,3 @@
-require 'helper'
-
 describe AccessToken do
   let(:token) { 'monkey' }
   let(:refresh_body) { MultiJson.encode(:access_token => 'refreshed_foo', :expires_in => 600, :refresh_token => 'refresh_bar') }

@@ -1,5 +1,3 @@
-require 'helper'
-
 describe OAuth2::Strategy::Implicit do
   let(:client) { OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com') }
 
