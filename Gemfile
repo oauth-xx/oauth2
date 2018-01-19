@@ -11,7 +11,7 @@ ruby_version = Gem::Version.new(RUBY_VERSION)
 
 # For old ruby, restrict these gems to old version
 if ruby_version < Gem::Version.new('1.9')
-  gem 'faraday', '~> 0.9.2'
+  gem 'faraday', '~> 0.14.0'
   gem 'jwt', '< 1.5.2'
 end
 
