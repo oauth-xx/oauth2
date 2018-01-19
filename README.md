@@ -15,9 +15,23 @@
 A Ruby wrapper for the OAuth 2.0 specification.
 
 ## Installation
-    gem install oauth2
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem 'oauth2'
+```
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install oauth2
 
 ## Resources
+
 * [View Source on GitHub][code]
 * [Report Issues on GitHub][issues]
 * [Read More at the Wiki][wiki]
@@ -40,7 +54,9 @@ response = token.get('/api/resource', :params => { 'query_foo' => 'bar' })
 response.class.name
 # => OAuth2::Response
 ```
+
 ## OAuth2::Response
+
 The AccessToken methods #get, #post, #put and #delete and the generic #request
 will return an instance of the #OAuth2::Response class.
 
@@ -53,12 +69,14 @@ The original response body, headers, and status can be accessed via their
 respective methods.
 
 ## OAuth2::AccessToken
+
 If you have an existing Access Token for a user, you can initialize an instance
 using various class methods including the standard new, from_hash (if you have
 a hash of the values), or from_kvform (if you have an
 application/x-www-form-urlencoded encoded string of the values).
 
 ## OAuth2::Error
+
 On 400+ status code responses, an OAuth2::Error will be raised.  If it is a
 standard OAuth2 error response, the body will be parsed and #code and #description will contain the values provided from the error and
 error_description parameters.  The #response property of OAuth2::Error will
@@ -70,6 +88,7 @@ instance will be returned as usual and on 400+ status code responses, the
 Response instance will contain the OAuth2::Error instance.
 
 ## Authorization Grants
+
 Currently the Authorization Code, Implicit, Resource Owner Password Credentials, Client Credentials, and Assertion
 authentication grant types have helper strategy classes that simplify client
 use.  They are available via the #auth_code, #implicit, #password, #client_credentials, and #assertion methods respectively.
@@ -100,6 +119,7 @@ You can always use the #request method on the OAuth2::Client instance to make
 requests for tokens for any Authentication grant type.
 
 ## Supported Ruby Versions
+
 This library aims to support and is [tested against][travis] the following Ruby
 implementations:
 
@@ -126,8 +146,27 @@ implementation, you will be responsible for providing patches in a timely
 fashion. If critical issues for a particular implementation exist at the time
 of a major release, support for that Ruby version may be dropped.
 
-## License
-Copyright (c) 2011-2013 Michael Bleigh and Intridea, Inc. See [LICENSE][] for
-details.
+## License 
+
+MIT
+
+Copyright (c) 2011-2013 Michael Bleigh and Intridea, Inc.
+Copyright (c) 2017-2018 [oauth-xx Github organization][oauth-xx]
+See [LICENSE][license] for details.
 
 [license]: LICENSE.md
+[oauth-xx]: https://github.com/oauth-xx
+
+## Development
+
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/oauth-xx/oauth2. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+
+## Code of Conduct
+
+Everyone interacting in the OAuth2 project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/oauth-xx/oauth2/blob/master/CODE_OF_CONDUCT.md).
