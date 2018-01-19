@@ -14,3 +14,7 @@ require 'oauth2/strategy/assertion'
 require 'oauth2/access_token'
 require 'oauth2/mac_token'
 require 'oauth2/response'
+
+# The namespace of this library
+module OAuth2
+end
