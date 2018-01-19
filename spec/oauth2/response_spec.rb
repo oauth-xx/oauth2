@@ -1,4 +1,4 @@
-describe OAuth2::Response do
+RSpec.describe OAuth2::Response do
   describe '#initialize' do
     let(:status) { 200 }
     let(:headers) { {'foo' => 'bar'} }

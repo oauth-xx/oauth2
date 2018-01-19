@@ -1,4 +1,4 @@
-describe OAuth2::Strategy::Assertion do
+RSpec.describe OAuth2::Strategy::Assertion do
   let(:client) do
     cli = OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com')
     cli.connection.build do |b|

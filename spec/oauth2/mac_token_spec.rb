@@ -1,4 +1,4 @@
-describe MACToken do
+RSpec.describe MACToken do
   let(:token) { 'monkey' }
   let(:client) do
     Client.new('abc', 'def', :site => 'https://api.example.com') do |builder|

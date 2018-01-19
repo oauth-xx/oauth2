@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-describe OAuth2::Strategy::AuthCode do
+RSpec.describe OAuth2::Strategy::AuthCode do
   let(:code) { 'sushi' }
   let(:kvform_token) { 'expires_in=600&access_token=salmon&refresh_token=trout&extra_param=steve' }
   let(:facebook_token) { kvform_token.gsub('_in', '') }

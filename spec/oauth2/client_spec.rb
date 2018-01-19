@@ -2,7 +2,7 @@
 
 require 'nkf'
 
-describe OAuth2::Client do
+RSpec.describe OAuth2::Client do
   let!(:error_value) { 'invalid_token' }
   let!(:error_description_value) { 'bad bad token' }
 

@@ -1,4 +1,4 @@
-describe OAuth2::Strategy::ClientCredentials do
+RSpec.describe OAuth2::Strategy::ClientCredentials do
   let(:kvform_token) { 'expires_in=600&access_token=salmon&refresh_token=trout' }
   let(:json_token) { '{"expires_in":600,"access_token":"salmon","refresh_token":"trout"}' }
 

@@ -1,4 +1,4 @@
-describe OAuth2::Authenticator do
+RSpec.describe OAuth2::Authenticator do
   let(:client_id) { 'foo' }
   let(:client_secret) { 'bar' }
   let(:mode) { :undefined }
