@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
+git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 # RUBY_ENGINE is not defined on ruby 1.8.7
 ruby_engine = if defined? RUBY_ENGINE
@@ -22,11 +22,6 @@ group :development do
 end
 
 group :test do
-  # For old ruby, restrict these gems to old version
-  if ruby_version < Gem::Version.new('1.9')
-    gem 'mime-types', '~> 1.25'
-    gem 'rest-client', '~> 1.6.0'
-  end
   if ruby_engine == 'ruby' && ruby_version < Gem::Version.new('2.0')
     gem 'json', '< 2.0'
     gem 'term-ansicolor', '< 1.4.0'

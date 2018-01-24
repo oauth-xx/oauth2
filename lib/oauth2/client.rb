@@ -54,7 +54,7 @@ module OAuth2
     # The Faraday connection object
     def connection
       @connection ||= Faraday.new(site, options[:connection_opts]) do |builder|
-        builder.response(:logger, ::Logger.new($stdout)) if ENV['OAUTH_DEBUG'] == 'true'
+        oauth_debug_logger_for_response(builder)
         if options[:connection_build]
           options[:connection_build].call(builder)
         else
@@ -221,6 +221,10 @@ module OAuth2
       access_token_class.from_hash(self, response.parsed.merge(access_token_opts)).tap do |access_token|
         access_token.response = response if access_token.respond_to?(:response=)
       end
+    end
+
+    def oauth_debug_logger_for_response(builder)
+      builder.response(:logger, ::Logger.new($stdout)) if ENV['OAUTH_DEBUG'] == 'true'
     end
   end
 end

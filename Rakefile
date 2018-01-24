@@ -1,9 +1,19 @@
+# encoding: utf-8
+
+# !/usr/bin/env rake
+
 require 'bundler/gem_tasks'
 
-require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new(:spec)
-
-task :test => :spec
+# rubocop:disable Lint/HandleExceptions
+begin
+  require 'wwtd/tasks'
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new(:spec)
+  task :test => :spec
+rescue LoadError
+  # puts "failed to load wwtd or rspec, probably because bundled --without-development"
+end
+# rubocop:enable Lint/HandleExceptions
 
 namespace :doc do
   require 'rdoc/task'
