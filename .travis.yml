@@ -1,6 +1,6 @@
 before_install:
   - gem update --system
-  - gem update bundler
+  - gem install bundler
 
 bundler_args: --without development
 
@@ -47,8 +47,5 @@ matrix:
 #      gemfile: gemfiles/jruby-head.gemfile
     - rvm: ruby-head
       gemfile: gemfiles/ruby_head.gemfile
-
-install:
-  - "bin/setup"
 
 sudo: false

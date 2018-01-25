@@ -8,6 +8,7 @@
 # Bundler
 Gemfile.lock
 /.bundle/
+/gemfiles/vendor/
 
 # Specs
 /coverage/
