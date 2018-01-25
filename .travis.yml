@@ -2,8 +2,6 @@ before_install:
   - gem update --system
   - gem install bundler
 
-bundler_args: --without development
-
 cache: bundler
 
 env:

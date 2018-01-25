@@ -1,7 +1,7 @@
 # For a list of available precompiled Rubies on Travis, see http://rubies.travis-ci.org/
 
 # TODO: Ruby < 2.2 will not be supported in oauth2 versions >= 2.x
-appraise 'ruby-1.8.7-p371' do
+appraise 'ruby-1.8' do
   gem 'faraday', '~> 0.9.2'
   gem 'jwt', '< 1.5.2'
   gem 'mime-types', '~> 1.25'

@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'coveralls', '~> 0.8'
   spec.add_development_dependency 'pry', '~> 0.11'
   spec.add_development_dependency 'rake', '~> 11.3'
-  spec.add_development_dependency 'rdoc', '~> 6.0'
+  spec.add_development_dependency 'rdoc', ['>= 5.0', '< 7']
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'wwtd'
 end

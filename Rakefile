@@ -4,16 +4,31 @@
 
 require 'bundler/gem_tasks'
 
-# rubocop:disable Lint/HandleExceptions
 begin
   require 'wwtd/tasks'
+rescue LoadError
+  puts 'failed to load wwtd'
+end
+
+begin
   require 'rspec/core/rake_task'
   RSpec::Core::RakeTask.new(:spec)
-  task :test => :spec
 rescue LoadError
   # puts "failed to load wwtd or rspec, probably because bundled --without-development"
+  task :spec do
+    warn 'rspec is disabled'
+  end
 end
-# rubocop:enable Lint/HandleExceptions
+task :test => :spec
+
+begin
+  require 'rubocop/rake_task'
+  RuboCop::RakeTask.new
+rescue LoadError
+  task :rubocop do
+    warn 'RuboCop is disabled'
+  end
+end
 
 namespace :doc do
   require 'rdoc/task'
@@ -23,15 +38,6 @@ namespace :doc do
     rdoc.title = "oauth2 #{OAuth2::Version}"
     rdoc.main = 'README.md'
     rdoc.rdoc_files.include('README.md', 'LICENSE.md', 'lib/**/*.rb')
-  end
-end
-
-begin
-  require 'rubocop/rake_task'
-  RuboCop::RakeTask.new
-rescue LoadError
-  task :rubocop do
-    warn 'RuboCop is disabled'
   end
 end
 
