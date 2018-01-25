@@ -8,12 +8,8 @@ gem "mime-types", "~> 1.25"
 gem "rest-client", "~> 1.6.0"
 gem "rack", "~> 1.2"
 
-group :development do
-  gem "pry"
-end
-
 group :test do
-  gem "rubocop", "~> 0.52.1"
+  gem "rubocop", "~> 0.41.2"
   gem 'rake'
   gem 'rspec'
 end

@@ -35,4 +35,4 @@ rescue LoadError
   end
 end
 
-task :default => [:spec, :rubocop]
+task :default => [:test, :rubocop]
