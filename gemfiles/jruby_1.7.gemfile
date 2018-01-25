@@ -13,7 +13,8 @@ group :development do
 end
 
 group :test do
-  gem "rubocop", "~> 0.41.2"
+  # Some changes to defaults make older version config incompatible with newer version config
+  # gem "rubocop", "~> 0.41.2"
   gem 'rake'
   gem 'rspec'
 end

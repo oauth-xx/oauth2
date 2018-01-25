@@ -1,6 +1,8 @@
 AllCops:
   DisplayCopNames: true # Display the name of the failing cops
   TargetRubyVersion: 2.1
+  Exclude:
+    - 'gemfiles/vendor/**/*'
 
 Gemspec/RequiredRubyVersion:
   Enabled: false
