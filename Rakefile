@@ -14,7 +14,6 @@ begin
   require 'rspec/core/rake_task'
   RSpec::Core::RakeTask.new(:spec)
 rescue LoadError
-  # puts "failed to load wwtd or rspec, probably because bundled --without-development"
   task :spec do
     warn 'rspec is disabled'
   end
