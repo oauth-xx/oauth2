@@ -3,6 +3,7 @@ AllCops:
   TargetRubyVersion: 2.1
   Exclude:
     - 'gemfiles/vendor/**/*'
+    - 'vendor/**/*'
 
 Gemspec/RequiredRubyVersion:
   Enabled: false
