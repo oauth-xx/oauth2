@@ -4,10 +4,6 @@ source "https://rubygems.org"
 
 gem "rack", "~> 1.2"
 
-group :development do
-  gem "pry"
-end
-
 group :test do
   gem "rubocop", "~> 0.52.1"
   gem 'rake'

@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-gem "rubocop", "~> 0.52.1"
+gem "rack", "~> 1.2"
 
 group :development do
   gem "pry"
