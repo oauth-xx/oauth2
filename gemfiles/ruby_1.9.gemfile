@@ -8,7 +8,6 @@ gem "tins", "< 1.7"
 gem "rack", "~> 1.2"
 
 group :test do
-  gem "rubocop", "~> 0.52.1"
   gem 'rake'
   gem 'rspec'
 end
