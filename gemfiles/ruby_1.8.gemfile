@@ -15,4 +15,4 @@ group :test do
   gem 'rspec'
 end
 
-gemspec path: "../"
+gemspec :path => "../"
