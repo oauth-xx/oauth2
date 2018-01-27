@@ -42,6 +42,7 @@ Lint/UnusedBlockArgument:
     - 'spec/**/*.rb'
     - 'gemfiles/vendor/**/*'
     - 'vendor/**/*'
+    - '**/.irbrc'
 
 Style/ClassVars:
   Enabled: false
