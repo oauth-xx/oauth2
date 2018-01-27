@@ -1,9 +1,7 @@
-require 'helper'
-
-describe OAuth2::Strategy::Implicit do
-  let(:client) { OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com') }
-
+RSpec.describe OAuth2::Strategy::Implicit do
   subject { client.implicit }
+
+  let(:client) { OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com') }
 
   describe '#authorize_url' do
     it 'includes the client_id' do

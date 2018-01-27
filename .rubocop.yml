@@ -1,6 +1,14 @@
+require: rubocop-rspec
+inherit_from:
+  - .rubocop_todo.yml
+  - .rubocop_rspec.yml
 AllCops:
   DisplayCopNames: true # Display the name of the failing cops
   TargetRubyVersion: 2.1
+  Exclude:
+    - 'gemfiles/vendor/**/*'
+    - 'vendor/**/*'
+    - '**/.irbrc'
 
 Gemspec/RequiredRubyVersion:
   Enabled: false
@@ -32,6 +40,9 @@ Layout/SpaceInsideHashLiteralBraces:
 Lint/UnusedBlockArgument:
   Exclude:
     - 'spec/**/*.rb'
+    - 'gemfiles/vendor/**/*'
+    - 'vendor/**/*'
+    - '**/.irbrc'
 
 Style/ClassVars:
   Enabled: false
@@ -49,22 +60,10 @@ Style/Documentation:
 Style/DoubleNegation:
   Enabled: false
 
-Style/EachWithObject:
-  Enabled: false
-
 Style/EmptyMethod:
   EnforcedStyle: expanded
 
 Style/Encoding:
-  Enabled: false
-
-Style/HashSyntax:
-  EnforcedStyle: hash_rockets
-
-Style/Lambda:
-  Enabled: false
-
-Style/SymbolArray:
   Enabled: false
 
 Style/TrailingCommaInLiteral:

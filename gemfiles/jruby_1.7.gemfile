@@ -1,0 +1,16 @@
+source "https://rubygems.org"
+
+gem "faraday", "~> 0.9.2"
+gem "jwt", "< 1.5.2"
+gem "mime-types", "~> 1.25"
+gem "rest-client", "~> 1.6.0"
+gem "rack", "~> 1.2"
+
+group :test do
+  # Some changes to defaults make older version config incompatible with newer version config
+  # gem "rubocop", "~> 0.41.2"
+  gem 'rake'
+  gem 'rspec'
+end
+
+gemspec path: "../"

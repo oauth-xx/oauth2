@@ -1,14 +1,10 @@
 # coding: utf-8
 
-require 'helper'
 require 'nkf'
 
-describe OAuth2::Client do
-  let!(:error_value) { 'invalid_token' }
-  let!(:error_description_value) { 'bad bad token' }
-
+RSpec.describe OAuth2::Client do
   subject do
-    OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com') do |builder|
+    described_class.new('abc', 'def', :site => 'https://api.example.com') do |builder|
       builder.adapter :test do |stub|
         stub.get('/success')             { |env| [200, {'Content-Type' => 'text/awesome'}, 'yay'] }
         stub.get('/reflect')             { |env| [200, {}, env[:body]] }
@@ -24,6 +20,9 @@ describe OAuth2::Client do
       end
     end
   end
+
+  let!(:error_value) { 'invalid_token' }
+  let!(:error_description_value) { 'bad bad token' }
 
   describe '#initialize' do
     it 'assigns id and secret' do
@@ -51,7 +50,7 @@ describe OAuth2::Client do
 
       expect(builder).to receive(:adapter).with(:test)
 
-      OAuth2::Client.new('abc', 'def') do |client|
+      described_class.new('abc', 'def') do |client|
         client.adapter :test
       end.connection
     end
@@ -61,14 +60,14 @@ describe OAuth2::Client do
     end
 
     it 'allows true/false for raise_errors option' do
-      client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :raise_errors => false)
+      client = described_class.new('abc', 'def', :site => 'https://api.example.com', :raise_errors => false)
       expect(client.options[:raise_errors]).to be false
-      client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :raise_errors => true)
+      client = described_class.new('abc', 'def', :site => 'https://api.example.com', :raise_errors => true)
       expect(client.options[:raise_errors]).to be true
     end
 
     it 'allows override of raise_errors option' do
-      client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :raise_errors => true) do |builder|
+      client = described_class.new('abc', 'def', :site => 'https://api.example.com', :raise_errors => true) do |builder|
         builder.adapter :test do |stub|
           stub.get('/notfound') { |env| [404, {}, nil] }
         end
@@ -80,16 +79,16 @@ describe OAuth2::Client do
     end
 
     it 'allows get/post for access_token_method option' do
-      client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :access_token_method => :get)
+      client = described_class.new('abc', 'def', :site => 'https://api.example.com', :access_token_method => :get)
       expect(client.options[:access_token_method]).to eq(:get)
-      client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :access_token_method => :post)
+      client = described_class.new('abc', 'def', :site => 'https://api.example.com', :access_token_method => :post)
       expect(client.options[:access_token_method]).to eq(:post)
     end
 
     it 'does not mutate the opts hash argument' do
       opts = {:site => 'http://example.com/'}
       opts2 = opts.dup
-      OAuth2::Client.new 'abc', 'def', opts
+      described_class.new 'abc', 'def', opts
       expect(opts).to eq(opts2)
     end
   end
@@ -128,7 +127,7 @@ describe OAuth2::Client do
       end
 
       it 'does not add the redirect_uri param to the auth_code token exchange request' do
-        client = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :auth_scheme => :request_body) do |builder|
+        client = described_class.new('abc', 'def', :site => 'https://api.example.com', :auth_scheme => :request_body) do |builder|
           builder.adapter :test do |stub|
             stub.post('/oauth/token', auth_code_params) do
               [200, {'Content-Type' => 'application/json'}, '{"access_token":"token"}']
@@ -147,7 +146,7 @@ describe OAuth2::Client do
       end
 
       it 'adds the redirect_uri param to the auth_code token exchange request' do
-        client = OAuth2::Client.new('abc', 'def', :redirect_uri => 'https://site.com/oauth/callback', :site => 'https://api.example.com', :auth_scheme => :request_body) do |builder|
+        client = described_class.new('abc', 'def', :redirect_uri => 'https://site.com/oauth/callback', :site => 'https://api.example.com', :auth_scheme => :request_body) do |builder|
           builder.adapter :test do |stub|
             stub.post('/oauth/token', auth_code_params.merge('redirect_uri' => 'https://site.com/oauth/callback')) do
               [200, {'Content-Type' => 'application/json'}, '{"access_token":"token"}']
@@ -344,7 +343,7 @@ describe OAuth2::Client do
 
   context 'with SSL options' do
     subject do
-      cli = OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com', :ssl => {:ca_file => 'foo.pem'})
+      cli = described_class.new('abc', 'def', :site => 'https://api.example.com', :ssl => {:ca_file => 'foo.pem'})
       cli.connection.build do |b|
         b.adapter :test
       end
@@ -358,9 +357,10 @@ describe OAuth2::Client do
 
   context 'without a connection-configuration block' do
     subject do
-      OAuth2::Client.new('abc', 'def', :site => 'https://api.example.com')
+      described_class.new('abc', 'def', :site => 'https://api.example.com')
     end
-    fit 'applies default faraday middleware to the connection' do
+
+    it 'applies default faraday middleware to the connection' do
       expect(subject.connection.builder.handlers).to eq([Faraday::Request::UrlEncoded, Faraday::Adapter::Test])
     end
   end

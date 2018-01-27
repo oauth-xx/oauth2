@@ -1,6 +1,6 @@
-require 'helper'
+RSpec.describe MACToken do
+  subject { described_class.new(client, token, 'abc123') }
 
-describe MACToken do
   let(:token) { 'monkey' }
   let(:client) do
     Client.new('abc', 'def', :site => 'https://api.example.com') do |builder|
@@ -12,8 +12,6 @@ describe MACToken do
       end
     end
   end
-
-  subject { MACToken.new(client, token, 'abc123') }
 
   describe '#initialize' do
     it 'assigns client and token' do
@@ -30,17 +28,17 @@ describe MACToken do
     end
 
     it 'handles hmac-sha-256' do
-      mac = MACToken.new(client, token, 'abc123', :algorithm => 'hmac-sha-256')
+      mac = described_class.new(client, token, 'abc123', :algorithm => 'hmac-sha-256')
       expect(mac.algorithm).to be_instance_of(OpenSSL::Digest::SHA256)
     end
 
     it 'handles hmac-sha-1' do
-      mac = MACToken.new(client, token, 'abc123', :algorithm => 'hmac-sha-1')
+      mac = described_class.new(client, token, 'abc123', :algorithm => 'hmac-sha-1')
       expect(mac.algorithm).to be_instance_of(OpenSSL::Digest::SHA1)
     end
 
     it 'raises on improper algorithm' do
-      expect { MACToken.new(client, token, 'abc123', :algorithm => 'invalid-sha') }.to raise_error(ArgumentError)
+      expect { described_class.new(client, token, 'abc123', :algorithm => 'invalid-sha') }.to raise_error(ArgumentError)
     end
   end
 
@@ -57,7 +55,7 @@ describe MACToken do
       header = subject.header('get', 'https://www.example.com/hello')
       duplicate_header = subject.header('get', 'https://www.example.com/hello')
 
-      expect(header).to_not eq(duplicate_header)
+      expect(header).not_to eq(duplicate_header)
     end
 
     it 'generates the proper format' do
@@ -88,6 +86,8 @@ describe MACToken do
   end
 
   describe '.from_access_token' do
+    subject { described_class.from_access_token(access_token, 'hello') }
+
     let(:access_token) do
       AccessToken.new(
         client, token,
@@ -97,8 +97,6 @@ describe MACToken do
         :random => 1
       )
     end
-
-    subject { MACToken.from_access_token(access_token, 'hello') }
 
     it 'initializes client, token, and secret properly' do
       expect(subject.client).to eq(client)
