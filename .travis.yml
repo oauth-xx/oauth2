@@ -18,14 +18,14 @@ matrix:
     - rvm: ruby-head
   fast_finish: true
   include:
-#    - rvm: 1.8.7-p371
-#      gemfile: gemfiles/ruby_1.8.gemfile
+    - rvm: 1.8.7-p371
+      gemfile: gemfiles/ruby_1.8.gemfile
     - rvm: jruby-1.7.27
       gemfile: gemfiles/jruby_1.7.gemfile
-#    - rvm: 1.9.3-p551
-#      gemfile: gemfiles/ruby_1.9.gemfile
-#    - rvm: 2.0.0-p648
-#      gemfile: gemfiles/ruby_2.0.gemfile
+    - rvm: 1.9.3-p551
+      gemfile: gemfiles/ruby_1.9.gemfile
+    - rvm: 2.0.0-p648
+      gemfile: gemfiles/ruby_2.0.gemfile
     - rvm: 2.1.10
       gemfile: gemfiles/ruby_2.1.gemfile
     - rvm: jruby-9.0.5.0
@@ -43,8 +43,8 @@ matrix:
       gemfile: gemfiles/ruby_2.4.gemfile
     - rvm: 2.5.0
       gemfile: gemfiles/ruby_2.5.gemfile
-#    - rvm: jruby-head
-#      gemfile: gemfiles/jruby-head.gemfile
+    - rvm: jruby-head
+      gemfile: gemfiles/jruby-head.gemfile
     - rvm: ruby-head
       gemfile: gemfiles/ruby_head.gemfile
 
