@@ -8,6 +8,7 @@ AllCops:
   Exclude:
     - 'gemfiles/vendor/**/*'
     - 'vendor/**/*'
+    - '**/.irbrc'
 
 Gemspec/RequiredRubyVersion:
   Enabled: false
