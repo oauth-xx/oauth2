@@ -30,11 +30,9 @@ Gem::Specification.new do |spec|
   end
 
   spec.add_development_dependency 'addressable', '~> 2.3'
-  spec.add_development_dependency 'appraisal'
   spec.add_development_dependency 'backports', '~> 3.11'
   spec.add_development_dependency 'bundler', '~> 1.16'
   spec.add_development_dependency 'coveralls', '~> 0.8'
-  spec.add_development_dependency 'pry', '~> 0.11'
   spec.add_development_dependency 'rake', '~> 11.3'
   spec.add_development_dependency 'rdoc', ['>= 5.0', '< 7']
   spec.add_development_dependency 'rspec', '~> 3.0'
