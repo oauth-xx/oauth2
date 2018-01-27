@@ -1,0 +1,11 @@
+Style/HashSyntax:
+  EnforcedStyle: hash_rockets
+
+Style/Lambda:
+  Enabled: false
+
+Style/SymbolArray:
+  Enabled: false
+
+Style/EachWithObject:
+  Enabled: false

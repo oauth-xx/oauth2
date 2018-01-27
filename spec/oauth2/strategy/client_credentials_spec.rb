@@ -1,4 +1,6 @@
 RSpec.describe OAuth2::Strategy::ClientCredentials do
+  subject { client.client_credentials }
+
   let(:kvform_token) { 'expires_in=600&access_token=salmon&refresh_token=trout' }
   let(:json_token) { '{"expires_in":600,"access_token":"salmon","refresh_token":"trout"}' }
 
@@ -26,8 +28,6 @@ RSpec.describe OAuth2::Strategy::ClientCredentials do
       end
     end
   end
-
-  subject { client.client_credentials }
 
   describe '#authorize_url' do
     it 'raises NotImplementedError' do

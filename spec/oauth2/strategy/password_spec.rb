@@ -1,4 +1,6 @@
 RSpec.describe OAuth2::Strategy::Password do
+  subject { client.password }
+
   let(:client) do
     cli = OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com')
     cli.connection.build do |b|
@@ -15,7 +17,6 @@ RSpec.describe OAuth2::Strategy::Password do
     end
     cli
   end
-  subject { client.password }
 
   describe '#authorize_url' do
     it 'raises NotImplementedError' do

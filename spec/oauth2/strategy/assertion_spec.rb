@@ -1,4 +1,6 @@
 RSpec.describe OAuth2::Strategy::Assertion do
+  subject { client.assertion }
+
   let(:client) do
     cli = OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com')
     cli.connection.build do |b|
@@ -17,8 +19,6 @@ RSpec.describe OAuth2::Strategy::Assertion do
   end
 
   let(:params) { {:hmac_secret => 'foo'} }
-
-  subject { client.assertion }
 
   describe '#authorize_url' do
     it 'raises NotImplementedError' do
