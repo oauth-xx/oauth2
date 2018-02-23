@@ -10,15 +10,7 @@ if RUBY_VERSION >= '1.9'
   end
 end
 
-require 'oauth2'
 require 'addressable/uri'
-require 'rspec'
-
-RSpec.configure do |config|
-  config.expect_with :rspec do |c|
-    c.syntax = :expect
-  end
-end
 
 Faraday.default_adapter = :test
 
@@ -26,11 +18,11 @@ RSpec.configure do |conf|
   include OAuth2
 end
 
-def capture_output(&block)
+def capture_output
   begin
     old_stdout = $stdout
     $stdout = StringIO.new
-    block.call
+    yield
     result = $stdout.string
   ensure
     $stdout = old_stdout
@@ -38,4 +30,4 @@ def capture_output(&block)
   result
 end
 
-VERBS = [:get, :post, :put, :delete]
+VERBS = [:get, :post, :put, :delete].freeze

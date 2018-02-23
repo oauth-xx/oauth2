@@ -1,10 +1,33 @@
-require 'bundler'
-Bundler::GemHelper.install_tasks
+# encoding: utf-8
 
-require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new(:spec)
+# !/usr/bin/env rake
 
+require 'bundler/gem_tasks'
+
+begin
+  require 'wwtd/tasks'
+rescue LoadError
+  puts 'failed to load wwtd'
+end
+
+begin
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new(:spec)
+rescue LoadError
+  task :spec do
+    warn 'rspec is disabled'
+  end
+end
 task :test => :spec
+
+begin
+  require 'rubocop/rake_task'
+  RuboCop::RakeTask.new
+rescue LoadError
+  task :rubocop do
+    warn 'RuboCop is disabled'
+  end
+end
 
 namespace :doc do
   require 'rdoc/task'
@@ -17,23 +40,4 @@ namespace :doc do
   end
 end
 
-begin
-  require 'rubocop/rake_task'
-  RuboCop::RakeTask.new
-rescue LoadError
-  task :rubocop do
-    $stderr.puts 'RuboCop is disabled'
-  end
-end
-
-require 'yardstick/rake/measurement'
-Yardstick::Rake::Measurement.new do |measurement|
-  measurement.output = 'measurement/report.txt'
-end
-
-require 'yardstick/rake/verify'
-Yardstick::Rake::Verify.new do |verify|
-  verify.threshold = 58.8
-end
-
-task :default => [:spec, :rubocop, :verify_measurements]
+task :default => [:test, :rubocop]

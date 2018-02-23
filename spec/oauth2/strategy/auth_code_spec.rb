@@ -1,6 +1,8 @@
-require 'helper'
+# encoding: utf-8
 
-describe OAuth2::Strategy::AuthCode do
+RSpec.describe OAuth2::Strategy::AuthCode do
+  subject { client.auth_code }
+
   let(:code) { 'sushi' }
   let(:kvform_token) { 'expires_in=600&access_token=salmon&refresh_token=trout&extra_param=steve' }
   let(:facebook_token) { kvform_token.gsub('_in', '') }
@@ -33,8 +35,6 @@ describe OAuth2::Strategy::AuthCode do
     end
   end
 
-  subject { client.auth_code }
-
   describe '#authorize_url' do
     it 'includes the client_id' do
       expect(subject.authorize_url).to include('client_id=abc')
@@ -46,16 +46,38 @@ describe OAuth2::Strategy::AuthCode do
 
     it 'includes passed in options' do
       cb = 'http://myserver.local/oauth/callback'
-      expect(subject.authorize_url(:redirect_uri => cb)).to include("redirect_uri=#{Rack::Utils.escape(cb)}")
+      expect(subject.authorize_url(:redirect_uri => cb)).to include("redirect_uri=#{CGI.escape(cb)}")
     end
   end
 
-  %w(json formencoded from_facebook).each do |mode|
+  describe '#get_token (handling utf-8 data)' do
+    let(:json_token) { MultiJson.encode(:expires_in => 600, :access_token => 'salmon', :refresh_token => 'trout', :extra_param => 'André') }
+
+    before do
+      @mode = 'json'
+      client.options[:token_method] = :post
+      client.options[:auth_scheme] = :request_body
+    end
+
+    it 'does not raise an error' do
+      expect { subject.get_token(code) }.not_to raise_error
+    end
+
+    it 'does not create an error instance' do
+      expect(OAuth2::Error).not_to receive(:new)
+
+      subject.get_token(code)
+    end
+  end
+
+  #
+  %w[json formencoded from_facebook].each do |mode|
     [:get, :post].each do |verb|
       describe "#get_token (#{mode}, access_token_method=#{verb}" do
         before do
           @mode = mode
           client.options[:token_method] = verb
+          client.options[:auth_scheme] = :request_body
           @access = subject.get_token(code)
         end
 

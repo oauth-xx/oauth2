@@ -25,7 +25,7 @@ module OAuth2
       #
       # @raise [NotImplementedError]
       def authorize_url
-        fail(NotImplementedError, 'The authorization endpoint is not used in this strategy')
+        raise(NotImplementedError, 'The authorization endpoint is not used in this strategy')
       end
 
       # Retrieve an access token given the specified client.
@@ -56,11 +56,12 @@ module OAuth2
       end
 
       def build_assertion(params)
-        claims = {:iss => params[:iss],
-                  :aud => params[:aud],
-                  :exp => params[:exp],
-                  :scope => params[:scope],
-                  :iat => params[:iat]
+        claims = {
+          :iss => params[:iss],
+          :aud => params[:aud],
+          :exp => params[:exp],
+          :scope => params[:scope],
+          :iat => params[:iat]
         }
 
         claims[:prn] = params[:prn] if params.has_key?(:prn)

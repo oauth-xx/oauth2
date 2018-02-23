@@ -1,16 +1,16 @@
-require 'helper'
+RSpec.describe OAuth2::Strategy::Assertion do
+  subject { client.assertion }
 
-describe OAuth2::Strategy::Assertion do
   let(:client) do
     cli = OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com')
     cli.connection.build do |b|
       b.adapter :test do |stub|
         stub.post('/oauth/token') do |env|
           case @mode
-          when 'formencoded'
-            [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, 'expires_in=600&access_token=salmon&refresh_token=trout']
-          when 'json'
-            [200, {'Content-Type' => 'application/json'}, '{"expires_in":600,"access_token":"salmon","refresh_token":"trout"}']
+            when 'formencoded'
+              [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, 'expires_in=600&access_token=salmon&refresh_token=trout']
+            when 'json'
+              [200, {'Content-Type' => 'application/json'}, '{"expires_in":600,"access_token":"salmon","refresh_token":"trout"}']
           end
         end
       end
@@ -19,8 +19,6 @@ describe OAuth2::Strategy::Assertion do
   end
 
   let(:params) { {:hmac_secret => 'foo'} }
-
-  subject { client.assertion }
 
   describe '#authorize_url' do
     it 'raises NotImplementedError' do
@@ -32,11 +30,11 @@ describe OAuth2::Strategy::Assertion do
     before do
       @key = OpenSSL::PKey::RSA.new(1024)
       @params = {:iss => 'google_api_account_name@developer.gserviceaccount.com',
-                 :scope => 'https://www.googleapis.com/auth/calendar',
-                 :aud => 'https://accounts.google.com/o/oauth2/token',
-                 :exp => Time.now.to_i + 3600,
-                 :iat => Time.now.to_i,
-                 :private_key => @key}
+        :scope => 'https://www.googleapis.com/auth/calendar',
+        :aud => 'https://accounts.google.com/o/oauth2/token',
+        :exp => Time.now.to_i + 3600,
+        :iat => Time.now.to_i,
+        :private_key => @key}
     end
 
     describe "#build_request" do
