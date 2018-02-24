@@ -47,59 +47,92 @@ RSpec.describe OAuth2::Strategy::Assertion do
   end
 
   describe '#build_assertion' do
-    it 'applies the parameters and constructs the claims' do
-      expected_claim_keys = %w(iss scope aud exp iat)
-      assertion = subject.build_assertion(params)
+    context 'when passed a prn param' do
+      before do
+        params.merge!(:prn => 'swayze@roadhouse.example.com')
+      end
+      
+      it 'includes it in the claim' do
+        expected_claim_keys = %w(iss scope aud exp iat prn)
+        assertion = subject.build_assertion(params)
 
-      jwt, _header = JWT.decode(assertion, key.public_key, true, { :algorithm => 'RS256' })
-      expect(jwt.keys).to match_array(expected_claim_keys)
-      expected_claim_keys.each do |claim_key|
-        expect(jwt[claim_key]).to eq(params[claim_key.to_sym])
+        jwt, _header = JWT.decode(assertion, key.public_key, true, { :algorithm => 'RS256' })
+        expect(jwt.keys).to match_array(expected_claim_keys)
+        expected_claim_keys.each do |claim_key|
+          expect(jwt[claim_key]).to eq(params[claim_key.to_sym])
+        end
       end
     end
+    
+    context 'when not passed a prn param' do
+      before do
+        expect(params).to_not have_key(:prn)
+      end
+      
+      it 'constructs the claim with no prn key by default' do
+        expected_claim_keys = %w(iss scope aud exp iat)
+        assertion = subject.build_assertion(params)
 
-    it 'optionally applies the prn param' do
-      expected_claim_keys = %w(iss scope aud exp iat prn)
-      assertion = subject.build_assertion(params.merge!(:prn => 'swayze@roadhouse.example.com'))
-
-      jwt, _header = JWT.decode(assertion, key.public_key, true, { :algorithm => 'RS256' })
-      expect(jwt.keys).to match_array(expected_claim_keys)
-      expected_claim_keys.each do |claim_key|
-        expect(jwt[claim_key]).to eq(params[claim_key.to_sym])
+        jwt, _header = JWT.decode(assertion, key.public_key, true, { :algorithm => 'RS256' })
+        expect(jwt.keys).to match_array(expected_claim_keys)
+        expected_claim_keys.each do |claim_key|
+          expect(jwt[claim_key]).to eq(params[claim_key.to_sym])
+        end
       end
     end
 
     describe 'JWT encoding' do
-      it 'encodes as HS256 when hmac_secret is passed in' do
-        params.merge!(:hmac_secret => 'thisiskey')
-        params.delete(:private_key)
-
-        expect(params[:private_key]).to_not be
-        expect(params[:hmac_secret]).to be
-
-        assertion = subject.build_assertion(params)
-        coded_header = assertion.split('.').first
-        header = JWT::Decode.base64url_decode(coded_header)
-        expect(MultiJson.decode(header)).to eq({ 'alg' => 'HS256' })
+      context 'when hmac_secret is passed in' do
+        before do
+          params.merge!(:hmac_secret => 'thisiskey')
+          params.delete(:private_key)
+        end
+        
+        it 'encodes as HS256' do
+          assertion = subject.build_assertion(params)
+          coded_header = assertion.split('.').first
+          header = JWT::Decode.base64url_decode(coded_header)
+          expect(MultiJson.decode(header)).to eq({ 'alg' => 'HS256' })
+        end
       end
-
-      it 'encodes as RS256 when private_key is passed in' do
-        expect(params[:private_key]).to be
-        expect(params[:hmac_secret]).to_not be
-
-        assertion = subject.build_assertion(params)
-        coded_header = assertion.split('.').first
-        header = JWT::Decode.base64url_decode(coded_header)
-        expect(MultiJson.decode(header)).to eq({ 'alg' => 'RS256' })
+      
+      context 'when private_key is passed in' do
+        before do
+          expect(params[:private_key]).to be
+          expect(params).to_not have_key(:hmac_secret)
+        end
+        
+        it 'encodes as RS256' do
+          assertion = subject.build_assertion(params)
+          coded_header = assertion.split('.').first
+          header = JWT::Decode.base64url_decode(coded_header)
+          expect(MultiJson.decode(header)).to eq({ 'alg' => 'RS256' })
+        end
       end
+      
+      context 'when neither private_key nor hmac_secret is passed in' do
+        before do
+          params.delete(:private_key)
+          expect(params).to_not have_key(:hmac_secret)
+        end
+        
+        it 'raises an argument error' do
+          expect { subject.build_assertion(params) }.to raise_error(ArgumentError, /hmac_secret or private_key/)
+        end
+      end
+      
+      context 'if both private_key and hmac_secret are passed in' do
+        before do
+          expect(params[:private_key]).to be
+          params.merge!(:hmac_secret => 'top_secret')
+        end
 
-      it 'raises an argument error when nothing is passed in' do
-        params.delete(:private_key)
-
-        expect(params[:private_key]).to_not be
-        expect(params[:hmac_secret]).to_not be
-
-        expect { subject.build_assertion(params) }.to raise_error(ArgumentError, /hmac_secret or private_key/)
+        it 'defaults to HS256' do
+          assertion = subject.build_assertion(params)
+          coded_header = assertion.split('.').first
+          header = JWT::Decode.base64url_decode(coded_header)
+          expect(MultiJson.decode(header)).to eq({ 'alg' => 'HS256' })
+        end
       end
     end
   end
