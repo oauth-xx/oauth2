@@ -49,10 +49,12 @@ module OAuth2
 
       def build_request(params)
         assertion = build_assertion(params)
-        request_hash = {}
-        request_hash[:grant_type] = params[:grant_type] || 'urn:ietf:params:oauth:grant-type:jwt-bearer'
-        request_hash[:assertion] = assertion
-        request_hash.merge!(client_params)
+        grant_type = params[:grant_type] || 'urn:ietf:params:oauth:grant-type:jwt-bearer'
+        
+        {
+          :grant_type => grant_type,
+          :assertion => assertion
+        }
       end
 
       def build_assertion(params)
