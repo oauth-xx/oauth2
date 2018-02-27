@@ -1,3 +1,5 @@
+require 'jwt'
+
 RSpec.describe OAuth2::Strategy::Assertion do
   subject { client.assertion }
 
