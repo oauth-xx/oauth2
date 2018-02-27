@@ -94,7 +94,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
           assertion = subject.build_assertion(params)
           coded_header = assertion.split('.').first
           header = JWT::Decode.base64url_decode(coded_header)
-          expect(MultiJson.decode(header)).to eq({ 'alg' => 'HS256' })
+          expect(MultiJson.decode(header)['alg']).to eq('HS256')
         end
       end
       
@@ -108,7 +108,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
           assertion = subject.build_assertion(params)
           coded_header = assertion.split('.').first
           header = JWT::Decode.base64url_decode(coded_header)
-          expect(MultiJson.decode(header)).to eq({ 'alg' => 'RS256' })
+          expect(MultiJson.decode(header)['alg']).to eq('RS256')
         end
       end
       
@@ -133,7 +133,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
           assertion = subject.build_assertion(params)
           coded_header = assertion.split('.').first
           header = JWT::Decode.base64url_decode(coded_header)
-          expect(MultiJson.decode(header)).to eq({ 'alg' => 'HS256' })
+          expect(MultiJson.decode(header)['alg']).to eq('HS256')
         end
       end
     end
