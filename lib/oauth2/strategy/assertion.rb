@@ -36,9 +36,12 @@ module OAuth2
       #   params :hmac_secret, secret string.
       #   params :private_key, private key string.
       #
+      # for possible claim keys, see https://tools.ietf.org/html/rfc7519#section-4.1
+      #
       #   params :iss, issuer
       #   params :aud, audience, optional
       #   params :prn, principal, current user
+      #     ^ DEPRECATED: prn is now 'sub' https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-06#appendix-F
       #   params :exp, expired at, in seconds, like Time.now.utc.to_i + 3600
       #
       # @param [Hash] opts options
@@ -48,33 +51,68 @@ module OAuth2
       end
 
       def build_request(params)
-        assertion = build_assertion(params)
-        grant_type = params[:grant_type] || 'urn:ietf:params:oauth:grant-type:jwt-bearer'
-        
+        extract_legacy_params!(params)
+        # ^ This can go away whenever we decide to no longer preserve previous gem behavior of restricting keys
+
+        url_params = params[:url_params]
+        claims = params[:claims]
+        encoding_options = choose_algorithm!(params)
+
         {
-          :grant_type => grant_type,
-          :assertion => assertion
-        }
+          :grant_type => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+          :assertion => build_assertion(claims, encoding_options),
+        }.merge(url_params)
       end
 
-      def build_assertion(params)
-        claims = {
-          :iss => params[:iss],
-          :aud => params[:aud],
-          :exp => params[:exp],
-          :scope => params[:scope],
-          :iat => params[:iat]
-        }
+    private
 
-        claims[:prn] = params[:prn] if params.has_key?(:prn)
+      def choose_algorithm!(params)
+        # Right now there is only the choice of HS256 or RS256, but this could be expanded
 
-        if params[:hmac_secret]
-          JWT.encode(claims, params[:hmac_secret], 'HS256')
-        elsif params[:private_key]
-          JWT.encode(claims, params[:private_key], 'RS256')
+        private_key = params.delete(:private_key)
+        hmac_secret = params.delete(:hmac_secret)
+
+        if hmac_secret
+          {:algorithm => 'HS256', :key => hmac_secret}
+        elsif private_key
+          {:algorithm => 'RS256', :key => private_key}
         else
-          raise ArgumentError.new 'Either hmac_secret or private_key is required for JWT encoding!'
+          raise ArgumentError.new(:message => 'Either hmac_secret or private_key is required for JWT encoding!')
         end
+      end
+
+      def build_assertion(claims, encoding_options)
+        JWT.encode(claims, encoding_options[:key], encoding_options[:algorithm])
+      end
+
+      def extract_legacy_params!(params)
+        # In previous versions of this gem, `:scope` defaulted to being in the POST request body outside the claimset.
+        # Additionally, :iss, :aud, :prn, and :exp were the only four keys and always present in the claimset
+        #
+        # This method is intended to preserve that behavior, and can be removed when no longer needed
+        #
+        # If you are seeing a deprecation warning in your app: the `params` argument to Assertion is now split into:
+        # params = { :url_params => {}, :claims => {} }
+
+        params[:url_params] ||= {}
+        params[:claims] ||= {}
+        legacy_url_params = {}
+        legacy_claims = {}
+
+        if params.has_key?(:scope)
+          puts "DEPRECATION WARNING: params[:scope] is defaulted to a header value -- this behavior may go away!"
+          legacy_url_params[:scope] = params.delete(:scope)
+        end
+
+        [:iss, :aud, :prn, :exp].each do |legacy_key|
+          if params.has_key?(legacy_key)
+            puts "DEPRECATION WARNING: params[#{legacy_key}] is a legacy default claim -- this behavior may go away!"
+            legacy_claims[legacy_key] = params.delete(legacy_key)
+          end
+        end
+
+        params[:url_params].merge!(legacy_url_params)
+        params[:claims].merge!(legacy_claims)
       end
     end
   end

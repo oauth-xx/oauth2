@@ -21,17 +21,27 @@ RSpec.describe OAuth2::Strategy::Assertion do
   end
 
   let(:key) { OpenSSL::PKey::RSA.new(1024) }
-  
-  let(:params) {
+  let(:timestamp) { Time.now.to_i }
+  let(:params) do
     {
-      :iss => 'google_api_account_name@developer.gserviceaccount.com',
-      :scope => 'https://www.googleapis.com/auth/calendar',
-      :aud => 'https://accounts.google.com/o/oauth2/token',
-      :exp => Time.now.to_i + 3600,
-      :iat => Time.now.to_i,
-      :private_key => key
+      :url_params => {
+        :custom_param => 'mackerel',
+        :scope => 'sole',
+      },
+
+      :claims => {
+        :iss => 'carp@example.com',
+        :scope => 'https://oauth.example.com/auth/flounder',
+        :aud => 'https://sturgeon.example.com/oauth2/token',
+        :exp => timestamp + 3600,
+        :iat => timestamp,
+        :sub => '12345',
+        :custom_claim => 'ling cod',
+      },
+
+      :private_key => key,
     }
-  }
+  end
 
   describe '#authorize_url' do
     it 'raises NotImplementedError' do
@@ -40,109 +50,107 @@ RSpec.describe OAuth2::Strategy::Assertion do
   end
 
   describe '#build_request' do
-    it 'assembles the request from the given params' do
-      request = subject.build_request(params)
+    let(:request) { subject.build_request(params) }
+
+    it 'assembles the request body params from params[:url_params] and the claims from params[:claims]' do
+      expect(request.keys).to match_array [:grant_type, :assertion, :custom_param, :scope]
       expect(request[:grant_type]).to eq('urn:ietf:params:oauth:grant-type:jwt-bearer')
-      expect(request.keys).to match_array [:grant_type, :assertion]
-      # TODO: client_id and client_secret were removed -- does this still work?
-    end
-  end
+      expect(request[:custom_param]).to eq('mackerel')
+      expect(request[:scope]).to eq('sole')
+      expect(request[:assertion]).not_to be_nil
 
-  describe '#build_assertion' do
-    context 'when passed a prn param' do
+      jwt, _header = JWT.decode(request[:assertion], key.public_key, true, :algorithm => 'RS256')
+
+      expect(params[:claims].keys).to match_array(jwt.keys.map(&:to_sym))
+      params[:claims].each do |key, claim|
+        expect(jwt[key.to_s]).to eq(claim)
+      end
+    end
+
+    context 'when hmac_secret is passed in' do
       before do
-        params.merge!(:prn => 'swayze@roadhouse.example.com')
+        params.merge!(:hmac_secret => 'thisiskey')
+        params.delete(:private_key)
       end
-      
-      it 'includes it in the claim' do
-        expected_claim_keys = %w(iss scope aud exp iat prn)
-        assertion = subject.build_assertion(params)
 
-        jwt, _header = JWT.decode(assertion, key.public_key, true, { :algorithm => 'RS256' })
-        expect(jwt.keys).to match_array(expected_claim_keys)
-        expected_claim_keys.each do |claim_key|
-          expect(jwt[claim_key]).to eq(params[claim_key.to_sym])
-        end
+      it 'encodes the JWT as HS256' do
+        coded_header = request[:assertion].split('.').first
+        header = JWT::Decode.base64url_decode(coded_header)
+        expect(MultiJson.decode(header)['alg']).to eq('HS256')
       end
     end
-    
-    context 'when not passed a prn param' do
+
+    context 'when private_key is passed in' do
       before do
-        expect(params).to_not have_key(:prn)
+        expect(params[:private_key]).to be
+        expect(params).to_not have_key(:hmac_secret)
       end
-      
-      it 'constructs the claim with no prn key by default' do
-        expected_claim_keys = %w(iss scope aud exp iat)
-        assertion = subject.build_assertion(params)
 
-        jwt, _header = JWT.decode(assertion, key.public_key, true, { :algorithm => 'RS256' })
-        expect(jwt.keys).to match_array(expected_claim_keys)
-        expected_claim_keys.each do |claim_key|
-          expect(jwt[claim_key]).to eq(params[claim_key.to_sym])
-        end
+      it 'encodes the JWT as RS256' do
+        coded_header = request[:assertion].split('.').first
+        header = JWT::Decode.base64url_decode(coded_header)
+        expect(MultiJson.decode(header)['alg']).to eq('RS256')
       end
     end
 
-    describe 'JWT encoding' do
-      context 'when hmac_secret is passed in' do
-        before do
-          params.merge!(:hmac_secret => 'thisiskey')
-          params.delete(:private_key)
-        end
-        
-        it 'encodes as HS256' do
-          assertion = subject.build_assertion(params)
-          coded_header = assertion.split('.').first
-          header = JWT::Decode.base64url_decode(coded_header)
-          expect(MultiJson.decode(header)['alg']).to eq('HS256')
-        end
+    context 'when neither private_key nor hmac_secret is passed in' do
+      before do
+        params.delete(:private_key)
+        expect(params).to_not have_key(:hmac_secret)
       end
-      
-      context 'when private_key is passed in' do
-        before do
-          expect(params[:private_key]).to be
-          expect(params).to_not have_key(:hmac_secret)
-        end
-        
-        it 'encodes as RS256' do
-          assertion = subject.build_assertion(params)
-          coded_header = assertion.split('.').first
-          header = JWT::Decode.base64url_decode(coded_header)
-          expect(MultiJson.decode(header)['alg']).to eq('RS256')
-        end
-      end
-      
-      context 'when neither private_key nor hmac_secret is passed in' do
-        before do
-          params.delete(:private_key)
-          expect(params).to_not have_key(:hmac_secret)
-        end
-        
-        it 'raises an argument error' do
-          expect { subject.build_assertion(params) }.to raise_error(ArgumentError, /hmac_secret or private_key/)
-        end
-      end
-      
-      context 'if both private_key and hmac_secret are passed in' do
-        before do
-          expect(params[:private_key]).to be
-          params.merge!(:hmac_secret => 'top_secret')
-        end
 
-        it 'defaults to HS256' do
-          assertion = subject.build_assertion(params)
-          coded_header = assertion.split('.').first
-          header = JWT::Decode.base64url_decode(coded_header)
-          expect(MultiJson.decode(header)['alg']).to eq('HS256')
-        end
+      it 'raises an argument error' do
+        expect { subject.build_request(params) }.to raise_error(ArgumentError, /hmac_secret or private_key/)
+      end
+    end
+
+    context 'when both private_key and hmac_secret are passed in' do
+      before do
+        expect(params[:private_key]).to be
+        params.merge!(:hmac_secret => 'top_secret')
+      end
+
+      it 'defaults to HS256' do
+        coded_header = request[:assertion].split('.').first
+        header = JWT::Decode.base64url_decode(coded_header)
+        expect(MultiJson.decode(header)['alg']).to eq('HS256')
+      end
+    end
+
+    describe 'legacy backwards-compatible gem behavior' do
+      # in previous versions, all params were sent in at the top level because there was no way to differentiate
+      # a value from being put in the claimset vs into the request body
+
+      # this reproduces the behavior prior to 1.5.0, and can be removed when extract_legacy_params! is removed
+
+      let(:params) do
+        {
+          :iss => 'test test test',
+          :scope => 'https://www.example.com/auth/calendar',
+          :aud => 'https://oauth.example.com/oauth2/token',
+          :exp => timestamp + 3600,
+          :prn => 'bob@example.com',
+          :private_key => key,
+        }
+      end
+
+      it 'defaults to putting params[:scope] into the request body' do
+        expect(request.keys).to match_array [:grant_type, :assertion, :scope]
+        expect(request[:scope]).to eq('https://www.example.com/auth/calendar')
+      end
+
+      it 'defaults to putting :iss, :aud, :prn, and :exp into the JWT claimset' do
+        expect(request.keys).to match_array [:grant_type, :assertion, :scope]
+        jwt, _header = JWT.decode(request[:assertion], key.public_key, true, :algorithm => 'RS256')
+        expect(jwt.keys).to match_array(%w[iss aud prn exp])
       end
     end
   end
 
-  %w(json formencoded).each do |mode|
+  %w[json formencoded].each do |mode|
     describe "#get_token (#{mode})" do
       let(:params) { { :hmac_secret => "#{mode}-foo" } }
-      
+
       before do
         @mode = mode
         @access = subject.get_token(params)
