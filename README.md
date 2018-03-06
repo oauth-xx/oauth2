@@ -1,18 +1,42 @@
 # OAuth2
 
+**_WARNING_**: You are viewing the README of the master branch which contains unreleased changes for version 2.0.0.
+
+If you need the readme for a released version of the gem please find it below:
+
+| Version  | Release Date | Readme                                                   |
+|----------|--------------|----------------------------------------------------------|
+| 1.4.0    | Jun 9, 2017  | https://github.com/oauth-xx/oauth2/blob/v1.4.0/README.md |
+| 1.3.1    | Mar 3, 2017  | https://github.com/oauth-xx/oauth2/blob/v1.3.1/README.md |
+| 1.3.0    | Dec 27, 2016 | https://github.com/oauth-xx/oauth2/blob/v1.3.0/README.md |
+| 1.2.0    | Jun 30, 2016 | https://github.com/oauth-xx/oauth2/blob/v1.2.0/README.md |
+| 1.1.0    | Jan 30, 2016 | https://github.com/oauth-xx/oauth2/blob/v1.1.0/README.md |
+| 1.0.0    | May 23, 2014 | https://github.com/oauth-xx/oauth2/blob/v1.0.0/README.md |
+| < 1.0.0  | Find here    | https://github.com/oauth-xx/oauth2/tags                  |
+
 [![Gem Version](http://img.shields.io/gem/v/oauth2.svg)][gem]
 [![Total Downloads](https://img.shields.io/gem/dt/oauth2.svg)][gem]
+[![Total Downloads](https://img.shields.io/gem/rt/oauth2.svg)](https://rubygems.org/gems/oauth2)
 [![Build Status](http://img.shields.io/travis/oauth-xx/oauth2.svg)][travis]
 [![Coverage Status](http://img.shields.io/coveralls/intridea/oauth2.svg)][coveralls]
-[![Maintainability](https://api.codeclimate.com/v1/badges/688c612528ff90a46955/maintainability)](https://codeclimate.com/github/oauth-xx/oauth2/maintainability)
+[![Maintainability](https://api.codeclimate.com/v1/badges/688c612528ff90a46955/maintainability)][codeclimate]
+[![Depfu](https://badges.depfu.com/badges/6d34dc1ba682bbdf9ae2a97848241743/count.svg)][depfu]
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)][source-license]
+[![Documentation](http://inch-ci.org/github/oauth-xx/oauth2.png)][inch-ci]
 
 [gem]: https://rubygems.org/gems/oauth2
 [travis]: http://travis-ci.org/oauth-xx/oauth2
 [coveralls]: https://coveralls.io/r/intridea/oauth2
+[codeclimate]: https://codeclimate.com/github/oauth-xx/oauth2/maintainability
+[depfu]: https://depfu.com/github/oauth-xx/oauth2
+[source-license]: https://opensource.org/licenses/MIT
+[inch-ci]: http://inch-ci.org/github/oauth-xx/oauth2
 
-### Oauth2 gem is looking for new maintainers. See [#307](https://github.com/oauth-xx/oauth2/issues/307).
+### Oauth2 gem is looking for additional maintainers. See [#307](https://github.com/oauth-xx/oauth2/issues/307).
 
-A Ruby wrapper for the OAuth 2.0 specification.
+A Ruby wrapper for the [OAuth 2.0 specification][oauth2-spec].
+
+[oauth2-spec]: https://oauth.net/2/
 
 ## Installation
 
@@ -123,15 +147,20 @@ requests for tokens for any Authentication grant type.
 This library aims to support and is [tested against][travis] the following Ruby
 implementations:
 
-* Ruby 1.9.3
-* Ruby 2.0.0
-* Ruby 2.1
-* Ruby 2.2
-* Ruby 2.3
+* Ruby 1.9.3 - Support through version 2.x series
+* Ruby 2.0.0 - Support through version 2.x series
+* Ruby 2.1 - Support through version 2.x series
+* Ruby 2.2 - Support through version 3.x series
+* Ruby 2.3 - Support through version 3.x series
 * Ruby 2.4
-* [JRuby 9K][jruby]
+* Ruby 2.5
+* [JRuby 1.7][jruby-1.7] - Support through version 2.x series
+* [JRuby 9.0][jruby-9.0] - Support through version 2.x series
+* [JRuby 9.1][jruby-9.1]
 
-[jruby]: http://jruby.org/
+[jruby-1.7]: http://jruby.org/2017/05/11/jruby-1-7-27.html
+[jruby-9.0]: http://jruby.org/2016/01/26/jruby-9-0-5-0.html
+[jruby-9.1]: http://jruby.org/2018/02/21/jruby-9-1-16-0
 
 If something doesn't work on one of these interpreters, it's a bug.
 
@@ -154,7 +183,7 @@ of a major release, support for that Ruby version may be dropped.
 - Copyright (c) 2017-2018 [oauth-xx organization][oauth-xx]
 - See [LICENSE][license] for details.
 
-[license]: LICENSE.md
+[license]: LICENSE
 [oauth-xx]: https://github.com/oauth-xx
 
 ## Development
