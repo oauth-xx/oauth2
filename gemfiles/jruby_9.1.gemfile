@@ -1,14 +1,14 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
 group :development do
-  gem "pry"
+  gem 'pry'
 end
 
 group :test do
-  gem 'rubocop', '~> 0.52.1'
-  gem 'rubocop-rspec', '~> 1.22.1'
   gem 'rake'
   gem 'rspec'
+  gem 'rubocop', '~> 0.53.0'
+  gem 'rubocop-rspec', '~> 1.24.0'
 end
 
-gemspec path: "../"
+gemspec :path => '../'

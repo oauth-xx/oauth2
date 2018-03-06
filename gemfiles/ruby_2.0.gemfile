@@ -1,9 +1,9 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem "rack", "~> 1.2"
+gem 'rack', '~> 1.2'
 
 group :development do
-  gem "pry"
+  gem 'pry'
 end
 
 group :test do
@@ -11,4 +11,4 @@ group :test do
   gem 'rspec'
 end
 
-gemspec path: "../"
+gemspec :path => '../'
