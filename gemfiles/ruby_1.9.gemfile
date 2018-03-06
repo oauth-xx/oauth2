@@ -1,13 +1,13 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem "json", "< 2.0"
-gem "term-ansicolor", "< 1.4.0"
-gem "tins", "< 1.7"
-gem "rack", "~> 1.2"
+gem 'json', '< 2.0'
+gem 'rack', '~> 1.2'
+gem 'term-ansicolor', '< 1.4.0'
+gem 'tins', '< 1.7'
 
 group :test do
   gem 'rake'
   gem 'rspec'
 end
 
-gemspec path: "../"
+gemspec :path => '../'
