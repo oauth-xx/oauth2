@@ -9,3 +9,7 @@ Style/SymbolArray:
 
 Style/EachWithObject:
   Enabled: false
+
+# Once we drop Rubies that lack support for __dir__ we can turn this on.
+Style/ExpandPathArguments:
+  Enabled: false
