@@ -9,17 +9,19 @@ module StubbedEnv
       end
     end
 
-    private
+  private
 
-    STUBBED_KEY = '__STUBBED__'
+    STUBBED_KEY = '__STUBBED__'.freeze
 
+    # rubocop:disable Metrics/AbcSize
     def add_stubbed_value(key, value)
       allow(ENV).to receive(:[]).with(key).and_return(value)
       allow(ENV).to receive(:fetch).with(key).and_return(value)
-      allow(ENV).to receive(:fetch).with(key, anything()) do |_, default_val|
+      allow(ENV).to receive(:fetch).with(key, anything) do |_, default_val|
         value || default_val
       end
     end
+    # rubocop:enable Metrics/AbcSize
 
     def env_stubbed?
       ENV[STUBBED_KEY]
@@ -33,6 +35,6 @@ module StubbedEnv
   end
 end
 
-RSpec.shared_context "with stubbed env" do
+RSpec.shared_context 'with stubbed env' do
   include StubbedEnv::Helpers
 end
