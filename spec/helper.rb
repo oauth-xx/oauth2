@@ -1,5 +1,6 @@
 require 'simplecov'
 require 'coveralls'
+require 'spec_helpers/stubbed_env'
 
 SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter[
   SimpleCov::Formatter::HTMLFormatter,

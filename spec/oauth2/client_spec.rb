@@ -159,19 +159,57 @@ RSpec.describe OAuth2::Client do
   end
 
   describe '#connection' do
-    it 'smoothly handles succeeding requests when OAUTH_DEBUG=true' do
-      env = double('ENV')
-      allow(env).to receive(:[]).with('OAUTH_DEBUG').and_return('true')
-
-      capture_output do
-        # first request (always goes smoothly)
-        subject.request(:get, '/success')
+    context 'debugging' do
+      include_context 'with stubbed env'
+      before do
+        stub_env('OAUTH_DEBUG' => debug_value)
       end
+      context 'OAUTH_DEBUG=true' do
+        let(:debug_value) { 'true' }
+        it 'smoothly handles successive requests' do
+          capture_output do
+            # first request (always goes smoothly)
+            subject.request(:get, '/success')
+          end
 
-      expect do
-        # second request (used to throw Faraday::RackBuilder::StackLocked)
-        subject.request(:get, '/success')
-      end.not_to raise_error
+          expect do
+            # second request (used to throw Faraday::RackBuilder::StackLocked)
+            subject.request(:get, '/success')
+          end.not_to raise_error
+        end
+        it 'prints both request and response bodies to STDOUT' do
+          printed = capture_output do
+            subject.request(:get, '/success')
+            subject.request(:get, '/reflect', { body: "this is magical" })
+          end
+          expect(printed).to match %q(DEBUG -- request: User-Agent: "Faraday v0.13.1")
+          expect(printed).to match %q(DEBUG -- response: Content-Type: "text/awesome)
+          expect(printed).to match %q(DEBUG -- response: yay)
+          expect(printed).to match %q(DEBUG -- request: this is magical)
+          expect(printed).to match %q(DEBUG -- response: this is magical)
+        end
+      end
+      context 'OAUTH_DEBUG=false' do
+        let(:debug_value) { 'false' }
+        it 'smoothly handles successive requests' do
+          capture_output do
+            # first request (always goes smoothly)
+            subject.request(:get, '/success')
+          end
+
+          expect do
+            # second request (used to throw Faraday::RackBuilder::StackLocked)
+            subject.request(:get, '/success')
+          end.not_to raise_error
+        end
+        it 'prints nothing to STDOUT' do
+          printed = capture_output do
+            subject.request(:get, '/success')
+            subject.request(:get, '/reflect', { body: "this is magical" })
+          end
+          expect(printed).to eq ""
+        end
+      end
     end
   end
 
