@@ -1,6 +1,8 @@
-# OAuth2
+⚠️ **_WARNING_**: You are viewing the README of the master branch which contains unreleased changes for version 2.0.0.
 
-**_WARNING_**: You are viewing the README of the master branch which contains unreleased changes for version 2.0.0.
+---
+
+# OAuth2
 
 If you need the readme for a released version of the gem please find it below:
 
