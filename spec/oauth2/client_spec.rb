@@ -182,7 +182,7 @@ RSpec.describe OAuth2::Client do
             subject.request(:get, '/success')
             subject.request(:get, '/reflect', { body: "this is magical" })
           end
-          expect(printed).to match %q(DEBUG -- request: User-Agent: "Faraday v0.13.1")
+          expect(printed).to match /DEBUG -- request: User-Agent: "Faraday v.+"/
           expect(printed).to match %q(DEBUG -- response: Content-Type: "text/awesome)
           expect(printed).to match %q(DEBUG -- response: yay)
           expect(printed).to match %q(DEBUG -- request: this is magical)
