@@ -79,6 +79,15 @@ response.class.name
 # => OAuth2::Response
 ```
 
+### DEBUGGING
+
+Set an environment variable, however you would [normally do that](https://github.com/bkeepers/dotenv).
+
+```ruby
+# will log both request and response, including bodies
+ENV['OAUTH_DEBUG'] = 'true'
+```
+
 ## OAuth2::Response
 
 The AccessToken methods #get, #post, #put and #delete and the generic #request
@@ -196,7 +205,7 @@ spec.add_dependency 'oauth2', '~> 1.4'
 [semver]: http://semver.org/
 [pvc]: http://guides.rubygems.org/patterns/#pessimistic-version-constraint
 
-## License 
+## License
 
 [MIT][license]
 

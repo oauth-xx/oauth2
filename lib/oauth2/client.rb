@@ -53,15 +53,16 @@ module OAuth2
 
     # The Faraday connection object
     def connection
-      @connection ||= Faraday.new(site, options[:connection_opts]) do |builder|
-        oauth_debug_logger_for_response(builder)
-        if options[:connection_build]
-          options[:connection_build].call(builder)
-        else
-          builder.request :url_encoded             # form-encode POST params
-          builder.adapter Faraday.default_adapter  # make requests with Net::HTTP
+      @connection ||=
+        Faraday.new(site, options[:connection_opts]) do |builder|
+          oauth_debug_logging(builder)
+          if options[:connection_build]
+            options[:connection_build].call(builder)
+          else
+            builder.request :url_encoded             # form-encode POST params
+            builder.adapter Faraday.default_adapter  # make requests with Net::HTTP
+          end
         end
-      end
     end
 
     # The authorize endpoint URL of the OAuth2 provider
@@ -93,7 +94,6 @@ module OAuth2
     # @yield [req] The Faraday request
     def request(verb, url, opts = {}) # rubocop:disable CyclomaticComplexity, MethodLength, Metrics/AbcSize
       url = connection.build_url(url, opts[:params]).to_s
-
       response = connection.run_request(verb, url, opts[:body], opts[:headers]) do |req|
         yield(req) if block_given?
       end
@@ -223,8 +223,8 @@ module OAuth2
       end
     end
 
-    def oauth_debug_logger_for_response(builder)
-      builder.response(:logger, ::Logger.new($stdout)) if ENV['OAUTH_DEBUG'] == 'true'
+    def oauth_debug_logging(builder)
+      builder.response :logger, ::Logger.new($stdout), :bodies => true if ENV['OAUTH_DEBUG'] == 'true'
     end
   end
 end
