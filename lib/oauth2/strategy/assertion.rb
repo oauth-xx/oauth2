@@ -51,11 +51,8 @@ module OAuth2
       end
 
       def build_request(params)
-        extract_legacy_params!(params)
-        # ^ This can go away whenever we decide to no longer preserve previous gem behavior of restricting keys
-
-        url_params = params[:url_params]
-        claims = params[:claims]
+        url_params = params[:url_params] || {}
+        claims = params[:claims] || {}
         encoding_options = choose_algorithm!(params)
 
         {
@@ -83,36 +80,6 @@ module OAuth2
 
       def build_assertion(claims, encoding_options)
         JWT.encode(claims, encoding_options[:key], encoding_options[:algorithm])
-      end
-
-      def extract_legacy_params!(params)
-        # In previous versions of this gem, `:scope` defaulted to being in the POST request body outside the claimset.
-        # Additionally, :iss, :aud, :prn, and :exp were the only four keys and always present in the claimset
-        #
-        # This method is intended to preserve that behavior, and can be removed when no longer needed
-        #
-        # If you are seeing a deprecation warning in your app: the `params` argument to Assertion is now split into:
-        # params = { :url_params => {}, :claims => {} }
-
-        params[:url_params] ||= {}
-        params[:claims] ||= {}
-        legacy_url_params = {}
-        legacy_claims = {}
-
-        if params.has_key?(:scope)
-          puts "DEPRECATION WARNING: params[:scope] is defaulted to a header value -- this behavior may go away!"
-          legacy_url_params[:scope] = params.delete(:scope)
-        end
-
-        [:iss, :aud, :prn, :exp].each do |legacy_key|
-          if params.has_key?(legacy_key)
-            puts "DEPRECATION WARNING: params[#{legacy_key}] is a legacy default claim -- this behavior may go away!"
-            legacy_claims[legacy_key] = params.delete(legacy_key)
-          end
-        end
-
-        params[:url_params].merge!(legacy_url_params)
-        params[:claims].merge!(legacy_claims)
       end
     end
   end

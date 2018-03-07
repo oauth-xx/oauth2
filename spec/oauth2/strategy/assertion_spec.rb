@@ -116,35 +116,6 @@ RSpec.describe OAuth2::Strategy::Assertion do
         expect(MultiJson.decode(header)['alg']).to eq('HS256')
       end
     end
-
-    describe 'legacy backwards-compatible gem behavior' do
-      # in previous versions, all params were sent in at the top level because there was no way to differentiate
-      # a value from being put in the claimset vs into the request body
-
-      # this reproduces the behavior prior to 1.5.0, and can be removed when extract_legacy_params! is removed
-
-      let(:params) do
-        {
-          :iss => 'test test test',
-          :scope => 'https://www.example.com/auth/calendar',
-          :aud => 'https://oauth.example.com/oauth2/token',
-          :exp => timestamp + 3600,
-          :prn => 'bob@example.com',
-          :private_key => key,
-        }
-      end
-
-      it 'defaults to putting params[:scope] into the request body' do
-        expect(request.keys).to match_array [:grant_type, :assertion, :scope]
-        expect(request[:scope]).to eq('https://www.example.com/auth/calendar')
-      end
-
-      it 'defaults to putting :iss, :aud, :prn, and :exp into the JWT claimset' do
-        expect(request.keys).to match_array [:grant_type, :assertion, :scope]
-        jwt, _header = JWT.decode(request[:assertion], key.public_key, true, :algorithm => 'RS256')
-        expect(jwt.keys).to match_array(%w[iss aud prn exp])
-      end
-    end
   end
 
   %w[json formencoded].each do |mode|
