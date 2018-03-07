@@ -11,15 +11,12 @@ module OAuth2
     # Procs that, when called, will parse a response body according
     # to the specified format.
     @@parsers = {
-      :json  => lambda { |body| MultiJson.load(body) rescue body }, # rubocop:disable RescueModifier
       :query => lambda { |body| Rack::Utils.parse_query(body) },
       :text  => lambda { |body| body },
     }
 
     # Content type assignments for various potential HTTP content types.
     @@content_types = {
-      'application/json' => :json,
-      'text/javascript' => :json,
       'application/x-www-form-urlencoded' => :query,
       'text/plain' => :text,
     }
