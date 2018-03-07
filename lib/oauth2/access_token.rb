@@ -79,7 +79,7 @@ module OAuth2
     #
     # @return [AccessToken] a new AccessToken
     # @note options should be carried over to the new AccessToken
-    def refresh!(params = {})
+    def refresh(params = {})
       raise('A refresh_token is not available') unless refresh_token
       params[:grant_type] = 'refresh_token'
       params[:refresh_token] = refresh_token
@@ -88,6 +88,9 @@ module OAuth2
       new_token.refresh_token = refresh_token unless new_token.refresh_token
       new_token
     end
+    # A compatibility alias
+    # @note does not modify the receiver, so bang is not the default method
+    alias refresh! refresh
 
     # Convert AccessToken to a hash which can be used to rebuild itself with AccessToken.from_hash
     #
