@@ -8,6 +8,8 @@ RSpec.describe OAuth2::Strategy::Assertion do
     cli.connection.build do |b|
       b.adapter :test do |stub|
         stub.post('/oauth/token') do |env|
+          @request_body = env.body
+          
           case @mode
             when 'formencoded'
               [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, 'expires_in=600&access_token=salmon&refresh_token=trout']
@@ -20,26 +22,18 @@ RSpec.describe OAuth2::Strategy::Assertion do
     cli
   end
 
-  let(:key) { OpenSSL::PKey::RSA.new(1024) }
+  let(:algorithm) { 'HS256' }
+  let(:key) { 'arowana' }
   let(:timestamp) { Time.now.to_i }
-  let(:params) do
+  let(:claims) do
     {
-      :url_params => {
-        :custom_param => 'mackerel',
-        :scope => 'sole',
-      },
-
-      :claims => {
-        :iss => 'carp@example.com',
-        :scope => 'https://oauth.example.com/auth/flounder',
-        :aud => 'https://sturgeon.example.com/oauth2/token',
-        :exp => timestamp + 3600,
-        :iat => timestamp,
-        :sub => '12345',
-        :custom_claim => 'ling cod',
-      },
-
-      :private_key => key,
+      :iss => 'carp@example.com',
+      :scope => 'https://oauth.example.com/auth/flounder',
+      :aud => 'https://sturgeon.example.com/oauth2/token',
+      :exp => timestamp + 3600,
+      :iat => timestamp,
+      :sub => '12345',
+      :custom_claim => 'ling cod',
     }
   end
 
@@ -49,98 +43,122 @@ RSpec.describe OAuth2::Strategy::Assertion do
     end
   end
 
-  describe '#build_request' do
-    let(:request) { subject.build_request(params) }
+  describe '#get_token' do
+    before do
+      @mode = 'json'
+    end
+    
+    describe 'JWT assertion' do
+      context 'when encoding as HS256' do
+        let(:algorithm) { 'HS256' }
+        let(:key) { 'super_secret!' }
+        
+        before do
+          subject.get_token(claims, algorithm, key)
+          expect(@request_body).not_to be_nil
+          expect(@request_body[:assertion]).not_to be_nil
+        end
 
-    it 'assembles the request body params from params[:url_params] and the claims from params[:claims]' do
-      expect(request.keys).to match_array [:grant_type, :assertion, :custom_param, :scope]
-      expect(request[:grant_type]).to eq('urn:ietf:params:oauth:grant-type:jwt-bearer')
-      expect(request[:custom_param]).to eq('mackerel')
-      expect(request[:scope]).to eq('sole')
-      expect(request[:assertion]).not_to be_nil
+        it 'indicates HS256 in the header' do
+          coded_header = @request_body[:assertion].split('.').first
+          header = JWT::Decode.base64url_decode(coded_header)
+          expect(MultiJson.decode(header)['alg']).to eq('HS256')
+        end
+        
+        it 'encodes the JWT as HS256' do
+          jwt, _header = JWT.decode(@request_body[:assertion], key, true, :algorithm => algorithm)
+          expect(jwt.keys).to match_array(%w[iss scope aud exp iat sub custom_claim])
+          jwt.each do |key, claim|
+            expect(claims[key.to_sym]).to eq(claim)
+          end
+        end
+      end
+      
+      context 'when encoding as RS256' do
+        let(:algorithm) { 'RS256' }
+        let(:key) { OpenSSL::PKey::RSA.new(1024) }
 
-      jwt, _header = JWT.decode(request[:assertion], key.public_key, true, :algorithm => 'RS256')
+        before do
+          subject.get_token(claims, algorithm, key)
+          expect(@request_body).not_to be_nil
+          expect(@request_body[:assertion]).not_to be_nil
+        end
 
-      expect(params[:claims].keys).to match_array(jwt.keys.map(&:to_sym))
-      params[:claims].each do |key, claim|
-        expect(jwt[key.to_s]).to eq(claim)
+        it 'indicates RS256 in the header' do
+          coded_header = @request_body[:assertion].split('.').first
+          header = JWT::Decode.base64url_decode(coded_header)
+          expect(MultiJson.decode(header)['alg']).to eq('RS256')
+        end
+
+        it 'encodes the JWT as RS256' do
+          jwt, _header = JWT.decode(@request_body[:assertion], key, true, :algorithm => algorithm)
+          expect(jwt.keys).to match_array(%w[iss scope aud exp iat sub custom_claim])
+          jwt.each do |key, claim|
+            expect(claims[key.to_sym]).to eq(claim)
+          end
+        end
       end
     end
 
-    context 'when hmac_secret is passed in' do
-      before do
-        params.merge!(:hmac_secret => 'thisiskey')
-        params.delete(:private_key)
+    describe 'POST request parameters' do
+      it 'includes assertion and grant_type by default' do
+        subject.get_token(claims, algorithm, key)
+        expect(@request_body).not_to be_nil
+        expect(@request_body.keys).to match_array([:assertion, :grant_type])
+        expect(@request_body[:grant_type]).to eq('urn:ietf:params:oauth:grant-type:jwt-bearer')
+        expect(@request_body[:assertion]).to be_a(String) # tested in detail in JWT assertion contexts
       end
 
-      it 'encodes the JWT as HS256' do
-        coded_header = request[:assertion].split('.').first
-        header = JWT::Decode.base64url_decode(coded_header)
-        expect(MultiJson.decode(header)['alg']).to eq('HS256')
+      it 'includes others via request_options' do
+        subject.get_token(claims, algorithm, key, {:scope => 'dover sole'})
+        expect(@request_body).not_to be_nil
+        expect(@request_body.keys).to match_array([:assertion, :grant_type, :scope])
+        expect(@request_body[:grant_type]).to eq('urn:ietf:params:oauth:grant-type:jwt-bearer')
+        expect(@request_body[:assertion]).to be_a(String) # tested in detail in JWT assertion contexts
+        expect(@request_body[:scope]).to eq('dover sole')
+      end
+    end
+    
+    describe 'AccessToken options' do
+      it 'sets refresh_token to nil' do
+        token = subject.get_token(claims, algorithm, key)
+        expect(token).to be_an(AccessToken)
+        expect(token.params).to eq({})
+        expect(token.refresh_token).to eq(nil)
+      end
+      
+      it 'passes custom opts via request_options' do
+        custom_token_option = {:custom_token_option => 'mackerel'}
+        token = subject.get_token(claims, algorithm, key, {}, custom_token_option)
+        expect(token).to be_an(AccessToken)
+        expect(token.params).to eq(custom_token_option)
       end
     end
 
-    context 'when private_key is passed in' do
-      before do
-        expect(params[:private_key]).to be
-        expect(params).to_not have_key(:hmac_secret)
-      end
+    describe 'response type' do
+      %w[json formencoded].each do |mode|
+        context "when #{mode}" do
+          before do
+            @mode = mode
+            @access = subject.get_token(claims, algorithm, key)
+          end
 
-      it 'encodes the JWT as RS256' do
-        coded_header = request[:assertion].split('.').first
-        header = JWT::Decode.base64url_decode(coded_header)
-        expect(MultiJson.decode(header)['alg']).to eq('RS256')
-      end
-    end
+          it 'returns AccessToken with same Client' do
+            expect(@access.client).to eq(client)
+          end
 
-    context 'when neither private_key nor hmac_secret is passed in' do
-      before do
-        params.delete(:private_key)
-        expect(params).to_not have_key(:hmac_secret)
-      end
+          it 'returns AccessToken with #token' do
+            expect(@access.token).to eq('salmon')
+          end
 
-      it 'raises an argument error' do
-        expect { subject.build_request(params) }.to raise_error(ArgumentError, /hmac_secret or private_key/)
-      end
-    end
+          it 'returns AccessToken with #expires_in' do
+            expect(@access.expires_in).to eq(600)
+          end
 
-    context 'when both private_key and hmac_secret are passed in' do
-      before do
-        expect(params[:private_key]).to be
-        params.merge!(:hmac_secret => 'top_secret')
-      end
-
-      it 'defaults to HS256' do
-        coded_header = request[:assertion].split('.').first
-        header = JWT::Decode.base64url_decode(coded_header)
-        expect(MultiJson.decode(header)['alg']).to eq('HS256')
-      end
-    end
-  end
-
-  %w[json formencoded].each do |mode|
-    describe "#get_token (#{mode})" do
-      let(:params) { { :hmac_secret => "#{mode}-foo" } }
-
-      before do
-        @mode = mode
-        @access = subject.get_token(params)
-      end
-
-      it 'returns AccessToken with same Client' do
-        expect(@access.client).to eq(client)
-      end
-
-      it 'returns AccessToken with #token' do
-        expect(@access.token).to eq('salmon')
-      end
-
-      it 'returns AccessToken with #expires_in' do
-        expect(@access.expires_in).to eq(600)
-      end
-
-      it 'returns AccessToken with #expires_at' do
-        expect(@access.expires_at).not_to be_nil
+          it 'returns AccessToken with #expires_at' do
+            expect(@access.expires_at).not_to be_nil
+          end
+        end
       end
     end
   end
