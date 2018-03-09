@@ -98,6 +98,16 @@ RSpec.describe OAuth2::Strategy::Assertion do
           end
         end
       end
+      
+      context 'with bad encoding params' do
+        let(:algorithm) { 'the blockchain' }
+        let(:key) { 'machine learning' }
+        
+        it 'raises' do
+          # this behavior is handled by the JWT gem, but this should make sure it is consistent
+          expect { subject.get_token(claims, algorithm, key) }.to raise_error
+        end
+      end
     end
 
     describe 'POST request parameters' do
