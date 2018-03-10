@@ -59,17 +59,19 @@ RSpec.describe OAuth2::Strategy::Assertion do
 
         before do
           subject.get_token(claims, algorithm, key)
-          expect(@request_body).not_to be_nil
-          expect(@request_body[:assertion]).not_to be_nil
         end
 
         it 'indicates HS256 in the header' do
+          expect(@request_body).not_to be_nil
+          expect(@request_body[:assertion]).not_to be_nil
           coded_header = @request_body[:assertion].split('.').first
           header = JWT::Decode.base64url_decode(coded_header)
           expect(MultiJson.decode(header)['alg']).to eq('HS256')
         end
 
         it 'encodes the JWT as HS256' do
+          expect(@request_body).not_to be_nil
+          expect(@request_body[:assertion]).not_to be_nil
           jwt, _header = JWT.decode(@request_body[:assertion], key, true, :algorithm => algorithm)
           expect(jwt.keys).to match_array(%w[iss scope aud exp iat sub custom_claim])
           jwt.each do |key, claim|
@@ -84,17 +86,19 @@ RSpec.describe OAuth2::Strategy::Assertion do
 
         before do
           subject.get_token(claims, algorithm, key)
-          expect(@request_body).not_to be_nil
-          expect(@request_body[:assertion]).not_to be_nil
         end
 
         it 'indicates RS256 in the header' do
+          expect(@request_body).not_to be_nil
+          expect(@request_body[:assertion]).not_to be_nil
           coded_header = @request_body[:assertion].split('.').first
           header = JWT::Decode.base64url_decode(coded_header)
           expect(MultiJson.decode(header)['alg']).to eq('RS256')
         end
 
         it 'encodes the JWT as RS256' do
+          expect(@request_body).not_to be_nil
+          expect(@request_body[:assertion]).not_to be_nil
           jwt, _header = JWT.decode(@request_body[:assertion], key, true, :algorithm => algorithm)
           expect(jwt.keys).to match_array(%w[iss scope aud exp iat sub custom_claim])
           jwt.each do |key, claim|
