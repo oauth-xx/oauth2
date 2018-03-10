@@ -44,6 +44,9 @@ Lint/UnusedBlockArgument:
     - 'vendor/**/*'
     - '**/.irbrc'
 
+RSpec/NestedGroups:
+  Enabled: false
+
 Style/ClassVars:
   Enabled: false
 
