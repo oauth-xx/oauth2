@@ -9,21 +9,21 @@ RSpec.describe OAuth2::Strategy::Assertion do
       b.adapter :test do |stub|
         stub.post('/oauth/token') do |token_request|
           @request_body = token_request.body
-          
+
           case @response_format
           when 'formencoded'
             [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, 'expires_in=600&access_token=salmon&refresh_token=trout']
           when 'json'
             [200, {'Content-Type' => 'application/json'}, '{"expires_in":600,"access_token":"salmon","refresh_token":"trout"}']
           else
-            fail('Please define @response_format to choose a response content type!')  
+            raise 'Please define @response_format to choose a response content type!'
           end
         end
       end
     end
     cli
   end
-  
+
   let(:auth_scheme) { :request_body }
 
   describe '#authorize_url' do
@@ -47,16 +47,16 @@ RSpec.describe OAuth2::Strategy::Assertion do
         :custom_claim => 'ling cod',
       }
     end
-    
+
     before do
       @response_format = 'json'
     end
-    
+
     describe 'JWT assertion' do
       context 'when encoding as HS256' do
         let(:algorithm) { 'HS256' }
         let(:key) { 'super_secret!' }
-        
+
         before do
           subject.get_token(claims, algorithm, key)
           expect(@request_body).not_to be_nil
@@ -68,7 +68,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
           header = JWT::Decode.base64url_decode(coded_header)
           expect(MultiJson.decode(header)['alg']).to eq('HS256')
         end
-        
+
         it 'encodes the JWT as HS256' do
           jwt, _header = JWT.decode(@request_body[:assertion], key, true, :algorithm => algorithm)
           expect(jwt.keys).to match_array(%w[iss scope aud exp iat sub custom_claim])
@@ -77,7 +77,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
           end
         end
       end
-      
+
       context 'when encoding as RS256' do
         let(:algorithm) { 'RS256' }
         let(:key) { OpenSSL::PKey::RSA.new(1024) }
@@ -102,11 +102,11 @@ RSpec.describe OAuth2::Strategy::Assertion do
           end
         end
       end
-      
+
       context 'with bad encoding params' do
         let(:algorithm) { 'the blockchain' }
         let(:key) { 'machine learning' }
-        
+
         it 'raises NotImplementedError' do
           # this behavior is handled by the JWT gem, but this should make sure it is consistent
           expect { subject.get_token(claims, algorithm, key) }.to raise_error(NotImplementedError)
@@ -129,7 +129,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
         end
 
         it 'includes other params via request_options' do
-          subject.get_token(claims, algorithm, key, {:scope => 'dover sole'})
+          subject.get_token(claims, algorithm, key, :scope => 'dover sole')
           expect(@request_body).not_to be_nil
           expect(@request_body.keys).to match_array([:assertion, :grant_type, :scope, 'client_id', 'client_secret'])
           expect(@request_body[:grant_type]).to eq('urn:ietf:params:oauth:grant-type:jwt-bearer')
@@ -139,10 +139,10 @@ RSpec.describe OAuth2::Strategy::Assertion do
           expect(@request_body['client_secret']).to eq('def')
         end
       end
-      
+
       context 'when using :auth_scheme => :basic_auth' do
         let(:auth_scheme) { :basic_auth }
-        
+
         it 'includes assertion and grant_type by default' do
           subject.get_token(claims, algorithm, key)
           expect(@request_body).not_to be_nil
@@ -152,7 +152,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
         end
 
         it 'includes other params via request_options' do
-          subject.get_token(claims, algorithm, key, {:scope => 'dover sole'})
+          subject.get_token(claims, algorithm, key, :scope => 'dover sole')
           expect(@request_body).not_to be_nil
           expect(@request_body.keys).to match_array([:assertion, :grant_type, :scope])
           expect(@request_body[:grant_type]).to eq('urn:ietf:params:oauth:grant-type:jwt-bearer')
@@ -161,11 +161,11 @@ RSpec.describe OAuth2::Strategy::Assertion do
         end
       end
     end
-    
+
     describe 'returning the response' do
       let(:access_token) { subject.get_token(claims, algorithm, key, {}, response_opts) }
       let(:response_opts) { {} }
-      
+
       %w[json formencoded].each do |mode|
         context "when the content type is #{mode}" do
           before do
@@ -191,7 +191,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
           it 'returns AccessToken with #expires_at' do
             expect(access_token.expires_at).not_to be_nil
           end
-          
+
           it 'sets AccessToken#refresh_token to nil' do
             expect(access_token.refresh_token).to eq(nil)
           end
