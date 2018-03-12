@@ -18,7 +18,7 @@ module OAuth2
     #     :exp => Time.now.utc.to_i + 3600
     #   }
     #
-    #   access = client.assertion.get_token(claimset, 'HS256', 'secret_key')
+    #   access = client.assertion.get_token(claimset, :algorithm => 'HS256', :key => 'secret_key')
     #   access.token                 # actual access_token string
     #   access.get("/api/stuff")     # making api calls with access token in header
     #
@@ -37,26 +37,30 @@ module OAuth2
       # For reading on JWT and claim keys:
       #   @see https://github.com/jwt/ruby-jwt
       #   @see https://tools.ietf.org/html/rfc7519#section-4.1
+      #   @see https://tools.ietf.org/html/rfc7523#section-3
       #   @see https://www.iana.org/assignments/jwt/jwt.xhtml
       #
       # There are many possible claim keys, and applications may ask for their own custom keys.
       # Some typically required ones:
-      #
       #   :iss (issuer)
       #   :aud (audience)
       #   :sub (subject) -- formerly :prn https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-06#appendix-F
       #   :exp, (expiration time) -- in seconds, e.g. Time.now.utc.to_i + 3600
       #
-      # @param [String] algorithm the algorithm with which you would like the JWT to be encoded.
-      # @param [Object] key the key with which you would like to encode the JWT
+      # Note that this method does *not* validate presence of those four claim keys indicated as required by RFC 7523.
+      # There are endpoints that may not conform with this RFC, and this gem should still work for those use cases.
       #
-      # These two arguments are passed directly to `JWT.encode`.  For supported encoding arguments:
+      # @param [Hash] encoding_opts a hash containing instructions on how the JWT should be encoded
+      # @option algorithm [String] the algorithm with which you would like the JWT to be encoded
+      # @option key [Object] the key with which you would like to encode the JWT
+      #
+      # These two options are passed directly to `JWT.encode`.  For supported encoding arguments:
       #   @see https://github.com/jwt/ruby-jwt#algorithms-and-usage
       #   @see https://tools.ietf.org/html/rfc7518#section-3.1
       #
-      # The object type of `key` may depend on the value of `algorithm`.  Sample arguments:
-      #   client.assertion.get_token(claimset, 'HS256', 'secret_key')
-      #   client.assertion.get_token(claimset, 'RS256', OpenSSL::PKCS12.new(File.read('my_key.p12'), 'not_secret'))
+      # The object type of `:key` may depend on the value of `:algorithm`.  Sample arguments:
+      #   get_token(claimset, :algorithm => 'HS256', :key => 'secret_key')
+      #   get_token(claimset, :algorithm => 'RS256', :key => OpenSSL::PKCS12.new(File.read('my_key.p12'), 'not_secret'))
       #
       # @param [Hash] request_opts options that will be used to assemble the request
       # @option request_opts [String] :scope the url parameter `scope` that may be required by some endpoints
@@ -65,8 +69,8 @@ module OAuth2
       # @param [Hash] response_opts this will be merged with the token response to create the AccessToken object
       #   @see the access_token_opts argument to Client#get_token
 
-      def get_token(claims, algorithm, key, request_opts = {}, response_opts = {})
-        assertion = build_assertion(claims, algorithm, key)
+      def get_token(claims, encoding_opts, request_opts = {}, response_opts = {})
+        assertion = build_assertion(claims, encoding_opts)
         params = build_request(assertion, request_opts)
 
         @client.get_token(params, response_opts.merge('refresh_token' => nil))
@@ -81,8 +85,10 @@ module OAuth2
         }.merge(request_opts)
       end
 
-      def build_assertion(claims, algorithm, key)
-        JWT.encode(claims, key, algorithm)
+      def build_assertion(claims, encoding_opts)
+        raise ArgumentError.new(:message => 'Please provide encoding_opts[:algorithm]') unless encoding_opts[:algorithm]
+        raise ArgumentError.new(:message => 'Please provide encoding_opts[:key]') unless encoding_opts[:key]
+        JWT.encode(claims, encoding_opts[:key], encoding_opts[:algorithm])
       end
     end
   end
