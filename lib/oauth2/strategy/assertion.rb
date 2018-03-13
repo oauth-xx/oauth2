@@ -15,10 +15,15 @@ module OAuth2
     #     :iss => "http://localhost:3001",
     #     :aud => "http://localhost:8080/oauth2/token"
     #     :sub => "me@example.com",
-    #     :exp => Time.now.utc.to_i + 3600
+    #     :exp => Time.now.utc.to_i + 3600,
     #   }
     #
-    #   access = client.assertion.get_token(claimset, :algorithm => 'HS256', :key => 'secret_key')
+    #   encoding = {
+    #     :algorithm => 'HS256',
+    #     :key => 'secret_key',
+    #   }
+    #
+    #   access = client.assertion.get_token(claimset, encoding)
     #   access.token                 # actual access_token string
     #   access.get("/api/stuff")     # making api calls with access token in header
     #
