@@ -158,15 +158,22 @@ requests for tokens for any Authentication grant type.
 This library aims to support and is [tested against][travis] the following Ruby
 implementations:
 
-* Ruby 1.9.3 - Support through version 2.x series
-* Ruby 2.0.0 - Support through version 2.x series
-* Ruby 2.1 - Support through version 2.x series
-* Ruby 2.2 - Support through version 3.x series
+### Rubies with support ending at Oauth2 2.x
+
+* Ruby 1.9.3
+* Ruby 2.0.0
+* Ruby 2.1
+* Ruby 2.2
+* [JRuby 1.7][jruby-1.7]
+* [JRuby 9.0][jruby-9.0]
+
+---
+
+### Rubies with continued support past Oauth2 2.x
+
 * Ruby 2.3 - Support through version 3.x series
 * Ruby 2.4
 * Ruby 2.5
-* [JRuby 1.7][jruby-1.7] - Support through version 2.x series
-* [JRuby 9.0][jruby-9.0] - Support through version 2.x series
 * [JRuby 9.1][jruby-9.1]
 
 [jruby-1.7]: http://jruby.org/2017/05/11/jruby-1-7-27.html
