@@ -64,8 +64,8 @@ module OAuth2
       #   @see https://tools.ietf.org/html/rfc7518#section-3.1
       #
       # The object type of `:key` may depend on the value of `:algorithm`.  Sample arguments:
-      #   get_token(claimset, :algorithm => 'HS256', :key => 'secret_key')
-      #   get_token(claimset, :algorithm => 'RS256', :key => OpenSSL::PKCS12.new(File.read('my_key.p12'), 'not_secret'))
+      #   get_token(claimset, {:algorithm => 'HS256', :key => 'secret_key'})
+      #   get_token(claimset, {:algorithm => 'RS256', :key => OpenSSL::PKCS12.new(File.read('my_key.p12'), 'not_secret')})
       #
       # @param [Hash] request_opts options that will be used to assemble the request
       # @option request_opts [String] :scope the url parameter `scope` that may be required by some endpoints
