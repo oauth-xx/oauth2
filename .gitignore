@@ -27,6 +27,7 @@ Gemfile.lock
 .rvmrc
 
 # Editors
+.idea
 *~
 
 # Other

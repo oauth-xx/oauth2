@@ -4,19 +4,26 @@ module OAuth2
   module Strategy
     # The Client Assertion Strategy
     #
-    # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-10#section-4.1.3
+    # @see https://tools.ietf.org/html/rfc7523
     #
     # Sample usage:
     #   client = OAuth2::Client.new(client_id, client_secret,
-    #                               :site => 'http://localhost:8080')
+    #                               :site => 'http://localhost:8080',
+    #                               :auth_scheme => :request_body)
     #
-    #   params = {:hmac_secret => "some secret",
-    #             # or :private_key => "private key string",
-    #             :iss => "http://localhost:3001",
-    #             :prn => "me@here.com",
-    #             :exp => Time.now.utc.to_i + 3600}
+    #   claimset = {
+    #     :iss => "http://localhost:3001",
+    #     :aud => "http://localhost:8080/oauth2/token"
+    #     :sub => "me@example.com",
+    #     :exp => Time.now.utc.to_i + 3600,
+    #   }
     #
-    #   access = client.assertion.get_token(params)
+    #   encoding = {
+    #     :algorithm => 'HS256',
+    #     :key => 'secret_key',
+    #   }
+    #
+    #   access = client.assertion.get_token(claimset, encoding)
     #   access.token                 # actual access_token string
     #   access.get("/api/stuff")     # making api calls with access token in header
     #
@@ -30,45 +37,63 @@ module OAuth2
 
       # Retrieve an access token given the specified client.
       #
-      # @param [Hash] params assertion params
-      # pass either :hmac_secret or :private_key, but not both.
+      # @param [Hash] claims the hash representation of the claims that should be encoded as a JWT (JSON Web Token)
       #
-      #   params :hmac_secret, secret string.
-      #   params :private_key, private key string.
+      # For reading on JWT and claim keys:
+      #   @see https://github.com/jwt/ruby-jwt
+      #   @see https://tools.ietf.org/html/rfc7519#section-4.1
+      #   @see https://tools.ietf.org/html/rfc7523#section-3
+      #   @see https://www.iana.org/assignments/jwt/jwt.xhtml
       #
-      #   params :iss, issuer
-      #   params :aud, audience, optional
-      #   params :prn, principal, current user
-      #   params :exp, expired at, in seconds, like Time.now.utc.to_i + 3600
+      # There are many possible claim keys, and applications may ask for their own custom keys.
+      # Some typically required ones:
+      #   :iss (issuer)
+      #   :aud (audience)
+      #   :sub (subject) -- formerly :prn https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-06#appendix-F
+      #   :exp, (expiration time) -- in seconds, e.g. Time.now.utc.to_i + 3600
       #
-      # @param [Hash] opts options
-      def get_token(params = {}, opts = {})
-        hash = build_request(params)
-        @client.get_token(hash, opts.merge('refresh_token' => nil))
+      # Note that this method does *not* validate presence of those four claim keys indicated as required by RFC 7523.
+      # There are endpoints that may not conform with this RFC, and this gem should still work for those use cases.
+      #
+      # @param [Hash] encoding_opts a hash containing instructions on how the JWT should be encoded
+      # @option algorithm [String] the algorithm with which you would like the JWT to be encoded
+      # @option key [Object] the key with which you would like to encode the JWT
+      #
+      # These two options are passed directly to `JWT.encode`.  For supported encoding arguments:
+      #   @see https://github.com/jwt/ruby-jwt#algorithms-and-usage
+      #   @see https://tools.ietf.org/html/rfc7518#section-3.1
+      #
+      # The object type of `:key` may depend on the value of `:algorithm`.  Sample arguments:
+      #   get_token(claimset, {:algorithm => 'HS256', :key => 'secret_key'})
+      #   get_token(claimset, {:algorithm => 'RS256', :key => OpenSSL::PKCS12.new(File.read('my_key.p12'), 'not_secret')})
+      #
+      # @param [Hash] request_opts options that will be used to assemble the request
+      # @option request_opts [String] :scope the url parameter `scope` that may be required by some endpoints
+      #   @see https://tools.ietf.org/html/rfc7521#section-4.1
+      #
+      # @param [Hash] response_opts this will be merged with the token response to create the AccessToken object
+      #   @see the access_token_opts argument to Client#get_token
+
+      def get_token(claims, encoding_opts, request_opts = {}, response_opts = {})
+        assertion = build_assertion(claims, encoding_opts)
+        params = build_request(assertion, request_opts)
+
+        @client.get_token(params, response_opts.merge('refresh_token' => nil))
       end
 
-      def build_request(params)
-        assertion = build_assertion(params)
+    private
+
+      def build_request(assertion, request_opts = {})
         {
-          :grant_type     => 'assertion',
-          :assertion_type => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
-          :assertion      => assertion,
-          :scope          => params[:scope],
-        }
+          :grant_type => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+          :assertion => assertion,
+        }.merge(request_opts)
       end
 
-      def build_assertion(params)
-        claims = {
-          :iss => params[:iss],
-          :aud => params[:aud],
-          :prn => params[:prn],
-          :exp => params[:exp],
-        }
-        if params[:hmac_secret]
-          JWT.encode(claims, params[:hmac_secret], 'HS256')
-        elsif params[:private_key]
-          JWT.encode(claims, params[:private_key], 'RS256')
-        end
+      def build_assertion(claims, encoding_opts)
+        raise ArgumentError.new(:message => 'Please provide encoding_opts[:algorithm]') unless encoding_opts[:algorithm]
+        raise ArgumentError.new(:message => 'Please provide encoding_opts[:key]') unless encoding_opts[:key]
+        JWT.encode(claims, encoding_opts[:key], encoding_opts[:algorithm])
       end
     end
   end
