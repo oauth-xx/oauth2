@@ -16,7 +16,8 @@ If you need the readme for a released version of the gem please find it below:
 | 1.0.0    | May 23, 2014 | https://github.com/oauth-xx/oauth2/blob/v1.0.0/README.md |
 | < 1.0.0  | Find here    | https://github.com/oauth-xx/oauth2/tags                  |
 
-[![Gem Version](http://img.shields.io/gem/v/oauth2.svg)][gem]
+[![Gem Version](http://img.shields.io/gem/v/oauth2.svg)][![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2?ref=badge_shield)
+[gem]
 [![Total Downloads](https://img.shields.io/gem/dt/oauth2.svg)][gem]
 [![Total Downloads](https://img.shields.io/gem/rt/oauth2.svg)](https://rubygems.org/gems/oauth2)
 [![Build Status](http://img.shields.io/travis/oauth-xx/oauth2.svg)][travis]
@@ -224,6 +225,9 @@ spec.add_dependency 'oauth2', '~> 1.4'
 
 [license]: LICENSE
 [oauth-xx]: https://github.com/oauth-xx
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2?ref=badge_large)
 
 ## Development
 
