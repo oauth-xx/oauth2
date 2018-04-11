@@ -120,13 +120,21 @@ RSpec.describe OAuth2::Strategy::Assertion do
           end
         end
 
+        describe 'of a wrong object type' do
+          let(:encoding_opts) { 'the cloud' }
+
+          it 'raises ArgumentError' do
+            expect { subject.get_token(claims, encoding_opts) }.to raise_error(ArgumentError, /encoding_opts/)
+          end
+        end
+
         describe 'missing encoding_opts[:algorithm]' do
           before do
             encoding_opts.delete(:algorithm)
           end
 
           it 'raises ArgumentError' do
-            expect { subject.get_token(claims, encoding_opts) }.to raise_error(ArgumentError, /algorithm/)
+            expect { subject.get_token(claims, encoding_opts) }.to raise_error(ArgumentError, /encoding_opts/)
           end
         end
 
@@ -136,7 +144,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
           end
 
           it 'raises ArgumentError' do
-            expect { subject.get_token(claims, encoding_opts) }.to raise_error(ArgumentError, /key/)
+            expect { subject.get_token(claims, encoding_opts) }.to raise_error(ArgumentError, /encoding_opts/)
           end
         end
       end
