@@ -35,7 +35,7 @@ RSpec.describe 'using OAuth2 with Google' do
         # has a maximum of 1 hour after the issued time.
 
         'iat' => Time.now.to_i,
-        #   The time the assertion was issued, specified as seconds since 00:00:00 UTC, January 1, 1970.
+        # The time the assertion was issued, specified as seconds since 00:00:00 UTC, January 1, 1970.
       }
     end
 
@@ -65,8 +65,16 @@ RSpec.describe 'using OAuth2 with Google' do
 
             [
               200,
-              {'Content-Type' => 'application/json'},
-              {'expires_in' => 600, 'access_token' => 'google!'}.to_json,
+
+              {
+                'Content-Type' => 'application/json',
+              },
+
+              {
+                'access_token' => '1/8xbJqaOZXSUZbHLl5EOtu1pxz3fmmetKx9W8CV4t79M',
+                'token_type' => 'Bearer',
+                'expires_in' => 3600,
+              }.to_json,
             ]
           end
         end
