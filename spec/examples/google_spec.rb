@@ -49,7 +49,7 @@ RSpec.describe 'using OAuth2 with Google' do
     let(:algorithm) { 'RS256' }
     # Per Google: "Service accounts rely on the RSA SHA-256 algorithm"
 
-    let(:key) { OpenSSL::PKCS12.new(File.read('spec/fixtures/google_service_account_key.p12')).key }
+    let(:key) { OpenSSL::PKCS12.new(File.read('spec/fixtures/google_service_account_key.p12'), 'notasecret').key }
     # In practice, this will be a .p12 file you download from Google and keep somewhere.  From Google:
 
     # "Take note of the service account's email address and store the service account's P12 private key file in a
