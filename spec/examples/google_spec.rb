@@ -97,7 +97,7 @@ RSpec.describe 'using OAuth2 with Google' do
       it 'sends a JWT with the 5 keys' do
         client.assertion.get_token(claims, encoding_options)
 
-        expect(@request_body).to be_a(Hash)
+        expect(@request_body).not_to be_nil, 'No access token request was made!'
         expect(@request_body[:grant_type]).to eq('urn:ietf:params:oauth:grant-type:jwt-bearer')
         expect(@request_body[:assertion]).to be_a(String)
 
@@ -121,7 +121,7 @@ RSpec.describe 'using OAuth2 with Google' do
       it 'sends a JWT with the 6 keys' do
         client.assertion.get_token(claims, encoding_options)
 
-        expect(@request_body).to be_a(Hash)
+        expect(@request_body).not_to be_nil, 'No access token request was made!'
         expect(@request_body[:grant_type]).to eq('urn:ietf:params:oauth:grant-type:jwt-bearer')
         expect(@request_body[:assertion]).to be_a(String)
 
