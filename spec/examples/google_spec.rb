@@ -92,7 +92,7 @@ RSpec.describe 'using OAuth2 with Google' do
         expect(@request_body[:assertion]).to be_a(String)
 
         payload, header = JWT.decode(@request_body[:assertion], key, true, :algorithm => algorithm)
-        expect(header).to eq('alg' => 'RS256')
+        expect(header['alg']).to eq('RS256')
         expect(payload.keys).to match_array(%w[iss scope aud exp iat])
 
         # Note that these specifically do _not_ include the 'sub' claim, which is indicated as being 'required'
@@ -116,7 +116,7 @@ RSpec.describe 'using OAuth2 with Google' do
         expect(@request_body[:assertion]).to be_a(String)
 
         payload, header = JWT.decode(@request_body[:assertion], key, true, :algorithm => algorithm)
-        expect(header).to eq('alg' => 'RS256')
+        expect(header['alg']).to eq('RS256')
         expect(payload.keys).to match_array(%w[iss scope aud exp iat sub])
 
         payload.each do |key, value|
