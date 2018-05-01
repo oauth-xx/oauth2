@@ -7,11 +7,13 @@ module OAuth2
     def initialize(response)
       response.error = self
       @response = response
+      error_description = ''
 
       if response.parsed.is_a?(Hash)
         @code = response.parsed['error']
         @description = response.parsed['error_description']
-        error_description = "#{@code}: #{@description}"
+        error_description << "#{@code}: " if @code
+        error_description << @description if @description
       end
 
       super(error_message(response.body, :error_description => error_description))
@@ -23,7 +25,7 @@ module OAuth2
     def error_message(response_body, opts = {})
       message = []
 
-      opts[:error_description] && message << opts[:error_description]
+      message << opts[:error_description] unless opts[:error_description].empty?
 
       error_message = if opts[:error_description] && opts[:error_description].respond_to?(:encoding)
                         script_encoding = opts[:error_description].encoding
