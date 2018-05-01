@@ -7,36 +7,44 @@ module OAuth2
     def initialize(response)
       response.error = self
       @response = response
-      error_description = ''
+      message_opts = {}
 
       if response.parsed.is_a?(Hash)
         @code = response.parsed['error']
         @description = response.parsed['error_description']
-        error_description << "#{@code}: " if @code
-        error_description << @description if @description
+        message_opts = parse_error_description(@code, @description)
       end
 
-      super(error_message(response.body, :error_description => error_description))
+      super(error_message(response.body, message_opts))
     end
 
-    # Makes a error message
-    # @param [String] response_body response body of request
-    # @param [String] opts :error_description error description to show first line
+  private
+
     def error_message(response_body, opts = {})
-      message = []
+      lines = []
 
-      message << opts[:error_description] unless opts[:error_description].empty?
+      lines << opts[:error_description] if opts[:error_description]
 
-      error_message = if opts[:error_description] && opts[:error_description].respond_to?(:encoding)
-                        script_encoding = opts[:error_description].encoding
-                        response_body.encode(script_encoding, :invalid => :replace, :undef => :replace)
-                      else
-                        response_body
-                      end
+      error_string = if response_body.respond_to?(:encoding) && opts[:error_description].respond_to?(:encoding)
+                       script_encoding = opts[:error_description].encoding
+                       response_body.encode(script_encoding, :invalid => :replace, :undef => :replace)
+                     else
+                       response_body
+                     end
 
-      message << error_message
+      lines << error_string
 
-      message.join("\n")
+      lines.join("\n")
+    end
+
+    def parse_error_description(code, description)
+      return {} unless code || description
+
+      error_description = ''
+      error_description << "#{code}: " if code
+      error_description << description if description
+
+      {:error_description => error_description}
     end
   end
 end
