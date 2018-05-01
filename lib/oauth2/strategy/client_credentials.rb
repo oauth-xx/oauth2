@@ -17,6 +17,15 @@ module OAuth2
       # @param [Hash] opts options
       def get_token(params = {}, opts = {})
         params = params.merge('grant_type' => 'client_credentials')
+
+        request_body = opts.delete('auth_scheme') == 'request_body'
+        if request_body
+          params.merge!(client_params)
+        else
+          authorization_header = {'Authorization' => authorization(client_params['client_id'], client_params['client_secret'])}
+          params[:headers] = (params[:headers] || {}).merge(authorization_header)
+        end
+
         @client.get_token(params, opts.merge('refresh_token' => nil))
       end
     end
