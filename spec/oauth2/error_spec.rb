@@ -67,7 +67,7 @@ RSpec.describe OAuth2::Error do
           end
 
           it 'replaces them' do
-            expect(subject.message.include?("� invalid �")).to be_truthy
+            raise 'Invalid characters not replaced' unless subject.message.include?('� invalid �')
             # This will fail if {:invalid => replace} is not passed into `encode`
           end
         end
@@ -78,7 +78,7 @@ RSpec.describe OAuth2::Error do
           end
 
           it 'replaces them' do
-            expect(subject.message.include?("tea �")).to be_truthy
+            raise 'Undefined characters not replaced' unless subject.message.include?('tea �')
             # This will fail if {:undef => replace} is not passed into `encode`
           end
         end
