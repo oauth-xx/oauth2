@@ -63,12 +63,12 @@ RSpec.describe OAuth2::Error do
 
         context 'with invalid characters present' do
           before do
-            response_body.gsub!('failed', "\255 invalid \255")
+            response_body.gsub!('stout', "\255 invalid \255")
           end
 
           it 'replaces them' do
-            expect(subject.message).to match(/� invalid �/)
-            # This will fail with Encoding::InvalidByteSequenceError if {:invalid => replace} is not passed in
+            expect(subject.message.include?("� invalid �")).to be_truthy
+            # This will fail if {:invalid => replace} is not passed into `encode`
           end
         end
 
@@ -78,8 +78,8 @@ RSpec.describe OAuth2::Error do
           end
 
           it 'replaces them' do
-            expect(subject.message).to match(/tea �/)
-            # This will fail with Encoding::CompatibilityError if {:undef => replace} is not passed in
+            expect(subject.message.include?("tea �")).to be_truthy
+            # This will fail if {:undef => replace} is not passed into `encode`
           end
         end
       end
