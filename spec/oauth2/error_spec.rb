@@ -61,13 +61,26 @@ RSpec.describe OAuth2::Error do
       context 'when the response needs to be encoded' do
         let(:response_body) { MultiJson.encode(response_hash).force_encoding('ASCII-8BIT') }
 
-        before do
-          response_hash[:error_description] << ": 'A magical voyage of tea 🍵'"
+        context 'with invalid characters present' do
+          before do
+            response_body.gsub!('failed', "\255 invalid \255")
+          end
+
+          it 'replaces them' do
+            expect(subject.message).to match(/� invalid �/)
+            # This will fail with Encoding::InvalidByteSequenceError if {:invalid => replace} is not passed in
+          end
         end
 
-        it 'respects the encoding of the response body' do
-          expect(subject.message).to match(/🍵/)
-          # This will fail with Encoding::CompatibilityError if done incorrectly
+        context 'with undefined characters present' do
+          before do
+            response_hash[:error_description] << ": 'A magical voyage of tea 🍵'"
+          end
+
+          it 'replaces them' do
+            expect(subject.message).to match(/tea �/)
+            # This will fail with Encoding::CompatibilityError if {:undef => replace} is not passed in
+          end
         end
       end
 
@@ -118,7 +131,7 @@ RSpec.describe OAuth2::Error do
   context 'when the response does not parse to a hash' do
     let(:response_headers) { {'Content-Type' => 'text/html'} }
     let(:response_body) { '<!DOCTYPE html><html><head>Hello, I am a teapot</head><body></body></html>' }
-    
+
     before do
       expect(response.parsed).not_to be_a(Hash)
     end
