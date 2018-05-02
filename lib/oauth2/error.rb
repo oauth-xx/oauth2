@@ -25,7 +25,7 @@ module OAuth2
 
       lines << opts[:error_description] if opts[:error_description]
 
-      error_string = if response_body.respond_to?(:encoding) && opts[:error_description].respond_to?(:encoding)
+      error_string = if response_body.respond_to?(:encode) && opts[:error_description].respond_to?(:encoding)
                        script_encoding = opts[:error_description].encoding
                        response_body.encode(script_encoding, :invalid => :replace, :undef => :replace)
                      else
