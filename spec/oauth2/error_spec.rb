@@ -1,4 +1,5 @@
 # encoding: UTF-8
+
 RSpec.describe OAuth2::Error do
   let(:subject) { described_class.new(response) }
   let(:response) do
@@ -51,7 +52,7 @@ RSpec.describe OAuth2::Error do
       end
 
       it 'prepends to the error message with a return character' do
-        expect(subject.message.lines).to eq(
+        expect(subject.message.each_line.to_a).to eq(
           [
             'i_am_a_teapot: Short and stout' + "\n",
             '{"text":"Coffee brewing failed","error_description":"Short and stout","error":"i_am_a_teapot"}',
