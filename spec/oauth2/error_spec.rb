@@ -1,3 +1,4 @@
+# encoding: UTF-8
 RSpec.describe OAuth2::Error do
   let(:subject) { described_class.new(response) }
   let(:response) do
@@ -68,9 +69,9 @@ RSpec.describe OAuth2::Error do
 
           it 'replaces them' do
             # The skip can be removed once support for < 2.1 is dropped.
-            encoding_skip = {:versions => %w[1.8.7 1.9.3 2.0.0], :reason => 'encode/scrub only works as of Ruby 2.1'}
-            skip_for(encoding_skip.merge(:engine => 'ruby'))
-            skip_for(encoding_skip.merge(:engine => 'jruby'))
+            encoding = {:reason => 'encode/scrub only works as of Ruby 2.1'}
+            skip_for(encoding.merge(:engine => 'ruby', :versions => %w[1.8.7 1.9.3 2.0.0]))
+            skip_for(encoding.merge(:engine => 'jruby'))
             # See https://bibwild.wordpress.com/2013/03/12/removing-illegal-bytes-for-encoding-in-ruby-1-9-strings/
 
             raise 'Invalid characters not replaced' unless subject.message.include?('� invalid �')
