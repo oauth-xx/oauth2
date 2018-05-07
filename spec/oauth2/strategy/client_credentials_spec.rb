@@ -10,6 +10,7 @@ RSpec.describe OAuth2::Strategy::ClientCredentials do
         stub.post('/oauth/token', 'grant_type' => 'client_credentials') do |env|
           client_id, client_secret = Base64.decode64(env[:request_headers]['Authorization'].split(' ', 2)[1]).split(':', 2)
           client_id == 'abc' && client_secret == 'def' || raise(Faraday::Adapter::Test::Stubs::NotFound)
+          @last_headers = env[:request_headers]
           case @mode
           when 'formencoded'
             [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, kvform_token]
@@ -64,6 +65,17 @@ RSpec.describe OAuth2::Strategy::ClientCredentials do
           expect(@access.expires_at).not_to be_nil
         end
       end
+    end
+  end
+
+  describe '#get_token (with extra header parameters)' do
+    before do
+      @mode = 'json'
+      @access = subject.get_token(:headers => {'X-Extra-Header' => 'wow'})
+    end
+
+    it 'sends the header correctly.' do
+      expect(@last_headers['X-Extra-Header']).to eq('wow')
     end
   end
 end
