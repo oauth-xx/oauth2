@@ -9,6 +9,7 @@ group :test do
     gem 'rubocop-rspec', '~> 1.24.0'
   end
   gem 'pry', '~> 0.11' if ruby_version >= Gem::Version.new('2.0')
+  gem 'rspec-pending_for'
 end
 
 # Specify non-special dependencies in oauth2.gemspec

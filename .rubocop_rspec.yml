@@ -21,3 +21,6 @@ RSpec/InstanceVariable:
 
 RSpec/NestedGroups:
   Enabled: false
+  
+RSpec/ExpectInHook:
+  Enabled: false

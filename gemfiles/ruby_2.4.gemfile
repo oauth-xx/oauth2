@@ -7,6 +7,7 @@ end
 group :test do
   gem 'rake'
   gem 'rspec'
+  gem 'rspec-pending_for'
   gem 'rubocop', '~> 0.53.0'
   gem 'rubocop-rspec', '~> 1.24.0'
 end

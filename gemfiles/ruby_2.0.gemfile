@@ -9,6 +9,7 @@ end
 group :test do
   gem 'rake'
   gem 'rspec'
+  gem 'rspec-pending_for'
 end
 
 gemspec :path => '../'
