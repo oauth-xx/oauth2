@@ -1,6 +1,6 @@
 module OAuth2
   class AccessToken
-    attr_reader :client, :token, :expires_in, :expires_at, :params
+    attr_reader :client, :token, :expires_in, :expires_at, :params, :time_skew
     attr_accessor :options, :refresh_token, :response
 
     class << self
@@ -37,17 +37,27 @@ module OAuth2
     # @option opts [String] :header_format ('Bearer %s') the string format to use for the Authorization header
     # @option opts [String] :param_name ('access_token') the parameter name to use for transmission of the
     #    Access Token value in :body or :query transmission mode
-    def initialize(client, token, opts = {}) # rubocop:disable Metrics/AbcSize
+    def initialize(client, token, opts = {}) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      local_now = Time.now.to_i
+      opts = opts.dup
       @client = client
       @token = token.to_s
-      opts = opts.dup
+      @time_skew = 0
+
       [:refresh_token, :expires_in, :expires_at].each do |arg|
         instance_variable_set("@#{arg}", opts.delete(arg) || opts.delete(arg.to_s))
       end
+
       @expires_in ||= opts.delete('expires')
       @expires_in &&= @expires_in.to_i
       @expires_at &&= @expires_at.to_i
-      @expires_at ||= Time.now.to_i + @expires_in if @expires_in
+
+      if @expires_in
+        @expires_at ||= local_now + @expires_in
+        calculated_issued_at = @expires_at - @expires_in
+        @time_skew = local_now - calculated_issued_at
+      end
+
       @options = {:mode          => opts.delete(:mode) || :header,
                   :header_format => opts.delete(:header_format) || 'Bearer %s',
                   :param_name    => opts.delete(:param_name) || 'access_token'}
@@ -72,7 +82,7 @@ module OAuth2
     #
     # @return [Boolean]
     def expired?
-      expires? && (expires_at <= Time.now.to_i)
+      expires? && (expires_at + time_skew <= Time.now.to_i)
     end
 
     # Refreshes the current Access Token
