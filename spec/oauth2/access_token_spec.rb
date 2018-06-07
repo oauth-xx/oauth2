@@ -171,7 +171,7 @@ RSpec.describe AccessToken do
         let(:now) { Time.at(expires_at) + time_skew - 1 }
 
         it 'access is not expired' do
-          expect(access).to_not be_expired
+          expect(access).not_to be_expired
         end
       end
     end
