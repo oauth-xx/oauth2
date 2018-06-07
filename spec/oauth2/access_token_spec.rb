@@ -151,6 +151,30 @@ RSpec.describe AccessToken do
       allow(Time).to receive(:now).and_return(@now)
       expect(access).to be_expired
     end
+
+    describe 'time skew' do
+      let(:time_skew) { 10 }
+      let(:expires_in) { 300 }
+      let(:expires_at) { Time.now.to_i - 10 + expires_in }
+      let!(:access) { described_class.new(client, token, :refresh_token => 'abaca', :expires_at => expires_at, :expires_in => expires_in) }
+
+      context 'when not within time skew correction' do
+        let(:now) { Time.at(expires_at) + time_skew + 1 }
+
+        it 'access is expired' do
+          allow(Time).to receive(:now).and_return(now)
+          expect(access).to be_expired
+        end
+      end
+
+      context 'when within time skew correction' do
+        let(:now) { Time.at(expires_at) + time_skew - 1 }
+
+        it 'access is not expired' do
+          expect(access).to_not be_expired
+        end
+      end
+    end
   end
 
   describe '#refresh' do
