@@ -213,7 +213,7 @@ RSpec.describe AccessToken do
     let(:rsa_private) { OpenSSL::PKey::RSA.generate 2048 }
     let(:rsa_public) { rsa_private.public_key }
     let(:token_payload) do
-      Hash(
+      {
         'exp' => exp,
         'nbf' => 0,
         'iat' => now.to_i,
@@ -222,12 +222,12 @@ RSpec.describe AccessToken do
         'sub' => 'subject-identifier',
         'typ' => 'Bearer',
         'azp' => 'client-identifier'
-      )
+      }
     end
     let(:token) { @token ||= JWT.encode(token_payload, rsa_private, 'RS256') }
 
     let(:refresh_token_payload) do
-      Hash(
+      {
         'exp' => exp_refresh,
         'nbf' => 0,
         'iat' => refreshed_now.to_i,
@@ -236,7 +236,7 @@ RSpec.describe AccessToken do
         'sub' => 'subject-identifier',
         'typ' => 'Bearer',
         'azp' => 'client-identifier'
-      )
+      }
     end
     let(:refresh_token) { @refresh_token ||= JWT.encode(refresh_token_payload, rsa_private, 'RS256') }
 
