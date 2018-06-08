@@ -86,7 +86,7 @@ module OAuth2
     end
 
     # Determines the parser (a Proc or other Object which responds to #call)
-    # that will be passed the {#body} (and optionall {#response}) to supply
+    # that will be passed the {#body} (and optional {#response}) to supply
     # {#parsed}.
     #
     # The parser can be supplied as the +:parse+ option in the form of a Proc

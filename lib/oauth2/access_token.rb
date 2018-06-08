@@ -1,6 +1,6 @@
 module OAuth2
   class AccessToken
-    attr_reader :client, :token, :expires_in, :expires_at, :params, :time_skew
+    attr_reader :client, :token, :expires_in, :expires_at, :params, :token_payload, :time_skew
     attr_accessor :options, :refresh_token, :response
 
     class << self
@@ -37,12 +37,11 @@ module OAuth2
     # @option opts [String] :header_format ('Bearer %s') the string format to use for the Authorization header
     # @option opts [String] :param_name ('access_token') the parameter name to use for transmission of the
     #    Access Token value in :body or :query transmission mode
-    def initialize(client, token, opts = {}) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def initialize(client, token, opts = {}) # rubocop:disable Metrics/AbcSize
       local_now = Time.now.to_i
-      opts = opts.dup
       @client = client
       @token = token.to_s
-      @time_skew = 0
+      opts = opts.dup
 
       [:refresh_token, :expires_in, :expires_at].each do |arg|
         instance_variable_set("@#{arg}", opts.delete(arg) || opts.delete(arg.to_s))
@@ -51,12 +50,9 @@ module OAuth2
       @expires_in ||= opts.delete('expires')
       @expires_in &&= @expires_in.to_i
       @expires_at &&= @expires_at.to_i
-
-      if @expires_in
-        @expires_at ||= local_now + @expires_in
-        calculated_issued_at = @expires_at - @expires_in
-        @time_skew = local_now - calculated_issued_at
-      end
+      @expires_at ||= local_now + @expires_in if @expires_in
+      issued_at = token_payload.fetch('iat', nil)
+      @time_skew = issued_at ? local_now - issued_at : 0
 
       @options = {:mode          => opts.delete(:mode) || :header,
                   :header_format => opts.delete(:header_format) || 'Bearer %s',
@@ -158,6 +154,50 @@ module OAuth2
     # Get the headers hash (includes Authorization token)
     def headers
       {'Authorization' => options[:header_format] % token}
+    end
+
+    # For JWT tokens, this will store a Hash on the form
+    # {
+    #   "exp": exp,
+    #   "nbf": 0,
+    #   "iat": now.to_i,
+    #   "iss": "https://example.com/auth/realms/issuer",
+    #   "aud": "client-identifier",
+    #   "sub": "subject-identifier",
+    #   "typ": "Bearer",
+    #   "azp": "client-identifier"
+    # }
+    #
+    # For non-JWT tokens, an empty Hash is stored
+    #
+    # @return [Hash] a hash of token property values
+    def token_payload
+      @token_payload ||= decoded_token(:payload)
+    end
+
+    # A JWT token consists of three dot separated parts:
+    #   1) header
+    #   2) payload
+    #   3) verify_signature
+    #
+    # Some access tokens are not JWT tokens,
+    #   in which case nil is returned
+    def decoded_token(part)
+      token_chunks = token.split('.')
+      selected_chunk = case part
+      when :header
+        token_chunks.fetch(0)
+      when :payload
+        token_chunks.fetch(1)
+      when :verify_signature
+        token_chunks.fetch(2)
+      else
+        raise(ArgumentError, "#{part} is not a valid token chunk, valid arguments: [:header, :payload, :verify_signature]")
+      end
+
+      JSON Base64.decode64(selected_chunk)
+    rescue
+      {}
     end
 
   private
