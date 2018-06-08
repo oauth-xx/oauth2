@@ -1,5 +1,7 @@
 module OAuth2
   class AccessToken
+    MIN_VALIDITY = 30
+
     attr_reader :client, :token, :expires_in, :issued_at, :expires_at, :params, :time_skew
     attr_accessor :options, :refresh_token, :response
 
@@ -81,7 +83,7 @@ module OAuth2
     #
     # @return [Boolean]
     def expired?
-      expires? && (expires_at + time_skew <= Time.now.to_i)
+      expires? && (expires_at + time_skew - MIN_VALIDITY <= Time.now.to_i)
     end
 
     # Refreshes the current Access Token

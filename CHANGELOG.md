@@ -15,6 +15,7 @@ All notable changes to this project will be documented in this file.
 - Fix logging to `$stdout` of request and response bodies via Faraday's logger and `ENV["OAUTH_DEBUG"] == 'true'`
 - Read issued_at and expires_at from the token instead of using Time.now [#391]
 - Take clock skew into consideration when checking expired? [#391]
+- Take minimum validity into consideration when checking expired? [#391]
 
 ## [1.4.0] - 2017-06-09
 

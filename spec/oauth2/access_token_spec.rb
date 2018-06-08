@@ -152,25 +152,23 @@ RSpec.describe AccessToken do
       expect(access).to be_expired
     end
 
-    describe 'time skew' do
-      let(:time_skew) { 10 }
+    describe 'min validity' do
+      let(:old_now) { 1_528_454_438 }
       let(:expires_in) { 300 }
-      let(:expires_at) { Time.now.to_i - 10 + expires_in }
+      let(:expires_at) { 1_528_454_438 + expires_in }
       let!(:access) { described_class.new(client, token, :refresh_token => 'abaca', :expires_at => expires_at, :expires_in => expires_in) }
+      let(:now) { Time.at(expires_at) - AccessToken::MIN_VALIDITY }
 
-      context 'when not within time skew correction' do
-        let(:now) { Time.at(expires_at) + time_skew + 1 }
-
+      context 'when not within min validity correction' do
         it 'access is expired' do
           allow(Time).to receive(:now).and_return(now)
           expect(access).to be_expired
         end
       end
 
-      context 'when within time skew correction' do
-        let(:now) { Time.at(expires_at) + time_skew - 1 }
-
+      context 'when within min validity correction' do
         it 'access is not expired' do
+          allow(Time).to receive(:now).and_return(now - 1)
           expect(access).not_to be_expired
         end
       end
@@ -256,7 +254,7 @@ RSpec.describe AccessToken do
       end
 
       context 'when not within time skew correction' do
-        let(:local_now) { Time.at(exp) + time_skew + 1 }
+        let(:local_now) { Time.at(exp) + time_skew - AccessToken::MIN_VALIDITY }
 
         it 'access is expired' do
           allow(Time).to receive(:now).and_return(local_now)
@@ -265,7 +263,7 @@ RSpec.describe AccessToken do
       end
 
       context 'when within time skew correction' do
-        let(:local_now) { Time.at(exp) + time_skew - 1 }
+        let(:local_now) { Time.at(exp) + time_skew - AccessToken::MIN_VALIDITY - 1 }
 
         it 'access is not expired' do
           allow(Time).to receive(:now).and_return(local_now)

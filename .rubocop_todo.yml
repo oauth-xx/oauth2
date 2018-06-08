@@ -14,8 +14,5 @@ Style/EachWithObject:
 Style/ExpandPathArguments:
   Enabled: false
 
-Metrics/CyclomaticComplexity:
-  Max: 7
-
 Metrics/ClassLength:
-  Max: 104
+  Max: 105
