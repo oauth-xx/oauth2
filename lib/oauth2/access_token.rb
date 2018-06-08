@@ -1,6 +1,6 @@
 module OAuth2
   class AccessToken
-    attr_reader :client, :token, :expires_in, :expires_at, :params, :time_skew
+    attr_reader :client, :token, :expires_in, :issued_at, :expires_at, :params, :time_skew
     attr_accessor :options, :refresh_token, :response
 
     class << self
@@ -49,10 +49,13 @@ module OAuth2
 
       @expires_in ||= opts.delete('expires')
       @expires_in &&= @expires_in.to_i
+
+      @issued_at = token_payload.fetch('iat', local_now)
+      @expires_at ||= token_payload.fetch('exp', nil)
+
       @expires_at &&= @expires_at.to_i
-      @expires_at ||= local_now + @expires_in if @expires_in
-      issued_at = token_payload.fetch('iat', nil)
-      @time_skew = issued_at ? local_now - issued_at : 0
+      @expires_at ||= @issued_at + @expires_in if @expires_in
+      @time_skew = local_now - @issued_at
 
       @options = {:mode          => opts.delete(:mode) || :header,
                   :header_format => opts.delete(:header_format) || 'Bearer %s',
