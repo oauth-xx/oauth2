@@ -208,4 +208,74 @@ RSpec.describe AccessToken do
       expect(access_token.to_hash).to eq(hash)
     end
   end
+
+  context 'when token is a JWT token' do
+    let(:rsa_private) { OpenSSL::PKey::RSA.generate 2048 }
+    let(:rsa_public) { rsa_private.public_key }
+    let(:token_payload) do
+      Hash(
+        {
+          "exp": exp,
+          "nbf": 0,
+          "iat": now.to_i,
+          "iss": "https://example.com/auth/realms/issuer",
+          "aud": "client-identifier",
+          "sub": "subject-identifier",
+          "typ": "Bearer",
+          "azp": "client-identifier"
+        }
+      )
+    end
+    let(:token) { @token ||= JWT.encode(token_payload, rsa_private, 'RS256') }
+
+    let(:refresh_token_payload) do
+      Hash(
+        {
+          "exp": exp_refresh,
+          "nbf": 0,
+          "iat": refreshed_now.to_i,
+          "iss": "https://example.com/auth/realms/issuer",
+          "aud": "client-identifier",
+          "sub": "subject-identifier",
+          "typ": "Bearer",
+          "azp": "client-identifier"
+        }
+      )
+    end
+    let(:refresh_token) { @refresh_token ||= JWT.encode(refresh_token_payload, rsa_private, 'RS256') }
+
+    let(:now) { Time.now }
+    let(:exp) { now.to_i + 300 }
+    let(:exp_refresh) { refreshed_now.to_i + 300 }
+    let(:refreshed_now) { Time.now + 300 }
+
+    let(:refresh_body) { MultiJson.encode(:access_token => token, :expires_in => 600, :refresh_token => refresh_token) }
+
+    describe 'time skew' do
+      let(:time_skew) { 10 }
+      let!(:access) do
+        described_class.new(client, token, :expires_at => exp).tap do |access|
+          access.instance_variable_set(:@time_skew, time_skew)
+        end
+      end
+
+      context 'when not within time skew correction' do
+        let(:local_now) { Time.at(exp) + time_skew + 1 }
+
+        it 'access is expired' do
+          allow(Time).to receive(:now).and_return(local_now)
+          expect(access).to be_expired
+        end
+      end
+
+      context 'when within time skew correction' do
+        let(:local_now) { Time.at(exp) + time_skew - 1 }
+
+        it 'access is not expired' do
+          allow(Time).to receive(:now).and_return(local_now)
+          expect(access).to_not be_expired
+        end
+      end
+    end
+  end
 end
