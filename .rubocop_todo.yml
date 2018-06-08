@@ -18,4 +18,4 @@ Metrics/CyclomaticComplexity:
   Max: 7
 
 Metrics/ClassLength:
-  Max: 103
+  Max: 104

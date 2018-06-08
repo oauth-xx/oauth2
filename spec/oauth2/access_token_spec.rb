@@ -221,7 +221,7 @@ RSpec.describe AccessToken do
         'aud' => 'client-identifier',
         'sub' => 'subject-identifier',
         'typ' => 'Bearer',
-        'azp' => 'client-identifier'
+        'azp' => 'client-identifier',
       }
     end
     let(:token) { @token ||= JWT.encode(token_payload, rsa_private, 'RS256') }
@@ -235,7 +235,7 @@ RSpec.describe AccessToken do
         'aud' => 'client-identifier',
         'sub' => 'subject-identifier',
         'typ' => 'Bearer',
-        'azp' => 'client-identifier'
+        'azp' => 'client-identifier',
       }
     end
     let(:refresh_token) { @refresh_token ||= JWT.encode(refresh_token_payload, rsa_private, 'RS256') }
