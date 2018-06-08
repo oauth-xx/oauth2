@@ -1,6 +1,8 @@
 module OAuth2
   class AccessToken
-    attr_reader :client, :token, :expires_in, :expires_at, :params
+    MIN_VALIDITY = 30
+
+    attr_reader :client, :token, :expires_in, :issued_at, :expires_at, :params, :time_skew
     attr_accessor :options, :refresh_token, :response
 
     class << self
@@ -37,17 +39,26 @@ module OAuth2
     # @option opts [String] :header_format ('Bearer %s') the string format to use for the Authorization header
     # @option opts [String] :param_name ('access_token') the parameter name to use for transmission of the
     #    Access Token value in :body or :query transmission mode
-    def initialize(client, token, opts = {}) # rubocop:disable Metrics/AbcSize
+    def initialize(client, token, opts = {}) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+      local_now = Time.now.to_i
       @client = client
       @token = token.to_s
       opts = opts.dup
+
       [:refresh_token, :expires_in, :expires_at].each do |arg|
         instance_variable_set("@#{arg}", opts.delete(arg) || opts.delete(arg.to_s))
       end
+
       @expires_in ||= opts.delete('expires')
       @expires_in &&= @expires_in.to_i
+
+      @issued_at = token_payload.fetch('iat', local_now)
+      @expires_at ||= token_payload.fetch('exp', nil)
+
       @expires_at &&= @expires_at.to_i
-      @expires_at ||= Time.now.to_i + @expires_in if @expires_in
+      @expires_at ||= @issued_at + @expires_in if @expires_in
+      @time_skew = local_now - @issued_at
+
       @options = {:mode          => opts.delete(:mode) || :header,
                   :header_format => opts.delete(:header_format) || 'Bearer %s',
                   :param_name    => opts.delete(:param_name) || 'access_token'}
@@ -72,7 +83,7 @@ module OAuth2
     #
     # @return [Boolean]
     def expired?
-      expires? && (expires_at <= Time.now.to_i)
+      expires? && (expires_at + time_skew - MIN_VALIDITY <= Time.now.to_i)
     end
 
     # Refreshes the current Access Token
@@ -148,6 +159,39 @@ module OAuth2
     # Get the headers hash (includes Authorization token)
     def headers
       {'Authorization' => options[:header_format] % token}
+    end
+
+    # For JWT tokens, this will store a Hash on the form
+    # {
+    #   "exp": exp,
+    #   "nbf": 0,
+    #   "iat": now.to_i,
+    #   "iss": "https://example.com/auth/realms/issuer",
+    #   "aud": "client-identifier",
+    #   "sub": "subject-identifier",
+    #   "typ": "Bearer",
+    #   "azp": "client-identifier"
+    # }
+    #
+    #
+    # @return [Hash] a hash of token property values
+    def token_payload
+      @token_payload ||= decoded_payload
+    end
+
+    # A JWT token consists of three dot separated parts:
+    #   1) header
+    #   2) payload
+    #   3) verify_signature
+    #
+    # For non-JWT tokens, an empty Hash is returned
+    #
+    # @return [Hash] a hash of token property values
+    def decoded_payload
+      jwt_payload = token.split('.').fetch(1)
+      JSON Base64.decode64(jwt_payload)
+    rescue StandardError
+      {}
     end
 
   private

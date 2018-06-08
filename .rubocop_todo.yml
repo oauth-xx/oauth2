@@ -13,3 +13,6 @@ Style/EachWithObject:
 # Once we drop Rubies that lack support for __dir__ we can turn this on.
 Style/ExpandPathArguments:
   Enabled: false
+
+Metrics/ClassLength:
+  Max: 105

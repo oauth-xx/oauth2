@@ -151,6 +151,28 @@ RSpec.describe AccessToken do
       allow(Time).to receive(:now).and_return(@now)
       expect(access).to be_expired
     end
+
+    describe 'min validity' do
+      let(:old_now) { 1_528_454_438 }
+      let(:expires_in) { 300 }
+      let(:expires_at) { 1_528_454_438 + expires_in }
+      let!(:access) { described_class.new(client, token, :refresh_token => 'abaca', :expires_at => expires_at, :expires_in => expires_in) }
+      let(:now) { Time.at(expires_at) - AccessToken::MIN_VALIDITY }
+
+      context 'when not within min validity correction' do
+        it 'access is expired' do
+          allow(Time).to receive(:now).and_return(now)
+          expect(access).to be_expired
+        end
+      end
+
+      context 'when within min validity correction' do
+        it 'access is not expired' do
+          allow(Time).to receive(:now).and_return(now - 1)
+          expect(access).not_to be_expired
+        end
+      end
+    end
   end
 
   describe '#refresh' do
@@ -182,6 +204,72 @@ RSpec.describe AccessToken do
       hash = {:access_token => token, :refresh_token => 'foobar', :expires_at => Time.now.to_i + 200, 'foo' => 'bar'}
       access_token = described_class.from_hash(client, hash.clone)
       expect(access_token.to_hash).to eq(hash)
+    end
+  end
+
+  context 'when token is a JWT token' do
+    let(:rsa_private) { OpenSSL::PKey::RSA.generate 2048 }
+    let(:rsa_public) { rsa_private.public_key }
+    let(:token_payload) do
+      {
+        'exp' => exp,
+        'nbf' => 0,
+        'iat' => now.to_i,
+        'iss' => 'https://example.com/auth/realms/issuer',
+        'aud' => 'client-identifier',
+        'sub' => 'subject-identifier',
+        'typ' => 'Bearer',
+        'azp' => 'client-identifier',
+      }
+    end
+    let(:token) { @token ||= JWT.encode(token_payload, rsa_private, 'RS256') }
+
+    let(:refresh_token_payload) do
+      {
+        'exp' => exp_refresh,
+        'nbf' => 0,
+        'iat' => refreshed_now.to_i,
+        'iss' => 'https://example.com/auth/realms/issuer',
+        'aud' => 'client-identifier',
+        'sub' => 'subject-identifier',
+        'typ' => 'Bearer',
+        'azp' => 'client-identifier',
+      }
+    end
+    let(:refresh_token) { @refresh_token ||= JWT.encode(refresh_token_payload, rsa_private, 'RS256') }
+
+    let(:now) { Time.now }
+    let(:exp) { now.to_i + 300 }
+    let(:exp_refresh) { refreshed_now.to_i + 300 }
+    let(:refreshed_now) { Time.now + 300 }
+
+    let(:refresh_body) { MultiJson.encode(:access_token => token, :expires_in => 600, :refresh_token => refresh_token) }
+
+    describe 'time skew' do
+      let(:time_skew) { 10 }
+      let!(:access) do
+        described_class.new(client, token, :expires_at => exp).tap do |access|
+          access.instance_variable_set(:@time_skew, time_skew)
+        end
+      end
+
+      context 'when not within time skew correction' do
+        let(:local_now) { Time.at(exp) + time_skew - AccessToken::MIN_VALIDITY }
+
+        it 'access is expired' do
+          allow(Time).to receive(:now).and_return(local_now)
+          expect(access).to be_expired
+        end
+      end
+
+      context 'when within time skew correction' do
+        let(:local_now) { Time.at(exp) + time_skew - AccessToken::MIN_VALIDITY - 1 }
+
+        it 'access is not expired' do
+          allow(Time).to receive(:now).and_return(local_now)
+          expect(access).not_to be_expired
+        end
+      end
     end
   end
 end

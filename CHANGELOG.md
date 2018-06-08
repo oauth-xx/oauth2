@@ -1,4 +1,5 @@
 # Change Log
+
 All notable changes to this project will be documented in this file.
 
 ## [unreleased]
@@ -12,6 +13,9 @@ All notable changes to this project will be documented in this file.
 - _Dependency_: Upgrade Faraday to 0.13.x (@zacharywelch)
 - _Dependency_: Upgrade jwt to 2.x.x (@travisofthenorth)
 - Fix logging to `$stdout` of request and response bodies via Faraday's logger and `ENV["OAUTH_DEBUG"] == 'true'`
+- Read issued_at and expires_at from the token instead of using Time.now [#391]
+- Take clock skew into consideration when checking expired? [#391]
+- Take minimum validity into consideration when checking expired? [#391]
 
 ## [1.4.0] - 2017-06-09
 
@@ -49,14 +53,17 @@ All notable changes to this project will be documented in this file.
 ## [1.0.0] - 2014-07-09
 
 ### Added
+
 - Add an implementation of the MAC token spec.
 
 ### Fixed
+
 - Fix Base64.strict_encode64 incompatibility with Ruby 1.8.7.
 
 ## [0.5.0] - 2011-07-29
 
 ### Changed
+
 - [breaking] `oauth_token` renamed to `oauth_bearer`.
 - [breaking] `authorize_path` Client option renamed to `authorize_url`.
 - [breaking] `access_token_path` Client option renamed to `token_url`.
@@ -88,7 +95,6 @@ All notable changes to this project will be documented in this file.
 ## [0.0.5] - 2010-04-23
 
 ## [0.0.4] + [0.0.3] + [0.0.2] + [0.0.1] - 2010-04-22
-
 
 [0.0.1]: https://github.com/oauth-xx/oauth2/compare/311d9f4...v0.0.1
 [0.0.2]: https://github.com/oauth-xx/oauth2/compare/v0.0.1...v0.0.2
