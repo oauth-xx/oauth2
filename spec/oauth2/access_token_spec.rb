@@ -171,7 +171,7 @@ RSpec.describe AccessToken do
         let(:now) { Time.at(expires_at) + time_skew - 1 }
 
         it 'access is not expired' do
-          expect(access).to_not be_expired
+          expect(access).not_to be_expired
         end
       end
     end
@@ -214,32 +214,28 @@ RSpec.describe AccessToken do
     let(:rsa_public) { rsa_private.public_key }
     let(:token_payload) do
       Hash(
-        {
-          "exp": exp,
-          "nbf": 0,
-          "iat": now.to_i,
-          "iss": "https://example.com/auth/realms/issuer",
-          "aud": "client-identifier",
-          "sub": "subject-identifier",
-          "typ": "Bearer",
-          "azp": "client-identifier"
-        }
+        'exp' => exp,
+        'nbf' => 0,
+        'iat' => now.to_i,
+        'iss' => 'https://example.com/auth/realms/issuer',
+        'aud' => 'client-identifier',
+        'sub' => 'subject-identifier',
+        'typ' => 'Bearer',
+        'azp' => 'client-identifier'
       )
     end
     let(:token) { @token ||= JWT.encode(token_payload, rsa_private, 'RS256') }
 
     let(:refresh_token_payload) do
       Hash(
-        {
-          "exp": exp_refresh,
-          "nbf": 0,
-          "iat": refreshed_now.to_i,
-          "iss": "https://example.com/auth/realms/issuer",
-          "aud": "client-identifier",
-          "sub": "subject-identifier",
-          "typ": "Bearer",
-          "azp": "client-identifier"
-        }
+        'exp' => exp_refresh,
+        'nbf' => 0,
+        'iat' => refreshed_now.to_i,
+        'iss' => 'https://example.com/auth/realms/issuer',
+        'aud' => 'client-identifier',
+        'sub' => 'subject-identifier',
+        'typ' => 'Bearer',
+        'azp' => 'client-identifier'
       )
     end
     let(:refresh_token) { @refresh_token ||= JWT.encode(refresh_token_payload, rsa_private, 'RS256') }
@@ -273,7 +269,7 @@ RSpec.describe AccessToken do
 
         it 'access is not expired' do
           allow(Time).to receive(:now).and_return(local_now)
-          expect(access).to_not be_expired
+          expect(access).not_to be_expired
         end
       end
     end

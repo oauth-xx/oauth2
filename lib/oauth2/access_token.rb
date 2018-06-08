@@ -172,7 +172,7 @@ module OAuth2
     #
     # @return [Hash] a hash of token property values
     def token_payload
-      @token_payload ||= decoded_token(:payload)
+      @token_payload ||= decoded_payload
     end
 
     # A JWT token consists of three dot separated parts:
@@ -180,23 +180,11 @@ module OAuth2
     #   2) payload
     #   3) verify_signature
     #
-    # Some access tokens are not JWT tokens,
-    #   in which case nil is returned
-    def decoded_token(part)
-      token_chunks = token.split('.')
-      selected_chunk = case part
-      when :header
-        token_chunks.fetch(0)
-      when :payload
-        token_chunks.fetch(1)
-      when :verify_signature
-        token_chunks.fetch(2)
-      else
-        raise(ArgumentError, "#{part} is not a valid token chunk, valid arguments: [:header, :payload, :verify_signature]")
-      end
-
-      JSON Base64.decode64(selected_chunk)
-    rescue
+    # @return [Hash] a hash of token property values
+    def decoded_payload
+      jwt_payload = token.split('.').fetch(1)
+      JSON Base64.decode64(jwt_payload)
+    rescue StandardError
       {}
     end
 
