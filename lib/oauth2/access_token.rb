@@ -37,7 +37,7 @@ module OAuth2
     # @option opts [String] :header_format ('Bearer %s') the string format to use for the Authorization header
     # @option opts [String] :param_name ('access_token') the parameter name to use for transmission of the
     #    Access Token value in :body or :query transmission mode
-    def initialize(client, token, opts = {}) # rubocop:disable Metrics/AbcSize
+    def initialize(client, token, opts = {}) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       local_now = Time.now.to_i
       @client = client
       @token = token.to_s
@@ -168,7 +168,6 @@ module OAuth2
     #   "azp": "client-identifier"
     # }
     #
-    # For non-JWT tokens, an empty Hash is stored
     #
     # @return [Hash] a hash of token property values
     def token_payload
@@ -179,6 +178,8 @@ module OAuth2
     #   1) header
     #   2) payload
     #   3) verify_signature
+    #
+    # For non-JWT tokens, an empty Hash is returned
     #
     # @return [Hash] a hash of token property values
     def decoded_payload
