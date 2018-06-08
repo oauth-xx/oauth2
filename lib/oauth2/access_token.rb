@@ -1,6 +1,6 @@
 module OAuth2
   class AccessToken
-    attr_reader :client, :token, :expires_in, :expires_at, :params, :token_payload, :time_skew
+    attr_reader :client, :token, :expires_in, :expires_at, :params, :time_skew
     attr_accessor :options, :refresh_token, :response
 
     class << self
