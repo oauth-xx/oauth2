@@ -1,5 +1,6 @@
 module OAuth2
   class AccessToken
+    REDUCE_VALIDITY = 10
     attr_reader :client, :token, :expires_in, :expires_at, :params
     attr_accessor :options, :refresh_token, :response
 
@@ -69,10 +70,12 @@ module OAuth2
     end
 
     # Whether or not the token is expired
+    # - The client will expire the token REDUCE_VALIDITY seconds
+    #   prematurely to offset latency issues
     #
     # @return [Boolean]
     def expired?
-      expires? && (expires_at <= Time.now.to_i)
+      expires? && (expires_at - REDUCE_VALIDITY <= Time.now.to_i)
     end
 
     # Refreshes the current Access Token
