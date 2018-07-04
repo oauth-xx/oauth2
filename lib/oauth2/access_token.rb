@@ -50,7 +50,7 @@ module OAuth2
       @expires_in &&= @expires_in.to_i
       @expires_at &&= @expires_at.to_i
       @expires_latency &&= @expires_latency.to_i
-      @expires_at ||= Time.now.to_i + @expires_in if @expires_in
+      @expires_at ||= Time.now.to_i + @expires_in - @expires_latency if @expires_in
       @options = {:mode          => opts.delete(:mode) || :header,
                   :header_format => opts.delete(:header_format) || 'Bearer %s',
                   :param_name    => opts.delete(:param_name) || 'access_token'}
@@ -72,12 +72,10 @@ module OAuth2
     end
 
     # Whether or not the token is expired
-    # - The client will expire the token expires_latency seconds
-    #   prematurely to offset latency issues
     #
     # @return [Boolean]
     def expired?
-      expires? && (expires_at - expires_latency <= Time.now.to_i)
+      expires? && (expires_at <= Time.now.to_i)
     end
 
     # Refreshes the current Access Token
