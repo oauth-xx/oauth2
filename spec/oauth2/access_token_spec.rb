@@ -75,6 +75,13 @@ RSpec.describe AccessToken do
       assert_initialized_token(target)
       expect(target.expires_at).to be_a(Integer)
     end
+
+    it 'initializes with a string expires_latency' do
+      hash = {:access_token => token, :expires_at => '1361396829', :expires_latency => '10', 'foo' => 'bar'}
+      target = described_class.from_hash(client, hash)
+      assert_initialized_token(target)
+      expect(target.expires_latency).to be_a(Integer)
+    end
   end
 
   describe '#request' do
