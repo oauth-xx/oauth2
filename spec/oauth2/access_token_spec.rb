@@ -84,16 +84,16 @@ RSpec.describe AccessToken do
       end
 
       it 'sets it 0 by default' do
-        hash = {:access_token => token, expires_in: 100}
+        hash = {:access_token => token, :expires_in => 100}
         target = described_class.from_hash(client, hash)
         expect(target.expires_latency).to eq 0
       end
 
       it 'reduces expires_at by the given amount' do
-        allow(Time).to receive(:now).and_return(1530000000)
-        hash = {:access_token => token, :expires_latency => 10, expires_in: 100}
+        allow(Time).to receive(:now).and_return(1_530_000_000)
+        hash = {:access_token => token, :expires_latency => 10, :expires_in => 100}
         target = described_class.from_hash(client, hash)
-        expect(target.expires_at).to eq 1530000090
+        expect(target.expires_at).to eq 1_530_000_090
       end
     end
   end
