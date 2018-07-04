@@ -76,11 +76,25 @@ RSpec.describe AccessToken do
       expect(target.expires_at).to be_a(Integer)
     end
 
-    it 'initializes with a string expires_latency' do
-      hash = {:access_token => token, :expires_at => '1361396829', :expires_latency => '10', 'foo' => 'bar'}
-      target = described_class.from_hash(client, hash)
-      assert_initialized_token(target)
-      expect(target.expires_latency).to be_a(Integer)
+    describe 'expires_latency' do
+      it 'sets it via options' do
+        hash = {:access_token => token, :expires_latency => '10'}
+        target = described_class.from_hash(client, hash)
+        expect(target.expires_latency).to eq 10
+      end
+
+      it 'sets it 0 by default' do
+        hash = {:access_token => token, expires_in: 100}
+        target = described_class.from_hash(client, hash)
+        expect(target.expires_latency).to eq 0
+      end
+
+      it 'reduces expires_at by the given amount' do
+        allow(Time).to receive(:now).and_return(1530000000)
+        hash = {:access_token => token, :expires_latency => 10, expires_in: 100}
+        target = described_class.from_hash(client, hash)
+        expect(target.expires_at).to eq 1530000090
+      end
     end
   end
 
