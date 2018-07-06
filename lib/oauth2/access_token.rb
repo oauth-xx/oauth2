@@ -38,19 +38,21 @@ module OAuth2
     # @option opts [String] :header_format ('Bearer %s') the string format to use for the Authorization header
     # @option opts [String] :param_name ('access_token') the parameter name to use for transmission of the
     #    Access Token value in :body or :query transmission mode
-    def initialize(client, token, opts = {}) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def initialize(client, token, opts = {}) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
       @client = client
       @token = token.to_s
       opts = opts.dup
       [:refresh_token, :expires_in, :expires_at, :expires_latency].each do |arg|
         instance_variable_set("@#{arg}", opts.delete(arg) || opts.delete(arg.to_s))
       end
-      @expires_latency ||= 0
       @expires_in ||= opts.delete('expires')
       @expires_in &&= @expires_in.to_i
       @expires_at &&= @expires_at.to_i
       @expires_latency &&= @expires_latency.to_i
-      @expires_at ||= Time.now.to_i + @expires_in - @expires_latency if @expires_in
+      if @expires_in
+        @expires_at ||= Time.now.to_i + @expires_in
+        @expires_at -= @expires_latency if @expires_latency
+      end
       @options = {:mode          => opts.delete(:mode) || :header,
                   :header_format => opts.delete(:header_format) || 'Bearer %s',
                   :param_name    => opts.delete(:param_name) || 'access_token'}
