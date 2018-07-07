@@ -90,7 +90,7 @@ RSpec.describe AccessToken do
 
       it 'sets it via options' do
         target = described_class.from_hash(client, hash.merge(:expires_latency => expires_latency.to_s))
-        expect(target.expires_latency).to eq 10
+        expect(target.expires_latency).to eq expires_latency
       end
 
       it 'sets it nil by default' do

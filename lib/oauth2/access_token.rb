@@ -49,10 +49,8 @@ module OAuth2
       @expires_in &&= @expires_in.to_i
       @expires_at &&= @expires_at.to_i
       @expires_latency &&= @expires_latency.to_i
-      if @expires_in
-        @expires_at ||= Time.now.to_i + @expires_in
-        @expires_at -= @expires_latency if @expires_latency
-      end
+      @expires_at ||= Time.now.to_i + @expires_in if @expires_in
+      @expires_at -= @expires_latency if @expires_latency
       @options = {:mode          => opts.delete(:mode) || :header,
                   :header_format => opts.delete(:header_format) || 'Bearer %s',
                   :param_name    => opts.delete(:param_name) || 'access_token'}
