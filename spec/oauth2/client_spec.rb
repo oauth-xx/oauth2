@@ -248,7 +248,7 @@ RSpec.describe OAuth2::Client do
           subject.request(:get, '/success')
         end
 
-        expect(output).to include 'INFO -- : get https://api.example.com/success', 'INFO -- : get https://api.example.com/success'
+        expect(output).to include 'INFO -- request: GET https://api.example.com/success'
       end
     end
 
