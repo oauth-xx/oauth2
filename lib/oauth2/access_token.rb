@@ -1,6 +1,6 @@
 module OAuth2
   class AccessToken
-    attr_reader :client, :token, :expires_in, :expires_at, :params
+    attr_reader :client, :token, :expires_in, :expires_at, :expires_latency, :params
     attr_accessor :options, :refresh_token, :response
 
     class << self
@@ -32,22 +32,25 @@ module OAuth2
     # @option opts [String] :refresh_token (nil) the refresh_token value
     # @option opts [FixNum, String] :expires_in (nil) the number of seconds in which the AccessToken will expire
     # @option opts [FixNum, String] :expires_at (nil) the epoch time in seconds in which AccessToken will expire
+    # @option opts [FixNum, String] :expires_latency (nil) the number of seconds by which AccessToken validity will be reduced to offset latency
     # @option opts [Symbol] :mode (:header) the transmission mode of the Access Token parameter value
     #    one of :header, :body or :query
     # @option opts [String] :header_format ('Bearer %s') the string format to use for the Authorization header
     # @option opts [String] :param_name ('access_token') the parameter name to use for transmission of the
     #    Access Token value in :body or :query transmission mode
-    def initialize(client, token, opts = {}) # rubocop:disable Metrics/AbcSize
+    def initialize(client, token, opts = {}) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
       @client = client
       @token = token.to_s
       opts = opts.dup
-      [:refresh_token, :expires_in, :expires_at].each do |arg|
+      [:refresh_token, :expires_in, :expires_at, :expires_latency].each do |arg|
         instance_variable_set("@#{arg}", opts.delete(arg) || opts.delete(arg.to_s))
       end
       @expires_in ||= opts.delete('expires')
       @expires_in &&= @expires_in.to_i
       @expires_at &&= @expires_at.to_i
+      @expires_latency &&= @expires_latency.to_i
       @expires_at ||= Time.now.to_i + @expires_in if @expires_in
+      @expires_at -= @expires_latency if @expires_latency
       @options = {:mode          => opts.delete(:mode) || :header,
                   :header_format => opts.delete(:header_format) || 'Bearer %s',
                   :param_name    => opts.delete(:param_name) || 'access_token'}

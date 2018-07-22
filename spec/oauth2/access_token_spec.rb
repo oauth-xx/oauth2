@@ -75,6 +75,41 @@ RSpec.describe AccessToken do
       assert_initialized_token(target)
       expect(target.expires_at).to be_a(Integer)
     end
+
+    describe 'expires_latency' do
+      let(:expires_at) { 1_530_000_000 }
+      let(:expires_in) { 100 }
+      let(:expires_latency) { 10 }
+      let(:hash) do
+        {
+          :access_token => token,
+          :expires_latency => expires_latency,
+          :expires_in => expires_in,
+        }
+      end
+
+      it 'sets it via options' do
+        target = described_class.from_hash(client, hash.merge(:expires_latency => expires_latency.to_s))
+        expect(target.expires_latency).to eq expires_latency
+      end
+
+      it 'sets it nil by default' do
+        hash.delete(:expires_latency)
+        target = described_class.from_hash(client, hash)
+        expect(target.expires_latency).to be_nil
+      end
+
+      it 'reduces expires_at by the given amount' do
+        allow(Time).to receive(:now).and_return(expires_at)
+        target = described_class.from_hash(client, hash)
+        expect(target.expires_at).to eq(expires_at + expires_in - expires_latency)
+      end
+
+      it 'reduces expires_at by the given amount if expires_at is provided as option' do
+        target = described_class.from_hash(client, hash.merge(:expires_at => expires_at))
+        expect(target.expires_at).to eq(expires_at - expires_latency)
+      end
+    end
   end
 
   describe '#request' do
