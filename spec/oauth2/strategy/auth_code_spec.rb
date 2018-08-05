@@ -7,6 +7,7 @@ RSpec.describe OAuth2::Strategy::AuthCode do
   let(:kvform_token) { 'expires_in=600&access_token=salmon&refresh_token=trout&extra_param=steve' }
   let(:facebook_token) { kvform_token.gsub('_in', '') }
   let(:json_token) { MultiJson.encode(:expires_in => 600, :access_token => 'salmon', :refresh_token => 'trout', :extra_param => 'steve') }
+  let(:redirect_uri) { 'http://example.com/redirect_uri' }
 
   let(:client) do
     OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com') do |builder|
@@ -31,6 +32,9 @@ RSpec.describe OAuth2::Strategy::AuthCode do
             [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, facebook_token]
           end
         end
+        stub.post('/oauth/token', 'client_id' => 'abc', 'client_secret' => 'def', 'code' => 'sushi', 'grant_type' => 'authorization_code', 'redirect_uri' => redirect_uri) do |env|
+          [200, {'Content-Type' => 'application/json'}, json_token]
+        end
       end
     end
   end
@@ -47,6 +51,19 @@ RSpec.describe OAuth2::Strategy::AuthCode do
     it 'includes passed in options' do
       cb = 'http://myserver.local/oauth/callback'
       expect(subject.authorize_url(:redirect_uri => cb)).to include("redirect_uri=#{CGI.escape(cb)}")
+    end
+  end
+
+  describe '#get_token (with dynamic redirect_uri)' do
+    before do
+      @mode = 'json'
+      client.options[:token_method] = :post
+      client.options[:auth_scheme] = :request_body
+      client.options[:redirect_uri] = redirect_uri
+    end
+
+    it 'includes redirect_uri once in the request parameters' do
+      expect { subject.get_token(code, :redirect_uri => redirect_uri) }.not_to raise_error
     end
   end
 
