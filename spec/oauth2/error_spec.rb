@@ -157,4 +157,10 @@ RSpec.describe OAuth2::Error do
       expect(subject.description).to be_nil
     end
   end
+  
+  describe 'encoding as json' do
+    it 'does not blow up' do
+      expect(subject.to_json).to match /Coffee brewing failed/
+    end
+  end
 end
