@@ -38,6 +38,18 @@ RSpec.describe OAuth2::Response do
     end
   end
 
+  describe '#content_type' do
+    let(:response) { double('response', :headers => headers, :status => 200, :body => 'baz') }
+
+    context 'when blank' do
+      let(:headers) { nil }
+
+      it 'returns nil' do
+        expect(described_class.new(response).content_type).to be_nil
+      end
+    end
+  end
+
   describe '#parsed' do
     it 'parses application/x-www-form-urlencoded body' do
       headers = {'Content-Type' => 'application/x-www-form-urlencoded'}

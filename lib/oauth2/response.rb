@@ -82,6 +82,7 @@ module OAuth2
 
     # Attempts to determine the content type of the response.
     def content_type
+      return nil unless response.headers
       ((response.headers.values_at('content-type', 'Content-Type').compact.first || '').split(';').first || '').strip
     end
 
