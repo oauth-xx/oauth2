@@ -311,10 +311,11 @@ RSpec.describe OAuth2::Client do
       end
     end
 
-    it 'provides the response body in the Exception' do
+    it 'provides the response in the Exception' do
       begin
         subject.request(:get, '/error')
       rescue StandardError => e
+        expect(e.response).not_to be_nil
         expect(e.to_s).to match(/unknown error/)
       end
     end

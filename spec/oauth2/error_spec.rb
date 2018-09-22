@@ -21,6 +21,11 @@ RSpec.describe OAuth2::Error do
     expect(response.error).to equal(error)
   end
 
+  it 'sets the response object to #response on self' do
+    error = described_class.new(response)
+    expect(error.response).to equal(response)
+  end
+
   describe 'attr_readers' do
     it 'has code' do
       expect(subject).to respond_to(:code)
@@ -28,6 +33,10 @@ RSpec.describe OAuth2::Error do
 
     it 'has description' do
       expect(subject).to respond_to(:description)
+    end
+
+    it 'has response' do
+      expect(subject).to respond_to(:response)
     end
   end
 
@@ -148,9 +157,10 @@ RSpec.describe OAuth2::Error do
     end
   end
 
-  describe 'converting to json' do
+  describe 'parsing json' do
     it 'does not blow up' do
       expect { subject.to_json }.not_to raise_error
+      expect { subject.response.to_json }.not_to raise_error
     end
   end
 end

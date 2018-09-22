@@ -115,6 +115,7 @@ module OAuth2
       when 400..599
         error = Error.new(response)
         raise(error) if opts.fetch(:raise_errors, options[:raise_errors])
+        response.error = error
         response
       else
         error = Error.new(response)
