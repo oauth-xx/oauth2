@@ -284,7 +284,6 @@ RSpec.describe OAuth2::Client do
 
       expect(response.status).to eq(401)
       expect(response.headers).to eq('Content-Type' => 'application/json')
-      expect(response.error).not_to be_nil
     end
 
     %w[/unauthorized /conflict /error /different_encoding /ascii_8bit_encoding].each do |error_path|
@@ -315,7 +314,7 @@ RSpec.describe OAuth2::Client do
       begin
         subject.request(:get, '/error')
       rescue StandardError => e
-        expect(e.response).not_to be_nil
+        expect(e.response).to be_a(OAuth2::Response)
         expect(e.to_s).to match(/unknown error/)
       end
     end

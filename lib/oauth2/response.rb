@@ -6,7 +6,7 @@ module OAuth2
   # OAuth2::Response class
   class Response
     attr_reader :response
-    attr_accessor :error, :options
+    attr_accessor :options
 
     # Procs that, when called, will parse a response body according
     # to the specified format.

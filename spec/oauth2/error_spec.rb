@@ -15,12 +15,6 @@ RSpec.describe OAuth2::Error do
   let(:response_headers) { {'Content-Type' => 'application/json'} }
   let(:response_body) { {:text => 'Coffee brewing failed'}.to_json }
 
-  it 'sets self to #error on the response object' do
-    expect(response.error).to be_nil
-    error = described_class.new(response)
-    expect(response.error).to equal(error)
-  end
-
   it 'sets the response object to #response on self' do
     error = described_class.new(response)
     expect(error.response).to equal(response)

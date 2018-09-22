@@ -199,10 +199,6 @@ RSpec.describe OAuth2::Response do
   end
 
   describe 'converting to json' do
-    before do
-      OAuth2::Error.new(subject)
-    end
-
     it 'does not blow up' do
       expect { subject.to_json }.not_to raise_error
     end
