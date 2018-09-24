@@ -5,7 +5,6 @@ module OAuth2
     # standard error codes include:
     # 'invalid_request', 'invalid_client', 'invalid_token', 'invalid_grant', 'unsupported_grant_type', 'invalid_scope'
     def initialize(response)
-      response.error = self
       @response = response
       message_opts = {}
 

@@ -3,24 +3,17 @@
 RSpec.describe OAuth2::Error do
   let(:subject) { described_class.new(response) }
   let(:response) do
-    fake_response = double(
-      'response',
+    raw_response = Faraday::Response.new(
       :status => 418,
-      :headers => response_headers,
+      :response_headers => response_headers,
       :body => response_body
     )
 
-    OAuth2::Response.new(fake_response)
+    OAuth2::Response.new(raw_response)
   end
 
   let(:response_headers) { {'Content-Type' => 'application/json'} }
   let(:response_body) { {:text => 'Coffee brewing failed'}.to_json }
-
-  it 'sets self to #error on the response object' do
-    expect(response.error).to be_nil
-    error = described_class.new(response)
-    expect(response.error).to equal(error)
-  end
 
   it 'sets the response object to #response on self' do
     error = described_class.new(response)
@@ -155,6 +148,13 @@ RSpec.describe OAuth2::Error do
 
     it 'does not set description' do
       expect(subject.description).to be_nil
+    end
+  end
+
+  describe 'parsing json' do
+    it 'does not blow up' do
+      expect { subject.to_json }.not_to raise_error
+      expect { subject.response.to_json }.not_to raise_error
     end
   end
 end
