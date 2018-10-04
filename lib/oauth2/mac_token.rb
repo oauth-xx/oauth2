@@ -88,7 +88,7 @@ module OAuth2
         '', nil
       ].join("\n")
 
-      strict_encode64(OpenSSL::HMAC.digest(@algorithm, secret, signature))
+      Base64.strict_encode64(OpenSSL::HMAC.digest(@algorithm, secret, signature))
     end
 
     # Set the HMAC algorithm
@@ -112,11 +112,6 @@ module OAuth2
     # No-op since we need the verb and path
     # and the MAC always goes in a header
     def token=(_noop)
-    end
-
-    # Base64.strict_encode64 is not available on Ruby 1.8.7
-    def strict_encode64(str)
-      Base64.encode64(str).delete("\n")
     end
   end
 end
