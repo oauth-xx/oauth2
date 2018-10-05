@@ -27,6 +27,7 @@ If you need the readme for a released version of the gem please find it below:
 [![Open Source Helpers](https://www.codetriage.com/oauth-xx/oauth2/badges/users.svg)][code-triage]
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)][source-license]
 [![Documentation](http://inch-ci.org/github/oauth-xx/oauth2.png)][inch-ci]
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2.svg?type=shield)][fossa1]
 
 [gem]: https://rubygems.org/gems/oauth2
 [travis]: http://travis-ci.org/oauth-xx/oauth2
@@ -36,6 +37,7 @@ If you need the readme for a released version of the gem please find it below:
 [source-license]: https://opensource.org/licenses/MIT
 [inch-ci]: http://inch-ci.org/github/oauth-xx/oauth2
 [code-triage]: https://www.codetriage.com/oauth-xx/oauth2
+[fossa1]: https://app.fossa.io/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2?ref=badge_shield
 
 ### Oauth2 gem is looking for additional maintainers. See [#307](https://github.com/oauth-xx/oauth2/issues/307).
 
@@ -225,8 +227,11 @@ spec.add_dependency 'oauth2', '~> 1.4'
 - Copyright (c) 2017-2018 [oauth-xx organization][oauth-xx]
 - See [LICENSE][license] for details.
 
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2.svg?type=large)][fossa2]
+
 [license]: LICENSE
 [oauth-xx]: https://github.com/oauth-xx
+[fossa2]: https://app.fossa.io/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2?ref=badge_large
 
 ## Development
 
