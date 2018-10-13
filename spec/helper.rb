@@ -9,7 +9,7 @@ SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter[
 
 SimpleCov.start do
   add_filter '/spec'
-  minimum_coverage(95.33)
+  minimum_coverage(95)
 end
 
 require 'addressable/uri'

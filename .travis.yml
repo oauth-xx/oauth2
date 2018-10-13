@@ -6,10 +6,6 @@ bundler_args: --no-deployment --jobs 3 --retry 3
 
 cache: bundler
 
-env:
-  global:
-    - JRUBY_OPTS="$JRUBY_OPTS -Xcli.debug=true --debug"
-
 language: ruby
 
 matrix:
@@ -19,7 +15,7 @@ matrix:
     - rvm: rbx-3
   fast_finish: true
   include:
-    - rvm: jruby-1.7.27
+    - rvm: jruby-1.7.27 # targets MRI v1.9
       gemfile: gemfiles/jruby_1.7.gemfile
     - rvm: 1.9.3-p551
       gemfile: gemfiles/ruby_1.9.gemfile
@@ -27,23 +23,25 @@ matrix:
       gemfile: gemfiles/ruby_2.0.gemfile
     - rvm: 2.1.10
       gemfile: gemfiles/ruby_2.1.gemfile
-    - rvm: jruby-9.0.5.0
+    - rvm: jruby-9.0.5.0 # targets MRI v2.0
       gemfile: gemfiles/jruby_9.0.gemfile
     # DEPRECATION WARNING
     # oauth2 1.x series releases are the last to support Ruby versions above
     # oauth2 2.x series releases will support Ruby versions below, and not above
-    - rvm: jruby-9.1.15.0
+    - rvm: jruby-9.1.9.0 # targets MRI v2.3
       gemfile: gemfiles/jruby_9.1.gemfile
-    - rvm: 2.2.9
+    - rvm: 2.2.10
       gemfile: gemfiles/ruby_2.2.gemfile
-    - rvm: 2.3.6
+    - rvm: 2.3.7
       gemfile: gemfiles/ruby_2.3.gemfile
-    - rvm: 2.4.3
+    - rvm: 2.4.4
       gemfile: gemfiles/ruby_2.4.gemfile
-    - rvm: 2.5.0
+    - rvm: jruby-9.2.0.0 # targets MRI v2.5
+      gemfile: gemfiles/jruby_9.2.gemfile
+    - rvm: 2.5.1
       gemfile: gemfiles/ruby_2.5.gemfile
     - rvm: jruby-head
-      gemfile: gemfiles/jruby-head.gemfile
+      gemfile: gemfiles/jruby_head.gemfile
     - rvm: ruby-head
       gemfile: gemfiles/ruby_head.gemfile
     - rvm: rbx-3
