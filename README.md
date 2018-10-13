@@ -3,7 +3,7 @@
 [![Gem Version](http://img.shields.io/gem/v/oauth2.svg)][gem]
 [![Total Downloads](https://img.shields.io/gem/dt/oauth2.svg)][gem]
 [![Downloads Today](https://img.shields.io/gem/rt/oauth2.svg)][gem]
-[![Build Status](http://img.shields.io/travis/oauth-xx/oauth2.svg)][travis]
+[![Build Status](https://travis-ci.org/oauth-xx/oauth2.svg?branch=1-4-stable)][travis]
 [![Coverage Status](http://img.shields.io/coveralls/intridea/oauth2.svg)][coveralls]
 [![Maintainability](https://api.codeclimate.com/v1/badges/688c612528ff90a46955/maintainability)][codeclimate-maintainability]
 [![Depfu](https://badges.depfu.com/badges/6d34dc1ba682bbdf9ae2a97848241743/count.svg)][depfu]
