@@ -13,6 +13,7 @@ matrix:
     - rvm: jruby-head
     - rvm: ruby-head
     - rvm: rbx-3
+    - rvm: jruby-1.7.27
   fast_finish: true
   include:
     - rvm: jruby-1.7.27 # targets MRI v1.9

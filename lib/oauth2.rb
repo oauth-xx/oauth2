@@ -1,5 +1,6 @@
 # includes modules from stdlib
 require 'cgi'
+require 'time'
 
 # includes gem files
 require 'oauth2/error'
