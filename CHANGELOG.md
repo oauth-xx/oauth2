@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file.
 - [#418](oauth-xx/oauth2#418) - remove rubocop (temporary) (@pboling)
 - [#419](oauth-xx/oauth2#419) - update faraday dependency (@pboling)
 - [#420](oauth-xx/oauth2#420) - update gemspec (@pboling)
+- [#421](oauth-xx/oauth2#421) - fix [CHANGELOG](CHANGELOG.md) for previous releases (@pboling)
 
 ## [1.4.0] - 2017-06-09
 
