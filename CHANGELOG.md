@@ -3,11 +3,17 @@ All notable changes to this project will be documented in this file.
 
 ## [unreleased]
 
-- [#417](oauth-xx/oauth2#417) - update jwt (@thewoolleyman)
-- [#418](oauth-xx/oauth2#418) - remove rubocop (temporary) (@pboling)
+- no changes yet
+
+## [1.4.1] - 2018-10-13
+
+- [#417](oauth-xx/oauth2#417) - update jwt dependency (@thewoolleyman)
+- [#418](oauth-xx/oauth2#418) - remove rubocop dependency (temporary, added back in [#423](oauth-xx/oauth2#423)) (@pboling)
 - [#419](oauth-xx/oauth2#419) - update faraday dependency (@pboling)
-- [#420](oauth-xx/oauth2#420) - update gemspec (@pboling)
-- [#421](oauth-xx/oauth2#421) - fix [CHANGELOG](CHANGELOG.md) for previous releases (@pboling)
+- [#420](oauth-xx/oauth2#420) - update [oauth2.gemspec](oauth2.gemspec) (@pboling)
+- [#421](oauth-xx/oauth2#421) - fix [CHANGELOG.md](CHANGELOG.md) for previous releases (@pboling)
+- [#422](oauth-xx/oauth2#422) - update [LICENSE](LICENSE) and [README.md](README.md) (@pboling)
+- [#423](oauth-xx/oauth2#423) - update [builds](https://travis-ci.org/oauth-xx/oauth2/builds), [Rakefile](Rakefile) (@pboling)
 
 ## [1.4.0] - 2017-06-09
 
@@ -112,4 +118,5 @@ All notable changes to this project will be documented in this file.
 [1.3.0]: https://github.com/oauth-xx/oauth2/compare/v1.2.0...v1.3.0
 [1.3.1]: https://github.com/oauth-xx/oauth2/compare/v1.3.0...v1.3.1
 [1.4.0]: https://github.com/oauth-xx/oauth2/compare/v1.3.1...v1.4.0
+[1.4.1]: https://github.com/oauth-xx/oauth2/compare/v1.4.0...v1.4.1
 [unreleased]: https://github.com/oauth-xx/oauth2/compare/v1.4.0...1-4-stable
