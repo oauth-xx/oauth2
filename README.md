@@ -135,8 +135,8 @@ implementations:
 * Ruby 2.0.0
 * Ruby 2.1
 * Ruby 2.2
-* [JRuby 1.7][jruby-1.7]
-* [JRuby 9.0][jruby-9.0]
+* [JRuby 1.7][jruby-1.7] (targets MRI v1.9)
+* [JRuby 9.0][jruby-9.0] (targets MRI v2.0)
 
 ---
 
@@ -145,11 +145,13 @@ implementations:
 * Ruby 2.3 - Support through version 3.x series
 * Ruby 2.4
 * Ruby 2.5
-* [JRuby 9.1][jruby-9.1]
+* [JRuby 9.1][jruby-9.1] (targets MRI v2.3) 
+* [JRuby 9.2][jruby-9.2] (targets MRI v2.5)
 
-[jruby-1.7]: http://jruby.org/2017/05/11/jruby-1-7-27.html
-[jruby-9.0]: http://jruby.org/2016/01/26/jruby-9-0-5-0.html
-[jruby-9.1]: http://jruby.org/2018/02/21/jruby-9-1-16-0
+[jruby-1.7]: https://www.jruby.org/2017/05/11/jruby-1-7-27.html
+[jruby-9.0]: https://www.jruby.org/2016/01/26/jruby-9-0-5-0.html
+[jruby-9.1]: https://www.jruby.org/2017/05/16/jruby-9-1-9-0.html
+[jruby-9.2]: https://www.jruby.org/2018/05/24/jruby-9-2-0-0.html
 
 If something doesn't work on one of these interpreters, it's a bug.
 
