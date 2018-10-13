@@ -9,4 +9,8 @@ measurement/*
 pkg/*
 rdoc/*
 
+# rspec failure tracking
 .rspec_status
+
+# gemfiles for CI
+/gemfiles/*.gemfile.lock
