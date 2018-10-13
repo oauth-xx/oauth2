@@ -3,6 +3,8 @@
 require 'helper'
 
 describe OAuth2::Strategy::AuthCode do
+  subject { client.auth_code }
+
   let(:code) { 'sushi' }
   let(:kvform_token) { 'expires_in=600&access_token=salmon&refresh_token=trout&extra_param=steve' }
   let(:facebook_token) { kvform_token.gsub('_in', '') }
@@ -35,8 +37,6 @@ describe OAuth2::Strategy::AuthCode do
     end
   end
 
-  subject { client.auth_code }
-
   describe '#authorize_url' do
     it 'includes the client_id' do
       expect(subject.authorize_url).to include('client_id=abc')
@@ -60,12 +60,12 @@ describe OAuth2::Strategy::AuthCode do
       client.options[:token_method] = :post
     end
 
-    it 'should not raise an error' do
-      expect { subject.get_token(code) }.to_not raise_error
+    it 'does not raise an error' do
+      expect { subject.get_token(code) }.not_to raise_error
     end
 
-    it 'should not create an error instance' do
-      expect(OAuth2::Error).to_not receive(:new)
+    it 'does not create an error instance' do
+      expect(OAuth2::Error).not_to receive(:new)
 
       subject.get_token(code)
     end

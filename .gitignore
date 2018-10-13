@@ -8,3 +8,5 @@ log/*
 measurement/*
 pkg/*
 rdoc/*
+
+.rspec_status
