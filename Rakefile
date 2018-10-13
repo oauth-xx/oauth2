@@ -1,10 +1,35 @@
-require 'bundler'
-Bundler::GemHelper.install_tasks
+# encoding: utf-8
 
-require 'rspec/core/rake_task'
-RSpec::Core::RakeTask.new(:spec)
+# !/usr/bin/env rake
 
+require 'bundler/gem_tasks'
+
+begin
+  require 'wwtd/tasks'
+rescue LoadError
+  puts 'failed to load wwtd'
+end
+
+begin
+  require 'rspec/core/rake_task'
+  RSpec::Core::RakeTask.new(:spec)
+rescue LoadError
+  task :spec do
+    warn 'rspec is disabled'
+  end
+end
 task :test => :spec
+
+begin
+  require 'rubocop/rake_task'
+  RuboCop::RakeTask.new do |task|
+    task.options = ['-D'] # Display the name of the failing cops
+  end
+rescue LoadError
+  task :rubocop do
+    warn 'RuboCop is disabled'
+  end
+end
 
 namespace :doc do
   require 'rdoc/task'
@@ -17,15 +42,4 @@ namespace :doc do
   end
 end
 
-begin
-  require 'rubocop/rake_task'
-  RuboCop::RakeTask.new do |task|
-    task.options = ['-D'] # Display the name of the failing cops
-  end
-rescue LoadError
-  task :rubocop do
-    $stderr.puts 'RuboCop is disabled'
-  end
-end
-
-task :default => [:spec]
+task :default => [:test, :rubocop]

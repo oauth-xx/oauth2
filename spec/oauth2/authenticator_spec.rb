@@ -1,13 +1,13 @@
 require 'helper'
 
 describe OAuth2::Authenticator do
+  subject do
+    described_class.new(client_id, client_secret, mode)
+  end
+
   let(:client_id) { 'foo' }
   let(:client_secret) { 'bar' }
   let(:mode) { :undefined }
-
-  subject do
-    OAuth2::Authenticator.new(client_id, client_secret, mode)
-  end
 
   it 'raises NotImplementedError for unknown authentication mode' do
     expect { subject.apply({}) }.to raise_error(NotImplementedError)

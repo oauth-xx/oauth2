@@ -1,17 +1,32 @@
+require: rubocop-rspec
+inherit_from:
+  - .rubocop_todo.yml
+  - .rubocop_rspec.yml
+AllCops:
+  DisplayCopNames: true # Display the name of the failing cops
+  TargetRubyVersion: 2.1
+  Exclude:
+    - 'gemfiles/vendor/**/*'
+    - 'vendor/**/*'
+    - '**/.irbrc'
+
+Gemspec/RequiredRubyVersion:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
 Metrics/BlockNesting:
   Max: 2
 
 Metrics/LineLength:
-  AllowURI: true
   Enabled: false
 
 Metrics/MethodLength:
-  CountComments: false
   Max: 15
 
 Metrics/ParameterLists:
   Max: 4
-  CountKeywordArgs: true
 
 Layout/AccessModifierIndentation:
   EnforcedStyle: outdent
@@ -25,6 +40,16 @@ Layout/SpaceInsideHashLiteralBraces:
 Lint/UnusedBlockArgument:
   Exclude:
     - 'spec/**/*.rb'
+    - 'gemfiles/vendor/**/*'
+    - 'vendor/**/*'
+    - '**/.irbrc'
+
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/examples/*'
+
+RSpec/NestedGroups:
+  Enabled: false
 
 Style/ClassVars:
   Enabled: false
@@ -42,26 +67,14 @@ Style/Documentation:
 Style/DoubleNegation:
   Enabled: false
 
-Style/EachWithObject:
-  Enabled: false
-
 Style/EmptyMethod:
   EnforcedStyle: expanded
 
 Style/Encoding:
   Enabled: false
 
-Style/HashSyntax:
-  EnforcedStyle: hash_rockets
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
 
-Style/Lambda:
-  Enabled: false
-
-Style/SymbolArray:
-  Enabled: false
-
-Style/TrailingCommaInLiteral:
-  EnforcedStyleForMultiline: 'comma'
-
-Metrics/BlockLength:
-  Enabled: false
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
