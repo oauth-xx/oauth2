@@ -1,6 +1,6 @@
 module OAuth2
   module Version
-  module_function
+    module_function
 
     # The major version
     #
@@ -20,7 +20,7 @@ module OAuth2
     #
     # @return [Integer]
     def patch
-      0
+      1
     end
 
     # The pre-release version, if any
@@ -35,10 +35,10 @@ module OAuth2
     # @return [Hash]
     def to_h
       {
-        :major => major,
-        :minor => minor,
-        :patch => patch,
-        :pre => pre,
+          :major => major,
+          :minor => minor,
+          :patch => patch,
+          :pre => pre,
       }
     end
 
