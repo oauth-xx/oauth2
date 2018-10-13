@@ -1,30 +1,55 @@
 # OAuth2
 
 [![Gem Version](http://img.shields.io/gem/v/oauth2.svg)][gem]
-[![Build Status](http://img.shields.io/travis/intridea/oauth2.svg)][travis]
-[![Dependency Status](http://img.shields.io/gemnasium/intridea/oauth2.svg)][gemnasium]
-[![Code Climate](http://img.shields.io/codeclimate/github/intridea/oauth2.svg)][codeclimate]
+[![Total Downloads](https://img.shields.io/gem/dt/oauth2.svg)][gem]
+[![Downloads Today](https://img.shields.io/gem/rt/oauth2.svg)][gem]
+[![Build Status](http://img.shields.io/travis/oauth-xx/oauth2.svg)][travis]
 [![Coverage Status](http://img.shields.io/coveralls/intridea/oauth2.svg)][coveralls]
+[![Maintainability](https://api.codeclimate.com/v1/badges/688c612528ff90a46955/maintainability)][codeclimate-maintainability]
+[![Depfu](https://badges.depfu.com/badges/6d34dc1ba682bbdf9ae2a97848241743/count.svg)][depfu]
+[![Open Source Helpers](https://www.codetriage.com/oauth-xx/oauth2/badges/users.svg)][code-triage]
+[![Chat](https://img.shields.io/gitter/room/oauth-xx/oauth2.svg)](https://gitter.im/oauth-xx/oauth2)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)][source-license]
+[![Documentation](http://inch-ci.org/github/oauth-xx/oauth2.png)][inch-ci]
 
 [gem]: https://rubygems.org/gems/oauth2
-[travis]: http://travis-ci.org/intridea/oauth2
-[gemnasium]: https://gemnasium.com/intridea/oauth2
-[codeclimate]: https://codeclimate.com/github/intridea/oauth2
-[coveralls]: https://coveralls.io/r/intridea/oauth2
+[travis]: http://travis-ci.org/oauth-xx/oauth2
+[coveralls]: https://coveralls.io/r/oauth-xx/oauth2
+[codeclimate-maintainability]: https://codeclimate.com/github/oauth-xx/oauth2/maintainability
+[depfu]: https://depfu.com/github/oauth-xx/oauth2
+[source-license]: https://opensource.org/licenses/MIT
+[inch-ci]: http://inch-ci.org/github/oauth-xx/oauth2
+[code-triage]: https://www.codetriage.com/oauth-xx/oauth2
 
-A Ruby wrapper for the OAuth 2.0 specification.
+A Ruby wrapper for the [OAuth 2.0 specification][oauth2-spec].
+
+[oauth2-spec]: https://oauth.net/2/
 
 ## Installation
-    gem install oauth2
+
+Add this line to your application's Gemfile:
+
+```ruby
+gem 'oauth2'
+```
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install oauth2
 
 ## Resources
+
 * [View Source on GitHub][code]
 * [Report Issues on GitHub][issues]
 * [Read More at the Wiki][wiki]
 
-[code]: https://github.com/intridea/oauth2
-[issues]: https://github.com/intridea/oauth2/issues
-[wiki]: https://wiki.github.com/intridea/oauth2
+[code]: https://github.com/oauth-xx/oauth2
+[issues]: https://github.com/oauth-xx/oauth2/issues
+[wiki]: https://github.com/oauth-xx/oauth2/wiki
 
 ## Usage Examples
 
@@ -100,18 +125,31 @@ You can always use the #request method on the OAuth2::Client instance to make
 requests for tokens for any Authentication grant type.
 
 ## Supported Ruby Versions
+
 This library aims to support and is [tested against][travis] the following Ruby
 implementations:
+
+### Rubies with support ending at Oauth2 2.x
 
 * Ruby 1.9.3
 * Ruby 2.0.0
 * Ruby 2.1
 * Ruby 2.2
-* Ruby 2.3
-* Ruby 2.4
-* [JRuby 9K][jruby]
+* [JRuby 1.7][jruby-1.7]
+* [JRuby 9.0][jruby-9.0]
 
-[jruby]: http://jruby.org/
+---
+
+### Rubies with continued support past Oauth2 2.x
+
+* Ruby 2.3 - Support through version 3.x series
+* Ruby 2.4
+* Ruby 2.5
+* [JRuby 9.1][jruby-9.1]
+
+[jruby-1.7]: http://jruby.org/2017/05/11/jruby-1-7-27.html
+[jruby-9.0]: http://jruby.org/2016/01/26/jruby-9-0-5-0.html
+[jruby-9.1]: http://jruby.org/2018/02/21/jruby-9-1-16-0
 
 If something doesn't work on one of these interpreters, it's a bug.
 
@@ -126,8 +164,51 @@ implementation, you will be responsible for providing patches in a timely
 fashion. If critical issues for a particular implementation exist at the time
 of a major release, support for that Ruby version may be dropped.
 
-## License
-Copyright (c) 2011-2013 Michael Bleigh and Intridea, Inc. See [LICENSE][] for
-details.
+## Versioning
 
-[license]: LICENSE.md
+This library aims to adhere to [Semantic Versioning 2.0.0][semver].
+Violations of this scheme should be reported as bugs. Specifically,
+if a minor or patch version is released that breaks backward
+compatibility, a new version should be immediately released that
+restores compatibility. Breaking changes to the public API will
+only be introduced with new major versions.
+
+As a result of this policy, you can (and should) specify a
+dependency on this gem using the [Pessimistic Version Constraint][pvc] with two digits of precision.
+
+For example:
+
+```ruby
+spec.add_dependency 'oauth2', '~> 1.4'
+```
+
+[semver]: http://semver.org/
+[pvc]: http://guides.rubygems.org/patterns/#pessimistic-version-constraint
+
+## License
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)][source-license]
+
+- Copyright (c) 2011-2013 Michael Bleigh and Intridea, Inc.
+- Copyright (c) 2017-2018 [oauth-xx organization][oauth-xx]
+- See [LICENSE][license] for details.
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2.svg?type=large)][fossa2]
+
+[license]: LICENSE
+[oauth-xx]: https://github.com/oauth-xx
+[fossa2]: https://app.fossa.io/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2?ref=badge_large
+
+## Development
+
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/oauth-xx/oauth2. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+
+## Code of Conduct
+
+Everyone interacting in the OAuth2 project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/oauth-xx/oauth2/blob/master/CODE_OF_CONDUCT.md).
