@@ -195,7 +195,7 @@ RSpec.describe AccessToken do
                                          :param_name     => 'o_param')
     end
     let(:new_access) do
-      NewAccessToken = Class.new(AccessToken)
+      NewAccessToken = Class.new(described_class)
       NewAccessToken.new(client, token, :refresh_token => 'abaca')
     end
 
