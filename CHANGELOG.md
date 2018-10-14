@@ -13,6 +13,33 @@ All notable changes to this project will be documented in this file.
 - _Dependency_: Upgrade jwt to 2.x.x (@travisofthenorth)
 - Fix logging to `$stdout` of request and response bodies via Faraday's logger and `ENV["OAUTH_DEBUG"] == 'true'`
 
+## [1.4.1] - 2018-10-13
+
+- [#417](https://github.com/oauth-xx/oauth2/pull/417) - update jwt dependency (@thewoolleyman)
+- [#418](https://github.com/oauth-xx/oauth2/pull/418) - remove rubocop dependency (temporary, added back in [#423](https://github.com/oauth-xx/oauth2/pull/423)) (@pboling)
+- [#419](https://github.com/oauth-xx/oauth2/pull/419) - update faraday dependency (@pboling)
+- [#420](https://github.com/oauth-xx/oauth2/pull/420) - update [oauth2.gemspec](https://github.com/oauth-xx/oauth2/blob/1-4-stable/oauth2.gemspec) (@pboling)
+- [#421](https://github.com/oauth-xx/oauth2/pull/421) - fix [CHANGELOG.md](https://github.com/oauth-xx/oauth2/blob/1-4-stable/CHANGELOG.md) for previous releases (@pboling)
+- [#422](https://github.com/oauth-xx/oauth2/pull/422) - update [LICENSE](https://github.com/oauth-xx/oauth2/blob/1-4-stable/LICENSE) and [README.md](https://github.com/oauth-xx/oauth2/blob/1-4-stable/README.md) (@pboling)
+- [#423](https://github.com/oauth-xx/oauth2/pull/423) - update [builds](https://travis-ci.org/oauth-xx/oauth2/builds), [Rakefile](https://github.com/oauth-xx/oauth2/blob/1-4-stable/Rakefile) (@pboling)
+  - officially document supported Rubies
+    * Ruby 1.9.3
+    * Ruby 2.0.0
+    * Ruby 2.1
+    * Ruby 2.2
+    * [JRuby 1.7][jruby-1.7] (targets MRI v1.9)
+    * [JRuby 9.0][jruby-9.0] (targets MRI v2.0)
+    * Ruby 2.3
+    * Ruby 2.4
+    * Ruby 2.5
+    * [JRuby 9.1][jruby-9.1] (targets MRI v2.3)
+    * [JRuby 9.2][jruby-9.2] (targets MRI v2.5)
+
+[jruby-1.7]: https://www.jruby.org/2017/05/11/jruby-1-7-27.html
+[jruby-9.0]: https://www.jruby.org/2016/01/26/jruby-9-0-5-0.html
+[jruby-9.1]: https://www.jruby.org/2017/05/16/jruby-9-1-9-0.html
+[jruby-9.2]: https://www.jruby.org/2018/05/24/jruby-9-2-0-0.html
+
 ## [1.4.0] - 2017-06-09
 
 - Drop Ruby 1.8.7 support (@sferik)
@@ -116,4 +143,5 @@ All notable changes to this project will be documented in this file.
 [1.3.0]: https://github.com/oauth-xx/oauth2/compare/v1.2.0...v1.3.0
 [1.3.1]: https://github.com/oauth-xx/oauth2/compare/v1.3.0...v1.3.1
 [1.4.0]: https://github.com/oauth-xx/oauth2/compare/v1.3.1...v1.4.0
-[unreleased]: https://github.com/oauth-xx/oauth2/compare/v1.4.0...HEAD
+[1.4.1]: https://github.com/oauth-xx/oauth2/compare/v1.4.0...v1.4.1
+[unreleased]: https://github.com/oauth-xx/oauth2/compare/v1.4.1...HEAD

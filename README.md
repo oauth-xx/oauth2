@@ -9,6 +9,7 @@ If you need the readme for a released version of the gem please find it below:
 
 | Version  | Release Date | Readme                                                   |
 |----------|--------------|----------------------------------------------------------|
+| 1.4.1    | Oct 13, 2018 | https://github.com/oauth-xx/oauth2/blob/v1.4.1/README.md |
 | 1.4.0    | Jun 9, 2017  | https://github.com/oauth-xx/oauth2/blob/v1.4.0/README.md |
 | 1.3.1    | Mar 3, 2017  | https://github.com/oauth-xx/oauth2/blob/v1.3.1/README.md |
 | 1.3.0    | Dec 27, 2016 | https://github.com/oauth-xx/oauth2/blob/v1.3.0/README.md |
@@ -21,7 +22,7 @@ If you need the readme for a released version of the gem please find it below:
 [![Total Downloads](https://img.shields.io/gem/dt/oauth2.svg)][gem]
 [![Downloads Today](https://img.shields.io/gem/rt/oauth2.svg)](https://rubygems.org/gems/oauth2)
 [![Build Status](http://img.shields.io/travis/oauth-xx/oauth2.svg)][travis]
-[![Coverage Status](http://img.shields.io/coveralls/intridea/oauth2.svg)][coveralls]
+[![Coverage Status](http://img.shields.io/coveralls/oauth-xx/oauth2.svg)][coveralls]
 [![Maintainability](https://api.codeclimate.com/v1/badges/688c612528ff90a46955/maintainability)][codeclimate]
 [![Depfu](https://badges.depfu.com/badges/6d34dc1ba682bbdf9ae2a97848241743/count.svg)][depfu]
 [![Open Source Helpers](https://www.codetriage.com/oauth-xx/oauth2/badges/users.svg)][code-triage]
@@ -169,8 +170,8 @@ implementations:
 * Ruby 2.0.0
 * Ruby 2.1
 * Ruby 2.2
-* [JRuby 1.7][jruby-1.7]
-* [JRuby 9.0][jruby-9.0]
+* [JRuby 1.7][jruby-1.7] (targets MRI v1.9)
+* [JRuby 9.0][jruby-9.0] (targets MRI v2.0)
 
 ---
 
@@ -179,11 +180,13 @@ implementations:
 * Ruby 2.3 - Support through version 3.x series
 * Ruby 2.4
 * Ruby 2.5
-* [JRuby 9.1][jruby-9.1]
+* [JRuby 9.1][jruby-9.1] (targets MRI v2.3) 
+* [JRuby 9.2][jruby-9.2] (targets MRI v2.5)
 
-[jruby-1.7]: http://jruby.org/2017/05/11/jruby-1-7-27.html
-[jruby-9.0]: http://jruby.org/2016/01/26/jruby-9-0-5-0.html
-[jruby-9.1]: http://jruby.org/2018/02/21/jruby-9-1-16-0
+[jruby-1.7]: https://www.jruby.org/2017/05/11/jruby-1-7-27.html
+[jruby-9.0]: https://www.jruby.org/2016/01/26/jruby-9-0-5-0.html
+[jruby-9.1]: https://www.jruby.org/2017/05/16/jruby-9-1-9-0.html
+[jruby-9.2]: https://www.jruby.org/2018/05/24/jruby-9-2-0-0.html
 
 If something doesn't work on one of these interpreters, it's a bug.
 
@@ -221,7 +224,7 @@ spec.add_dependency 'oauth2', '~> 1.4'
 
 ## License
 
-[MIT][license]
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)][source-license]
 
 - Copyright (c) 2011-2013 Michael Bleigh and Intridea, Inc.
 - Copyright (c) 2017-2018 [oauth-xx organization][oauth-xx]
