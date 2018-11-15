@@ -94,9 +94,10 @@ module OAuth2
     def request(verb, url, opts = {}) # rubocop:disable CyclomaticComplexity, MethodLength, Metrics/AbcSize
       connection.response :logger, ::Logger.new($stdout) if ENV['OAUTH_DEBUG'] == 'true'
 
-      url = connection.build_url(url, opts[:params]).to_s
+      url = connection.build_url(url).to_s
 
       response = connection.run_request(verb, url, opts[:body], opts[:headers]) do |req|
+        req.params.update(opts[:params]) if opts[:params]
         yield(req) if block_given?
       end
       response = Response.new(response, :parse => opts[:parse])
@@ -130,7 +131,7 @@ module OAuth2
     # @param [Hash] params a Hash of params for the token endpoint
     # @param [Hash] access token options, to pass to the AccessToken object
     # @param [Class] class of access token for easier subclassing OAuth2::AccessToken
-    # @return [AccessToken] the initalized AccessToken
+    # @return [AccessToken] the initialized AccessToken
     def get_token(params, access_token_opts = {}, access_token_class = AccessToken) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       params = Authenticator.new(id, secret, options[:auth_scheme]).apply(params)
       opts = {:raise_errors => options[:raise_errors], :parse => params.delete(:parse)}
