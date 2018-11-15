@@ -122,7 +122,7 @@ describe AccessToken do
       end
     end
 
-    context "params include [number]" do
+    context 'params include [number]' do
       VERBS.each do |verb|
         it "sends #{verb.to_s.upcase} correct query" do
           expect(subject.__send__(verb, '/token/query_string', :params => {'foo[bar][1]' => 'val'}).body).to include('foo[bar][1]=val')
