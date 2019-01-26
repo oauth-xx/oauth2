@@ -227,6 +227,36 @@ RSpec.describe OAuth2::Client do
       expect(response.headers).to eq('Content-Type' => 'text/awesome')
     end
 
+    context 'when OAUTH_DEBUG=true and logger is set to log to /dev/null' do
+      around do |example|
+        begin
+          original = ENV['OAUTH_DEBUG']
+          ENV['OAUTH_DEBUG'] = 'true'
+
+          original_logger = subject.options[:logger]
+          subject.options[:logger] = Logger.new('/dev/null')
+
+          example.call
+        ensure
+          subject.options[:logger] = original_logger
+
+          if original.nil?
+            ENV.delete('OAUTH_DEBUG')
+          else
+            ENV['OAUTH_DEBUG'] = original
+          end
+        end
+      end
+
+      it 'will not log anything to standard out if logger is overridden to use /dev/null' do
+        output = capture_output do
+          subject.request(:get, '/success')
+        end
+
+        expect(output).to be_empty
+      end
+    end
+
     context 'when OAUTH_DEBUG=true' do
       around do |example|
         begin

@@ -24,6 +24,7 @@ module OAuth2
     # @option opts [Hash] :connection_opts ({}) Hash of connection options to pass to initialize Faraday with
     # @option opts [FixNum] :max_redirects (5) maximum number of redirects to follow
     # @option opts [Boolean] :raise_errors (true) whether or not to raise an OAuth2::Error
+    # @options opts [Logger] :logger (::Logger.new($stdout)) which logger to use when OAUTH_DEBUG is enabled
     #  on responses with 400+ status codes
     # @yield [builder] The Faraday connection builder
     def initialize(client_id, client_secret, options = {}, &block)
@@ -39,7 +40,8 @@ module OAuth2
                   :connection_opts  => {},
                   :connection_build => block,
                   :max_redirects    => 5,
-                  :raise_errors     => true}.merge(opts)
+                  :raise_errors     => true,
+                  :logger           => ::Logger.new($stdout)}.merge!(opts)
       @options[:connection_opts][:ssl] = ssl if ssl
     end
 
@@ -223,7 +225,7 @@ module OAuth2
     end
 
     def oauth_debug_logging(builder)
-      builder.response :logger, ::Logger.new($stdout), :bodies => true if ENV['OAUTH_DEBUG'] == 'true'
+      builder.response :logger, options[:logger], :bodies => true if ENV['OAUTH_DEBUG'] == 'true'
     end
   end
 end

@@ -96,6 +96,19 @@ Set an environment variable, however you would [normally do that](https://github
 ENV['OAUTH_DEBUG'] = 'true'
 ```
 
+By default, debug output will go to `$stdout`. This can be overridden when
+initializing your OAuth2::Client.
+
+```ruby
+require 'oauth2'
+client = OAuth2::Client.new(
+  'client_id',
+  'client_secret',
+  :site   => 'https://example.org',
+  :logger => Logger.new('example.log', 'weekly')
+)
+```
+
 ## OAuth2::Response
 
 The AccessToken methods #get, #post, #put and #delete and the generic #request
