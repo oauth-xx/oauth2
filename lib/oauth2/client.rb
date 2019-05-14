@@ -130,7 +130,7 @@ module OAuth2
     # @param [Hash] access token options, to pass to the AccessToken object
     # @param [Class] class of access token for easier subclassing OAuth2::AccessToken
     # @return [AccessToken] the initialized AccessToken
-    def get_token(params, access_token_opts = {}, access_token_class = AccessToken) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def get_token(params, access_token_opts = {}, access_token_class = AccessToken) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
       params = authenticator.apply(params)
       opts = {:raise_errors => options[:raise_errors], :parse => params.delete(:parse)}
       headers = params.delete(:headers) || {}
@@ -143,7 +143,10 @@ module OAuth2
       end
       opts[:headers].merge!(headers)
       response = request(options[:token_method], token_url, opts)
-      if options[:raise_errors] && !(response.parsed.is_a?(Hash) && response.parsed['access_token'])
+      response_contains_token = response.parsed.is_a?(Hash) &&
+                                (response.parsed['access_token'] || response.parsed['id_token'])
+
+      if options[:raise_errors] && !response_contains_token
         error = Error.new(response)
         raise(error)
       end
