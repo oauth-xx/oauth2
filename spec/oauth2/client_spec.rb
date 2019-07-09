@@ -470,6 +470,42 @@ describe OAuth2::Client do
       end
     end
 
+    context 'when the :raise_errors flag is set to false' do
+      context 'when the request body is nil' do
+        it 'returns a nil :access_token' do
+          client = stubbed_client(:raise_errors => false) do |stub|
+            stub.post('/oauth/token') do
+              [500, {'Content-Type' => 'application/json'}, nil]
+            end
+          end
+
+          expect(client.get_token({})).to eq(nil)
+        end
+      end
+
+      context 'when the request body is not nil' do
+        it 'returns the parsed :access_token from body' do
+          client = stubbed_client do |stub|
+            stub.post('/oauth/token') do
+              [200, {'Content-Type' => 'application/json'}, MultiJson.encode('access_token' => 'the-token')]
+            end
+          end
+
+          token = client.get_token({})
+          expect(token.response).to be_a OAuth2::Response
+          expect(token.response.parsed).to eq('access_token' => 'the-token')
+        end
+      end
+    end
+
+    it 'forwards given token parameters' do
+      client = stubbed_client(:auth_scheme => :request_body) do |stub|
+        stub.post('/oauth/token', 'arbitrary' => 'parameter', 'client_id' => 'abc', 'client_secret' => 'def') do |env|
+          [200, {'Content-Type' => 'application/json'}, MultiJson.encode('access_token' => 'the-token')]
+        end
+      end
+    end
+
     def stubbed_client(params = {}, &stubs)
       params = {:site => 'https://api.example.com'}.merge(params)
       OAuth2::Client.new('abc', 'def', params) do |builder|
