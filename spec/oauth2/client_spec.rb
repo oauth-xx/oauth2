@@ -4,7 +4,7 @@ require 'nkf'
 
 RSpec.describe OAuth2::Client do
   subject do
-    described_class.new('abc', 'def', :site => 'https://api.example.com') do |builder|
+    described_class.new('abc', 'def', {:site => 'https://api.example.com'}.merge(options)) do |builder|
       builder.adapter :test do |stub|
         stub.get('/success')             { |env| [200, {'Content-Type' => 'text/awesome'}, 'yay'] }
         stub.get('/reflect')             { |env| [200, {}, env[:body]] }
@@ -23,6 +23,7 @@ RSpec.describe OAuth2::Client do
 
   let!(:error_value) { 'invalid_token' }
   let!(:error_description_value) { 'bad bad token' }
+  let(:options) { {} }
 
   describe '#initialize' do
     it 'assigns id and secret' do
@@ -107,6 +108,20 @@ RSpec.describe OAuth2::Client do
       it 'allows a different host than the site' do
         subject.options[:"#{url_type}_url"] = 'https://api.foo.com/oauth/custom'
         expect(subject.send("#{url_type}_url")).to eq('https://api.foo.com/oauth/custom')
+      end
+
+      context 'when a URL with path is used in the site' do
+        let(:options) do
+          {
+            :site => 'https://example.com/blog',
+            :authorize_url => 'oauth/authorize',
+            :token_url => 'oauth/token',
+          }
+        end
+
+        it 'generates an authorization URL relative to the site' do
+          expect(subject.send("#{url_type}_url")).to eq("https://example.com/blog/oauth/#{url_type}")
+        end
       end
     end
   end
