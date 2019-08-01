@@ -12,7 +12,7 @@ group :test do
     #     Error: Unsupported Ruby version 2.1 found in `TargetRubyVersion` parameter (in .rubocop.yml). 2.1-compatible analysis was dropped after version 0.58.
     #     Supported versions: 2.2, 2.3, 2.4, 2.5
     gem 'rubocop', '~> 0.73.0'
-    gem 'rubocop-rspec', '~> 1.33.0' # last version that can use rubocop < 0.58
+    gem 'rubocop-rspec', '~> 1.34.1' # last version that can use rubocop < 0.58
   end
   gem 'coveralls'
   gem 'pry', '~> 0.11' if ruby_version >= Gem::Version.new('2.0')
