@@ -33,8 +33,8 @@ module OAuth2
       @secret = client_secret
       @site = opts.delete(:site)
       ssl = opts.delete(:ssl)
-      @options = {:authorize_url    => '/oauth/authorize',
-                  :token_url        => '/oauth/token',
+      @options = {:authorize_url    => 'oauth/authorize',
+                  :token_url        => 'oauth/token',
                   :token_method     => :post,
                   :auth_scheme      => :basic_auth,
                   :connection_opts  => {},
