@@ -112,11 +112,7 @@ RSpec.describe OAuth2::Client do
 
       context 'when a URL with path is used in the site' do
         let(:options) do
-          {
-            :site => 'https://example.com/blog',
-            :authorize_url => 'oauth/authorize',
-            :token_url => 'oauth/token',
-          }
+          {:site => 'https://example.com/blog'}
         end
 
         it 'generates an authorization URL relative to the site' do
