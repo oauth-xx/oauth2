@@ -15,6 +15,7 @@ module OAuth2
       #
       # @param [Hash] params additional query parameters for the URL
       def authorize_url(params = {})
+        assert_valid_params(params)
         @client.authorize_url(authorize_params.merge(params))
       end
 
@@ -23,6 +24,12 @@ module OAuth2
       # @raise [NotImplementedError]
       def get_token(*)
         raise(NotImplementedError, 'The token is accessed differently in this strategy')
+      end
+
+    private
+
+      def assert_valid_params(params)
+        raise(ArgumentError, 'client_secret is not allowed in authorize URL query params') if params.key?(:client_secret) || params.key?('client_secret')
       end
     end
   end
