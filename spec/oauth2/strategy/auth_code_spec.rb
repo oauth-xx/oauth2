@@ -13,7 +13,7 @@ RSpec.describe OAuth2::Strategy::AuthCode do
   let(:client) do
     OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com') do |builder|
       builder.adapter :test do |stub|
-        stub.get("/oauth/token?client_id=abc&client_secret=def&code=#{code}&grant_type=authorization_code") do |env|
+        stub.get("/oauth/token?client_id=abc&code=#{code}&grant_type=authorization_code") do |env|
           case @mode
           when 'formencoded'
             [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, kvform_token]
@@ -49,6 +49,18 @@ RSpec.describe OAuth2::Strategy::AuthCode do
 
     it 'includes the type' do
       expect(subject.authorize_url).to include('response_type=code')
+    end
+
+    it 'does not include the client_secret' do
+      expect(subject.authorize_url).not_to include('client_secret=def')
+    end
+
+    it 'raises an error if the client_secret is passed in' do
+      expect { subject.authorize_url(:client_secret => 'def') }.to raise_error(ArgumentError)
+    end
+
+    it 'raises an error if the client_secret is passed in with string keys' do
+      expect { subject.authorize_url('client_secret' => 'def') }.to raise_error(ArgumentError)
     end
 
     it 'includes passed in options' do
