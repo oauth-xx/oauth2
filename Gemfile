@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
-gem 'faraday', '~> 0.15.2', :platforms => [:jruby_18, :ruby_18]
+gem 'faraday', '0.16.2', :platforms => [:jruby_18, :ruby_18]
 gem 'jwt', '< 1.5.2', :platforms => [:jruby_18, :ruby_18]
 
 group :test do
