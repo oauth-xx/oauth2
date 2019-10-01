@@ -1,20 +1,21 @@
 before_install:
   # rubygems 2.7.8 and greater include bundler
-  # - Ruby 2.2, and under, get RubyGems ~> 2.7, and update bundler to 1.17.3
+  # - Ruby 2.2, and under, get RubyGems ~> 2.7.10, (includes bundler 1.17.3)
   # - Anything else, including Ruby 2.3, and above, gets RubyGems ~> 3, and update bundler to latest
   # - NOTE ON JRUBY: identifies as RUBY_VERSION ~> 1.9, 2.0, 2.3, or 2.5.
   # - NOTE ON TRUFFLERUBY: identifies as RUBY_VERSION ~> 2.6
   - |
     rv="$(ruby -e 'STDOUT.write RUBY_VERSION')"
     echo "Discovered Ruby Version of =====> $rv"
-    if   [ "$rv" \< "2.3" ]; then
-      gem update --system 2.7.10 --no-document
-      gem install --no-document bundler "bundler:~>1.17"
+    if   [ "$rv" \< "2.0" ]; then
+      gem update --system 2.7.10
+    elif   [ "$rv" \< "2.3" ]; then
+      gem update --system 2.7.10 --no-document -​-no-post-install-message
     elif [ "$rv" = "2.5.3" ]; then
       # JRUBY 9.2 Identifies as 2.5.3, and it fails to update rubygems
       gem install --no-document bundler "bundler:>=2.0"
     else
-      gem update --system --no-document --conservative
+      gem update --system --no-document --conservative -​-no-post-install-message
       gem install --no-document bundler "bundler:>=2.0"
     fi
 
