@@ -29,7 +29,6 @@ matrix:
   allow_failures:
     - rvm: jruby-head
     - rvm: ruby-head
-    - rvm: rbx-3
     - rvm: truffleruby
     - rvm: jruby-9.0 # targets MRI v2.0
       gemfile: gemfiles/jruby_9.0.gemfile
@@ -64,7 +63,6 @@ matrix:
       gemfile: gemfiles/jruby_head.gemfile
     - rvm: ruby-head
       gemfile: gemfiles/ruby_head.gemfile
-    - rvm: rbx-3
     - rvm: truffleruby
 
 sudo: false
