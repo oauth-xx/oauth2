@@ -7,7 +7,7 @@ before_install:
   - |
     rv="$(ruby -e 'STDOUT.write RUBY_VERSION')"
     echo "Discovered Ruby Version of =====> $rv"
-    if   [ "$rv" \< "2.0" ]; then
+    if   [ "$rv" \< "2.2" ]; then
       gem update --system 2.7.10
     elif   [ "$rv" \< "2.3" ]; then
       gem update --system 2.7.10 --no-document -​-no-post-install-message
