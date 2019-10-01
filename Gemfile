@@ -17,7 +17,6 @@ group :test do
     gem 'rubocop-rspec', '~> 1.27.0' # last version that can use rubocop < 0.58
   end
   gem 'pry', '~> 0.11' if ruby_version >= Gem::Version.new('2.0')
-  gem 'rspec-pending_for'
 
   gem 'addressable', '~> 2.3.8'
   gem 'backports'

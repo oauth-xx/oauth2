@@ -7,10 +7,4 @@ gem 'rack', '~> 1.2'
 gem 'term-ansicolor', '< 1.4.0'
 gem 'tins', '< 1.7'
 
-group :test do
-  gem 'rake'
-  gem 'rspec'
-  gem 'rspec-pending_for'
-end
-
 gemspec :path => '../'

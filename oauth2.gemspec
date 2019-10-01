@@ -37,6 +37,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rdoc', ['>= 5.0', '< 7']
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rspec-stubbed_env'
+  spec.add_development_dependency 'rspec-pending_for'
+  spec.add_development_dependency 'rspec-block_is_expected'
   spec.add_development_dependency 'silent_stream'
   spec.add_development_dependency 'wwtd'
 end
