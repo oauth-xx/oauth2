@@ -10,6 +10,10 @@ if RUBY_VERSION >= '1.9'
   end
 end
 
+if RUBY_VERSION >= '2.5'
+  require 'byebug'
+end
+
 require 'oauth2'
 require 'addressable/uri'
 require 'rspec'

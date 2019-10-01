@@ -57,6 +57,8 @@ matrix:
       gemfile: gemfiles/jruby_9.2.gemfile
     - rvm: 2.5
       gemfile: gemfiles/ruby_2.5.gemfile
+    - rvm: 2.6
+      gemfile: gemfiles/ruby_2.6.gemfile
     - rvm: jruby-head
       gemfile: gemfiles/jruby_head.gemfile
     - rvm: ruby-head
