@@ -7,9 +7,9 @@ before_install:
   - |
     rv="$(ruby -e 'STDOUT.write RUBY_VERSION')"
     echo "Discovered Ruby Version of =====> $rv"
-    if   [ "$rv" \< "2.2" ]; then
+    if   [ "$rv" \< "2.3" ]; then
       gem update --system 2.7.10
-    elif   [ "$rv" \< "2.3" ]; then
+    elif   [ "$rv" \< "2.4" ]; then
       gem update --system 2.7.10 --no-document -​-no-post-install-message
     elif [ "$rv" = "2.5.3" ]; then
       # JRUBY 9.2 Identifies as 2.5.3, and it fails to update rubygems
@@ -31,6 +31,8 @@ matrix:
     - rvm: ruby-head
     - rvm: rbx-3
     - rvm: truffleruby
+    - rvm: jruby-9.0 # targets MRI v2.0
+      gemfile: gemfiles/jruby_9.0.gemfile
   fast_finish: true
   include:
 #    - rvm: jruby-1.7 # targets MRI v1.9
@@ -41,8 +43,6 @@ matrix:
       gemfile: gemfiles/ruby_2.0.gemfile
     - rvm: 2.1
       gemfile: gemfiles/ruby_2.1.gemfile
-    - rvm: jruby-9.0 # targets MRI v2.0
-      gemfile: gemfiles/jruby_9.0.gemfile
     # DEPRECATION WARNING
     # oauth2 1.x series releases are the last to support Ruby versions above
     # oauth2 2.x series releases will support Ruby versions below, and not above
