@@ -1,3 +1,5 @@
+DEBUG = ENV['DEBUG'] == 'true'
+
 if RUBY_VERSION >= '1.9'
   require 'simplecov'
   require 'coveralls'
@@ -10,7 +12,7 @@ if RUBY_VERSION >= '1.9'
   end
 end
 
-if RUBY_VERSION >= '2.5'
+if DEBUG && RUBY_VERSION >= '2.6'
   require 'byebug'
 end
 
