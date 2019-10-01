@@ -171,16 +171,6 @@ describe OAuth2::Client do
       expect(response.headers).to eq('Content-Type' => 'text/awesome')
     end
 
-    it 'outputs to $stdout when OAUTH_DEBUG=true' do
-      allow(ENV).to receive(:[]).with('http_proxy').and_return(nil)
-      allow(ENV).to receive(:[]).with('OAUTH_DEBUG').and_return('true')
-      output = capture_output do
-        subject.request(:get, '/success')
-      end
-
-      expect(output).to include 'INFO -- : get https://api.example.com/success', 'INFO -- : get https://api.example.com/success'
-    end
-
     it 'posts a body' do
       response = subject.request(:post, '/reflect', :body => 'foo=bar')
       expect(response.body).to eq('foo=bar')
@@ -248,6 +238,24 @@ describe OAuth2::Client do
       rescue StandardError => e
         expect(e.response).not_to be_nil
         expect(e.to_s).to match(/unknown error/)
+      end
+    end
+
+    context 'with ENV' do
+      include_context 'with stubbed env'
+      before do
+        stub_env('OAUTH_DEBUG' => 'true')
+      end
+      it 'outputs to $stdout when OAUTH_DEBUG=true' do
+        output = capture(:stdout) do
+          subject.request(:get, '/success')
+        end
+        logs = [
+          'INFO -- request: GET https://api.example.com/success',
+          'INFO -- response: Status 200',
+          'DEBUG -- response: Content-Type: "text/awesome"'
+        ]
+        expect(output).to include(*logs)
       end
     end
   end

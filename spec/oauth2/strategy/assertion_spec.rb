@@ -20,7 +20,12 @@ describe OAuth2::Strategy::Assertion do
     cli
   end
 
-  let(:params) { {:hmac_secret => 'foo'} }
+  let(:params) do
+    {
+        :hmac_secret => 'foo',
+        :exp => Time.now.utc.to_i + 3600
+    }
+  end
 
   describe '#authorize_url' do
     it 'raises NotImplementedError' do

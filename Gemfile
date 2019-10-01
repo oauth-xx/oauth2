@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
-gem 'faraday', '~> 0.9.2', :platforms => [:jruby_18, :ruby_18]
+gem 'faraday', ['>= 0.8', '< 2.0'], :platforms => [:jruby_18, :ruby_18]
 gem 'jwt', '< 1.5.2', :platforms => [:jruby_18, :ruby_18]
 gem 'rake', '< 11.0'
 gem 'rdoc', '~> 4.2.2'
@@ -17,7 +17,6 @@ group :test do
     gem 'rubocop-rspec', '~> 1.27.0' # last version that can use rubocop < 0.58
   end
   gem 'pry', '~> 0.11' if ruby_version >= Gem::Version.new('2.0')
-  gem 'rspec-pending_for'
 
   gem 'addressable', '~> 2.3.8'
   gem 'backports'

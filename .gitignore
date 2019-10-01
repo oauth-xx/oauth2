@@ -14,3 +14,6 @@ rdoc/*
 
 # gemfiles for CI
 /gemfiles/*.gemfile.lock
+
+# CI bundle
+/gemfiles/vendor/
