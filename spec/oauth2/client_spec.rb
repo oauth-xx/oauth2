@@ -179,7 +179,7 @@ RSpec.describe OAuth2::Client do
         let(:debug_value) { 'true' }
 
         it 'smoothly handles successive requests' do
-          capture_output do
+          silence_all do
             # first request (always goes smoothly)
             subject.request(:get, '/success')
           end
@@ -190,7 +190,7 @@ RSpec.describe OAuth2::Client do
           end.not_to raise_error
         end
         it 'prints both request and response bodies to STDOUT' do
-          printed = capture_output do
+          printed = capture(:stdout) do
             subject.request(:get, '/success')
             subject.request(:get, '/reflect', :body => 'this is magical')
           end
@@ -205,7 +205,7 @@ RSpec.describe OAuth2::Client do
         let(:debug_value) { 'false' }
 
         it 'smoothly handles successive requests' do
-          capture_output do
+          silence_all do
             # first request (always goes smoothly)
             subject.request(:get, '/success')
           end
@@ -216,7 +216,7 @@ RSpec.describe OAuth2::Client do
           end.not_to raise_error
         end
         it 'prints nothing to STDOUT' do
-          printed = capture_output do
+          printed = capture(:stdout) do
             subject.request(:get, '/success')
             subject.request(:get, '/reflect', :body => 'this is magical')
           end
@@ -260,7 +260,7 @@ RSpec.describe OAuth2::Client do
       end
 
       it 'will not log anything to standard out if logger is overridden to use /dev/null' do
-        output = capture_output do
+        output = capture(:stdout) do
           subject.request(:get, '/success')
         end
 
