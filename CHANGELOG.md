@@ -8,6 +8,7 @@ All notable changes to this project will be documented in this file.
 ## [1.4.2] - 2019-10-01
 
 - [#478](https://github.com/oauth-xx/oauth2/pull/478) - support latest version of faraday & fix build (@pboling)
+  - officially support Ruby 2.6 and truffleruby
 
 ## [1.4.1] - 2018-10-13
 
