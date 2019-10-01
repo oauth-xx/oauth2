@@ -13,6 +13,8 @@ end
 require 'oauth2'
 require 'addressable/uri'
 require 'rspec'
+require 'rspec/stubbed_env'
+require 'silent_stream'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
@@ -22,20 +24,13 @@ end
 
 Faraday.default_adapter = :test
 
-RSpec.configure do |conf|
-  include OAuth2
-end
+# This is dangerous - HERE BE DRAGONS.
+# It allows us to refer to classes without the namespace, but at what cost?!?
+# TODO: Refactor to use explicit references everywhere
+include OAuth2
 
-def capture_output
-  begin
-    old_stdout = $stdout
-    $stdout = StringIO.new
-    yield
-    result = $stdout.string
-  ensure
-    $stdout = old_stdout
-  end
-  result
+RSpec.configure do |conf|
+  conf.include SilentStream
 end
 
 VERBS = [:get, :post, :put, :delete].freeze
