@@ -445,7 +445,7 @@ RSpec.describe OAuth2::Client do
     end
 
     it 'applies default faraday middleware to the connection' do
-      expect(subject.connection.builder.handlers).to eq([Faraday::Request::UrlEncoded, Faraday::Adapter::Test])
+      expect(subject.connection.builder.handlers).to include(Faraday::Request::UrlEncoded)
     end
   end
 end

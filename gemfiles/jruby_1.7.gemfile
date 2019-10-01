@@ -1,9 +1,7 @@
 source 'https://rubygems.org'
 
 group :test do
-  gem 'rake', '~> 11.0'
-  gem 'rspec'
-  gem 'rspec-pending_for'
+    gem 'rake', [">= 10.0", "< 12"]
 end
 
 gemspec :path => '../'
