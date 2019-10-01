@@ -141,4 +141,5 @@ All notable changes to this project will be documented in this file.
 [1.3.1]: https://github.com/oauth-xx/oauth2/compare/v1.3.0...v1.3.1
 [1.4.0]: https://github.com/oauth-xx/oauth2/compare/v1.3.1...v1.4.0
 [1.4.1]: https://github.com/oauth-xx/oauth2/compare/v1.4.0...v1.4.1
+[1.4.2]: https://github.com/oauth-xx/oauth2/compare/v1.4.1...v1.4.2
 [unreleased]: https://github.com/oauth-xx/oauth2/compare/v1.4.1...HEAD
