@@ -43,35 +43,19 @@ If you need the readme for a released version of the gem please find it below:
 
 ### Oauth2 gem is looking for additional maintainers. See [#307](https://github.com/oauth-xx/oauth2/issues/307).
 
-A Ruby wrapper for the [OAuth 2.0 specification][oauth2-spec].
-
-[oauth2-spec]: https://oauth.net/2/
+A Ruby wrapper for the OAuth 2.0 specification.
 
 ## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'oauth2'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install oauth2
+    gem install oauth2
 
 ## Resources
-
 * [View Source on GitHub][code]
 * [Report Issues on GitHub][issues]
 * [Read More at the Wiki][wiki]
 
-[code]: https://github.com/oauth-xx/oauth2
-[issues]: https://github.com/oauth-xx/oauth2/issues
-[wiki]: https://github.com/oauth-xx/oauth2/wiki
+[code]: https://github.com/intridea/oauth2
+[issues]: https://github.com/intridea/oauth2/issues
+[wiki]: https://wiki.github.com/intridea/oauth2
 
 ## Usage Examples
 

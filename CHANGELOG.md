@@ -13,6 +13,11 @@ All notable changes to this project will be documented in this file.
 - _Dependency_: Upgrade jwt to 2.x.x (@travisofthenorth)
 - Fix logging to `$stdout` of request and response bodies via Faraday's logger and `ENV["OAUTH_DEBUG"] == 'true'`
 
+## [1.4.2] - 2019-10-01
+
+- [#478](https://github.com/oauth-xx/oauth2/pull/478) - support latest version of faraday & fix build (@pboling)
+  - Officially support Ruby 2.6 and truffleruby
+
 ## [1.4.1] - 2018-10-13
 
 - [#417](https://github.com/oauth-xx/oauth2/pull/417) - update jwt dependency (@thewoolleyman)

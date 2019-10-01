@@ -179,7 +179,7 @@ RSpec.describe OAuth2::Client do
         let(:debug_value) { 'true' }
 
         it 'smoothly handles successive requests' do
-          capture_output do
+          silence_all do
             # first request (always goes smoothly)
             subject.request(:get, '/success')
           end
@@ -190,7 +190,7 @@ RSpec.describe OAuth2::Client do
           end.not_to raise_error
         end
         it 'prints both request and response bodies to STDOUT' do
-          printed = capture_output do
+          printed = capture(:stdout) do
             subject.request(:get, '/success')
             subject.request(:get, '/reflect', :body => 'this is magical')
           end
@@ -205,7 +205,7 @@ RSpec.describe OAuth2::Client do
         let(:debug_value) { 'false' }
 
         it 'smoothly handles successive requests' do
-          capture_output do
+          silence_all do
             # first request (always goes smoothly)
             subject.request(:get, '/success')
           end
@@ -216,7 +216,7 @@ RSpec.describe OAuth2::Client do
           end.not_to raise_error
         end
         it 'prints nothing to STDOUT' do
-          printed = capture_output do
+          printed = capture(:stdout) do
             subject.request(:get, '/success')
             subject.request(:get, '/reflect', :body => 'this is magical')
           end
@@ -260,7 +260,7 @@ RSpec.describe OAuth2::Client do
       end
 
       it 'will not log anything to standard out if logger is overridden to use /dev/null' do
-        output = capture_output do
+        output = capture(:stdout) do
           subject.request(:get, '/success')
         end
 
@@ -268,28 +268,23 @@ RSpec.describe OAuth2::Client do
       end
     end
 
-    context 'when OAUTH_DEBUG=true' do
-      around do |example|
-        begin
-          original = ENV['OAUTH_DEBUG']
-          ENV['OAUTH_DEBUG'] = 'true'
-
-          example.call
-        ensure
-          if original.nil?
-            ENV.delete('OAUTH_DEBUG')
-          else
-            ENV['OAUTH_DEBUG'] = original
+    context 'with ENV' do
+      include_context 'with stubbed env'
+      context 'when OAUTH_DEBUG=true' do
+        before do
+          stub_env('OAUTH_DEBUG' => 'true')
+        end
+        it 'outputs to $stdout when OAUTH_DEBUG=true' do
+          output = capture(:stdout) do
+            subject.request(:get, '/success')
           end
+          logs = [
+              'INFO -- request: GET https://api.example.com/success',
+              'INFO -- response: Status 200',
+              'DEBUG -- response: Content-Type: "text/awesome"'
+          ]
+          expect(output).to include(*logs)
         end
-      end
-
-      it 'outputs to $stdout when OAUTH_DEBUG=true' do
-        output = capture_output do
-          subject.request(:get, '/success')
-        end
-
-        expect(output).to include 'INFO -- request: GET https://api.example.com/success'
       end
     end
 
@@ -450,7 +445,7 @@ RSpec.describe OAuth2::Client do
     end
 
     it 'applies default faraday middleware to the connection' do
-      expect(subject.connection.builder.handlers).to eq([Faraday::Request::UrlEncoded, Faraday::Adapter::Test])
+      expect(subject.connection.builder.handlers).to include(Faraday::Request::UrlEncoded)
     end
   end
 end
