@@ -9,6 +9,7 @@ If you need the readme for a released version of the gem please find it below:
 
 | Version  | Release Date | Readme                                                   |
 |----------|--------------|----------------------------------------------------------|
+| 1.4.2    | Oct 1, 2019  | https://github.com/oauth-xx/oauth2/blob/v1.4.2/README.md |
 | 1.4.1    | Oct 13, 2018 | https://github.com/oauth-xx/oauth2/blob/v1.4.1/README.md |
 | 1.4.0    | Jun 9, 2017  | https://github.com/oauth-xx/oauth2/blob/v1.4.0/README.md |
 | 1.3.1    | Mar 3, 2017  | https://github.com/oauth-xx/oauth2/blob/v1.3.1/README.md |
@@ -177,7 +178,7 @@ requests for tokens for any Authentication grant type.
 This library aims to support and is [tested against][travis] the following Ruby
 implementations:
 
-### Rubies with support ending at Oauth2 2.x
+### Rubies with support ending at Oauth2 1.x
 
 * Ruby 1.9.3
 * Ruby 2.0.0
