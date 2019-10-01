@@ -6,9 +6,13 @@ before_install:
   # - NOTE ON TRUFFLERUBY: identifies as RUBY_VERSION ~> 2.6
   - |
     rv="$(ruby -e 'STDOUT.write RUBY_VERSION')"
+    echo "Discovered Ruby Version of =====> $rv"
     if   [ "$rv" \< "2.3" ]; then
       gem update --system 2.7.10 --no-document
       gem install --no-document bundler "bundler:~>1.17"
+    elif [ "$rv" = "2.5.3" ]; then
+      # JRUBY 9.2 Identifies as 2.5.3, and it fails to update rubygems
+      gem install --no-document bundler "bundler:>=2.0"
     else
       gem update --system --no-document --conservative
       gem install --no-document bundler "bundler:>=2.0"
