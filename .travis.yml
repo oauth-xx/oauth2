@@ -5,7 +5,7 @@ before_install:
   # - NOTE ON JRUBY: identifies as RUBY_VERSION ~> 1.9, 2.0, 2.3, or 2.5.
   # - NOTE ON TRUFFLERUBY: identifies as RUBY_VERSION ~> 2.6
   - |
-    rv="$(ruby -e 'STDOUT.write RUBY_VERSION')";
+    rv="$(ruby -e 'STDOUT.write RUBY_VERSION')"
     if   [ "$rv" \< "2.3" ]; then
       gem update --system 2.7.10 --no-document
       gem install --no-document bundler "bundler:~>1.17"
@@ -28,8 +28,8 @@ matrix:
     - rvm: truffleruby
   fast_finish: true
   include:
-    - rvm: jruby-1.7 # targets MRI v1.9
-      gemfile: gemfiles/jruby_1.7.gemfile
+#    - rvm: jruby-1.7 # targets MRI v1.9
+#      gemfile: gemfiles/jruby_1.7.gemfile
     - rvm: 1.9
       gemfile: gemfiles/ruby_1.9.gemfile
     - rvm: 2.0
