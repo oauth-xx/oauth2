@@ -30,8 +30,7 @@ matrix:
     - rvm: jruby-head
     - rvm: ruby-head
     - rvm: truffleruby
-    - rvm: jruby-9.0 # targets MRI v2.0
-      gemfile: gemfiles/jruby_9.0.gemfile
+    - rvm: jruby-9.0
   fast_finish: true
   include:
 #    - rvm: jruby-1.7 # targets MRI v1.9
@@ -40,6 +39,8 @@ matrix:
       gemfile: gemfiles/ruby_1.9.gemfile
     - rvm: 2.0
       gemfile: gemfiles/ruby_2.0.gemfile
+    - rvm: jruby-9.0 # targets MRI v2.0
+      gemfile: gemfiles/jruby_9.0.gemfile
     - rvm: 2.1
       gemfile: gemfiles/ruby_2.1.gemfile
     # DEPRECATION WARNING
@@ -64,5 +65,6 @@ matrix:
     - rvm: ruby-head
       gemfile: gemfiles/ruby_head.gemfile
     - rvm: truffleruby
+      gemfile: gemfiles/truffleruby.gemfile
 
 sudo: false
