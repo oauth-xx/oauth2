@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 
 - no changes yet
 
+## [1.4.2] - 2019-10-01
+
+- [#478](https://github.com/oauth-xx/oauth2/pull/478) - support latest version of faraday & fix build (@pboling)
+
 ## [1.4.1] - 2018-10-13
 
 - [#417](https://github.com/oauth-xx/oauth2/pull/417) - update jwt dependency (@thewoolleyman)
