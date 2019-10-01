@@ -42,7 +42,7 @@ RSpec.describe AccessToken do
       assert_initialized_token(target)
     end
 
-    it 'from_hash does not modify hash' do
+    it 'from_hash does not modify opts hash' do
       hash = {:access_token => token, :expires_at => Time.now.to_i}
       hash_before = hash.dup
       described_class.from_hash(client, hash)

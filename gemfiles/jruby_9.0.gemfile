@@ -1,11 +1,7 @@
 source 'https://rubygems.org'
 
-group :test do
-  gem 'rake'
-  gem 'rspec'
-  gem 'rspec-pending_for'
-  gem 'rubocop', '~> 0.53.0'
-  gem 'rubocop-rspec', '~> 1.24.0'
-end
+gem 'faraday', '~> 0.15.4'
+
+gem 'rake', [">= 10.0", "< 12"]
 
 gemspec :path => '../'

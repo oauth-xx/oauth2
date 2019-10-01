@@ -1,6 +1,9 @@
+require 'oauth2'
 require 'simplecov'
 require 'coveralls'
-require 'spec_helpers/stubbed_env'
+require 'rspec'
+require 'rspec/stubbed_env'
+require 'silent_stream'
 
 SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter[
   SimpleCov::Formatter::HTMLFormatter,
@@ -16,20 +19,21 @@ require 'addressable/uri'
 
 Faraday.default_adapter = :test
 
-RSpec.configure do |conf|
-  include OAuth2
+DEBUG = ENV['DEBUG'] == 'true'
+if DEBUG && RUBY_VERSION >= '2.6'
+  require 'byebug'
 end
 
-def capture_output
-  begin
-    old_stdout = $stdout
-    $stdout = StringIO.new
-    yield
-    result = $stdout.string
-  ensure
-    $stdout = old_stdout
+# This is dangerous - HERE BE DRAGONS.
+# It allows us to refer to classes without the namespace, but at what cost?!?
+# TODO: Refactor to use explicit references everywhere
+include OAuth2
+
+RSpec.configure do |config|
+  config.expect_with :rspec do |c|
+    c.syntax = :expect
   end
-  result
+  config.include SilentStream
 end
 
 VERBS = [:get, :post, :put, :delete].freeze

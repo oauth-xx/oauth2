@@ -268,28 +268,23 @@ RSpec.describe OAuth2::Client do
       end
     end
 
-    context 'when OAUTH_DEBUG=true' do
-      around do |example|
-        begin
-          original = ENV['OAUTH_DEBUG']
-          ENV['OAUTH_DEBUG'] = 'true'
-
-          example.call
-        ensure
-          if original.nil?
-            ENV.delete('OAUTH_DEBUG')
-          else
-            ENV['OAUTH_DEBUG'] = original
+    context 'with ENV' do
+      include_context 'with stubbed env'
+      context 'when OAUTH_DEBUG=true' do
+        before do
+          stub_env('OAUTH_DEBUG' => 'true')
+        end
+        it 'outputs to $stdout when OAUTH_DEBUG=true' do
+          output = capture(:stdout) do
+            subject.request(:get, '/success')
           end
+          logs = [
+              'INFO -- request: GET https://api.example.com/success',
+              'INFO -- response: Status 200',
+              'DEBUG -- response: Content-Type: "text/awesome"'
+          ]
+          expect(output).to include(*logs)
         end
-      end
-
-      it 'outputs to $stdout when OAUTH_DEBUG=true' do
-        output = capture_output do
-          subject.request(:get, '/success')
-        end
-
-        expect(output).to include 'INFO -- request: GET https://api.example.com/success'
       end
     end
 
