@@ -33,7 +33,7 @@ If you need the readme for a released version of the gem please find it below:
 
 [gem]: https://rubygems.org/gems/oauth2
 [travis]: http://travis-ci.org/oauth-xx/oauth2
-[coveralls]: https://coveralls.io/r/intridea/oauth2
+[coveralls]: https://coveralls.io/r/oauth-xx/oauth2
 [codeclimate]: https://codeclimate.com/github/oauth-xx/oauth2/maintainability
 [depfu]: https://depfu.com/github/oauth-xx/oauth2
 [source-license]: https://opensource.org/licenses/MIT
@@ -53,9 +53,9 @@ A Ruby wrapper for the OAuth 2.0 specification.
 * [Report Issues on GitHub][issues]
 * [Read More at the Wiki][wiki]
 
-[code]: https://github.com/intridea/oauth2
-[issues]: https://github.com/intridea/oauth2/issues
-[wiki]: https://wiki.github.com/intridea/oauth2
+[code]: https://github.com/oauth-xx/oauth2
+[issues]: https://github.com/oauth-xx/oauth2/issues
+[wiki]: https://wiki.github.com/oauth-xx/oauth2
 
 ## Usage Examples
 
