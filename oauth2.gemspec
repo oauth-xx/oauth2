@@ -22,6 +22,14 @@ Gem::Specification.new do |spec|
   spec.summary       = 'A Ruby wrapper for the OAuth 2.0 protocol.'
   spec.version       = OAuth2::Version
 
+  spec.metadata = {
+    'bug_tracker_uri'   => 'https://github.com/oauth-xx/oauth2/issues',
+    'changelog_uri'     => "https://github.com/oauth-xx/oauth2/blob/v#{spec.version}/CHANGELOG.md",
+    'documentation_uri' => "https://www.rubydoc.info/gems/oauth2/#{spec.version}",
+    'source_code_uri'   => "https://github.com/oauth-xx/oauth2/tree/v#{spec.version}",
+    'wiki_uri'          => 'https://github.com/oauth-xx/oauth2/wiki'
+  }
+
   spec.require_paths = %w[lib]
   spec.bindir        = 'exe'
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
