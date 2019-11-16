@@ -492,8 +492,8 @@ describe OAuth2::Client do
           end
 
           token = client.get_token({})
-          expect(token.response).to be_a OAuth2::Response
-          expect(token.response.parsed).to eq('access_token' => 'the-token')
+          expect(token).to be_a OAuth2::AccessToken
+          expect(token.token).to eq('the-token')
         end
       end
     end

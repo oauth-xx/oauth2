@@ -166,7 +166,10 @@ module OAuth2
       if options[:raise_errors] && !access_token
         error = Error.new(response)
         raise(error)
+      elsif !access_token
+        return nil
       end
+      
       access_token
     end
 
