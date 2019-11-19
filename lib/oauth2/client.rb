@@ -149,7 +149,10 @@ module OAuth2
       if options[:raise_errors] && !response_contains_token
         error = Error.new(response)
         raise(error)
+      elsif !response_contains_token
+        return nil
       end
+
       build_access_token(response, access_token_opts, access_token_class)
     end
 
