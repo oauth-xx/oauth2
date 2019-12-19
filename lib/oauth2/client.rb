@@ -87,6 +87,9 @@ module OAuth2
     end
 
     # Makes a request relative to the specified site root.
+    # Updated HTTP 1.1 specification (IETF RFC 7231) relaxed the original constraint (IETF RFC 2616),
+    #   allowing the use of relative URLs in Location headers.
+    # @see https://datatracker.ietf.org/doc/html/rfc7231#section-7.1.2
     #
     # @param [Symbol] verb one of :get, :post, :put, :delete
     # @param [String] url URL path of request
@@ -124,7 +127,8 @@ module OAuth2
         end
         location = response.headers['location']
         if location
-          request(verb, location, opts)
+          full_location = response.response.env.url.merge(location)
+          request(verb, full_location, opts)
         else
           error = Error.new(response)
           raise(error, "Got #{response.status} status code, but no Location header was present")
