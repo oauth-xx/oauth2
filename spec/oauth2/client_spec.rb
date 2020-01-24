@@ -194,11 +194,11 @@ RSpec.describe OAuth2::Client do
             subject.request(:get, '/success')
             subject.request(:get, '/reflect', :body => 'this is magical')
           end
-          expect(printed).to match(/DEBUG -- request: User-Agent: "Faraday v.+"/)
-          expect(printed).to match 'DEBUG -- response: Content-Type: "text/awesome'
-          expect(printed).to match 'DEBUG -- response: yay'
-          expect(printed).to match 'DEBUG -- request: this is magical'
-          expect(printed).to match 'DEBUG -- response: this is magical'
+          expect(printed).to match(/INFO -- request: User-Agent: "Faraday v.+"/)
+          expect(printed).to match 'INFO -- response: Content-Type: "text/awesome'
+          expect(printed).to match 'INFO -- response: yay'
+          expect(printed).to match 'INFO -- request: this is magical'
+          expect(printed).to match 'INFO -- response: this is magical'
         end
       end
       context 'when OAUTH_DEBUG=false' do
@@ -281,7 +281,7 @@ RSpec.describe OAuth2::Client do
           logs = [
               'INFO -- request: GET https://api.example.com/success',
               'INFO -- response: Status 200',
-              'DEBUG -- response: Content-Type: "text/awesome"'
+              'INFO -- response: Content-Type: "text/awesome"'
           ]
           expect(output).to include(*logs)
         end
