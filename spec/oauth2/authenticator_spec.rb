@@ -45,6 +45,15 @@ RSpec.describe OAuth2::Authenticator do
           expect(output).to eq('client_id' => 'foo')
         end
       end
+
+      context 'using private key jwt authentication' do
+        let(:mode) { :private_key_jwt }
+
+        it 'does not add client_secret' do
+          output = subject.apply({})
+          expect(output).to eq('client_id' => 'foo')
+        end
+      end
     end
 
     context 'with Basic authentication' do
