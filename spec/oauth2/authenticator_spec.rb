@@ -36,6 +36,15 @@ RSpec.describe OAuth2::Authenticator do
           :headers => {'A' => 'b'}
         )
       end
+
+      context 'using tls client authentication' do
+        let(:mode) { :tls_client_auth }
+
+        it 'does not add client_secret' do
+          output = subject.apply({})
+          expect(output).to eq('client_id' => 'foo')
+        end
+      end
     end
 
     context 'with Basic authentication' do
