@@ -25,8 +25,10 @@ module OAuth2
         apply_basic_auth(params)
       when :request_body
         apply_params_auth(params)
-      when :tls_client_auth, :private_key_jwt
+      when :tls_client_auth
         apply_client_id(params)
+      when :private_key_jwt
+        params
       else
         raise NotImplementedError
       end
