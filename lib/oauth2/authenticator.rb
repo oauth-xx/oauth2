@@ -25,6 +25,10 @@ module OAuth2
         apply_basic_auth(params)
       when :request_body
         apply_params_auth(params)
+      when :tls_client_auth
+        apply_client_id(params)
+      when :private_key_jwt
+        params
       else
         raise NotImplementedError
       end
@@ -40,6 +44,12 @@ module OAuth2
     # already set.
     def apply_params_auth(params)
       {'client_id' => id, 'client_secret' => secret}.merge(params)
+    end
+
+    # When using schemes that don't require the client_secret to be passed i.e TLS Client Auth,
+    # we don't want to send the secret
+    def apply_client_id(params)
+      { 'client_id' => id }.merge(params)
     end
 
     # Adds an `Authorization` header with Basic Auth credentials if and only if

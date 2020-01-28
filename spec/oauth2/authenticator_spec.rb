@@ -38,6 +38,24 @@ describe OAuth2::Authenticator do
           :headers => {'A' => 'b'}
         )
       end
+
+      context 'using tls client authentication' do
+        let(:mode) { :tls_client_auth }
+
+        it 'does not add client_secret' do
+          output = subject.apply({})
+          expect(output).to eq('client_id' => 'foo')
+        end
+      end
+
+      context 'using private key jwt authentication' do
+        let(:mode) { :private_key_jwt }
+
+        it 'does not add client_secret or client_id' do
+          output = subject.apply({})
+          expect(output).to eq({})
+        end
+      end
     end
 
     context 'with Basic authentication' do
