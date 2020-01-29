@@ -10,6 +10,7 @@ RSpec.describe AccessToken do
         VERBS.each do |verb|
           stub.send(verb, '/token/header') { |env| [200, {}, env[:request_headers]['Authorization']] }
           stub.send(verb, "/token/query?access_token=#{token}") { |env| [200, {}, Addressable::URI.parse(env[:url]).query_values['access_token']] }
+          stub.send(verb, '/token/query_string') { |env| [200, {}, CGI.unescape(Addressable::URI.parse(env[:url]).query)] }
           stub.send(verb, '/token/body') { |env| [200, {}, env[:body]] }
         end
         stub.post('/oauth/token') { |env| [200, {'Content-Type' => 'application/json'}, refresh_body] }
@@ -134,6 +135,11 @@ RSpec.describe AccessToken do
         it "sends the token in the Authorization header for a #{verb.to_s.upcase} request" do
           expect(subject.post('/token/query').body).to eq(token)
         end
+
+        it "sends a #{verb.to_s.upcase} request and options[:param_name] include [number]." do
+          subject.options[:param_name] = 'auth[1]'
+          expect(subject.__send__(verb, '/token/query_string').body).to include("auth[1]=#{token}")
+        end
       end
     end
 
@@ -145,6 +151,14 @@ RSpec.describe AccessToken do
       VERBS.each do |verb|
         it "sends the token in the Authorization header for a #{verb.to_s.upcase} request" do
           expect(subject.post('/token/body').body.split('=').last).to eq(token)
+        end
+      end
+    end
+
+    context 'params include [number]' do
+      VERBS.each do |verb|
+        it "sends #{verb.to_s.upcase} correct query" do
+          expect(subject.__send__(verb, '/token/query_string', :params => {'foo[bar][1]' => 'val'}).body).to include('foo[bar][1]=val')
         end
       end
     end

@@ -95,8 +95,9 @@ module OAuth2
     # @option opts [Symbol] :parse @see Response::initialize
     # @yield [req] The Faraday request
     def request(verb, url, opts = {}) # rubocop:disable CyclomaticComplexity, MethodLength, Metrics/AbcSize
-      url = connection.build_url(url, opts[:params]).to_s
+      url = connection.build_url(url).to_s
       response = connection.run_request(verb, url, opts[:body], opts[:headers]) do |req|
+        req.params.update(opts[:params]) if opts[:params]
         yield(req) if block_given?
       end
       response = Response.new(response, :parse => opts[:parse])
