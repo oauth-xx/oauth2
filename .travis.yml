@@ -19,9 +19,22 @@ before_install:
       gem install --no-document bundler "bundler:>=2.0"
     fi
 
+before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
+
 bundler_args: --no-deployment --jobs 3 --retry 3
 
 cache: bundler
+
+env:
+  global:
+    - JRUBY_OPTS="$JRUBY_OPTS -Xcli.debug=true --debug"
+    - CC_TEST_REPORTER_ID=29caf9cf27d27ae609c088feb9d4ba34460f7a39251f2e8615c9a16f3075530e
 
 language: ruby
 
