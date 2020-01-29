@@ -1,5 +1,20 @@
 # OAuth2
 
+If you need the readme for a released version of the gem please find it below:
+
+| Version  | Release Date | Readme                                                   |
+|----------|--------------|----------------------------------------------------------|
+| 1.4.3    | Jan 29, 2020 | https://github.com/oauth-xx/oauth2/blob/v1.4.3/README.md |
+| 1.4.2    | Oct 1, 2019  | https://github.com/oauth-xx/oauth2/blob/v1.4.2/README.md |
+| 1.4.1    | Oct 13, 2018 | https://github.com/oauth-xx/oauth2/blob/v1.4.1/README.md |
+| 1.4.0    | Jun 9, 2017  | https://github.com/oauth-xx/oauth2/blob/v1.4.0/README.md |
+| 1.3.1    | Mar 3, 2017  | https://github.com/oauth-xx/oauth2/blob/v1.3.1/README.md |
+| 1.3.0    | Dec 27, 2016 | https://github.com/oauth-xx/oauth2/blob/v1.3.0/README.md |
+| 1.2.0    | Jun 30, 2016 | https://github.com/oauth-xx/oauth2/blob/v1.2.0/README.md |
+| 1.1.0    | Jan 30, 2016 | https://github.com/oauth-xx/oauth2/blob/v1.1.0/README.md |
+| 1.0.0    | May 23, 2014 | https://github.com/oauth-xx/oauth2/blob/v1.0.0/README.md |
+| < 1.0.0  | Find here    | https://github.com/oauth-xx/oauth2/tags                  |
+
 [![Gem Version](http://img.shields.io/gem/v/oauth2.svg)][gem]
 [![Total Downloads](https://img.shields.io/gem/dt/oauth2.svg)][gem]
 [![Downloads Today](https://img.shields.io/gem/rt/oauth2.svg)][gem]
@@ -21,6 +36,7 @@
 [source-license]: https://opensource.org/licenses/MIT
 [inch-ci]: http://inch-ci.org/github/oauth-xx/oauth2
 [code-triage]: https://www.codetriage.com/oauth-xx/oauth2
+[fossa1]: https://app.fossa.io/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2?ref=badge_shield
 
 A Ruby wrapper for the [OAuth 2.0 specification][oauth2-spec].
 
@@ -50,7 +66,7 @@ Or install it yourself as:
 
 [code]: https://github.com/oauth-xx/oauth2
 [issues]: https://github.com/oauth-xx/oauth2/issues
-[wiki]: https://github.com/oauth-xx/oauth2/wiki
+[wiki]: https://wiki.github.com/oauth-xx/oauth2
 
 ## Usage Examples
 
@@ -67,6 +83,7 @@ response.class.name
 # => OAuth2::Response
 ```
 ## OAuth2::Response
+
 The AccessToken methods #get, #post, #put and #delete and the generic #request
 will return an instance of the #OAuth2::Response class.
 
@@ -79,12 +96,14 @@ The original response body, headers, and status can be accessed via their
 respective methods.
 
 ## OAuth2::AccessToken
+
 If you have an existing Access Token for a user, you can initialize an instance
 using various class methods including the standard new, from_hash (if you have
 a hash of the values), or from_kvform (if you have an
 application/x-www-form-urlencoded encoded string of the values).
 
 ## OAuth2::Error
+
 On 400+ status code responses, an OAuth2::Error will be raised.  If it is a
 standard OAuth2 error response, the body will be parsed and #code and #description will contain the values provided from the error and
 error_description parameters.  The #response property of OAuth2::Error will
@@ -96,6 +115,7 @@ instance will be returned as usual and on 400+ status code responses, the
 Response instance will contain the OAuth2::Error instance.
 
 ## Authorization Grants
+
 Currently the Authorization Code, Implicit, Resource Owner Password Credentials, Client Credentials, and Assertion
 authentication grant types have helper strategy classes that simplify client
 use.  They are available via the #auth_code, #implicit, #password, #client_credentials, and #assertion methods respectively.
