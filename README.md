@@ -4,7 +4,7 @@
 [![Total Downloads](https://img.shields.io/gem/dt/oauth2.svg)][gem]
 [![Downloads Today](https://img.shields.io/gem/rt/oauth2.svg)][gem]
 [![Build Status](https://travis-ci.org/oauth-xx/oauth2.svg?branch=1-4-stable)][travis]
-[![Coverage Status](http://img.shields.io/coveralls/oauth-xx/oauth2.svg)][coveralls]
+[![Test Coverage](https://api.codeclimate.com/v1/badges/688c612528ff90a46955/test_coverage)][codeclimate-coverage]
 [![Maintainability](https://api.codeclimate.com/v1/badges/688c612528ff90a46955/maintainability)][codeclimate-maintainability]
 [![Depfu](https://badges.depfu.com/badges/6d34dc1ba682bbdf9ae2a97848241743/count.svg)][depfu]
 [![Open Source Helpers](https://www.codetriage.com/oauth-xx/oauth2/badges/users.svg)][code-triage]
@@ -16,6 +16,7 @@
 [travis]: http://travis-ci.org/oauth-xx/oauth2
 [coveralls]: https://coveralls.io/r/oauth-xx/oauth2
 [codeclimate-maintainability]: https://codeclimate.com/github/oauth-xx/oauth2/maintainability
+[codeclimate-coverage]: https://codeclimate.com/github/oauth-xx/oauth2/test_coverage
 [depfu]: https://depfu.com/github/oauth-xx/oauth2
 [source-license]: https://opensource.org/licenses/MIT
 [inch-ci]: http://inch-ci.org/github/oauth-xx/oauth2
