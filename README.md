@@ -157,6 +157,7 @@ token = client.auth_code.get_token('code_value', :redirect_uri => 'http://localh
 You can always use the #request method on the OAuth2::Client instance to make
 requests for tokens for any Authentication grant type.
 
+
 ## Supported Ruby Versions
 
 This library aims to support and is [tested against][travis] the following Ruby
