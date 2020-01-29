@@ -13,6 +13,12 @@ All notable changes to this project will be documented in this file.
 - _Dependency_: Upgrade jwt to 2.x.x (@travisofthenorth)
 - Fix logging to `$stdout` of request and response bodies via Faraday's logger and `ENV["OAUTH_DEBUG"] == 'true'`
 
+## [1.4.3] - 2020-01-29
+
+- [#483](https://github.com/oauth-xx/oauth2/pull/483) - add project metadata to gemspec (@orien)
+- [#495](https://github.com/oauth-xx/oauth2/pull/495) - support additional types of access token requests (@SteveyblamFreeagent, @thomcorley, @dgholz)
+  - Adds support for private_key_jwt and tls_client_auth
+
 ## [1.4.2] - 2019-10-01
 
 - [#478](https://github.com/oauth-xx/oauth2/pull/478) - support latest version of faraday & fix build (@pboling)
@@ -150,4 +156,5 @@ All notable changes to this project will be documented in this file.
 [1.4.0]: https://github.com/oauth-xx/oauth2/compare/v1.3.1...v1.4.0
 [1.4.1]: https://github.com/oauth-xx/oauth2/compare/v1.4.0...v1.4.1
 [1.4.2]: https://github.com/oauth-xx/oauth2/compare/v1.4.1...v1.4.2
+[1.4.3]: https://github.com/oauth-xx/oauth2/compare/v1.4.2...v1.4.3
 [unreleased]: https://github.com/oauth-xx/oauth2/compare/v1.4.1...HEAD

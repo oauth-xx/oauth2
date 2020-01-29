@@ -185,6 +185,7 @@ implementations:
   - [JRuby 9.2][jruby-9.2] (targets MRI v2.5)
   - [truffleruby][truffleruby] (targets MRI 2.5)
 * Ruby 2.6 - Support ends with version 6.x series
+* Ruby 2.7 - Support ends with version 7.x series
 
 [jruby-1.7]: https://www.jruby.org/2017/05/11/jruby-1-7-27.html
 [jruby-9.0]: https://www.jruby.org/2016/01/26/jruby-9-0-5-0.html
