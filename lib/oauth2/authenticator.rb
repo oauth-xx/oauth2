@@ -46,7 +46,7 @@ module OAuth2
       {'client_id' => id, 'client_secret' => secret}.merge(params)
     end
 
-    # When using schemes that don't require the client_secret to be passed ( TLS Client auth, Private Key JWT etc),
+    # When using schemes that don't require the client_secret to be passed i.e TLS Client Auth,
     # we don't want to send the secret
     def apply_client_id(params)
       { 'client_id' => id }.merge(params)
