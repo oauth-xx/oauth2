@@ -21,10 +21,10 @@ If you need the readme for a released version of the gem please find it below:
 
 [![Gem Version](http://img.shields.io/gem/v/oauth2.svg)][gem]
 [![Total Downloads](https://img.shields.io/gem/dt/oauth2.svg)][gem]
-[![Downloads Today](https://img.shields.io/gem/rt/oauth2.svg)](https://rubygems.org/gems/oauth2)
+[![Downloads Today](https://img.shields.io/gem/rt/oauth2.svg)][gem]
 [![Build Status](http://img.shields.io/travis/oauth-xx/oauth2.svg)][travis]
-[![Coverage Status](http://img.shields.io/coveralls/oauth-xx/oauth2.svg)][coveralls]
-[![Maintainability](https://api.codeclimate.com/v1/badges/688c612528ff90a46955/maintainability)][codeclimate]
+[![Test Coverage](https://api.codeclimate.com/v1/badges/688c612528ff90a46955/test_coverage)][codeclimate-coverage]
+[![Maintainability](https://api.codeclimate.com/v1/badges/688c612528ff90a46955/maintainability)][codeclimate-maintainability]
 [![Depfu](https://badges.depfu.com/badges/6d34dc1ba682bbdf9ae2a97848241743/count.svg)][depfu]
 [![Open Source Helpers](https://www.codetriage.com/oauth-xx/oauth2/badges/users.svg)][code-triage]
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)][source-license]
@@ -34,7 +34,8 @@ If you need the readme for a released version of the gem please find it below:
 [gem]: https://rubygems.org/gems/oauth2
 [travis]: http://travis-ci.org/oauth-xx/oauth2
 [coveralls]: https://coveralls.io/r/oauth-xx/oauth2
-[codeclimate]: https://codeclimate.com/github/oauth-xx/oauth2/maintainability
+[codeclimate-maintainability]: https://codeclimate.com/github/oauth-xx/oauth2/maintainability
+[codeclimate-coverage]: https://codeclimate.com/github/oauth-xx/oauth2/test_coverage
 [depfu]: https://depfu.com/github/oauth-xx/oauth2
 [source-license]: https://opensource.org/licenses/MIT
 [inch-ci]: http://inch-ci.org/github/oauth-xx/oauth2
