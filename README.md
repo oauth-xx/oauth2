@@ -166,12 +166,7 @@ implementations:
 
 ### Rubies with support ending at Oauth2 1.x
 
-* Ruby 1.9.3
-  - [JRuby 1.7][jruby-1.7] (targets MRI v1.9)
-
-* Ruby 2.0.0
-  - [JRuby 9.0][jruby-9.0] (targets MRI v2.0)
-* Ruby 2.1
+For information on supported Rubies for the current 1.x release of oauth2 see the [README for 1.4.x](https://github.com/oauth-xx/oauth2/blob/1-4-stable/README.md)
 
 ---
 
