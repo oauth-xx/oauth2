@@ -11,8 +11,8 @@ All notable changes to this project will be documented in this file.
 - Oauth2::Error : Error codes are strings instead of symbols (@NobodysNightmare)
 - _Dependency_: Upgrade Faraday to 0.13.x (@zacharywelch)
 - _Dependency_: Upgrade jwt to 2.x.x (@travisofthenorth)
-- Fix logging to `$stdout` of request and response bodies via Faraday's logger and `ENV["OAUTH_DEBUG"] == 'true'`
-- **Security**: Add checks to enforce `client_secret` is *never* passed in authorize_url query params
+- Fix logging to `$stdout` of request and response bodies via Faraday's logger and `ENV["OAUTH_DEBUG"] == 'true'` (@pboling)
+- **Security**: Add checks to enforce `client_secret` is *never* passed in authorize_url query params (@dfockler)
 
 ## [1.4.3] - 2020-01-29
 
