@@ -43,6 +43,7 @@ matrix:
     - rvm: jruby-head
     - rvm: ruby-head
     - rvm: truffleruby
+    - rvm: jruby-9.2 # jruby-9.2 often fails to download, thus failing the build.
   fast_finish: true
   include:
     - rvm: 2.2
