@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file.
 - [#483](https://github.com/oauth-xx/oauth2/pull/483) - add project metadata to gemspec (@orien)
 - [#495](https://github.com/oauth-xx/oauth2/pull/495) - support additional types of access token requests (@SteveyblamFreeagent, @thomcorley, @dgholz)
   - Adds support for private_key_jwt and tls_client_auth
+- [#433](https://github.com/oauth-xx/oauth2/pull/433) - allow field names with square brackets and numbers in params (@asm256)
 
 ## [1.4.2] - 2019-10-01
 
