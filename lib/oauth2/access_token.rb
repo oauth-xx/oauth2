@@ -47,7 +47,7 @@ module OAuth2
       end
       @expires_in ||= opts.delete('expires')
       @expires_in &&= @expires_in.to_i
-      @expires_at &&= @expires_at.to_i
+      @expires_at &&= convert_expires_at(@expires_at)
       @expires_latency &&= @expires_latency.to_i
       @expires_at ||= Time.now.to_i + @expires_in if @expires_in
       @expires_at -= @expires_latency if @expires_latency
@@ -174,6 +174,13 @@ module OAuth2
       else
         raise("invalid :mode option of #{options[:mode]}")
       end
+    end
+
+    def convert_expires_at(expires_at)
+      expires_at_i = expires_at.to_i
+      return expires_at_i if expires_at_i > Time.now.utc.to_i
+      return Time.parse(expires_at).to_i if expires_at.is_a?(String)
+      expires_at_i
     end
   end
 end
