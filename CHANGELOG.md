@@ -14,6 +14,10 @@ All notable changes to this project will be documented in this file.
 - Fix logging to `$stdout` of request and response bodies via Faraday's logger and `ENV["OAUTH_DEBUG"] == 'true'` (@pboling)
 - **Security**: Add checks to enforce `client_secret` is *never* passed in authorize_url query params (@dfockler)
 
+## [1.4.4] - 2020-02-12
+
+- [#408](https://github.com/oauth-xx/oauth2/pull/408) - Fixed expires_at for formatted time (@Lomey)
+
 ## [1.4.3] - 2020-01-29
 
 - [#483](https://github.com/oauth-xx/oauth2/pull/483) - add project metadata to gemspec (@orien)
