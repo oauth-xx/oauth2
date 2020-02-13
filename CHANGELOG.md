@@ -5,6 +5,10 @@ All notable changes to this project will be documented in this file.
 
 - no changes yet
 
+## [1.4.4] - 2020-02-12
+
+- [#408](https://github.com/oauth-xx/oauth2/pull/408) - Fixed expires_at for formatted time (@Lomey)
+
 ## [1.4.3] - 2020-01-29
 
 - [#483](https://github.com/oauth-xx/oauth2/pull/483) - add project metadata to gemspec (@orien)
