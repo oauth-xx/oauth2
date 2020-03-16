@@ -14,17 +14,17 @@ module OAuth2
     #
     # @param [String] client_id the client_id value
     # @param [String] client_secret the client_secret value
-    # @param [Hash] opts the options to create the client with
-    # @option opts [String] :site the OAuth2 provider site host
-    # @option opts [String] :redirect_uri the absolute URI to the Redirection Endpoint for use in authorization grants and token exchange
-    # @option opts [String] :authorize_url ('/oauth/authorize') absolute or relative URL path to the Authorization endpoint
-    # @option opts [String] :token_url ('/oauth/token') absolute or relative URL path to the Token endpoint
-    # @option opts [Symbol] :token_method (:post) HTTP method to use to request token (:get or :post)
-    # @option opts [Symbol] :auth_scheme (:basic_auth) HTTP method to use to authorize request (:basic_auth or :request_body)
-    # @option opts [Hash] :connection_opts ({}) Hash of connection options to pass to initialize Faraday with
-    # @option opts [FixNum] :max_redirects (5) maximum number of redirects to follow
-    # @option opts [Boolean] :raise_errors (true) whether or not to raise an OAuth2::Error
-    # @options opts [Logger] :logger (::Logger.new($stdout)) which logger to use when OAUTH_DEBUG is enabled
+    # @param [Hash] options the options to create the client with
+    # @option options [String] :site the OAuth2 provider site host
+    # @option options [String] :redirect_uri the absolute URI to the Redirection Endpoint for use in authorization grants and token exchange
+    # @option options [String] :authorize_url ('/oauth/authorize') absolute or relative URL path to the Authorization endpoint
+    # @option options [String] :token_url ('/oauth/token') absolute or relative URL path to the Token endpoint
+    # @option options [Symbol] :token_method (:post) HTTP method to use to request token (:get or :post)
+    # @option options [Symbol] :auth_scheme (:basic_auth) HTTP method to use to authorize request (:basic_auth or :request_body)
+    # @option options [Hash] :connection_opts ({}) Hash of connection options to pass to initialize Faraday with
+    # @option options [FixNum] :max_redirects (5) maximum number of redirects to follow
+    # @option options [Boolean] :raise_errors (true) whether or not to raise an OAuth2::Error
+    # @option options [Logger] :logger (::Logger.new($stdout)) which logger to use when OAUTH_DEBUG is enabled
     #  on responses with 400+ status codes
     # @yield [builder] The Faraday connection builder
     def initialize(client_id, client_secret, options = {}, &block)
@@ -47,7 +47,7 @@ module OAuth2
 
     # Set the site host
     #
-    # @param [String] the OAuth2 provider site host
+    # @param value [String] the OAuth2 provider site host
     def site=(value)
       @connection = nil
       @site = value
@@ -127,9 +127,9 @@ module OAuth2
 
     # Initializes an AccessToken by making a request to the token endpoint
     #
-    # @param [Hash] params a Hash of params for the token endpoint
-    # @param [Hash] access token options, to pass to the AccessToken object
-    # @param [Class] class of access token for easier subclassing OAuth2::AccessToken
+    # @param params [Hash] a Hash of params for the token endpoint
+    # @param access_token_opts [Hash] access token options, to pass to the AccessToken object
+    # @param access_token_class [Class] class of access token for easier subclassing OAuth2::AccessToken
     # @return [AccessToken] the initialized AccessToken
     def get_token(params, access_token_opts = {}, access_token_class = AccessToken) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
       params = authenticator.apply(params)
