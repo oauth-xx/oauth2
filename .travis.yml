@@ -69,5 +69,3 @@ matrix:
       gemfile: gemfiles/ruby_head.gemfile
     - rvm: truffleruby
       gemfile: gemfiles/truffleruby.gemfile
-
-sudo: false
