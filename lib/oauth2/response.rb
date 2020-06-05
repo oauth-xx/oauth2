@@ -69,24 +69,24 @@ module OAuth2
 
       @parsed =
         if parser.respond_to?(:call)
-          parsed_response = case parser.arity
-                            when 0
-                              parser.call
-                            when 1
-                              parser.call(body)
-                            else
-                              parser.call(body, response)
-                            end
-          if parsed_response.is_a?(Hash)
-            parsed_response = parsed_response.inject({}) do |carry, (key, value)|
-              carry[to_snake_case(key)] = value
-
-              carry
-            end
+          case parser.arity
+          when 0
+            parser.call
+          when 1
+            parser.call(body)
+          else
+            parser.call(body, response)
           end
-
-          parsed_response
         end
+
+      if @parsed.is_a?(Hash)
+        @parsed = @parsed.inject({}) do |carry, (key, value)|
+          carry[to_snake_case(key)] = value
+          carry
+        end
+      end
+
+      @parsed
     end
 
     # Attempts to determine the content type of the response.
