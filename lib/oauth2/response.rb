@@ -78,7 +78,11 @@ module OAuth2
                               parser.call(body, response)
                             end
           if parsed_response.is_a?(Hash)
-            parsed_response.transform_keys! { |key| to_snake_case(key) }
+            parsed_response = parsed_response.inject({}) do |carry, (key, value)|
+              carry[to_snake_case(key)] = value
+
+              carry
+            end
           end
 
           parsed_response
