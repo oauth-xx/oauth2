@@ -69,14 +69,19 @@ module OAuth2
 
       @parsed =
         if parser.respond_to?(:call)
-          case parser.arity
-          when 0
-            parser.call
-          when 1
-            parser.call(body)
-          else
-            parser.call(body, response)
+          parsed_response = case parser.arity
+                            when 0
+                              parser.call
+                            when 1
+                              parser.call(body)
+                            else
+                              parser.call(body, response)
+                            end
+          if parsed_response.is_a?(Hash)
+            parsed_response.transform_keys! { |key| to_snake_case(key) }
           end
+
+          parsed_response
         end
     end
 
@@ -112,7 +117,16 @@ module OAuth2
           @@parsers[options[:parse].to_sym]
         end
 
-      @parser ||= @@parsers[@@content_types[content_type]]
+      @parser ||= @@parsers[@@content_types[content_type.downcase]]
+    end
+
+    private
+
+    def to_snake_case(string)
+      string.gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
+            .gsub(/([a-z\d])([A-Z])/, '\1_\2')
+            .tr("-", "_")
+            .downcase
     end
   end
 end
