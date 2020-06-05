@@ -5,10 +5,10 @@ require 'rspec'
 require 'rspec/stubbed_env'
 require 'silent_stream'
 
-SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter[
+SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
   SimpleCov::Formatter::HTMLFormatter,
   Coveralls::SimpleCov::Formatter
-]
+])
 
 SimpleCov.start do
   add_filter '/spec'
