@@ -79,8 +79,8 @@ RSpec.describe MACToken do
       header = subject.header('get', 'https://www.example.com/hello?a=1')
       seq_nr_2 = header.match(/MAC kid="#{kid}", ts="[0-9]+", seq-nr="([^"]+)", mac="[^"]+"/)[1]
 
-      expect(seq_nr_1).not_to be_nil
-      expect(seq_nr_2).not_to be_nil
+      expect(seq_nr_1).not_to be_empty
+      expect(seq_nr_2).not_to be_empty
       expect(seq_nr_2).not_to eq(seq_nr_1)
     end
   end
