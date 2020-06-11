@@ -79,12 +79,7 @@ module OAuth2
           end
         end
 
-      if @parsed.is_a?(Hash)
-        @parsed = @parsed.inject({}) do |carry, (key, value)|
-          carry[to_snake_case(key)] = value
-          carry
-        end
-      end
+      @parsed = OAuth2::SnakeHash.build(@parsed) if @parsed.is_a?(Hash)
 
       @parsed
     end
