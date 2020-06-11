@@ -69,6 +69,10 @@ RSpec.describe MACToken do
     end
 
     it 'passes URI::InvalidURIError through' do
+      expect { subject.header('get', '\\') }.to raise_error(URI::InvalidURIError)
+    end
+
+    it 'passes ArgumentError with nil url' do
       expect { subject.header('get', nil) }.to raise_error(ArgumentError)
     end
 
