@@ -4,7 +4,7 @@ require 'time'
 
 # includes gem files
 require 'oauth2/error'
-require 'oauth2/snake_hash'
+require 'oauth2/snaky_hash'
 require 'oauth2/authenticator'
 require 'oauth2/client'
 require 'oauth2/strategy/base'

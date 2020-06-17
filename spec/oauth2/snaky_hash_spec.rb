@@ -1,4 +1,4 @@
-RSpec.describe SnakeHash do
+RSpec.describe SnakyHash do
   subject { described_class.new }
 
   describe '.build' do

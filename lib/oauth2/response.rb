@@ -79,7 +79,7 @@ module OAuth2
           end
         end
 
-      @parsed = OAuth2::SnakeHash.build(@parsed) if @parsed.is_a?(Hash)
+      @parsed = OAuth2::SnakyHash.build(@parsed) if @parsed.is_a?(Hash)
 
       @parsed
     end

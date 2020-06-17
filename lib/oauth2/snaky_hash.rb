@@ -1,10 +1,10 @@
 module OAuth2
   # Hash which allow assign string key in camel case
   # and query on both camel and snake case
-  class SnakeHash < ::Hash
-    # Build from another hash or SnakeHash
+  class SnakyHash < ::Hash
+    # Build from another hash or SnakyHash
     #
-    # @param [Hash, SnakeHash] hash initial values for hash
+    # @param [Hash, SnakyHash] hash initial values for hash
     def self.build(hash)
       new.merge!(hash)
     end
