@@ -26,6 +26,8 @@ module OAuth2
     # @option opts [Boolean] :raise_errors (true) whether or not to raise an OAuth2::Error
     # @options opts [Logger] :logger (::Logger.new($stdout)) which logger to use when OAUTH_DEBUG is enabled
     #  on responses with 400+ status codes
+    # @options opts [String] :dig_nested_keys_for_access_token comma-separated list of attributes to dig within the response hash to
+    #  retrieve the Oauth access token. e.g. for Pinterest API v3: "data,access_token"
     # @yield [builder] The Faraday connection builder
     def initialize(client_id, client_secret, options = {}, &block)
       opts = options.dup
@@ -143,9 +145,17 @@ module OAuth2
         opts[:headers] = {}
       end
       opts[:headers].merge!(headers)
+
       response = request(options[:token_method], token_url, opts)
       response_contains_token = response.parsed.is_a?(Hash) &&
                                 (response.parsed['access_token'] || response.parsed['id_token'])
+
+      if response.parsed.is_a?(Hash) && options[:dig_nested_keys_for_access_token]
+        if nested_access_token = response.parsed.dig(*options[:dig_nested_keys_for_access_token].to_s.split(","))
+          nested_access_token_hash = { "access_token" => nested_access_token }
+          response_contains_token = true
+        end
+      end
 
       if options[:raise_errors] && !response_contains_token
         error = Error.new(response)
@@ -154,7 +164,7 @@ module OAuth2
         return nil
       end
 
-      build_access_token(response, access_token_opts, access_token_class)
+      build_access_token(response, access_token_opts.merge(nested_access_token_hash.to_h), access_token_class)
     end
 
     # The Authorization Code strategy

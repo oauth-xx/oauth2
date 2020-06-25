@@ -7,6 +7,7 @@ RSpec.describe OAuth2::Strategy::AuthCode do
   let(:kvform_token) { 'expires_in=600&access_token=salmon&refresh_token=trout&extra_param=steve' }
   let(:facebook_token) { kvform_token.gsub('_in', '') }
   let(:json_token) { MultiJson.encode(:expires_in => 600, :access_token => 'salmon', :refresh_token => 'trout', :extra_param => 'steve') }
+  let(:pinterest_token) { MultiJson.encode(:data => { :expires_in => 600, :access_token => 'salmon' } ) }
   let(:redirect_uri) { 'http://example.com/redirect_uri' }
   let(:microsoft_token) { 'id_token=jwt' }
 
@@ -33,6 +34,8 @@ RSpec.describe OAuth2::Strategy::AuthCode do
             [200, {'Content-Type' => 'application/json'}, json_token]
           when 'from_facebook'
             [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, facebook_token]
+          when 'from_pinterest'
+            [200, {'Content-Type' => 'application/json'}, pinterest_token]
           end
         end
         stub.post('/oauth/token', 'client_id' => 'abc', 'client_secret' => 'def', 'code' => 'sushi', 'grant_type' => 'authorization_code', 'redirect_uri' => redirect_uri) do |env|
@@ -109,6 +112,25 @@ RSpec.describe OAuth2::Strategy::AuthCode do
       client.options[:auth_scheme] = :request_body
       @access = subject.get_token(code)
       expect(@access['id_token']).to eq('jwt')
+    end
+  end
+
+  describe '#get_token with nested access token' do
+    before do
+      @mode = 'from_pinterest'
+      client.options[:token_method] = :post
+      client.options[:auth_scheme] = :request_body
+      client.options[:dig_nested_keys_for_access_token] = "data,access_token"
+    end
+
+    it "doesn't treat a nested token (like from Pinterest) as invalid" do
+      expect(OAuth2::Error).not_to receive(:new)
+      subject.get_token(code)
+    end
+
+    it "retrieves the nested access token" do
+      token = subject.get_token(code).token
+      expect(token).to eq("salmon")
     end
   end
 
