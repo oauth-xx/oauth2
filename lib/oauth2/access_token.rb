@@ -6,8 +6,8 @@ module OAuth2
     class << self
       # Initializes an AccessToken from a Hash
       #
-      # @param [Client] the OAuth2::Client instance
-      # @param [Hash] a hash of AccessToken property values
+      # @param client [Client] the OAuth2::Client instance
+      # @param hash [Hash] a hash of AccessToken property values
       # @return [AccessToken] the initalized AccessToken
       def from_hash(client, hash)
         hash = hash.dup
