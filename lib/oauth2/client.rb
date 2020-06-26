@@ -150,11 +150,8 @@ module OAuth2
       response_contains_token = response.parsed.is_a?(Hash) &&
                                 (response.parsed['access_token'] || response.parsed['id_token'])
 
-      if response.parsed.is_a?(Hash) && options[:dig_nested_keys_for_access_token]
-        if nested_access_token = response.parsed.dig(*options[:dig_nested_keys_for_access_token].to_s.split(","))
-          nested_access_token_hash = { "access_token" => nested_access_token }
-          response_contains_token = true
-        end
+      if nested_access_token_hash = dig_response(response, options[:dig_nested_keys_for_access_token])
+        response_contains_token = true
       end
 
       if options[:raise_errors] && !response_contains_token
@@ -244,5 +241,22 @@ module OAuth2
     def oauth_debug_logging(builder)
       builder.response :logger, options[:logger], :bodies => true if ENV['OAUTH_DEBUG'] == 'true'
     end
+
+    def dig_response(response, dig_string)
+      return nil unless response.parsed.is_a?(Hash)
+      return nil unless dig_string.is_a?(String)
+
+      sub_element = response.parsed.dup
+      access_token_string = nil
+      dig_string.split(",").each do |key|
+        sub_element = sub_element[key]
+        access_token_string = sub_element
+        break if sub_element.nil?
+      end
+
+      return nil if access_token_string.nil?
+      { "access_token" => access_token_string }
+    end
+
   end
 end
