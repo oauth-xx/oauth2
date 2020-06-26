@@ -78,12 +78,16 @@ module OAuth2
             parser.call(body, response)
           end
         end
+
+      @parsed = OAuth2::SnakyHash.build(@parsed) if @parsed.is_a?(Hash)
+
+      @parsed
     end
 
     # Attempts to determine the content type of the response.
     def content_type
       return nil unless response.headers
-      ((response.headers.values_at('content-type', 'Content-Type').compact.first || '').split(';').first || '').strip
+      ((response.headers.values_at('content-type', 'Content-Type').compact.first || '').split(';').first || '').strip.downcase
     end
 
     # Determines the parser (a Proc or other Object which responds to #call)
