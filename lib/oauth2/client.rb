@@ -132,6 +132,10 @@ module OAuth2
     # @param access_token_class [Class] class of access token for easier subclassing OAuth2::AccessToken
     # @return [AccessToken] the initialized AccessToken
     def get_token(params, access_token_opts = {}, access_token_class = AccessToken) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+      if !params[:headers] && params['headers']
+        params[:headers] = params.delete('headers')
+      end
+
       params = authenticator.apply(params)
       opts = {:raise_errors => options[:raise_errors], :parse => params.delete(:parse)}
       headers = params.delete(:headers) || {}
