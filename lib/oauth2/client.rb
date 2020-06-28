@@ -134,9 +134,17 @@ module OAuth2
     # @param access_token_class [Class] class of access token for easier subclassing OAuth2::AccessToken
     # @return [AccessToken] the initialized AccessToken
     def get_token(params, access_token_opts = {}, access_token_class = AccessToken) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
-      params.transform_keys! do |key|
-        RESERVED_PARAM_KEYS.include?(key) ? key.to_sym : key
-      end
+      # if ruby version >= 2.4
+      # params.transform_keys! do |key|
+      #   RESERVED_PARAM_KEYS.include?(key) ? key.to_sym : key
+      # end
+      params = params.map do |key, value|
+        if RESERVED_PARAM_KEYS.include?(key)
+          [key.to_sym, value]
+        else
+          [key, value]
+        end
+      end.to_h
 
       params = authenticator.apply(params)
       opts = {:raise_errors => options[:raise_errors], :parse => params.delete(:parse)}
