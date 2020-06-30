@@ -4,6 +4,8 @@ require 'logger'
 module OAuth2
   # The OAuth2::Client class
   class Client # rubocop:disable Metrics/ClassLength
+    RESERVED_PARAM_KEYS = ['headers', 'parse'].freeze
+
     attr_reader :id, :secret, :site
     attr_accessor :options
     attr_writer :connection
@@ -132,6 +134,18 @@ module OAuth2
     # @param access_token_class [Class] class of access token for easier subclassing OAuth2::AccessToken
     # @return [AccessToken] the initialized AccessToken
     def get_token(params, access_token_opts = {}, access_token_class = AccessToken) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+      # if ruby version >= 2.4
+      # params.transform_keys! do |key|
+      #   RESERVED_PARAM_KEYS.include?(key) ? key.to_sym : key
+      # end
+      params = params.map do |key, value|
+        if RESERVED_PARAM_KEYS.include?(key)
+          [key.to_sym, value]
+        else
+          [key, value]
+        end
+      end.to_h
+
       params = authenticator.apply(params)
       opts = {:raise_errors => options[:raise_errors], :parse => params.delete(:parse)}
       headers = params.delete(:headers) || {}
