@@ -141,7 +141,8 @@ module OAuth2
         else
           [key, value]
         end
-      end.to_h
+      end
+      params = Hash[params]
 
       params = Authenticator.new(id, secret, options[:auth_scheme]).apply(params)
       opts = {:raise_errors => options[:raise_errors], :parse => params.delete(:parse)}
