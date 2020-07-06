@@ -159,7 +159,7 @@ module OAuth2
       opts[:headers].merge!(headers)
       response = request(options[:token_method], token_url, opts)
       response_contains_token = response.parsed.is_a?(Hash) &&
-                                (response.parsed['access_token'] || response.parsed['id_token'])
+                                (response.parsed['access_token'] || response.parsed['id_token'] || response.parsed['token'])
 
       if options[:raise_errors] && !response_contains_token
         error = Error.new(response)
