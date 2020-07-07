@@ -49,7 +49,12 @@ If you need the readme for a released version of the gem please find it below:
 A Ruby wrapper for the OAuth 2.0 specification.
 
 ## Installation
+
     gem install oauth2
+
+Or inside Gemfile
+
+    gem 'oauth2'
 
 ## Resources
 * [View Source on GitHub][code]
@@ -58,7 +63,7 @@ A Ruby wrapper for the OAuth 2.0 specification.
 
 [code]: https://github.com/oauth-xx/oauth2
 [issues]: https://github.com/oauth-xx/oauth2/issues
-[wiki]: https://wiki.github.com/oauth-xx/oauth2
+[wiki]: https://github.com/oauth-xx/oauth2/wiki
 
 ## Usage Examples
 
@@ -99,11 +104,11 @@ client = OAuth2::Client.new(
 
 ## OAuth2::Response
 
-The AccessToken methods #get, #post, #put and #delete and the generic #request
+The `AccessToken` methods `#get`, `#post`, `#put` and `#delete` and the generic `#request`
 will return an instance of the #OAuth2::Response class.
 
-This instance contains a #parsed method that will parse the response body and
-return a Hash if the Content-Type is application/x-www-form-urlencoded or if
+This instance contains a `#parsed` method that will parse the response body and
+return a Hash if the `Content-Type` is `application/x-www-form-urlencoded` or if
 the body is a JSON object.  It will return an Array if the body is a JSON
 array.  Otherwise, it will return the original body string.
 
@@ -113,27 +118,27 @@ respective methods.
 ## OAuth2::AccessToken
 
 If you have an existing Access Token for a user, you can initialize an instance
-using various class methods including the standard new, from_hash (if you have
-a hash of the values), or from_kvform (if you have an
-application/x-www-form-urlencoded encoded string of the values).
+using various class methods including the standard new, `from_hash` (if you have
+a hash of the values), or `from_kvform` (if you have an
+`application/x-www-form-urlencoded` encoded string of the values).
 
 ## OAuth2::Error
 
-On 400+ status code responses, an OAuth2::Error will be raised.  If it is a
-standard OAuth2 error response, the body will be parsed and #code and #description will contain the values provided from the error and
-error_description parameters.  The #response property of OAuth2::Error will
-always contain the OAuth2::Response instance.
+On 400+ status code responses, an `OAuth2::Error` will be raised.  If it is a
+standard OAuth2 error response, the body will be parsed and `#code` and `#description` will contain the values provided from the error and
+`error_description` parameters.  The `#response` property of `OAuth2::Error` will
+always contain the `OAuth2::Response` instance.
 
-If you do not want an error to be raised, you may use :raise_errors => false
-option on initialization of the client.  In this case the OAuth2::Response
+If you do not want an error to be raised, you may use `:raise_errors => false`
+option on initialization of the client.  In this case the `OAuth2::Response`
 instance will be returned as usual and on 400+ status code responses, the
-Response instance will contain the OAuth2::Error instance.
+Response instance will contain the `OAuth2::Error` instance.
 
 ## Authorization Grants
 
 Currently the Authorization Code, Implicit, Resource Owner Password Credentials, Client Credentials, and Assertion
 authentication grant types have helper strategy classes that simplify client
-use.  They are available via the #auth_code, #implicit, #password, #client_credentials, and #assertion methods respectively.
+use. They are available via the `#auth_code`, `#implicit`, `#password`, `#client_credentials`, and `#assertion` methods respectively.
 
 ```ruby
 auth_url = client.auth_code.authorize_url(:redirect_uri => 'http://localhost:8080/oauth/callback')
@@ -157,7 +162,7 @@ request, add a 'headers' hash under 'params':
 token = client.auth_code.get_token('code_value', :redirect_uri => 'http://localhost:8080/oauth/callback', :headers => {'Some' => 'Header'})
 ```
 
-You can always use the #request method on the OAuth2::Client instance to make
+You can always use the `#request` method on the `OAuth2::Client` instance to make
 requests for tokens for any Authentication grant type.
 
 
