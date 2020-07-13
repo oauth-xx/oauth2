@@ -3,6 +3,7 @@ module OAuth2
     attr_reader :client, :token, :expires_in, :expires_at, :params
     attr_accessor :options, :refresh_token
 
+    # Should these methods be deprecated?
     class << self
       # Initializes an AccessToken from a Hash
       #
