@@ -28,6 +28,7 @@ module OAuth2
     # @option options [Boolean] :raise_errors (true) whether or not to raise an OAuth2::Error
     # @option options [Logger] :logger (::Logger.new($stdout)) which logger to use when OAUTH_DEBUG is enabled
     #  on responses with 400+ status codes
+    # @option options [Class] :access_token_class (AccessToken) class used to create access tokens
     # @yield [builder] The Faraday connection builder
     def initialize(client_id, client_secret, options = {}, &block)
       opts = options.dup
@@ -35,15 +36,16 @@ module OAuth2
       @secret = client_secret
       @site = opts.delete(:site)
       ssl = opts.delete(:ssl)
-      @options = {:authorize_url    => 'oauth/authorize',
-                  :token_url        => 'oauth/token',
-                  :token_method     => :post,
-                  :auth_scheme      => :basic_auth,
-                  :connection_opts  => {},
-                  :connection_build => block,
-                  :max_redirects    => 5,
-                  :raise_errors     => true,
-                  :logger           => ::Logger.new($stdout)}.merge!(opts)
+      @options = {:authorize_url      => 'oauth/authorize',
+                  :token_url          => 'oauth/token',
+                  :token_method       => :post,
+                  :auth_scheme        => :basic_auth,
+                  :connection_opts    => {},
+                  :connection_build   => block,
+                  :max_redirects      => 5,
+                  :raise_errors       => true,
+                  :logger             => ::Logger.new($stdout),
+                  :access_token_class => AccessToken}.merge!(opts)
       @options[:connection_opts][:ssl] = ssl if ssl
     end
 
@@ -133,7 +135,7 @@ module OAuth2
     # @param access_token_opts [Hash] access token options, to pass to the AccessToken object
     # @param access_token_class [Class] class of access token for easier subclassing OAuth2::AccessToken
     # @return [AccessToken] the initialized AccessToken
-    def get_token(params, access_token_opts = {}, access_token_class = AccessToken) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+    def get_token(params, access_token_opts = {}, access_token_class = options[:access_token_class]) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
       # if ruby version >= 2.4
       # params.transform_keys! do |key|
       #   RESERVED_PARAM_KEYS.include?(key) ? key.to_sym : key
