@@ -158,17 +158,15 @@ module OAuth2
       end
       opts[:headers].merge!(headers)
       response = request(options[:token_method], token_url, opts)
-      response_contains_token = response.parsed.is_a?(Hash) &&
-                                (response.parsed['access_token'] || response.parsed['id_token'])
 
-      if options[:raise_errors] && !response_contains_token
+      access_token = build_access_token(response, access_token_opts, access_token_class)
+
+      if options[:raise_errors] && !access_token
         error = Error.new(response)
         raise(error)
-      elsif !response_contains_token
-        return nil
       end
 
-      build_access_token(response, access_token_opts, access_token_class)
+      access_token
     end
 
     # The Authorization Code strategy
@@ -240,6 +238,7 @@ module OAuth2
     #
     # @return [AccessToken] the initialized AccessToken
     def build_access_token(response, access_token_opts, access_token_class)
+      return unless response.parsed.is_a?(Hash)
       access_token_class.from_hash(self, response.parsed.merge(access_token_opts)).tap do |access_token|
         access_token.response = response if access_token.respond_to?(:response=)
       end
