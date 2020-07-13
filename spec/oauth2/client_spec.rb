@@ -463,16 +463,26 @@ RSpec.describe OAuth2::Client do
       context 'when the request body is nil' do
         subject(:get_token) { client.get_token({}) }
 
+        let(:status_code) { 500 }
         let(:client) do
           stubbed_client(raise_errors: false) do |stub|
             stub.post('/oauth/token') do
-              [500, {'Content-Type' => 'application/json'}, nil]
+              [status_code, {'Content-Type' => 'application/json'}, nil]
             end
           end
         end
 
         it 'raises error JSON::ParserError' do
           block_is_expected { get_token }.to raise_error(JSON::ParserError)
+        end
+
+        context 'when extract_access_token raises an exception' do
+          let(:status_code) { 200 }
+          let(:extract_proc) { proc { |client, hash| raise ArgumentError } }
+
+          it 'returns a nil :access_token' do
+            expect(client.get_token({}, {}, extract_proc)).to eq(nil)
+          end
         end
       end
 
@@ -488,6 +498,57 @@ RSpec.describe OAuth2::Client do
           expect(token.response).to be_a OAuth2::Response
           expect(token.response.parsed).to eq('access_token' => 'the-token')
         end
+      end
+    end
+
+    describe 'with custom access_token_class option' do
+      let(:client) do
+        stubbed_client do |stub|
+          stub.post('/oauth/token') do
+            [200, {'Content-Type' => 'application/json'}, JSON.dump('custom_token' => 'the-token')]
+          end
+        end
+      end
+
+      before do
+        custom_class = Class.new(OAuth2::AccessToken) do
+          def self.from_hash(client, hash)
+            new(client, hash.delete('custom_token'))
+          end
+
+          def self.contains_token?(hash)
+            hash.key?('custom_token')
+          end
+        end
+
+        stub_const('CustomAccessToken', custom_class)
+      end
+
+      it 'returns the parsed :custom_token from body' do
+        client.get_token({}, {}, {access_token_class: CustomAccessToken})
+      end
+    end
+
+    describe 'with extract_access_token option' do
+      let(:client) do
+        stubbed_client(extract_access_token: extract_access_token) do |stub|
+          stub.post('/oauth/token') do
+            [200, {'Content-Type' => 'application/json'}, JSON.dump('data' => {'access_token' => 'the-token'})]
+          end
+        end
+      end
+
+      let(:extract_access_token) do
+        proc do |client, hash|
+          token = hash['data']['access_token']
+          OAuth2::AccessToken.new(client, token, hash)
+        end
+      end
+
+      it 'returns a configured AccessToken' do
+        token = client.get_token({})
+        expect(token).to be_a OAuth2::AccessToken
+        expect(token.token).to eq('the-token')
       end
     end
 

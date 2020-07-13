@@ -30,6 +30,7 @@ module OAuth2
     # @option options [FixNum] :max_redirects (5) maximum number of redirects to follow
     # @option options [Boolean] :raise_errors (true) whether or not to raise an OAuth2::Error on responses with 400+ status codes
     # @option options [Logger] :logger (::Logger.new($stdout)) which logger to use when OAUTH_DEBUG is enabled
+    # @option options [Proc] :extract_access_token proc that takes the client and the response Hash and extracts the access token from the response (DEPRECATED)
     # @yield [builder] The Faraday connection builder
     def initialize(client_id, client_secret, options = {}, &block)
       opts = options.dup
@@ -37,15 +38,18 @@ module OAuth2
       @secret = client_secret
       @site = opts.delete(:site)
       ssl = opts.delete(:ssl)
-      @options = {authorize_url: 'oauth/authorize',
-                  token_url: 'oauth/token',
-                  token_method: :post,
-                  auth_scheme: :basic_auth,
-                  connection_opts: {},
-                  connection_build: block,
-                  max_redirects: 5,
-                  raise_errors: true,
-                  logger: ::Logger.new($stdout)}.merge!(opts)
+
+      @options = {
+        authorize_url: 'oauth/authorize',
+        token_url: 'oauth/token',
+        token_method: :post,
+        auth_scheme: :basic_auth,
+        connection_opts: {},
+        connection_build: block,
+        max_redirects: 5,
+        raise_errors: true,
+        logger: ::Logger.new($stdout),
+      }.merge(opts)
       @options[:connection_opts][:ssl] = ssl if ssl
     end
 
@@ -151,9 +155,10 @@ module OAuth2
     #
     # @param params [Hash] a Hash of params for the token endpoint
     # @param access_token_opts [Hash] access token options, to pass to the AccessToken object
+    # @param extract_access_token [Proc] proc that extracts the access token from the response (DEPRECATED)
     # @param access_token_class [Class] class of access token for easier subclassing OAuth2::AccessToken, @version 2.0+
     # @return [AccessToken] the initialized AccessToken
-    def get_token(params, access_token_opts = {}, access_token_class = AccessToken) # rubocop:disable Metrics/PerceivedComplexity
+    def get_token(params, access_token_opts = {}, extract_access_token = options[:extract_access_token], access_token_class: AccessToken)
       params = params.map do |key, value|
         if RESERVED_PARAM_KEYS.include?(key)
           [key.to_sym, value]
@@ -176,17 +181,15 @@ module OAuth2
       http_method = options[:token_method]
       http_method = :post if http_method == :post_with_query_string
       response = request(http_method, token_url, opts)
-      response_contains_token = response.parsed.is_a?(Hash) &&
-                                (response.parsed['access_token'] || response.parsed['id_token'] || response.parsed['token'])
 
-      if options[:raise_errors] && !response_contains_token
-        error = Error.new(response)
-        raise(error)
-      elsif !response_contains_token
-        return nil
+      # In v1.49, the deprecated extract_access_token option retrieves the token from the response.
+      # We preserve this behavior here, but a custom access_token_class that implements #from_hash
+      # should be used instead.
+      if extract_access_token
+        parse_response_with_legacy_extract(response, access_token_opts, extract_access_token)
+      else
+        parse_response(response, access_token_opts, access_token_class)
       end
-
-      build_access_token(response, access_token_opts, access_token_class)
     end
 
     # The Authorization Code strategy
@@ -254,6 +257,30 @@ module OAuth2
       Authenticator.new(id, secret, options[:auth_scheme])
     end
 
+    def parse_response_with_legacy_extract(response, access_token_opts, extract_access_token)
+      access_token = build_access_token_legacy_extract(response, access_token_opts, extract_access_token)
+
+      return access_token if access_token
+
+      if options[:raise_errors]
+        error = Error.new(response)
+        raise(error)
+      end
+
+      nil
+    end
+
+    def parse_response(response, access_token_opts, access_token_class)
+      data = response.parsed
+
+      if options[:raise_errors] && data.is_a?(Hash) && !access_token_class.contains_token?(data)
+        error = Error.new(response)
+        raise(error)
+      end
+
+      build_access_token(response, access_token_opts, access_token_class)
+    end
+
     # Builds the access token from the response of the HTTP call
     #
     # @return [AccessToken] the initialized AccessToken
@@ -261,6 +288,15 @@ module OAuth2
       access_token_class.from_hash(self, response.parsed.merge(access_token_opts)).tap do |access_token|
         access_token.response = response if access_token.respond_to?(:response=)
       end
+    end
+
+    # Builds the access token from the response of the HTTP call with legacy extract_access_token
+    #
+    # @return [AccessToken] the initialized AccessToken
+    def build_access_token_legacy_extract(response, access_token_opts, extract_access_token)
+      extract_access_token.call(self, response.parsed.merge(access_token_opts))
+    rescue StandardError
+      nil
     end
 
     def oauth_debug_logging(builder)

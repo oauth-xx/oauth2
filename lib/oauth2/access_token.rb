@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module OAuth2
-  class AccessToken
+  class AccessToken # rubocop:disable Metrics/ClassLength
     attr_reader :client, :token, :expires_in, :expires_at, :expires_latency, :params
     attr_accessor :options, :refresh_token, :response
 
@@ -23,6 +23,10 @@ module OAuth2
       # @return [AccessToken] the initialized AccessToken
       def from_kvform(client, kvform)
         from_hash(client, Rack::Utils.parse_query(kvform))
+      end
+
+      def contains_token?(hash)
+        hash.key?('access_token') || hash.key?('id_token') || hash.key?('token')
       end
     end
 
@@ -89,7 +93,7 @@ module OAuth2
 
       params[:grant_type] = 'refresh_token'
       params[:refresh_token] = refresh_token
-      new_token = @client.get_token(params, access_token_opts, access_token_class)
+      new_token = @client.get_token(params, access_token_opts, access_token_class: access_token_class)
       new_token.options = options
       new_token.refresh_token = refresh_token unless new_token.refresh_token
       new_token
