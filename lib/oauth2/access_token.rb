@@ -11,7 +11,7 @@ module OAuth2
       # @return [AccessToken] the initalized AccessToken
       def from_hash(client, hash)
         hash = hash.dup
-        new(client, hash.delete('access_token') || hash.delete(:access_token), hash)
+        new(client, hash.delete('access_token') || hash.delete(:access_token) || hash.delete('token') || hash.delete(:token), hash)
       end
 
       # Initializes an AccessToken from a key/value application/x-www-form-urlencoded string
