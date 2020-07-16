@@ -354,6 +354,122 @@ describe OAuth2::Client do
       client.get_token({})
     end
 
+    describe 'extract_access_token option' do
+      let(:client) do 
+        client = stubbed_client(:extract_access_token => extract_access_token) do |stub|
+          stub.post('/oauth/token') do
+            [200, {'Content-Type' => 'application/json'}, MultiJson.encode('data' => {'access_token' => 'the-token'})]
+          end
+        end
+      end
+
+      context "with proc extract_access_token" do
+        let(:extract_access_token) do
+          proc do |client, hash|
+            token = hash['data']['access_token']
+            AccessToken.new(client, token, hash)
+          end
+        end
+
+        it 'returns a configured AccessToken' do
+          token = client.get_token({})
+          expect(token).to be_a OAuth2::AccessToken
+          expect(token.token).to eq('the-token')
+        end
+      end
+
+      context "with depracted Class.from_hash option" do
+        let(:extract_access_token) do
+          CustomAccessToken = Class.new(AccessToken)
+          CustomAccessToken.define_singleton_method(:from_hash) do |client, hash| 
+            token = hash['data']['access_token']
+            AccessToken.new(client, token, hash)
+          end
+          CustomAccessToken
+        end
+
+        it 'returns a configured AccessToken' do
+          token = client.get_token({})
+          expect(token).to be_a OAuth2::AccessToken
+          expect(token.token).to eq('the-token')
+        end
+      end
+    end
+
+    describe ':raise_errors flag' do
+      let(:options) { {} }
+      let(:token_response) { nil }
+
+      let(:client) do
+        stubbed_client(options.merge(:raise_errors => raise_errors)) do |stub|
+          stub.post('/oauth/token') do
+            # stub 200 response so that we're testing the get_token handling of :raise_errors flag not request
+            [200, {'Content-Type' => 'application/json'}, token_response]
+          end
+        end
+      end
+
+      context 'when set to false' do
+        let(:raise_errors) { false }
+
+        context 'when the request body is nil' do
+          it 'returns a nil :access_token' do
+            expect(client.get_token({})).to eq(nil)
+          end
+        end
+
+        context 'when the request body is missing the access_token' do
+          let(:token_response) { MultiJson.encode('unexpected_access_token' => 'the-token') }
+
+          it 'returns a nil :access_token' do
+            expect(client.get_token({})).to eq(nil)
+          end
+        end
+
+        context 'when extract_access_token raises an exception' do
+          let(:options) do
+            {
+              :extract_access_token => proc { |client, hash| raise ArgumentError },
+            }
+          end
+
+          it 'returns a nil :access_token' do
+            expect(client.get_token({})).to eq(nil)
+          end
+        end
+      end
+
+      context 'when set to true' do
+        let(:raise_errors) { true }
+
+        context 'when the request body is nil' do
+          it 'raises an error' do
+            expect { client.get_token({}) }.to raise_error OAuth2::Error
+          end
+        end
+
+        context 'when the request body is missing the access_token' do
+          let(:token_response) { MultiJson.encode('unexpected_access_token' => 'the-token') }
+
+          it 'raises an error' do
+            expect { client.get_token({}) }.to raise_error OAuth2::Error
+          end
+        end
+
+        context 'when extract_access_token raises an exception' do
+          let(:options) do
+            {
+              :extract_access_token => proc { |client, hash| raise ArgumentError },
+            }
+          end
+
+          it 'raises an error' do
+            expect { client.get_token({}) }.to raise_error OAuth2::Error
+          end
+        end
+      end
+    end
+
     def stubbed_client(params = {}, &stubs)
       params = {:site => 'https://api.example.com'}.merge(params)
       OAuth2::Client.new('abc', 'def', params) do |builder|
