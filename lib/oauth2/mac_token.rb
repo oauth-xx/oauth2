@@ -29,6 +29,9 @@ module OAuth2
     # @option opts [FixNum, String] :algorithm (hmac-sha-256) the algorithm to use for the HMAC digest (one of 'hmac-sha-256', 'hmac-sha-1')
     def initialize(client, token, secret, opts = {})
       @secret = secret
+      @seq_nr = SecureRandom.random_number(2 ** 64)
+      @kid = opts.delete(:kid) || Base64.strict_encode64(Digest::SHA1.digest(token))
+
       self.algorithm = opts.delete(:algorithm) || 'hmac-sha-256'
 
       super(client, token, opts)
@@ -59,33 +62,29 @@ module OAuth2
     # @param [Symbol] verb the HTTP request method
     # @param [String] url the HTTP URL path of the request
     def header(verb, url)
-      timestamp = Time.now.utc.to_i
-      nonce = Digest::MD5.hexdigest([timestamp, SecureRandom.hex].join(':'))
+      timestamp = (Time.now.to_f * 1000).floor
+      @seq_nr = (@seq_nr + 1) % (2 ** 64)
 
-      uri = URI.parse(url)
+      uri = URI(url)
 
       raise(ArgumentError, "could not parse \"#{url}\" into URI") unless uri.is_a?(URI::HTTP)
 
-      mac = signature(timestamp, nonce, verb, uri)
+      mac = signature(timestamp, verb, uri)
 
-      "MAC id=\"#{token}\", ts=\"#{timestamp}\", nonce=\"#{nonce}\", mac=\"#{mac}\""
+      "MAC kid=\"#{@kid}\", ts=\"#{timestamp}\", seq-nr=\"#{@seq_nr}\", mac=\"#{mac}\""
     end
 
     # Generate the Base64-encoded HMAC digest signature
     #
     # @param [Fixnum] timestamp the timestamp of the request in seconds since epoch
-    # @param [String] nonce the MAC header nonce
     # @param [Symbol] verb the HTTP request method
-    # @param [String] uri the HTTP URL path of the request
-    def signature(timestamp, nonce, verb, uri)
+    # @param [String] url the HTTP URL path of the request
+    def signature(timestamp, verb, uri)
       signature = [
+        "#{verb.to_s.upcase} #{uri.request_uri} HTTP/1.1",
         timestamp,
-        nonce,
-        verb.to_s.upcase,
-        uri.request_uri,
-        uri.host,
-        uri.port,
-        '', nil
+        @seq_nr,
+        ''
       ].join("\n")
 
       Base64.strict_encode64(OpenSSL::HMAC.digest(@algorithm, secret, signature))
