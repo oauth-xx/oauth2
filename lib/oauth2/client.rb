@@ -21,7 +21,7 @@ module OAuth2
     # @option options [String] :redirect_uri the absolute URI to the Redirection Endpoint for use in authorization grants and token exchange
     # @option options [String] :authorize_url ('/oauth/authorize') absolute or relative URL path to the Authorization endpoint
     # @option options [String] :token_url ('/oauth/token') absolute or relative URL path to the Token endpoint
-    # @option options [Symbol] :token_method (:post) HTTP method to use to request token (:get or :post)
+    # @option options [Symbol] :token_method (:post) HTTP method to use to request token (:get, :post, :post_with_query_string)
     # @option options [Symbol] :auth_scheme (:basic_auth) HTTP method to use to authorize request (:basic_auth or :request_body)
     # @option options [Hash] :connection_opts ({}) Hash of connection options to pass to initialize Faraday with
     # @option options [FixNum] :max_redirects (5) maximum number of redirects to follow
@@ -157,7 +157,9 @@ module OAuth2
         opts[:headers] = {}
       end
       opts[:headers].merge!(headers)
-      response = request(options[:token_method], token_url, opts)
+      http_method = options[:token_method]
+      http_method = :post if http_method == :post_with_query_string
+      response = request(http_method, token_url, opts)
       response_contains_token = response.parsed.is_a?(Hash) &&
                                 (response.parsed['access_token'] || response.parsed['id_token'])
 
