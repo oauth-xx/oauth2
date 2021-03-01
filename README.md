@@ -34,7 +34,7 @@ If you need the readme for a released version of the gem please find it below:
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2.svg?type=shield)][fossa1]
 
 [gem]: https://rubygems.org/gems/oauth2
-[travis]: http://travis-ci.org/oauth-xx/oauth2
+[travis]: https://travis-ci.com/oauth-xx/oauth2
 [coveralls]: https://coveralls.io/r/oauth-xx/oauth2
 [codeclimate-maintainability]: https://codeclimate.com/github/oauth-xx/oauth2/maintainability
 [codeclimate-coverage]: https://codeclimate.com/github/oauth-xx/oauth2/test_coverage
