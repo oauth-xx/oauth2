@@ -1,5 +1,7 @@
 module OAuth2
   class AccessToken
+    TIMESTAMP_REGEXP = /^(\d{10,})$/
+
     attr_reader :client, :token, :expires_in, :expires_at, :expires_latency, :params
     attr_accessor :options, :refresh_token, :response
 
@@ -177,10 +179,10 @@ module OAuth2
     end
 
     def convert_expires_at(expires_at)
-      expires_at_i = expires_at.to_i
-      return expires_at_i if expires_at_i > Time.now.utc.to_i
-      return Time.parse(expires_at).to_i if expires_at.is_a?(String)
-      expires_at_i
+      return expires_at if expires_at.is_a?(Integer)
+      return expires_at.to_i if expires_at =~ TIMESTAMP_REGEXP
+
+      Time.iso8601(expires_at).to_i
     end
   end
 end
