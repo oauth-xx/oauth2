@@ -166,7 +166,7 @@ implementations:
 
 * Ruby 2.2 - Support ends with version 2.x series
 * Ruby 2.3 - Support ends with version 3.x series
-  - [JRuby 9.1][jruby-9.1] (targets MRI v2.3) 
+  - [JRuby 9.1][jruby-9.1] (targets MRI v2.3)
 * Ruby 2.4 - Support ends with version 4.x series
 * Ruby 2.5 - Support ends with version 5.x series
   - [JRuby 9.2][jruby-9.2] (targets MRI v2.5)
@@ -230,7 +230,7 @@ spec.add_dependency 'oauth2', '~> 1.4'
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+After checking out the repo, run `bundle install` to install dependencies. Then, run `rake spec` to run the tests.
 
 To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
