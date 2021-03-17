@@ -177,10 +177,11 @@ module OAuth2
     end
 
     def convert_expires_at(expires_at)
-      expires_at_i = expires_at.to_i
-      return expires_at_i if expires_at_i > Time.now.utc.to_i
-      return Time.parse(expires_at).to_i if expires_at.is_a?(String)
-      expires_at_i
+      begin
+        Time.iso8601(expires_at.to_s).to_i
+      rescue ArgumentError
+        expires_at.to_i
+      end
     end
   end
 end
