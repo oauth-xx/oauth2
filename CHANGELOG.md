@@ -3,6 +3,8 @@ All notable changes to this project will be documented in this file.
 
 ## unreleased
 
+## [1.4.5] - 2020-03-18
+
 - [#535](https://github.com/oauth-xx/oauth2/pull/535) - Compatibility with range of supported Ruby OpenSSL versions, Rubocop updates, Github Actions (@pboling)
 - [#518](https://github.com/oauth-xx/oauth2/pull/518) - Add extract_access_token option to OAuth2::Client (@jonspalmer)
 
