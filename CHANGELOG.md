@@ -15,7 +15,7 @@ All notable changes to this project will be documented in this file.
 - Fix logging to `$stdout` of request and response bodies via Faraday's logger and `ENV["OAUTH_DEBUG"] == 'true'` (@pboling)
 - **Security**: Add checks to enforce `client_secret` is *never* passed in authorize_url query params (@dfockler)
 
-## [1.4.5] - 2020-03-18
+## [1.4.5] - 2021-03-18
 
 - [#535](https://github.com/oauth-xx/oauth2/pull/535) - Compatibility with range of supported Ruby OpenSSL versions, Rubocop updates, Github Actions, analogous to  [#536](https://github.com/oauth-xx/oauth2/pull/536) on master branch (@pboling)
 - [#518](https://github.com/oauth-xx/oauth2/pull/518) - Add extract_access_token option to OAuth2::Client (@jonspalmer)
