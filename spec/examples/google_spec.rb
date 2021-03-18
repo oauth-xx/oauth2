@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'jwt'
 
 RSpec.describe 'using OAuth2 with Google' do
@@ -9,10 +11,10 @@ RSpec.describe 'using OAuth2 with Google' do
       OAuth2::Client.new(
         '',
         '',
-        :site => 'https://accounts.google.com',
-        :authorize_url => '/o/oauth2/auth',
-        :token_url => '/o/oauth2/token',
-        :auth_scheme => :request_body
+        site: 'https://accounts.google.com',
+        authorize_url: '/o/oauth2/auth',
+        token_url: '/o/oauth2/token',
+        auth_scheme: :request_body
       )
     end
 
@@ -41,7 +43,7 @@ RSpec.describe 'using OAuth2 with Google' do
 
     let(:optional_claims) do
       {
-        'sub' => 'some.user@example.com'
+        'sub' => 'some.user@example.com',
         # The email address of the user for which the application is requesting delegated access.
       }
     end
@@ -49,6 +51,7 @@ RSpec.describe 'using OAuth2 with Google' do
     let(:algorithm) { 'RS256' }
     # Per Google: "Service accounts rely on the RSA SHA-256 algorithm"
 
+    # rubocop:disable Style/RedundantBegin
     let(:key) do
       begin
         OpenSSL::PKCS12.new(File.read('spec/fixtures/google_service_account_key.p12'), 'notasecret').key
@@ -60,12 +63,13 @@ RSpec.describe 'using OAuth2 with Google' do
         OpenSSL::PKey::RSA.new(1024)
       end
     end
+    # rubocop:enable Style/RedundantBegin
     # Per Google:
 
     # "Take note of the service account's email address and store the service account's P12 private key file in a
     # location accessible to your application. Your application needs them to make authorized API calls."
 
-    let(:encoding_options) { {:key => key, :algorithm => algorithm} }
+    let(:encoding_options) { {key: key, algorithm: algorithm} }
 
     before do
       client.connection.build do |builder|
@@ -101,7 +105,7 @@ RSpec.describe 'using OAuth2 with Google' do
         expect(@request_body[:grant_type]).to eq('urn:ietf:params:oauth:grant-type:jwt-bearer')
         expect(@request_body[:assertion]).to be_a(String)
 
-        payload, header = JWT.decode(@request_body[:assertion], key, true, :algorithm => algorithm)
+        payload, header = JWT.decode(@request_body[:assertion], key, true, algorithm: algorithm)
         expect(header['alg']).to eq('RS256')
         expect(payload.keys).to match_array(%w[iss scope aud exp iat])
 
@@ -125,7 +129,7 @@ RSpec.describe 'using OAuth2 with Google' do
         expect(@request_body[:grant_type]).to eq('urn:ietf:params:oauth:grant-type:jwt-bearer')
         expect(@request_body[:assertion]).to be_a(String)
 
-        payload, header = JWT.decode(@request_body[:assertion], key, true, :algorithm => algorithm)
+        payload, header = JWT.decode(@request_body[:assertion], key, true, algorithm: algorithm)
         expect(header['alg']).to eq('RS256')
         expect(payload.keys).to match_array(%w[iss scope aud exp iat sub])
 

@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 RSpec.describe OAuth2::Strategy::Password do
   subject { client.password }
 
   let(:client) do
-    cli = OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com')
+    cli = OAuth2::Client.new('abc', 'def', site: 'http://api.example.com')
     cli.connection.build do |b|
       b.adapter :test do |stub|
         stub.post('/oauth/token') do |env|

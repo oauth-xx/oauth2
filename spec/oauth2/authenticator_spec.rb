@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe OAuth2::Authenticator do
   subject do
     described_class.new(client_id, client_secret, mode)
@@ -58,17 +60,17 @@ RSpec.describe OAuth2::Authenticator do
 
     context 'with Basic authentication' do
       let(:mode) { :basic_auth }
-      let(:header) { 'Basic ' + Base64.strict_encode64("#{client_id}:#{client_secret}") }
+      let(:header) { "Basic #{Base64.strict_encode64("#{client_id}:#{client_secret}")}" }
 
       it 'encodes credentials in headers' do
         output = subject.apply({})
-        expect(output).to eq(:headers => {'Authorization' => header})
+        expect(output).to eq(headers: {'Authorization' => header})
       end
 
       it 'does not overwrite existing credentials' do
-        input = {:headers => {'Authorization' => 'Bearer abc123'}}
+        input = {headers: {'Authorization' => 'Bearer abc123'}}
         output = subject.apply(input)
-        expect(output).to eq(:headers => {'Authorization' => 'Bearer abc123'})
+        expect(output).to eq(headers: {'Authorization' => 'Bearer abc123'})
       end
 
       it 'does not overwrite existing params or headers' do

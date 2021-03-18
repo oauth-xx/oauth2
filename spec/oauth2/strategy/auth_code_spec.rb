@@ -1,4 +1,5 @@
 # encoding: utf-8
+# frozen_string_literal: true
 
 RSpec.describe OAuth2::Strategy::AuthCode do
   subject { client.auth_code }
@@ -6,12 +7,12 @@ RSpec.describe OAuth2::Strategy::AuthCode do
   let(:code) { 'sushi' }
   let(:kvform_token) { 'expires_in=600&access_token=salmon&refresh_token=trout&extra_param=steve' }
   let(:facebook_token) { kvform_token.gsub('_in', '') }
-  let(:json_token) { MultiJson.encode(:expires_in => 600, :access_token => 'salmon', :refresh_token => 'trout', :extra_param => 'steve') }
+  let(:json_token) { MultiJson.encode(expires_in: 600, access_token: 'salmon', refresh_token: 'trout', extra_param: 'steve') }
   let(:redirect_uri) { 'http://example.com/redirect_uri' }
   let(:microsoft_token) { 'id_token=jwt' }
 
   let(:client) do
-    OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com') do |builder|
+    OAuth2::Client.new('abc', 'def', site: 'http://api.example.com') do |builder|
       builder.adapter :test do |stub|
         stub.get("/oauth/token?client_id=abc&code=#{code}&grant_type=authorization_code") do |env|
           case @mode
@@ -56,7 +57,7 @@ RSpec.describe OAuth2::Strategy::AuthCode do
     end
 
     it 'raises an error if the client_secret is passed in' do
-      expect { subject.authorize_url(:client_secret => 'def') }.to raise_error(ArgumentError)
+      expect { subject.authorize_url(client_secret: 'def') }.to raise_error(ArgumentError)
     end
 
     it 'raises an error if the client_secret is passed in with string keys' do
@@ -65,7 +66,7 @@ RSpec.describe OAuth2::Strategy::AuthCode do
 
     it 'includes passed in options' do
       cb = 'http://myserver.local/oauth/callback'
-      expect(subject.authorize_url(:redirect_uri => cb)).to include("redirect_uri=#{CGI.escape(cb)}")
+      expect(subject.authorize_url(redirect_uri: cb)).to include("redirect_uri=#{CGI.escape(cb)}")
     end
   end
 
@@ -78,12 +79,12 @@ RSpec.describe OAuth2::Strategy::AuthCode do
     end
 
     it 'includes redirect_uri once in the request parameters' do
-      expect { subject.get_token(code, :redirect_uri => redirect_uri) }.not_to raise_error
+      expect { subject.get_token(code, redirect_uri: redirect_uri) }.not_to raise_error
     end
   end
 
   describe '#get_token (handling utf-8 data)' do
-    let(:json_token) { MultiJson.encode(:expires_in => 600, :access_token => 'salmon', :refresh_token => 'trout', :extra_param => 'André') }
+    let(:json_token) { MultiJson.encode(expires_in: 600, access_token: 'salmon', refresh_token: 'trout', extra_param: 'André') }
 
     before do
       @mode = 'json'
@@ -113,7 +114,7 @@ RSpec.describe OAuth2::Strategy::AuthCode do
   end
 
   %w[json formencoded from_facebook].each do |mode|
-    [:get, :post].each do |verb|
+    %i[get post].each do |verb|
       describe "#get_token (#{mode}, access_token_method=#{verb}" do
         before do
           @mode = mode

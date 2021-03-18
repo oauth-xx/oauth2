@@ -1,6 +1,7 @@
-# coding: utf-8
+# encoding: utf-8
+# frozen_string_literal: true
 
-lib = File.expand_path('../lib', __FILE__)
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'oauth2/version'
 
@@ -23,11 +24,11 @@ Gem::Specification.new do |spec|
   spec.version       = OAuth2::Version
 
   spec.metadata = {
-    'bug_tracker_uri'   => 'https://github.com/oauth-xx/oauth2/issues',
-    'changelog_uri'     => "https://github.com/oauth-xx/oauth2/blob/v#{spec.version}/CHANGELOG.md",
+    'bug_tracker_uri' => 'https://github.com/oauth-xx/oauth2/issues',
+    'changelog_uri' => "https://github.com/oauth-xx/oauth2/blob/v#{spec.version}/CHANGELOG.md",
     'documentation_uri' => "https://www.rubydoc.info/gems/oauth2/#{spec.version}",
-    'source_code_uri'   => "https://github.com/oauth-xx/oauth2/tree/v#{spec.version}",
-    'wiki_uri'          => 'https://github.com/oauth-xx/oauth2/wiki'
+    'source_code_uri' => "https://github.com/oauth-xx/oauth2/tree/v#{spec.version}",
+    'wiki_uri' => 'https://github.com/oauth-xx/oauth2/wiki',
   }
 
   spec.require_paths = %w[lib]
@@ -40,13 +41,12 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'addressable', '~> 2.3'
   spec.add_development_dependency 'backports', '~> 3.11'
   spec.add_development_dependency 'bundler', '>= 1.16'
-  spec.add_development_dependency 'coveralls', '~> 0.8'
   spec.add_development_dependency 'rake', '>= 11'
   spec.add_development_dependency 'rdoc', ['>= 5.0', '< 7']
   spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'rspec-stubbed_env'
-  spec.add_development_dependency 'rspec-pending_for'
   spec.add_development_dependency 'rspec-block_is_expected'
+  spec.add_development_dependency 'rspec-pending_for'
+  spec.add_development_dependency 'rspec-stubbed_env'
   spec.add_development_dependency 'silent_stream'
   spec.add_development_dependency 'wwtd'
 end

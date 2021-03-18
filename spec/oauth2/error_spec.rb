@@ -1,19 +1,20 @@
 # encoding: UTF-8
+# frozen_string_literal: true
 
 RSpec.describe OAuth2::Error do
   let(:subject) { described_class.new(response) }
   let(:response) do
     raw_response = Faraday::Response.new(
-      :status => 418,
-      :response_headers => response_headers,
-      :body => response_body
+      status: 418,
+      response_headers: response_headers,
+      body: response_body
     )
 
     OAuth2::Response.new(raw_response)
   end
 
   let(:response_headers) { {'Content-Type' => 'application/json'} }
-  let(:response_body) { {:text => 'Coffee brewing failed'}.to_json }
+  let(:response_body) { {text: 'Coffee brewing failed'}.to_json }
 
   it 'sets the response object to #response on self' do
     error = described_class.new(response)
@@ -36,7 +37,7 @@ RSpec.describe OAuth2::Error do
 
   context 'when the response is parseable as a hash' do
     let(:response_body) { response_hash.to_json }
-    let(:response_hash) { {:text => 'Coffee brewing failed'} }
+    let(:response_hash) { {text: 'Coffee brewing failed'} }
 
     context 'when the response has an error and error_description' do
       before do
@@ -47,7 +48,7 @@ RSpec.describe OAuth2::Error do
       it 'prepends to the error message with a return character' do
         expect(subject.message.each_line.to_a).to eq(
           [
-            'i_am_a_teapot: Short and stout' + "\n",
+            "i_am_a_teapot: Short and stout\n",
             '{"text":"Coffee brewing failed","error_description":"Short and stout","error":"i_am_a_teapot"}',
           ]
         )
@@ -63,9 +64,9 @@ RSpec.describe OAuth2::Error do
 
           it 'replaces them' do
             # The skip can be removed once support for < 2.1 is dropped.
-            encoding = {:reason => 'encode/scrub only works as of Ruby 2.1'}
-            skip_for(encoding.merge(:engine => 'ruby', :versions => %w[1.8.7 1.9.3 2.0.0]))
-            skip_for(encoding.merge(:engine => 'jruby'))
+            encoding = {reason: 'encode/scrub only works as of Ruby 2.1'}
+            skip_for(encoding.merge(engine: 'ruby', versions: %w[1.8.7 1.9.3 2.0.0]))
+            skip_for(encoding.merge(engine: 'jruby'))
             # See https://bibwild.wordpress.com/2013/03/12/removing-illegal-bytes-for-encoding-in-ruby-1-9-strings/
 
             raise 'Invalid characters not replaced' unless subject.message.include?('� invalid �')
@@ -75,7 +76,7 @@ RSpec.describe OAuth2::Error do
 
         context 'with undefined characters present' do
           before do
-            response_hash[:error_description] << ": 'A magical voyage of tea 🍵'"
+            response_hash[:error_description] += ": 'A magical voyage of tea 🍵'"
           end
 
           it 'replaces them' do
@@ -87,7 +88,7 @@ RSpec.describe OAuth2::Error do
 
       context 'when the response is not an encodable thing' do
         let(:response_headers) { {'Content-Type' => 'who knows'} }
-        let(:response_body) { {:text => 'Coffee brewing failed'} }
+        let(:response_body) { {text: 'Coffee brewing failed'} }
 
         before do
           expect(response_body).not_to respond_to(:encode)

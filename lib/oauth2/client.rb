@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'faraday'
 require 'logger'
 
 module OAuth2
   # The OAuth2::Client class
   class Client # rubocop:disable Metrics/ClassLength
-    RESERVED_PARAM_KEYS = ['headers', 'parse'].freeze
+    RESERVED_PARAM_KEYS = %w[headers parse].freeze
 
     attr_reader :id, :secret, :site
     attr_accessor :options
@@ -35,15 +37,15 @@ module OAuth2
       @secret = client_secret
       @site = opts.delete(:site)
       ssl = opts.delete(:ssl)
-      @options = {:authorize_url    => 'oauth/authorize',
-                  :token_url        => 'oauth/token',
-                  :token_method     => :post,
-                  :auth_scheme      => :basic_auth,
-                  :connection_opts  => {},
-                  :connection_build => block,
-                  :max_redirects    => 5,
-                  :raise_errors     => true,
-                  :logger           => ::Logger.new($stdout)}.merge!(opts)
+      @options = {authorize_url: 'oauth/authorize',
+                  token_url: 'oauth/token',
+                  token_method: :post,
+                  auth_scheme: :basic_auth,
+                  connection_opts: {},
+                  connection_build: block,
+                  max_redirects: 5,
+                  raise_errors: true,
+                  logger: ::Logger.new($stdout)}.merge!(opts)
       @options[:connection_opts][:ssl] = ssl if ssl
     end
 
@@ -96,19 +98,20 @@ module OAuth2
     #   code response for this request.  Will default to client option
     # @option opts [Symbol] :parse @see Response::initialize
     # @yield [req] The Faraday request
-    def request(verb, url, opts = {}) # rubocop:disable CyclomaticComplexity, MethodLength, Metrics/AbcSize
+    def request(verb, url, opts = {}) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/AbcSize
       url = connection.build_url(url).to_s
       response = connection.run_request(verb, url, opts[:body], opts[:headers]) do |req|
         req.params.update(opts[:params]) if opts[:params]
         yield(req) if block_given?
       end
-      response = Response.new(response, :parse => opts[:parse])
+      response = Response.new(response, parse: opts[:parse])
 
       case response.status
       when 301, 302, 303, 307
         opts[:redirect_count] ||= 0
         opts[:redirect_count] += 1
         return response if opts[:redirect_count] > options[:max_redirects]
+
         if response.status == 303
           verb = :get
           opts.delete(:body)
@@ -120,6 +123,7 @@ module OAuth2
       when 400..599
         error = Error.new(response)
         raise(error) if opts.fetch(:raise_errors, options[:raise_errors])
+
         response
       else
         error = Error.new(response)
@@ -147,7 +151,7 @@ module OAuth2
       end.to_h
 
       params = authenticator.apply(params)
-      opts = {:raise_errors => options[:raise_errors], :parse => params.delete(:parse)}
+      opts = {raise_errors: options[:raise_errors], parse: params.delete(:parse)}
       headers = params.delete(:headers) || {}
       if options[:token_method] == :post
         opts[:body] = params
@@ -248,7 +252,7 @@ module OAuth2
     end
 
     def oauth_debug_logging(builder)
-      builder.response :logger, options[:logger], :bodies => true if ENV['OAUTH_DEBUG'] == 'true'
+      builder.response :logger, options[:logger], bodies: true if ENV['OAUTH_DEBUG'] == 'true'
     end
   end
 end

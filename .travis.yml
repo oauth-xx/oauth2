@@ -47,22 +47,12 @@ matrix:
     - rvm: jruby-9.2 # jruby-9.2 often fails to download, thus failing the build.
   fast_finish: true
   include:
-    - rvm: 2.2
-      gemfile: gemfiles/ruby_2.2.gemfile
+    # oauth2 2.x series releases will support Ruby versions below, and not above
+    # NOTE: Specs for Ruby 2.2, 2.3, 2.4, 2.5, 2.6, 2.7 & 3.0 are now running with Github Actions
     - rvm: jruby-9.1 # targets MRI v2.3
       gemfile: gemfiles/jruby_9.1.gemfile
-    - rvm: 2.3
-      gemfile: gemfiles/ruby_2.3.gemfile
-    - rvm: 2.4
-      gemfile: gemfiles/ruby_2.4.gemfile
     - rvm: jruby-9.2 # targets MRI v2.5
       gemfile: gemfiles/jruby_9.2.gemfile
-    - rvm: 2.5
-      gemfile: gemfiles/ruby_2.5.gemfile
-    - rvm: 2.6
-      gemfile: gemfiles/ruby_2.6.gemfile
-    - rvm: 2.7
-      gemfile: gemfiles/ruby_2.7.gemfile
     - rvm: jruby-head
       gemfile: gemfiles/jruby_head.gemfile
     - rvm: ruby-head

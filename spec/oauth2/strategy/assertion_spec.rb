@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'jwt'
 
 RSpec.describe OAuth2::Strategy::Assertion do
   subject { client.assertion }
 
   let(:client) do
-    cli = OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com', :auth_scheme => auth_scheme)
+    cli = OAuth2::Client.new('abc', 'def', site: 'http://api.example.com', auth_scheme: auth_scheme)
     cli.connection.build do |b|
       b.adapter :test do |stub|
         stub.post('/oauth/token') do |token_request|
@@ -38,13 +40,13 @@ RSpec.describe OAuth2::Strategy::Assertion do
     let(:timestamp) { Time.now.to_i }
     let(:claims) do
       {
-        :iss => 'carp@example.com',
-        :scope => 'https://oauth.example.com/auth/flounder',
-        :aud => 'https://sturgeon.example.com/oauth2/token',
-        :exp => timestamp + 3600,
-        :iat => timestamp,
-        :sub => '12345',
-        :custom_claim => 'ling cod',
+        iss: 'carp@example.com',
+        scope: 'https://oauth.example.com/auth/flounder',
+        aud: 'https://sturgeon.example.com/oauth2/token',
+        exp: timestamp + 3600,
+        iat: timestamp,
+        sub: '12345',
+        custom_claim: 'ling cod',
       }
     end
 
@@ -54,8 +56,8 @@ RSpec.describe OAuth2::Strategy::Assertion do
 
     describe 'assembling a JWT assertion' do
       let(:jwt) do
-        payload, header = JWT.decode(@request_body[:assertion], key, true, :algorithm => algorithm)
-        {:payload => payload, :header => header}
+        payload, header = JWT.decode(@request_body[:assertion], key, true, algorithm: algorithm)
+        {payload: payload, header: header}
       end
 
       let(:payload) { jwt[:payload] }
@@ -66,7 +68,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
         let(:key) { 'super_secret!' }
 
         before do
-          subject.get_token(claims, :algorithm => algorithm, :key => key)
+          subject.get_token(claims, algorithm: algorithm, key: key)
           raise 'No request made!' if @request_body.nil?
         end
 
@@ -89,7 +91,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
         let(:key) { OpenSSL::PKey::RSA.new(1024) }
 
         before do
-          subject.get_token(claims, :algorithm => algorithm, :key => key)
+          subject.get_token(claims, algorithm: algorithm, key: key)
           raise 'No request made!' if @request_body.nil?
         end
 
@@ -108,7 +110,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
       end
 
       context 'with bad encoding params' do
-        let(:encoding_opts) { {:algorithm => algorithm, :key => key} }
+        let(:encoding_opts) { {algorithm: algorithm, key: key} }
 
         describe 'non-supported algorithms' do
           let(:algorithm) { 'the blockchain' }
@@ -155,7 +157,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
         let(:auth_scheme) { :request_body }
 
         it 'includes assertion and grant_type, along with the client parameters' do
-          subject.get_token(claims, :algorithm => algorithm, :key => key)
+          subject.get_token(claims, algorithm: algorithm, key: key)
           expect(@request_body).not_to be_nil
           expect(@request_body.keys).to match_array([:assertion, :grant_type, 'client_id', 'client_secret'])
           expect(@request_body[:grant_type]).to eq('urn:ietf:params:oauth:grant-type:jwt-bearer')
@@ -165,7 +167,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
         end
 
         it 'includes other params via request_options' do
-          subject.get_token(claims, {:algorithm => algorithm, :key => key}, :scope => 'dover sole')
+          subject.get_token(claims, {algorithm: algorithm, key: key}, scope: 'dover sole')
           expect(@request_body).not_to be_nil
           expect(@request_body.keys).to match_array([:assertion, :grant_type, :scope, 'client_id', 'client_secret'])
           expect(@request_body[:grant_type]).to eq('urn:ietf:params:oauth:grant-type:jwt-bearer')
@@ -180,17 +182,17 @@ RSpec.describe OAuth2::Strategy::Assertion do
         let(:auth_scheme) { :basic_auth }
 
         it 'includes assertion and grant_type by default' do
-          subject.get_token(claims, :algorithm => algorithm, :key => key)
+          subject.get_token(claims, algorithm: algorithm, key: key)
           expect(@request_body).not_to be_nil
-          expect(@request_body.keys).to match_array([:assertion, :grant_type])
+          expect(@request_body.keys).to match_array(%i[assertion grant_type])
           expect(@request_body[:grant_type]).to eq('urn:ietf:params:oauth:grant-type:jwt-bearer')
           expect(@request_body[:assertion]).to be_a(String)
         end
 
         it 'includes other params via request_options' do
-          subject.get_token(claims, {:algorithm => algorithm, :key => key}, :scope => 'dover sole')
+          subject.get_token(claims, {algorithm: algorithm, key: key}, scope: 'dover sole')
           expect(@request_body).not_to be_nil
-          expect(@request_body.keys).to match_array([:assertion, :grant_type, :scope])
+          expect(@request_body.keys).to match_array(%i[assertion grant_type scope])
           expect(@request_body[:grant_type]).to eq('urn:ietf:params:oauth:grant-type:jwt-bearer')
           expect(@request_body[:assertion]).to be_a(String)
           expect(@request_body[:scope]).to eq('dover sole')
@@ -199,7 +201,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
     end
 
     describe 'returning the response' do
-      let(:access_token) { subject.get_token(claims, {:algorithm => algorithm, :key => key}, {}, response_opts) }
+      let(:access_token) { subject.get_token(claims, {algorithm: algorithm, key: key}, {}, response_opts) }
       let(:response_opts) { {} }
 
       %w[json formencoded].each do |mode|
@@ -233,7 +235,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
           end
 
           context 'with custom response_opts' do
-            let(:response_opts) { {:custom_token_option => 'mackerel'} }
+            let(:response_opts) { {custom_token_option: 'mackerel'} }
 
             it 'passes them into the token params' do
               expect(access_token.params).to eq(response_opts)

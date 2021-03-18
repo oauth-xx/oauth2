@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OAuth2
   class Error < StandardError
     attr_reader :response, :code, :description
@@ -26,7 +28,7 @@ module OAuth2
 
       error_string = if response_body.respond_to?(:encode) && opts[:error_description].respond_to?(:encoding)
                        script_encoding = opts[:error_description].encoding
-                       response_body.encode(script_encoding, :invalid => :replace, :undef => :replace)
+                       response_body.encode(script_encoding, invalid: :replace, undef: :replace)
                      else
                        response_body
                      end
@@ -40,10 +42,10 @@ module OAuth2
       return {} unless code || description
 
       error_description = ''
-      error_description << "#{code}: " if code
-      error_description << description if description
+      error_description += "#{code}: " if code
+      error_description += description if description
 
-      {:error_description => error_description}
+      {error_description: error_description}
     end
   end
 end

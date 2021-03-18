@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 RSpec.describe SnakyHash do
   subject { described_class.new }
 
   describe '.build' do
     context 'build from hash' do
-      subject { described_class.build({ 'AccessToken' => '1' }) }
+      subject { described_class.build({'AccessToken' => '1'}) }
 
       it 'create correct snake hash' do
         expect(subject).to be_a(described_class)
@@ -85,19 +87,19 @@ RSpec.describe SnakyHash do
       subject { described_class.new }
 
       it 'raise KeyError with key' do
-        expect {
+        expect do
           subject.fetch('access_token')
-        }.to raise_error(KeyError, /access_token/)
+        end.to raise_error(KeyError, /access_token/)
       end
 
       it 'return default value' do
-        expect(subject.fetch('access_token') {'default'}).to eq('default')
+        expect(subject.fetch('access_token', 'default')).to eq('default')
       end
     end
   end
 
   describe '#key?' do
-   context 'Camel case key' do
+    context 'Camel case key' do
       subject { described_class.build('AccessToken' => '1') }
 
       it 'return true' do

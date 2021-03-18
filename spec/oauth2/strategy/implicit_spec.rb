@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 RSpec.describe OAuth2::Strategy::Implicit do
   subject { client.implicit }
 
-  let(:client) { OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com') }
+  let(:client) { OAuth2::Client.new('abc', 'def', site: 'http://api.example.com') }
 
   describe '#authorize_url' do
     it 'includes the client_id' do
@@ -17,7 +19,7 @@ RSpec.describe OAuth2::Strategy::Implicit do
     end
 
     it 'raises an error if the client_secret is passed in' do
-      expect { subject.authorize_url(:client_secret => 'def') }.to raise_error(ArgumentError)
+      expect { subject.authorize_url(client_secret: 'def') }.to raise_error(ArgumentError)
     end
 
     it 'raises an error if the client_secret is passed in with string keys' do
@@ -26,7 +28,7 @@ RSpec.describe OAuth2::Strategy::Implicit do
 
     it 'includes passed in options' do
       cb = 'http://myserver.local/oauth/callback'
-      expect(subject.authorize_url(:redirect_uri => cb)).to include("redirect_uri=#{CGI.escape(cb)}")
+      expect(subject.authorize_url(redirect_uri: cb)).to include("redirect_uri=#{CGI.escape(cb)}")
     end
   end
 
