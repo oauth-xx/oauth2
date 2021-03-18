@@ -166,6 +166,7 @@ module OAuth2
       access_token = begin
         build_access_token(response, access_token_opts, extract_access_token)
       rescue StandardError
+        raise
         nil
       end
 
