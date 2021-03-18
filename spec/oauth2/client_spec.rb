@@ -274,28 +274,36 @@ describe OAuth2::Client do
       end
     end
 
+    # rubocop:disable Style/RedundantBegin
     it 're-encodes response body in the error message' do
-      subject.request(:get, '/ascii_8bit_encoding')
-    rescue StandardError => e
-      expect(e.message.encoding.name).to eq('UTF-8')
-      expect(e.message).to eq("invalid_request: é\n{\"error\":\"invalid_request\",\"error_description\":\"��\"}")
+      begin
+        subject.request(:get, '/ascii_8bit_encoding')
+      rescue StandardError => e
+        expect(e.message.encoding.name).to eq('UTF-8')
+        expect(e.message).to eq("invalid_request: é\n{\"error\":\"invalid_request\",\"error_description\":\"��\"}")
+      end
     end
 
     it 'parses OAuth2 standard error response' do
-      subject.request(:get, '/unauthorized')
-    rescue StandardError => e
-      expect(e.code).to eq(error_value)
-      expect(e.description).to eq(error_description_value)
-      expect(e.to_s).to match(/#{error_value}/)
-      expect(e.to_s).to match(/#{error_description_value}/)
+      begin
+        subject.request(:get, '/unauthorized')
+      rescue StandardError => e
+        expect(e.code).to eq(error_value)
+        expect(e.description).to eq(error_description_value)
+        expect(e.to_s).to match(/#{error_value}/)
+        expect(e.to_s).to match(/#{error_description_value}/)
+      end
     end
 
     it 'provides the response in the Exception' do
-      subject.request(:get, '/error')
-    rescue StandardError => e
-      expect(e.response).not_to be_nil
-      expect(e.to_s).to match(/unknown error/)
+      begin
+        subject.request(:get, '/error')
+      rescue StandardError => e
+        expect(e.response).not_to be_nil
+        expect(e.to_s).to match(/unknown error/)
+      end
     end
+    # rubocop:enable Style/RedundantBegin
 
     context 'with ENV' do
       include_context 'with stubbed env'
