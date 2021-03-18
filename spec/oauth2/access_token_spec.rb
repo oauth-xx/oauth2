@@ -1,5 +1,3 @@
-require 'helper'
-
 describe AccessToken do
   subject { described_class.new(client, token) }
 

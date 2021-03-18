@@ -1,5 +1,3 @@
-require 'helper'
-
 describe OAuth2::Strategy::Implicit do
   subject { client.implicit }
 

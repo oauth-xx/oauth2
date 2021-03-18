@@ -1,5 +1,3 @@
-require 'helper'
-
 describe MACToken do
   subject { described_class.new(client, token, 'abc123') }
 

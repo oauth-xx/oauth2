@@ -1,2 +1,4 @@
 --color
 --order random
+--require helper
+--format=documentation

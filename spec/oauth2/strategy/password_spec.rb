@@ -1,5 +1,3 @@
-require 'helper'
-
 describe OAuth2::Strategy::Password do
   subject { client.password }
 

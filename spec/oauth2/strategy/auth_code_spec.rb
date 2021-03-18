@@ -1,7 +1,5 @@
 # encoding: utf-8
 
-require 'helper'
-
 describe OAuth2::Strategy::AuthCode do
   subject { client.auth_code }
 

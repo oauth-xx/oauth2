@@ -1,5 +1,3 @@
-require 'helper'
-
 describe OAuth2::Strategy::ClientCredentials do
   subject { client.client_credentials }
 

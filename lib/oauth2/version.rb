@@ -1,5 +1,6 @@
 module OAuth2
   module Version
+    VERSION = to_s
   module_function
 
     # The major version
