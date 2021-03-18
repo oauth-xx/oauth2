@@ -51,15 +51,19 @@ RSpec.describe 'using OAuth2 with Google' do
     let(:algorithm) { 'RS256' }
     # Per Google: "Service accounts rely on the RSA SHA-256 algorithm"
 
+    # rubocop:disable Style/RedundantBegin
     let(:key) do
-      OpenSSL::PKCS12.new(File.read('spec/fixtures/google_service_account_key.p12'), 'notasecret').key
-      # This simulates the .p12 file that Google gives you to download and keep somewhere.  This is meant to
-      # illustrate extracting the key and using it to generate the JWT.
-    rescue OpenSSL::PKCS12::PKCS12Error
-      # JRuby CI builds are blowing up trying to extract a sample key for some reason.  This simulates the end result
-      # of actually figuring out the problem.
-      OpenSSL::PKey::RSA.new(1024)
+      begin
+        OpenSSL::PKCS12.new(File.read('spec/fixtures/google_service_account_key.p12'), 'notasecret').key
+        # This simulates the .p12 file that Google gives you to download and keep somewhere.  This is meant to
+        # illustrate extracting the key and using it to generate the JWT.
+      rescue OpenSSL::PKCS12::PKCS12Error
+        # JRuby CI builds are blowing up trying to extract a sample key for some reason.  This simulates the end result
+        # of actually figuring out the problem.
+        OpenSSL::PKey::RSA.new(1024)
+      end
     end
+    # rubocop:enable Style/RedundantBegin
     # Per Google:
 
     # "Take note of the service account's email address and store the service account's P12 private key file in a
