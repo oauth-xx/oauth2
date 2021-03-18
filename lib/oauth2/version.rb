@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OAuth2
   module Version
   module_function
@@ -35,10 +37,10 @@ module OAuth2
     # @return [Hash]
     def to_h
       {
-        :major => major,
-        :minor => minor,
-        :patch => patch,
-        :pre => pre,
+        major: major,
+        minor: minor,
+        patch: patch,
+        pre: pre,
       }
     end
 

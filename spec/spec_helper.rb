@@ -1,4 +1,5 @@
-require 'bundler/setup'
+# frozen_string_literal: true
+
 require 'oauth2'
 require 'helper'
 require 'rspec/pending_for'

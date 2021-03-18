@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 RSpec.describe OAuth2::Response do
-  let(:raw_response) { Faraday::Response.new(:status => status, :response_headers => headers, :body => body) }
+  let(:raw_response) { Faraday::Response.new(status: status, response_headers: headers, body: body) }
   let(:status) { 200 }
   let(:headers) { {'foo' => 'bar'} }
   let(:body) { 'foo' }
@@ -16,9 +18,9 @@ RSpec.describe OAuth2::Response do
 
   describe '.register_parser' do
     let(:response) do
-      double('response', :headers => {'Content-Type' => 'application/foo-bar'},
-                         :status => 200,
-                         :body => 'baz')
+      double('response', headers: {'Content-Type' => 'application/foo-bar'},
+                         status: 200,
+                         body: 'baz')
     end
 
     before do
@@ -67,7 +69,7 @@ RSpec.describe OAuth2::Response do
     it 'parses application/x-www-form-urlencoded body' do
       headers = {'Content-Type' => 'application/x-www-form-urlencoded'}
       body = 'foo=bar&answer=42'
-      response = double('response', :headers => headers, :body => body)
+      response = double('response', headers: headers, body: body)
       subject = described_class.new(response)
       expect(subject.parsed.keys.size).to eq(2)
       expect(subject.parsed['foo']).to eq('bar')
@@ -76,8 +78,8 @@ RSpec.describe OAuth2::Response do
 
     it 'parses application/json body' do
       headers = {'Content-Type' => 'application/json'}
-      body = MultiJson.encode(:foo => 'bar', :answer => 42)
-      response = double('response', :headers => headers, :body => body)
+      body = MultiJson.encode(foo: 'bar', answer: 42)
+      response = double('response', headers: headers, body: body)
       subject = described_class.new(response)
       expect(subject.parsed.keys.size).to eq(2)
       expect(subject.parsed['foo']).to eq('bar')
@@ -86,8 +88,8 @@ RSpec.describe OAuth2::Response do
 
     it 'parses alternative application/json extension bodies' do
       headers = {'Content-Type' => 'application/hal+json'}
-      body = MultiJson.encode(:foo => 'bar', :answer => 42)
-      response = double('response', :headers => headers, :body => body)
+      body = MultiJson.encode(foo: 'bar', answer: 42)
+      response = double('response', headers: headers, body: body)
       subject = described_class.new(response)
       expect(subject.parsed.keys.size).to eq(2)
       expect(subject.parsed['foo']).to eq('bar')
@@ -96,24 +98,24 @@ RSpec.describe OAuth2::Response do
 
     it 'parses application/vnd.collection+json body' do
       headers = {'Content-Type' => 'application/vnd.collection+json'}
-      body = MultiJson.encode(:collection => {})
-      response = double('response', :headers => headers, :body => body)
+      body = MultiJson.encode(collection: {})
+      response = double('response', headers: headers, body: body)
       subject = described_class.new(response)
       expect(subject.parsed.keys.size).to eq(1)
     end
 
     it 'parses application/vnd.api+json body' do
       headers = {'Content-Type' => 'application/vnd.api+json'}
-      body = MultiJson.encode(:collection => {})
-      response = double('response', :headers => headers, :body => body)
+      body = MultiJson.encode(collection: {})
+      response = double('response', headers: headers, body: body)
       subject = described_class.new(response)
       expect(subject.parsed.keys.size).to eq(1)
     end
 
-    it "parses application/Json body" do
+    it 'parses application/Json body' do
       headers = {'Content-Type' => 'application/Json'}
-      body = MultiJson.encode(:foo => 'bar', :answer => 42)
-      response = double('response', :headers => headers, :body => body)
+      body = MultiJson.encode(foo: 'bar', answer: 42)
+      response = double('response', headers: headers, body: body)
       subject = Response.new(response)
       expect(subject.parsed.keys.size).to eq(2)
       expect(subject.parsed['foo']).to eq('bar')
@@ -124,7 +126,7 @@ RSpec.describe OAuth2::Response do
       headers = {'Content-Type' => 'text/html'}
       body = '<!DOCTYPE html><html><head></head><body></body></html>'
 
-      response = double('response', :headers => headers, :body => body)
+      response = double('response', headers: headers, body: body)
 
       expect(MultiJson).not_to receive(:decode)
       expect(MultiJson).not_to receive(:load)
@@ -134,14 +136,14 @@ RSpec.describe OAuth2::Response do
       expect(subject.parsed).to be_nil
     end
 
-    it "should snakecase json keys when parsing" do
+    it 'snakecases json keys when parsing' do
       headers = {'Content-Type' => 'application/json'}
-      body = MultiJson.encode("accessToken" => 'bar', "MiGever" => "Ani")
-      response = double('response', :headers => headers, :body => body)
+      body = MultiJson.encode('accessToken' => 'bar', 'MiGever' => 'Ani')
+      response = double('response', headers: headers, body: body)
       subject = Response.new(response)
       expect(subject.parsed.keys.size).to eq(2)
       expect(subject.parsed['access_token']).to eq('bar')
-      expect(subject.parsed['mi_gever']).to eq("Ani")
+      expect(subject.parsed['mi_gever']).to eq('Ani')
     end
 
     it 'supports registered parsers with arity == 0; passing nothing' do
@@ -151,9 +153,9 @@ RSpec.describe OAuth2::Response do
 
       headers   = {'Content-Type' => 'text/html'}
       body      = '<!DOCTYPE html><html><head></head><body></body></html>'
-      response  = double('response', :headers => headers, :body => body)
+      response  = double('response', headers: headers, body: body)
 
-      subject = described_class.new(response, :parse => :arity_0)
+      subject = described_class.new(response, parse: :arity_0)
 
       expect(subject.parsed).to eq('a-ok')
     end
@@ -161,7 +163,7 @@ RSpec.describe OAuth2::Response do
     it 'supports registered parsers with arity == 2; passing body and response' do
       headers   = {'Content-Type' => 'text/html'}
       body      = '<!DOCTYPE html><html><head></head><body></body></html>'
-      response  = double('response', :headers => headers, :body => body)
+      response  = double('response', headers: headers, body: body)
 
       described_class.register_parser(:arity_2, []) do |passed_body, passed_response|
         expect(passed_body).to eq(body)
@@ -170,7 +172,7 @@ RSpec.describe OAuth2::Response do
         'a-ok'
       end
 
-      subject = described_class.new(response, :parse => :arity_2)
+      subject = described_class.new(response, parse: :arity_2)
 
       expect(subject.parsed).to eq('a-ok')
     end
@@ -178,7 +180,7 @@ RSpec.describe OAuth2::Response do
     it 'supports registered parsers with arity > 2; passing body and response' do
       headers   = {'Content-Type' => 'text/html'}
       body      = '<!DOCTYPE html><html><head></head><body></body></html>'
-      response  = double('response', :headers => headers, :body => body)
+      response  = double('response', headers: headers, body: body)
 
       described_class.register_parser(:arity_3, []) do |passed_body, passed_response, *args|
         expect(passed_body).to eq(body)
@@ -188,7 +190,7 @@ RSpec.describe OAuth2::Response do
         'a-ok'
       end
 
-      subject = described_class.new(response, :parse => :arity_3)
+      subject = described_class.new(response, parse: :arity_3)
 
       expect(subject.parsed).to eq('a-ok')
     end
@@ -196,9 +198,9 @@ RSpec.describe OAuth2::Response do
     it 'supports directly passed parsers' do
       headers   = {'Content-Type' => 'text/html'}
       body      = '<!DOCTYPE html><html><head></head><body></body></html>'
-      response  = double('response', :headers => headers, :body => body)
+      response  = double('response', headers: headers, body: body)
 
-      subject = described_class.new(response, :parse => lambda { 'a-ok' })
+      subject = described_class.new(response, parse: -> { 'a-ok' })
 
       expect(subject.parsed).to eq('a-ok')
     end
@@ -213,7 +215,7 @@ RSpec.describe OAuth2::Response do
       headers = {'Content-Type' => 'text/xml'}
       body = '<?xml version="1.0" standalone="yes" ?><foo><bar>baz</bar></foo>'
 
-      response = double('response', :headers => headers, :body => body)
+      response = double('response', headers: headers, body: body)
       expect(described_class.new(response).parsed).to eq('foo' => {'bar' => 'baz'})
     end
 
@@ -221,7 +223,7 @@ RSpec.describe OAuth2::Response do
       headers = {'Content-Type' => 'application/xml'}
       body = '<?xml version="1.0" standalone="yes" ?><foo><bar>baz</bar></foo>'
 
-      response = double('response', :headers => headers, :body => body)
+      response = double('response', headers: headers, body: body)
       expect(described_class.new(response).parsed).to eq('foo' => {'bar' => 'baz'})
     end
   end

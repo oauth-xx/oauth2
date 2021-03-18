@@ -1,14 +1,10 @@
 # encoding: utf-8
+# frozen_string_literal: true
 
 # !/usr/bin/env rake
 
-require 'bundler/gem_tasks'
-
-begin
-  require 'wwtd/tasks'
-rescue LoadError
-  puts 'failed to load wwtd'
-end
+lib = File.expand_path('lib', __dir__)
+$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 begin
   require 'rspec/core/rake_task'
@@ -18,7 +14,7 @@ rescue LoadError
     warn 'rspec is disabled'
   end
 end
-task :test => :spec
+task test: :spec
 
 begin
   require 'rubocop/rake_task'
@@ -33,7 +29,7 @@ end
 
 namespace :doc do
   require 'rdoc/task'
-  require File.expand_path('../lib/oauth2/version', __FILE__)
+  require 'oauth2/version'
   RDoc::Task.new do |rdoc|
     rdoc.rdoc_dir = 'rdoc'
     rdoc.title = "oauth2 #{OAuth2::Version}"
@@ -42,4 +38,4 @@ namespace :doc do
   end
 end
 
-task :default => [:test, :rubocop]
+task default: %i[test rubocop]

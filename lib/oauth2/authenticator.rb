@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'base64'
 
 module OAuth2
@@ -35,7 +37,7 @@ module OAuth2
     end
 
     def self.encode_basic_auth(user, password)
-      'Basic ' + Base64.strict_encode64(user + ':' + password)
+      "Basic #{Base64.strict_encode64("#{user}:#{password}")}"
     end
 
   private
@@ -49,7 +51,7 @@ module OAuth2
     # When using schemes that don't require the client_secret to be passed i.e TLS Client Auth,
     # we don't want to send the secret
     def apply_client_id(params)
-      { 'client_id' => id }.merge(params)
+      {'client_id' => id}.merge(params)
     end
 
     # Adds an `Authorization` header with Basic Auth credentials if and only if
@@ -57,7 +59,7 @@ module OAuth2
     def apply_basic_auth(params)
       headers = params.fetch(:headers, {})
       headers = basic_auth_header.merge(headers)
-      params.merge(:headers => headers)
+      params.merge(headers: headers)
     end
 
     # @see https://tools.ietf.org/html/rfc2617#section-2

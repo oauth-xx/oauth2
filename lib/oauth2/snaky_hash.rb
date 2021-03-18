@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OAuth2
   # Hash which allow assign string key in camel case
   # and query on both camel and snake case
@@ -16,25 +18,25 @@ module OAuth2
     def fetch(key, *extras)
       super(key) { nil } || super(camelize(key)) { nil } || super(camelize_upcase_first_letter(key), *extras)
     rescue KeyError
-      raise KeyError.new("key not found: \"#{key}\"")
+      raise KeyError, "key not found: \"#{key}\""
     end
 
     def key?(key)
       super(key) || super(camelize(key)) || super(camelize_upcase_first_letter(key))
     end
 
-    private
+  private
 
     def camelize_upcase_first_letter(string)
-      string.sub(/^[a-z\d]*/) { |match| match.capitalize }
-        .gsub(/(?:_|(\/))([a-z\d]*)/) { "#{$1}#{$2.capitalize}" }
-        .gsub("/", "::")
+      string.sub(/^[a-z\d]*/, &:capitalize).
+        gsub(%r{(?:_|(/))([a-z\d]*)}) { "#{Regexp.last_match(1)}#{Regexp.last_match(2).capitalize}" }.
+        gsub('/', '::')
     end
 
     def camelize(string)
-      string.sub(/^(?:(?=\b|[A-Z_])|\w)/) { |match| match.downcase }
-        .gsub(/(?:_|(\/))([a-z\d]*)/) { "#{$1}#{$2.capitalize}" }
-        .gsub("/", "::")
+      string.sub(/^(?:(?=\b|[A-Z_])|\w)/, &:downcase).
+        gsub(%r{(?:_|(/))([a-z\d]*)}) { "#{Regexp.last_match(1)}#{Regexp.last_match(2).capitalize}" }.
+        gsub('/', '::')
     end
   end
 end

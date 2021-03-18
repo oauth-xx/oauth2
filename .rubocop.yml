@@ -1,29 +1,41 @@
-require: rubocop-rspec
 inherit_from:
   - .rubocop_todo.yml
   - .rubocop_rspec.yml
+
+require:
+  - 'rubocop-md'
+  - 'rubocop-packaging'
+  - 'rubocop-performance'
+  - 'rubocop-rake'
+  - 'rubocop-rspec'
+
 AllCops:
+  NewCops: enable
   DisplayCopNames: true # Display the name of the failing cops
-  TargetRubyVersion: 2.1
   Exclude:
     - 'gemfiles/vendor/**/*'
     - 'vendor/**/*'
     - '**/.irbrc'
 
-Gemspec/RequiredRubyVersion:
-  Enabled: false
-
 Metrics/BlockLength:
+  IgnoredMethods:
+    - context
+    - describe
+    - it
+    - shared_context
+    - shared_examples
+    - shared_examples_for
+    - namespace
+    - draw
+
+Gemspec/RequiredRubyVersion:
   Enabled: false
 
 Metrics/BlockNesting:
   Max: 2
 
-Metrics/LineLength:
+Layout/LineLength:
   Enabled: false
-
-Metrics/MethodLength:
-  Max: 15
 
 Metrics/ParameterLists:
   Max: 4

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # includes modules from stdlib
 require 'cgi'
 require 'time'

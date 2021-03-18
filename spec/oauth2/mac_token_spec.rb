@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 RSpec.describe MACToken do
   subject { described_class.new(client, token, 'abc123', kid: kid) }
 
   let(:kid) { 'this-token' }
   let(:token) { 'monkey' }
   let(:client) do
-    Client.new('abc', 'def', :site => 'https://api.example.com') do |builder|
+    Client.new('abc', 'def', site: 'https://api.example.com') do |builder|
       builder.request :url_encoded
       builder.adapter :test do |stub|
         VERBS.each do |verb|
@@ -29,17 +31,17 @@ RSpec.describe MACToken do
     end
 
     it 'handles hmac-sha-256' do
-      mac = described_class.new(client, token, 'abc123', :algorithm => 'hmac-sha-256')
+      mac = described_class.new(client, token, 'abc123', algorithm: 'hmac-sha-256')
       expect(mac.algorithm).to be_instance_of(OpenSSL::Digest::SHA256)
     end
 
     it 'handles hmac-sha-1' do
-      mac = described_class.new(client, token, 'abc123', :algorithm => 'hmac-sha-1')
+      mac = described_class.new(client, token, 'abc123', algorithm: 'hmac-sha-1')
       expect(mac.algorithm).to be_instance_of(OpenSSL::Digest::SHA1)
     end
 
     it 'raises on improper algorithm' do
-      expect { described_class.new(client, token, 'abc123', :algorithm => 'invalid-sha') }.to raise_error(ArgumentError)
+      expect { described_class.new(client, token, 'abc123', algorithm: 'invalid-sha') }.to raise_error(ArgumentError)
     end
   end
 
@@ -112,10 +114,10 @@ RSpec.describe MACToken do
     let(:access_token) do
       AccessToken.new(
         client, token,
-        :expires_at => 1,
-        :expires_in => 1,
-        :refresh_token => 'abc',
-        :random => 1
+        expires_at: 1,
+        expires_in: 1,
+        refresh_token: 'abc',
+        random: 1
       )
     end
 
@@ -132,7 +134,7 @@ RSpec.describe MACToken do
     end
 
     it 'initializes params' do
-      expect(subject.params).to eq(:random => 1)
+      expect(subject.params).to eq(random: 1)
     end
   end
 end

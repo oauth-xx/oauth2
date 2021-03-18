@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'jwt'
 
 module OAuth2
@@ -85,15 +87,13 @@ module OAuth2
 
       def build_request(assertion, request_opts = {})
         {
-          :grant_type => 'urn:ietf:params:oauth:grant-type:jwt-bearer',
-          :assertion => assertion,
+          grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+          assertion: assertion,
         }.merge(request_opts)
       end
 
       def build_assertion(claims, encoding_opts)
-        if !encoding_opts.is_a?(Hash) || ([:algorithm, :key] - encoding_opts.keys).any?
-          raise ArgumentError.new(:message => 'Please provide an encoding_opts hash with :algorithm and :key')
-        end
+        raise ArgumentError.new(message: 'Please provide an encoding_opts hash with :algorithm and :key') if !encoding_opts.is_a?(Hash) || (%i[algorithm key] - encoding_opts.keys).any?
 
         JWT.encode(claims, encoding_opts[:key], encoding_opts[:algorithm])
       end

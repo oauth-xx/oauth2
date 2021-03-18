@@ -69,13 +69,13 @@ Or inside Gemfile
 
 ```ruby
 require 'oauth2'
-client = OAuth2::Client.new('client_id', 'client_secret', :site => 'https://example.org')
+client = OAuth2::Client.new('client_id', 'client_secret', site: 'https://example.org')
 
-client.auth_code.authorize_url(:redirect_uri => 'http://localhost:8080/oauth2/callback')
+client.auth_code.authorize_url(redirect_uri: 'http://localhost:8080/oauth2/callback')
 # => "https://example.org/oauth/authorization?response_type=code&client_id=client_id&redirect_uri=http://localhost:8080/oauth2/callback"
 
-token = client.auth_code.get_token('authorization_code_value', :redirect_uri => 'http://localhost:8080/oauth2/callback', :headers => {'Authorization' => 'Basic some_password'})
-response = token.get('/api/resource', :params => { 'query_foo' => 'bar' })
+token = client.auth_code.get_token('authorization_code_value', redirect_uri: 'http://localhost:8080/oauth2/callback', headers: {'Authorization' => 'Basic some_password'})
+response = token.get('/api/resource', params: {'query_foo' => 'bar'})
 response.class.name
 # => OAuth2::Response
 ```
@@ -97,8 +97,8 @@ require 'oauth2'
 client = OAuth2::Client.new(
   'client_id',
   'client_secret',
-  :site   => 'https://example.org',
-  :logger => Logger.new('example.log', 'weekly')
+  site: 'https://example.org',
+  logger: Logger.new('example.log', 'weekly')
 )
 ```
 
@@ -141,10 +141,10 @@ authentication grant types have helper strategy classes that simplify client
 use. They are available via the `#auth_code`, `#implicit`, `#password`, `#client_credentials`, and `#assertion` methods respectively.
 
 ```ruby
-auth_url = client.auth_code.authorize_url(:redirect_uri => 'http://localhost:8080/oauth/callback')
-token = client.auth_code.get_token('code_value', :redirect_uri => 'http://localhost:8080/oauth/callback')
+auth_url = client.auth_code.authorize_url(redirect_uri: 'http://localhost:8080/oauth/callback')
+token = client.auth_code.get_token('code_value', redirect_uri: 'http://localhost:8080/oauth/callback')
 
-auth_url = client.implicit.authorize_url(:redirect_uri => 'http://localhost:8080/oauth/callback')
+auth_url = client.implicit.authorize_url(redirect_uri: 'http://localhost:8080/oauth/callback')
 # get the token params in the callback and
 token = OAuth2::AccessToken.from_kvform(client, query_string)
 
@@ -159,7 +159,7 @@ If you want to specify additional headers to be sent out with the
 request, add a 'headers' hash under 'params':
 
 ```ruby
-token = client.auth_code.get_token('code_value', :redirect_uri => 'http://localhost:8080/oauth/callback', :headers => {'Some' => 'Header'})
+token = client.auth_code.get_token('code_value', redirect_uri: 'http://localhost:8080/oauth/callback', headers: {'Some' => 'Header'})
 ```
 
 You can always use the `#request` method on the `OAuth2::Client` instance to make
@@ -181,7 +181,7 @@ For information on supported Rubies for the current 1.x release of oauth2 see th
 
 * Ruby 2.2 - Support ends with version 2.x series
 * Ruby 2.3 - Support ends with version 3.x series
-  - [JRuby 9.1][jruby-9.1] (targets MRI v2.3) 
+  - [JRuby 9.1][jruby-9.1] (targets MRI v2.3)
 * Ruby 2.4 - Support ends with version 4.x series
 * Ruby 2.5 - Support ends with version 5.x series
   - [JRuby 9.2][jruby-9.2] (targets MRI v2.5)
