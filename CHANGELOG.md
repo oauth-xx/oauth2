@@ -3,7 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [unreleased]
 
-- [#536](https://github.com/oauth-xx/oauth2/pull/536) - Compatibility with Ruby OpenSSL versions, Github Actions, Rubocop updated (@pboling)
+- [#536](https://github.com/oauth-xx/oauth2/pull/536) - Compatibility with Ruby OpenSSL versions, Github Actions, Rubocop updated, analogous to [#535](https://github.com/oauth-xx/oauth2/pull/535) on 1-4-stable line (@pboling)
 - Update testing infrastructure for all supported Rubies (@pboling and @josephpage)
 - **Breaking**: Set `:basic_auth` as default for `:auth_scheme` instead of `:request_body`. This was default behavior before 1.3.0. See [#285](https://github.com/oauth-xx/oauth2/issues/285) (@tetsuya, @wy193777)
 - Token is expired if `expired_at` time is now (@davestevens)
@@ -14,6 +14,11 @@ All notable changes to this project will be documented in this file.
 - _Dependency_: Upgrade jwt to 2.x.x (@travisofthenorth)
 - Fix logging to `$stdout` of request and response bodies via Faraday's logger and `ENV["OAUTH_DEBUG"] == 'true'` (@pboling)
 - **Security**: Add checks to enforce `client_secret` is *never* passed in authorize_url query params (@dfockler)
+
+## [1.4.5] - 2020-03-18
+
+- [#535](https://github.com/oauth-xx/oauth2/pull/535) - Compatibility with range of supported Ruby OpenSSL versions, Rubocop updates, Github Actions, analogous to  [#536](https://github.com/oauth-xx/oauth2/pull/536) on master branch (@pboling)
+- [#518](https://github.com/oauth-xx/oauth2/pull/518) - Add extract_access_token option to OAuth2::Client (@jonspalmer)
 
 ## [1.4.4] - 2020-02-12
 
