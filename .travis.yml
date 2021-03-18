@@ -61,7 +61,7 @@ matrix:
     # DEPRECATION WARNING
     # oauth2 1.x series releases are the last to support Ruby versions above
     # oauth2 2.x series releases will support Ruby versions below, and not above
-    # NOTE: Specs for Ruby 2.4, 2.5, 2.6, 2.7 are now running with Github Actions
+    # NOTE: Specs for Ruby 2.4, 2.5, 2.6, 2.7 & 3.0 are now running with Github Actions
     - rvm: jruby-9.1 # targets MRI v2.3
       gemfile: gemfiles/jruby_9.1.gemfile
     - rvm: 2.2
