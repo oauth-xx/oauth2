@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [unreleased]
 
+- [#536](https://github.com/oauth-xx/oauth2/pull/536) - Compatibility with Ruby OpenSSL versions, Github Actions, Rubocop updated (@pboling)
 - Update testing infrastructure for all supported Rubies (@pboling and @josephpage)
 - **Breaking**: Set `:basic_auth` as default for `:auth_scheme` instead of `:request_body`. This was default behavior before 1.3.0. See [#285](https://github.com/oauth-xx/oauth2/issues/285) (@tetsuya, @wy193777)
 - Token is expired if `expired_at` time is now (@davestevens)
