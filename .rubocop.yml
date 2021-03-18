@@ -37,9 +37,6 @@ Metrics/BlockNesting:
 Layout/LineLength:
   Enabled: false
 
-Metrics/MethodLength:
-  Max: 17
-
 Metrics/ParameterLists:
   Max: 4
 
