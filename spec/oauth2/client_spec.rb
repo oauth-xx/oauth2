@@ -324,7 +324,7 @@ RSpec.describe OAuth2::Client do
           expect(output).to include(*logs)
         end
 
-        context "logger is set to log to /dev/null" do
+        context 'logger is set to log to /dev/null' do
           around do |example|
             original_logger = subject.options[:logger]
             subject.options[:logger] = Logger.new('/dev/null')
