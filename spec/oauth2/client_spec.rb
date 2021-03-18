@@ -402,19 +402,19 @@ RSpec.describe OAuth2::Client do
     end
 
     it 'parses OAuth2 standard error response' do
-      subject.request(:get, '/unauthorized')
-    rescue StandardError => e
-      expect(e.code).to eq(error_value)
-      expect(e.description).to eq(error_description_value)
-      expect(e.to_s).to match(/#{error_value}/)
-      expect(e.to_s).to match(/#{error_description_value}/)
+      expect { subject.request(:get, '/unauthorized') }.to raise_error do |ex|
+        expect(ex.code).to eq(error_value)
+        expect(ex.description).to eq(error_description_value)
+        expect(ex.to_s).to match(/#{error_value}/)
+        expect(ex.to_s).to match(/#{error_description_value}/)
+      end
     end
 
     it 'provides the response in the Exception' do
-      subject.request(:get, '/error')
-    rescue StandardError => e
-      expect(e.response).to be_a(OAuth2::Response)
-      expect(e.to_s).to match(/unknown error/)
+      expect { subject.request(:get, '/error') }.to raise_error do |ex|
+        expect(ex.response).not_to be_nil
+        expect(ex.to_s).to match(/unknown error/)
+      end
     end
   end
 
