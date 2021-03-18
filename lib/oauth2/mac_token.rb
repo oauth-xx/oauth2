@@ -98,9 +98,17 @@ module OAuth2
       @algorithm = begin
         case alg.to_s
         when 'hmac-sha-1'
-          OpenSSL::Digest::SHA1.new
+          begin
+            OpenSSL::Digest('SHA1').new
+          rescue StandardError
+            OpenSSL::Digest.new('SHA1')
+          end
         when 'hmac-sha-256'
-          OpenSSL::Digest::SHA256.new
+          begin
+            OpenSSL::Digest('SHA256').new
+          rescue StandardError
+            OpenSSL::Digest.new('SHA256')
+          end
         else
           raise(ArgumentError, 'Unsupported algorithm')
         end

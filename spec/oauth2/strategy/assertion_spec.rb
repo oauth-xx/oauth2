@@ -22,8 +22,8 @@ describe OAuth2::Strategy::Assertion do
 
   let(:params) do
     {
-        :hmac_secret => 'foo',
-        :exp => Time.now.utc.to_i + 3600
+      :hmac_secret => 'foo',
+      :exp => Time.now.utc.to_i + 3600,
     }
   end
 

@@ -36,16 +36,16 @@ module OAuth2
       ssl = opts.delete(:ssl)
 
       @options = {
-        :authorize_url        => '/oauth/authorize',
-        :token_url            => '/oauth/token',
-        :token_method         => :post,
-        :auth_scheme          => :request_body,
-        :connection_opts      => {},
-        :connection_build     => block,
-        :max_redirects        => 5,
-        :raise_errors         => true,
-        :extract_access_token => DEFAULT_EXTRACT_ACCESS_TOKEN
-                }.merge(opts)
+        :authorize_url => '/oauth/authorize',
+        :token_url => '/oauth/token',
+        :token_method => :post,
+        :auth_scheme => :request_body,
+        :connection_opts => {},
+        :connection_build => block,
+        :max_redirects => 5,
+        :raise_errors => true,
+        :extract_access_token => DEFAULT_EXTRACT_ACCESS_TOKEN,
+      }.merge(opts)
       @options[:connection_opts][:ssl] = ssl if ssl
     end
 
@@ -97,7 +97,7 @@ module OAuth2
     #   code response for this request.  Will default to client option
     # @option opts [Symbol] :parse @see Response::initialize
     # @yield [req] The Faraday request
-    def request(verb, url, opts = {}) # rubocop:disable CyclomaticComplexity, MethodLength, Metrics/AbcSize, Metrics/PerceivedComplexity
+    def request(verb, url, opts = {}) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       connection.response :logger, ::Logger.new($stdout) if ENV['OAUTH_DEBUG'] == 'true'
 
       url = connection.build_url(url).to_s
@@ -113,6 +113,7 @@ module OAuth2
         opts[:redirect_count] ||= 0
         opts[:redirect_count] += 1
         return response if opts[:redirect_count] > options[:max_redirects]
+
         if response.status == 303
           verb = :get
           opts.delete(:body)
@@ -124,6 +125,7 @@ module OAuth2
       when 400..599
         error = Error.new(response)
         raise(error) if opts.fetch(:raise_errors, options[:raise_errors])
+
         response.error = error
         response
       else
@@ -138,7 +140,7 @@ module OAuth2
     # @param [Hash] access token options, to pass to the AccessToken object
     # @param [Class] class of access token for easier subclassing OAuth2::AccessToken
     # @return [AccessToken] the initialized AccessToken
-    def get_token(params, access_token_opts = {}, extract_access_token = options[:extract_access_token]) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/PerceivedComplexity
+    def get_token(params, access_token_opts = {}, extract_access_token = options[:extract_access_token]) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       params = params.map do |key, value|
         if RESERVED_PARAM_KEYS.include?(key)
           [key.to_sym, value]
@@ -161,7 +163,11 @@ module OAuth2
       opts[:headers].merge!(headers)
       response = request(options[:token_method], token_url, opts)
 
-      access_token = build_access_token(response, access_token_opts, extract_access_token) rescue nil
+      access_token = begin
+        build_access_token(response, access_token_opts, extract_access_token)
+      rescue StandardError
+        nil
+      end
 
       if options[:raise_errors] && !access_token
         error = Error.new(response)
@@ -243,7 +249,7 @@ private
     # Provide backwards compatibility for old AcessToken.form_hash pattern
     # Should be deprecated in 2.x
     if extract_access_token.is_a?(Class) && extract_access_token.respond_to?(:from_hash)
-      extract_access_token.from_hash(self, hash) 
+      extract_access_token.from_hash(self, hash)
     else
       extract_access_token.call(self, hash)
     end

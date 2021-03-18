@@ -49,7 +49,7 @@ module OAuth2
     # When using schemes that don't require the client_secret to be passed i.e TLS Client Auth,
     # we don't want to send the secret
     def apply_client_id(params)
-      { 'client_id' => id }.merge(params)
+      {'client_id' => id}.merge(params)
     end
 
     # Adds an `Authorization` header with Basic Auth credentials if and only if

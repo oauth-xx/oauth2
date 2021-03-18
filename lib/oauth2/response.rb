@@ -11,9 +11,9 @@ module OAuth2
     # Procs that, when called, will parse a response body according
     # to the specified format.
     @@parsers = {
-      :json  => lambda { |body| MultiJson.load(body) rescue body }, # rubocop:disable RescueModifier
+      :json => lambda { |body| MultiJson.load(body) rescue body }, # rubocop:disable Style/RescueModifier
       :query => lambda { |body| Rack::Utils.parse_query(body) },
-      :text  => lambda { |body| body },
+      :text => lambda { |body| body },
     }
 
     # Content type assignments for various potential HTTP content types.
@@ -68,6 +68,7 @@ module OAuth2
     #   application/json Content-Type response bodies
     def parsed
       return nil unless @@parsers.key?(parser)
+
       @parsed ||= @@parsers[parser].call(body)
     end
 
@@ -79,11 +80,12 @@ module OAuth2
     # Determines the parser that will be used to supply the content of #parsed
     def parser
       return options[:parse].to_sym if @@parsers.key?(options[:parse])
+
       @@content_types[content_type]
     end
   end
 end
 
 OAuth2::Response.register_parser(:xml, ['text/xml', 'application/rss+xml', 'application/rdf+xml', 'application/atom+xml']) do |body|
-  MultiXml.parse(body) rescue body # rubocop:disable RescueModifier
+  MultiXml.parse(body) rescue body # rubocop:disable Style/RescueModifier
 end

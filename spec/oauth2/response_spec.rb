@@ -8,8 +8,8 @@ describe OAuth2::Response do
 
     it 'returns the status, headers and body' do
       response = double('response', :headers => headers,
-                                    :status  => status,
-                                    :body    => body)
+                                    :status => status,
+                                    :body => body)
       subject = Response.new(response)
       expect(subject.headers).to eq(headers)
       expect(subject.status).to eq(status)

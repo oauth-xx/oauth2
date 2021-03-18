@@ -167,8 +167,8 @@ describe AccessToken do
   describe '#refresh!' do
     let(:access) do
       described_class.new(client, token, :refresh_token => 'abaca',
-                                         :expires_in     => 600,
-                                         :param_name     => 'o_param')
+                                         :expires_in => 600,
+                                         :param_name => 'o_param')
     end
 
     it 'returns a refresh token with appropriate values carried over' do

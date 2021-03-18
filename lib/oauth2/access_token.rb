@@ -49,9 +49,9 @@ module OAuth2
       @expires_in &&= @expires_in.to_i
       @expires_at &&= convert_expires_at(@expires_at)
       @expires_at ||= Time.now.to_i + @expires_in if @expires_in
-      @options = {:mode          => opts.delete(:mode) || :header,
+      @options = {:mode => opts.delete(:mode) || :header,
                   :header_format => opts.delete(:header_format) || 'Bearer %s',
-                  :param_name    => opts.delete(:param_name) || 'access_token'}
+                  :param_name => opts.delete(:param_name) || 'access_token'}
       @params = opts
     end
 
@@ -82,6 +82,7 @@ module OAuth2
     # @note options should be carried over to the new AccessToken
     def refresh!(params = {})
       raise('A refresh_token is not available') unless refresh_token
+
       params[:grant_type] = 'refresh_token'
       params[:refresh_token] = refresh_token
       new_token = @client.get_token(params)
@@ -150,7 +151,7 @@ module OAuth2
 
   private
 
-    def configure_authentication!(opts) # rubocop:disable MethodLength, Metrics/AbcSize
+    def configure_authentication!(opts) # rubocop:disable Metrics/AbcSize
       case options[:mode]
       when :header
         opts[:headers] ||= {}
@@ -175,6 +176,7 @@ module OAuth2
       expires_at_i = expires_at.to_i
       return expires_at_i if expires_at_i > Time.now.utc.to_i
       return Time.parse(expires_at).to_i if expires_at.is_a?(String)
+
       expires_at_i
     end
   end

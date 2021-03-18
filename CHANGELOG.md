@@ -1,9 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+## unreleased
 
-- no changes yet
+- [#518](https://github.com/oauth-xx/oauth2/pull/518) - Add extract_access_token option to OAuth2::Client (@jonspalmer)
 
 ## [1.4.4] - 2020-02-12
 

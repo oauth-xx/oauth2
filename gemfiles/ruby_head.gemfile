@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
 group :development do
-  gem 'pry'
   gem 'byebug'
+  gem 'pry'
   gem 'pry-byebug'
 end
 
