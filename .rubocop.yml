@@ -106,3 +106,7 @@ Style/EachWithObject:
 # Once we drop Rubies that lack support for __dir__ we can turn this on.
 Style/ExpandPathArguments:
   Enabled: false
+
+# On Ruby 1.9 array.to_h isn't available, needs to be Hash[array]
+Style/HashConversion:
+  Enabled: false
