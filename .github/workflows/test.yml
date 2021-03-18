@@ -1,0 +1,55 @@
+name: Unit Tests
+
+on:
+  push:
+    branches:
+      - 'main'
+      - 'master'
+      - '*-maintenance'
+      - '*-dev'
+    tags:
+      - '!*' # Do not execute on tags
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  test:
+    name: Specs - Ruby ${{ matrix.ruby }} ${{ matrix.name_extra || '' }}
+    if: "!contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]')"
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby:
+          - 3.0.0
+          - 2.7
+          - 2.6
+          - 2.5
+          - 2.4
+    runs-on: ubuntu-20.04
+    continue-on-error: ${{ matrix.allow_failure || endsWith(matrix.ruby, 'head') }}
+    steps:
+      - uses: amancevice/setup-code-climate@v0
+        name: CodeClimate Install
+        if: matrix.ruby == '2.7' && github.event_name != 'pull_request'
+        with:
+          cc_test_reporter_id: ${{ secrets.CC_TEST_REPORTER_ID }}
+      - uses: actions/checkout@v2
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler: ${{ matrix.bundler || 2 }}
+          bundler-cache: true
+          ruby-version: ${{ matrix.ruby }}
+      - name: Install dependencies
+        run: bundle install --jobs 3 --retry 3 --binstubs --standalone
+      - name: CodeClimate Pre-build Notification
+        run: cc-test-reporter before-build
+        if: matrix.ruby == '2.7' && github.event_name != 'pull_request'
+        continue-on-error: ${{ matrix.allow_failures != 'false' }}
+      - name: Run tests
+        run: bundle exec rake test
+      - name: CodeClimate Post-build Notification
+        run: cc-test-reporter after-build
+        if: matrix.ruby == '2.7' && github.event_name != 'pull_request' && always()
+        continue-on-error: ${{ matrix.allow_failures != 'false' }}
