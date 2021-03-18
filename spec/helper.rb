@@ -1,20 +1,27 @@
 # frozen_string_literal: true
 
 require 'oauth2'
-require 'simplecov'
-require 'coveralls'
 require 'rspec'
 require 'rspec/stubbed_env'
 require 'silent_stream'
 
-SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
-                                                                  SimpleCov::Formatter::HTMLFormatter,
-                                                                  Coveralls::SimpleCov::Formatter,
-                                                                ])
+ruby_version = Gem::Version.new(RUBY_VERSION)
 
-SimpleCov.start do
-  add_filter '/spec'
-  minimum_coverage(95)
+# No need to get coverage for older versions of Ruby
+coverable_version = Gem::Version.new('2.7')
+
+if ruby_version >= coverable_version
+  require 'simplecov'
+  require 'coveralls'
+  SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
+                                                                    SimpleCov::Formatter::HTMLFormatter,
+                                                                    Coveralls::SimpleCov::Formatter,
+                                                                  ])
+
+  SimpleCov.start do
+    add_filter '/spec'
+    minimum_coverage(95)
+  end
 end
 
 require 'addressable/uri'
