@@ -1,29 +1,52 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
+
+gemspec
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 gem 'faraday', ['>= 0.8', '< 2.0'], :platforms => [:jruby_18, :ruby_18]
 gem 'jwt', '< 1.5.2', :platforms => [:jruby_18, :ruby_18]
 gem 'rake', '< 11.0'
-gem 'rdoc', '~> 4.2.2'
+
+ruby_version = Gem::Version.new(RUBY_VERSION)
+
+### deps for documentation and rdoc.info
+group :documentation do
+  gem 'github-markup', :platform => :mri
+  gem 'rdoc'
+  gem 'redcarpet', :platform => :mri
+  gem 'yard', :require => false
+end
+
+group :development, :test do
+  if ruby_version >= Gem::Version.new('2.4')
+    # No need to run byebug / pry on earlier versions
+    gem 'byebug', :platform => :mri
+    gem 'pry', :platform => :mri
+    gem 'pry-byebug', :platform => :mri
+  end
+
+  if ruby_version >= Gem::Version.new('2.7')
+    # No need to run rubocop or simplecov on earlier versions
+    gem 'rubocop', '~> 1.9', :platform => :mri
+    gem 'rubocop-md', :platform => :mri
+    gem 'rubocop-packaging', :platform => :mri
+    gem 'rubocop-performance', :platform => :mri
+    gem 'rubocop-rake', :platform => :mri
+    gem 'rubocop-rspec', :platform => :mri
+
+    gem 'coveralls'
+    gem 'simplecov', :platform => :mri
+  end
+end
 
 group :test do
-  ruby_version = Gem::Version.new(RUBY_VERSION)
-  if ruby_version >= Gem::Version.new('2.1')
-    # TODO: Upgrade to >= 0.59 when we drop Rubies below 2.2
-    #     Error: Unsupported Ruby version 2.1 found in `TargetRubyVersion` parameter (in .rubocop.yml). 2.1-compatible analysis was dropped after version 0.58.
-    #     Supported versions: 2.2, 2.3, 2.4, 2.5
-    gem 'rubocop', '~> 0.57.0'
-    gem 'rubocop-rspec', '~> 1.27.0' # last version that can use rubocop < 0.58
-  end
-  gem 'pry', '~> 0.11' if ruby_version >= Gem::Version.new('2.0')
-
   gem 'addressable', '~> 2.3.8'
   gem 'backports'
-  gem 'coveralls'
   gem 'rack', '~> 1.2', :platforms => [:jruby_18, :jruby_19, :ruby_18, :ruby_19, :ruby_20, :ruby_21]
   gem 'rspec', '>= 3'
-  gem 'simplecov', '>= 0.9'
 
   platforms :jruby_18, :ruby_18 do
     gem 'mime-types', '~> 1.25'
@@ -36,5 +59,3 @@ group :test do
     gem 'tins', '< 1.7'
   end
 end
-
-gemspec

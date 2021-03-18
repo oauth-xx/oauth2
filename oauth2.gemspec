@@ -23,11 +23,11 @@ Gem::Specification.new do |spec|
   spec.version       = OAuth2::Version
 
   spec.metadata = {
-    'bug_tracker_uri'   => 'https://github.com/oauth-xx/oauth2/issues',
-    'changelog_uri'     => "https://github.com/oauth-xx/oauth2/blob/v#{spec.version}/CHANGELOG.md",
+    'bug_tracker_uri' => 'https://github.com/oauth-xx/oauth2/issues',
+    'changelog_uri' => "https://github.com/oauth-xx/oauth2/blob/v#{spec.version}/CHANGELOG.md",
     'documentation_uri' => "https://www.rubydoc.info/gems/oauth2/#{spec.version}",
-    'source_code_uri'   => "https://github.com/oauth-xx/oauth2/tree/v#{spec.version}",
-    'wiki_uri'          => 'https://github.com/oauth-xx/oauth2/wiki'
+    'source_code_uri' => "https://github.com/oauth-xx/oauth2/tree/v#{spec.version}",
+    'wiki_uri' => 'https://github.com/oauth-xx/oauth2/wiki',
   }
 
   spec.require_paths = %w[lib]
@@ -44,9 +44,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake', '~> 12.3'
   spec.add_development_dependency 'rdoc', ['>= 5.0', '< 7']
   spec.add_development_dependency 'rspec', '~> 3.0'
-  spec.add_development_dependency 'rspec-stubbed_env'
-  spec.add_development_dependency 'rspec-pending_for'
   spec.add_development_dependency 'rspec-block_is_expected'
+  spec.add_development_dependency 'rspec-pending_for'
+  spec.add_development_dependency 'rspec-stubbed_env'
   spec.add_development_dependency 'silent_stream'
   spec.add_development_dependency 'wwtd'
 end

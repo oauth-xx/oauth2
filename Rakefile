@@ -33,7 +33,7 @@ end
 
 namespace :doc do
   require 'rdoc/task'
-  require File.expand_path('../lib/oauth2/version', __FILE__)
+  require 'oauth2/version'
   RDoc::Task.new do |rdoc|
     rdoc.rdoc_dir = 'rdoc'
     rdoc.title = "oauth2 #{OAuth2::Version}"

@@ -169,7 +169,7 @@ describe OAuth2::Client do
               end
             end
           end
-          header_params = {'headers' => { 'CustomHeader' => 'CustomHeader' }}
+          header_params = {'headers' => {'CustomHeader' => 'CustomHeader'}}
           client.auth_code.get_token('code', header_params)
         end
       end
@@ -184,7 +184,7 @@ describe OAuth2::Client do
               end
             end
           end
-          header_params = {headers: { 'CustomHeader' => 'CustomHeader' }}
+          header_params = {:headers => {'CustomHeader' => 'CustomHeader'}}
           client.auth_code.get_token('code', header_params)
         end
       end
@@ -199,7 +199,7 @@ describe OAuth2::Client do
               end
             end
           end
-          header_params = {'headers' => { 'CustomHeader' => 'CustomHeader' }}
+          header_params = {'headers' => {'CustomHeader' => 'CustomHeader'}}
           client.auth_code.get_token('code', header_params)
         end
       end
@@ -214,7 +214,7 @@ describe OAuth2::Client do
               end
             end
           end
-          header_params = {headers: { 'CustomHeader' => 'CustomHeader' }}
+          header_params = {:headers => {'CustomHeader' => 'CustomHeader'}}
           client.auth_code.get_token('code', header_params)
         end
       end
@@ -275,32 +275,26 @@ describe OAuth2::Client do
     end
 
     it 're-encodes response body in the error message' do
-      begin
-        subject.request(:get, '/ascii_8bit_encoding')
-      rescue StandardError => ex
-        expect(ex.message.encoding.name).to eq('UTF-8')
-        expect(ex.message).to eq("invalid_request: é\n{\"error\":\"invalid_request\",\"error_description\":\"��\"}")
-      end
+      subject.request(:get, '/ascii_8bit_encoding')
+    rescue StandardError => e
+      expect(e.message.encoding.name).to eq('UTF-8')
+      expect(e.message).to eq("invalid_request: é\n{\"error\":\"invalid_request\",\"error_description\":\"��\"}")
     end
 
     it 'parses OAuth2 standard error response' do
-      begin
-        subject.request(:get, '/unauthorized')
-      rescue StandardError => e
-        expect(e.code).to eq(error_value)
-        expect(e.description).to eq(error_description_value)
-        expect(e.to_s).to match(/#{error_value}/)
-        expect(e.to_s).to match(/#{error_description_value}/)
-      end
+      subject.request(:get, '/unauthorized')
+    rescue StandardError => e
+      expect(e.code).to eq(error_value)
+      expect(e.description).to eq(error_description_value)
+      expect(e.to_s).to match(/#{error_value}/)
+      expect(e.to_s).to match(/#{error_description_value}/)
     end
 
     it 'provides the response in the Exception' do
-      begin
-        subject.request(:get, '/error')
-      rescue StandardError => e
-        expect(e.response).not_to be_nil
-        expect(e.to_s).to match(/unknown error/)
-      end
+      subject.request(:get, '/error')
+    rescue StandardError => e
+      expect(e.response).not_to be_nil
+      expect(e.to_s).to match(/unknown error/)
     end
 
     context 'with ENV' do
@@ -308,6 +302,7 @@ describe OAuth2::Client do
       before do
         stub_env('OAUTH_DEBUG' => 'true')
       end
+
       it 'outputs to $stdout when OAUTH_DEBUG=true' do
         output = capture(:stdout) do
           subject.request(:get, '/success')
@@ -315,7 +310,7 @@ describe OAuth2::Client do
         logs = [
           '-- request: GET https://api.example.com/success',
           '-- response: Status 200',
-          '-- response: Content-Type: "text/awesome"'
+          '-- response: Content-Type: "text/awesome"',
         ]
         expect(output).to include(*logs)
       end
@@ -348,6 +343,7 @@ describe OAuth2::Client do
       client = stubbed_client(:auth_scheme => :basic_auth) do |stub|
         stub.post('/oauth/token') do |env|
           raise Faraday::Adapter::Test::Stubs::NotFound unless env[:request_headers]['Authorization'] == OAuth2::Authenticator.encode_basic_auth('abc', 'def')
+
           [200, {'Content-Type' => 'application/json'}, MultiJson.encode('access_token' => 'the-token')]
         end
       end
@@ -355,7 +351,7 @@ describe OAuth2::Client do
     end
 
     describe 'extract_access_token option' do
-      let(:client) do 
+      let(:client) do
         client = stubbed_client(:extract_access_token => extract_access_token) do |stub|
           stub.post('/oauth/token') do
             [200, {'Content-Type' => 'application/json'}, MultiJson.encode('data' => {'access_token' => 'the-token'})]
@@ -363,7 +359,7 @@ describe OAuth2::Client do
         end
       end
 
-      context "with proc extract_access_token" do
+      context 'with proc extract_access_token' do
         let(:extract_access_token) do
           proc do |client, hash|
             token = hash['data']['access_token']
@@ -378,10 +374,10 @@ describe OAuth2::Client do
         end
       end
 
-      context "with depracted Class.from_hash option" do
+      context 'with depracted Class.from_hash option' do
         let(:extract_access_token) do
           CustomAccessToken = Class.new(AccessToken)
-          CustomAccessToken.define_singleton_method(:from_hash) do |client, hash| 
+          CustomAccessToken.define_singleton_method(:from_hash) do |client, hash|
             token = hash['data']['access_token']
             AccessToken.new(client, token, hash)
           end

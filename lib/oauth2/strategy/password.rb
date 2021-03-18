@@ -18,8 +18,8 @@ module OAuth2
       # @param [Hash] params additional params
       def get_token(username, password, params = {}, opts = {})
         params = {'grant_type' => 'password',
-                  'username'   => username,
-                  'password'   => password}.merge(params)
+                  'username' => username,
+                  'password' => password}.merge(params)
         @client.get_token(params, opts)
       end
     end
