@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.homepage      = 'https://github.com/oauth-xx/oauth2'
   spec.licenses      = %w[MIT]
   spec.name          = 'oauth2'
-  spec.required_ruby_version = '>= 1.9.0'
+  spec.required_ruby_version = '>= 2.2.0'
   spec.required_rubygems_version = '>= 1.3.5'
   spec.summary       = 'A Ruby wrapper for the OAuth 2.0 protocol.'
   spec.version       = OAuth2::Version
@@ -33,10 +33,9 @@ Gem::Specification.new do |spec|
 
   spec.require_paths = %w[lib]
   spec.bindir        = 'exe'
+  spec.files = Dir['lib/**/*', 'LICENSE', 'README.md', 'CHANGELOG.md', 'CODE_OF_CONDUCT.md']
+  spec.test_files = Dir['spec/**/*']
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
-  spec.files         = `git ls-files -z`.split("\x0").reject do |f|
-    f.match(%r{^(bin|test|spec|features)/})
-  end
 
   spec.add_development_dependency 'addressable', '~> 2.3'
   spec.add_development_dependency 'backports', '~> 3.11'
