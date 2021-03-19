@@ -19,7 +19,7 @@ module OAuth2
 
     attr_reader :secret, :algorithm
 
-    # Initalize a MACToken
+    # Initialize a MACToken
     #
     # @param [Client] client the OAuth2::Client instance
     # @param [String] token the Access Token value
@@ -80,7 +80,7 @@ module OAuth2
     #
     # @param [Fixnum] timestamp the timestamp of the request in seconds since epoch
     # @param [Symbol] verb the HTTP request method
-    # @param [String] url the HTTP URL path of the request
+    # @param [URI::HTTP] uri the HTTP URL path of the request
     def signature(timestamp, verb, uri)
       signature = [
         "#{verb.to_s.upcase} #{uri.request_uri} HTTP/1.1",

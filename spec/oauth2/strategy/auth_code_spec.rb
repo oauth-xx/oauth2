@@ -14,7 +14,7 @@ RSpec.describe OAuth2::Strategy::AuthCode do
   let(:client) do
     OAuth2::Client.new('abc', 'def', site: 'http://api.example.com') do |builder|
       builder.adapter :test do |stub|
-        stub.get("/oauth/token?client_id=abc&code=#{code}&grant_type=authorization_code") do |env|
+        stub.get("/oauth/token?client_id=abc&code=#{code}&grant_type=authorization_code") do |_env|
           case @mode
           when 'formencoded'
             [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, kvform_token]
@@ -24,9 +24,10 @@ RSpec.describe OAuth2::Strategy::AuthCode do
             [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, facebook_token]
           when 'from_microsoft'
             [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, microsoft_token]
+          else raise ArgumentError, "Bad @mode: #{@mode}"
           end
         end
-        stub.post('/oauth/token', 'client_id' => 'abc', 'client_secret' => 'def', 'code' => 'sushi', 'grant_type' => 'authorization_code') do |env|
+        stub.post('/oauth/token', 'client_id' => 'abc', 'client_secret' => 'def', 'code' => 'sushi', 'grant_type' => 'authorization_code') do |_env|
           case @mode
           when 'formencoded'
             [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, kvform_token]
@@ -34,9 +35,10 @@ RSpec.describe OAuth2::Strategy::AuthCode do
             [200, {'Content-Type' => 'application/json'}, json_token]
           when 'from_facebook'
             [200, {'Content-Type' => 'application/x-www-form-urlencoded'}, facebook_token]
+          else raise ArgumentError, "Bad @mode: #{@mode}"
           end
         end
-        stub.post('/oauth/token', 'client_id' => 'abc', 'client_secret' => 'def', 'code' => 'sushi', 'grant_type' => 'authorization_code', 'redirect_uri' => redirect_uri) do |env|
+        stub.post('/oauth/token', 'client_id' => 'abc', 'client_secret' => 'def', 'code' => 'sushi', 'grant_type' => 'authorization_code', 'redirect_uri' => redirect_uri) do |_env|
           [200, {'Content-Type' => 'application/json'}, json_token]
         end
       end

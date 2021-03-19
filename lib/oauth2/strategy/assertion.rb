@@ -13,7 +13,7 @@ module OAuth2
     #                               :site => 'http://localhost:8080',
     #                               :auth_scheme => :request_body)
     #
-    #   claimset = {
+    #   claim_set = {
     #     :iss => "http://localhost:3001",
     #     :aud => "http://localhost:8080/oauth2/token"
     #     :sub => "me@example.com",
@@ -25,7 +25,7 @@ module OAuth2
     #     :key => 'secret_key',
     #   }
     #
-    #   access = client.assertion.get_token(claimset, encoding)
+    #   access = client.assertion.get_token(claim_set, encoding)
     #   access.token                 # actual access_token string
     #   access.get("/api/stuff")     # making api calls with access token in header
     #
@@ -66,8 +66,8 @@ module OAuth2
       #   @see https://tools.ietf.org/html/rfc7518#section-3.1
       #
       # The object type of `:key` may depend on the value of `:algorithm`.  Sample arguments:
-      #   get_token(claimset, {:algorithm => 'HS256', :key => 'secret_key'})
-      #   get_token(claimset, {:algorithm => 'RS256', :key => OpenSSL::PKCS12.new(File.read('my_key.p12'), 'not_secret')})
+      #   get_token(claim_set, {:algorithm => 'HS256', :key => 'secret_key'})
+      #   get_token(claim_set, {:algorithm => 'RS256', :key => OpenSSL::PKCS12.new(File.read('my_key.p12'), 'not_secret')})
       #
       # @param [Hash] request_opts options that will be used to assemble the request
       # @option request_opts [String] :scope the url parameter `scope` that may be required by some endpoints
