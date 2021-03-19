@@ -50,7 +50,7 @@ describe OAuth2::AccessToken do
       expect(hash).to eq(hash_before)
     end
 
-    it 'initalizes with a form-urlencoded key/value string' do
+    it 'initializes with a form-urlencoded key/value string' do
       kvform = "access_token=#{token}&expires_at=#{Time.now.to_i + 200}&foo=bar"
       target = described_class.from_kvform(client, kvform)
       assert_initialized_token(target)
@@ -70,13 +70,33 @@ describe OAuth2::AccessToken do
       expect(opts).to eq(opts_before)
     end
 
-    it 'initializes with a string expires_at' do
-      future = Time.now.utc + 100_000
-      hash = {:access_token => token, :expires_at => future.iso8601, 'foo' => 'bar'}
-      target = described_class.from_hash(client, hash)
-      assert_initialized_token(target)
-      expect(target.expires_at).to be_a(Integer)
-      expect(target.expires_at).to eql(future.to_i)
+    describe 'expires_at' do
+      let(:expires_at) { 1_361_396_829 }
+      let(:hash) do
+        {
+          :access_token => token,
+          :expires_at => expires_at.to_s,
+          'foo' => 'bar',
+        }
+      end
+
+      it 'initializes with an integer timestamp expires_at' do
+        target = described_class.from_hash(client, hash.merge(expires_at: expires_at))
+        assert_initialized_token(target)
+        expect(target.expires_at).to eql(expires_at)
+      end
+
+      it 'initializes with a string timestamp expires_at' do
+        target = described_class.from_hash(client, hash)
+        assert_initialized_token(target)
+        expect(target.expires_at).to eql(expires_at)
+      end
+
+      it 'initializes with a string time expires_at' do
+        target = described_class.from_hash(client, hash.merge(expires_at: Time.at(expires_at).iso8601))
+        assert_initialized_token(target)
+        expect(target.expires_at).to eql(expires_at)
+      end
     end
   end
 
