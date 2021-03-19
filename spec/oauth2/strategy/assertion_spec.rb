@@ -211,7 +211,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
           end
 
           it 'returns an AccessToken' do
-            expect(access_token).to be_an(AccessToken)
+            expect(access_token).to be_an(OAuth2::AccessToken)
           end
 
           it 'returns AccessToken with same Client' do
