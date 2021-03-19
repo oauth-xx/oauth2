@@ -231,27 +231,27 @@ module OAuth2
         {}
       end
     end
-  end
 
-  DEFAULT_EXTRACT_ACCESS_TOKEN = proc do |client, hash|
-    token = hash.delete('access_token') || hash.delete(:access_token)
-    token && AccessToken.new(client, token, hash)
-  end
+    DEFAULT_EXTRACT_ACCESS_TOKEN = proc do |client, hash|
+      token = hash.delete('access_token') || hash.delete(:access_token)
+      token && AccessToken.new(client, token, hash)
+    end
 
-private
+  private
 
-  def build_access_token(response, access_token_opts, extract_access_token)
-    parsed_response = response.parsed.dup
-    return unless parsed_response.is_a?(Hash)
+    def build_access_token(response, access_token_opts, extract_access_token)
+      parsed_response = response.parsed.dup
+      return unless parsed_response.is_a?(Hash)
 
-    hash = parsed_response.merge(access_token_opts)
+      hash = parsed_response.merge(access_token_opts)
 
-    # Provide backwards compatibility for old AcessToken.form_hash pattern
-    # Should be deprecated in 2.x
-    if extract_access_token.is_a?(Class) && extract_access_token.respond_to?(:from_hash)
-      extract_access_token.from_hash(self, hash)
-    else
-      extract_access_token.call(self, hash)
+      # Provide backwards compatibility for old AcessToken.form_hash pattern
+      # Should be deprecated in 2.x
+      if extract_access_token.is_a?(Class) && extract_access_token.respond_to?(:from_hash)
+        extract_access_token.from_hash(self, hash)
+      else
+        extract_access_token.call(self, hash)
+      end
     end
   end
 end
