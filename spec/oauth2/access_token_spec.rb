@@ -81,7 +81,7 @@ describe OAuth2::AccessToken do
       end
 
       it 'initializes with an integer timestamp expires_at' do
-        target = described_class.from_hash(client, hash.merge(expires_at: expires_at))
+        target = described_class.from_hash(client, hash.merge(:expires_at => expires_at))
         assert_initialized_token(target)
         expect(target.expires_at).to eql(expires_at)
       end
@@ -93,7 +93,7 @@ describe OAuth2::AccessToken do
       end
 
       it 'initializes with a string time expires_at' do
-        target = described_class.from_hash(client, hash.merge(expires_at: Time.at(expires_at).iso8601))
+        target = described_class.from_hash(client, hash.merge(:expires_at => Time.at(expires_at).iso8601))
         assert_initialized_token(target)
         expect(target.expires_at).to eql(expires_at)
       end
