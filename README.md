@@ -9,6 +9,7 @@ If you need the readme for a released version of the gem please find it below:
 
 | Version  | Release Date | Readme                                                   |
 |----------|--------------|----------------------------------------------------------|
+| 1.4.6    | Mar 18, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.6/README.md |
 | 1.4.5    | Mar 18, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.5/README.md |
 | 1.4.4    | Feb 12, 2020 | https://github.com/oauth-xx/oauth2/blob/v1.4.4/README.md |
 | 1.4.3    | Jan 29, 2020 | https://github.com/oauth-xx/oauth2/blob/v1.4.3/README.md |
