@@ -24,18 +24,18 @@ describe OAuth2::MACToken do
     end
 
     it 'defaults algorithm to hmac-sha-256' do
-      pending_for(:engine => "ruby", :versions => "1.9", :reason => "Ruby 1.9's OpenSSL uses instance of OpenSSL::Digest")
+      pending_for(:engine => 'ruby', :versions => '1.9', :reason => "Ruby 1.9's OpenSSL uses instance of OpenSSL::Digest")
       expect(subject.algorithm).to be_instance_of(OpenSSL::Digest::SHA256)
     end
 
     it 'handles hmac-sha-256' do
-      pending_for(:engine => "ruby", :versions => "1.9", :reason => "Ruby 1.9's OpenSSL uses instance of OpenSSL::Digest")
+      pending_for(:engine => 'ruby', :versions => '1.9', :reason => "Ruby 1.9's OpenSSL uses instance of OpenSSL::Digest")
       mac = described_class.new(client, token, 'abc123', :algorithm => 'hmac-sha-256')
       expect(mac.algorithm).to be_instance_of(OpenSSL::Digest::SHA256)
     end
 
     it 'handles hmac-sha-1' do
-      pending_for(:engine => "ruby", :versions => "1.9", :reason => "Ruby 1.9's OpenSSL uses instance of OpenSSL::Digest")
+      pending_for(:engine => 'ruby', :versions => '1.9', :reason => "Ruby 1.9's OpenSSL uses instance of OpenSSL::Digest")
       mac = described_class.new(client, token, 'abc123', :algorithm => 'hmac-sha-1')
       expect(mac.algorithm).to be_instance_of(OpenSSL::Digest::SHA1)
     end
