@@ -35,7 +35,7 @@ Gem::Specification.new do |spec|
   spec.bindir        = 'exe'
   spec.files = Dir['lib/**/*', 'LICENSE', 'README.md', 'CHANGELOG.md', 'CODE_OF_CONDUCT.md']
   spec.test_files = Dir['spec/**/*']
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.executables = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
 
   spec.add_development_dependency 'addressable', '~> 2.3'
   spec.add_development_dependency 'backports', '~> 3.11'
