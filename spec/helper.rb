@@ -20,6 +20,7 @@ require 'oauth2'
 require 'addressable/uri'
 require 'rspec'
 require 'rspec/stubbed_env'
+require 'rspec/pending_for'
 require 'silent_stream'
 
 RSpec.configure do |config|
