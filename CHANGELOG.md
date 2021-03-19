@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## unreleased
 
+## [1.4.7] - 2021-03-18
+
+- [#541](https://github.com/oauth-xx/oauth2/pull/541) - Backport fix to expires_at handling [#533](https://github.com/oauth-xx/oauth2/pull/533) to 1-4-stable branch. (@dobon)
+
 ## [1.4.6] - 2021-03-18
 
 - [#540](https://github.com/oauth-xx/oauth2/pull/540) - Add VERSION constant (@pboling)
