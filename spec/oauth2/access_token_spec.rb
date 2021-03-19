@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-RSpec.describe AccessToken do
+RSpec.describe OAuth2::AccessToken do
   subject { described_class.new(client, token) }
 
   let(:token) { 'monkey' }
   let(:refresh_body) { MultiJson.encode(access_token: 'refreshed_foo', expires_in: 600, refresh_token: 'refresh_bar') }
   let(:client) do
-    Client.new('abc', 'def', site: 'https://api.example.com') do |builder|
+    OAuth2::Client.new('abc', 'def', site: 'https://api.example.com') do |builder|
       builder.request :url_encoded
       builder.adapter :test do |stub|
         VERBS.each do |verb|

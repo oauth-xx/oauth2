@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe SnakyHash do
+RSpec.describe OAuth2::SnakyHash do
   subject { described_class.new }
 
   describe '.build' do

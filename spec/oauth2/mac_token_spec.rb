@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-RSpec.describe MACToken do
+RSpec.describe OAuth2::MACToken do
   subject { described_class.new(client, token, 'abc123', kid: kid) }
 
   let(:kid) { 'this-token' }
   let(:token) { 'monkey' }
   let(:client) do
-    Client.new('abc', 'def', site: 'https://api.example.com') do |builder|
+    OAuth2::Client.new('abc', 'def', site: 'https://api.example.com') do |builder|
       builder.request :url_encoded
       builder.adapter :test do |stub|
         VERBS.each do |verb|
@@ -112,7 +112,7 @@ RSpec.describe MACToken do
     subject { described_class.from_access_token(access_token, 'hello') }
 
     let(:access_token) do
-      AccessToken.new(
+      OAuth2::AccessToken.new(
         client, token,
         expires_at: 1,
         expires_in: 1,

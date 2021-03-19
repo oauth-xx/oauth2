@@ -116,7 +116,7 @@ RSpec.describe OAuth2::Response do
       headers = {'Content-Type' => 'application/Json'}
       body = MultiJson.encode(foo: 'bar', answer: 42)
       response = double('response', headers: headers, body: body)
-      subject = Response.new(response)
+      subject = described_class.new(response)
       expect(subject.parsed.keys.size).to eq(2)
       expect(subject.parsed['foo']).to eq('bar')
       expect(subject.parsed['answer']).to eq(42)
@@ -140,7 +140,7 @@ RSpec.describe OAuth2::Response do
       headers = {'Content-Type' => 'application/json'}
       body = MultiJson.encode('accessToken' => 'bar', 'MiGever' => 'Ani')
       response = double('response', headers: headers, body: body)
-      subject = Response.new(response)
+      subject = described_class.new(response)
       expect(subject.parsed.keys.size).to eq(2)
       expect(subject.parsed['access_token']).to eq('bar')
       expect(subject.parsed['mi_gever']).to eq('Ani')
