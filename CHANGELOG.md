@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [unreleased]
 
+- [#539](https://github.com/oauth-xx/oauth2/pull/539) - Remove reliance on globally included OAuth2 in tests, analog of [#538](https://github.com/oauth-xx/oauth2/pull/538) for 1-4-stable (@anderscarling)
 - [#536](https://github.com/oauth-xx/oauth2/pull/536) - Compatibility with Ruby OpenSSL versions, Github Actions, Rubocop updated, analogous to [#535](https://github.com/oauth-xx/oauth2/pull/535) on 1-4-stable line (@pboling)
 - Update testing infrastructure for all supported Rubies (@pboling and @josephpage)
 - **Breaking**: Set `:basic_auth` as default for `:auth_scheme` instead of `:request_body`. This was default behavior before 1.3.0. See [#285](https://github.com/oauth-xx/oauth2/issues/285) (@tetsuya, @wy193777)
@@ -19,7 +20,7 @@ All notable changes to this project will be documented in this file.
 
 - [#540](https://github.com/oauth-xx/oauth2/pull/540) - Add VERSION constant (@pboling)
 - [#537](https://github.com/oauth-xx/oauth2/pull/537) - Fix crash in OAuth2::Client#get_token (@anderscarling)
-- [#538](https://github.com/oauth-xx/oauth2/pull/538) - Remove reliance on globally included OAuth2 in tests for version 1.4 (@anderscarling)
+- [#538](https://github.com/oauth-xx/oauth2/pull/538) - Remove reliance on globally included OAuth2 in tests, analogous to [#539](https://github.com/oauth-xx/oauth2/pull/539) on master branch (@anderscarling)
 
 ## [1.4.5] - 2021-03-18
 
