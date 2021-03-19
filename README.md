@@ -22,7 +22,7 @@ If you need the readme for a released version of the gem please find it below:
 [![Gem Version](http://img.shields.io/gem/v/oauth2.svg)][gem]
 [![Total Downloads](https://img.shields.io/gem/dt/oauth2.svg)][gem]
 [![Downloads Today](https://img.shields.io/gem/rt/oauth2.svg)][gem]
-[![Build Status](https://travis-ci.org/oauth-xx/oauth2.svg?branch=1-4-stable)][travis]
+[![Build Status](https://travis-ci.com/oauth-xx/oauth2.svg?branch=1-4-stable)][travis]
 [![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Foauth-xx%2Foauth2%2Fbadge&style=flat)][github-actions]
 [![Test Coverage](https://api.codeclimate.com/v1/badges/688c612528ff90a46955/test_coverage)][codeclimate-coverage]
 [![Maintainability](https://api.codeclimate.com/v1/badges/688c612528ff90a46955/maintainability)][codeclimate-maintainability]
@@ -33,7 +33,7 @@ If you need the readme for a released version of the gem please find it below:
 [![Documentation](http://inch-ci.org/github/oauth-xx/oauth2.png)][inch-ci]
 
 [gem]: https://rubygems.org/gems/oauth2
-[travis]: http://travis-ci.org/oauth-xx/oauth2
+[travis]: http://travis-ci.com/oauth-xx/oauth2
 [github-actions]: https://actions-badge.atrox.dev/oauth-xx/oauth2/goto
 [coveralls]: https://coveralls.io/r/oauth-xx/oauth2
 [codeclimate-maintainability]: https://codeclimate.com/github/oauth-xx/oauth2/maintainability
