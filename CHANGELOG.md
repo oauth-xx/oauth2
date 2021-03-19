@@ -3,6 +3,7 @@ All notable changes to this project will be documented in this file.
 
 ## [unreleased]
 
+- [#542](https://github.com/oauth-xx/oauth2/pull/542) - Linting, spelling, type fixes. New VERSION constant. Bump to 2.0.0-alpha (@pboling)
 - [#539](https://github.com/oauth-xx/oauth2/pull/539) - Remove reliance on globally included OAuth2 in tests, analog of [#538](https://github.com/oauth-xx/oauth2/pull/538) for 1-4-stable (@anderscarling)
 - [#536](https://github.com/oauth-xx/oauth2/pull/536) - Compatibility with Ruby OpenSSL versions, Github Actions, Rubocop updated, analogous to [#535](https://github.com/oauth-xx/oauth2/pull/535) on 1-4-stable line (@pboling)
 - Update testing infrastructure for all supported Rubies (@pboling and @josephpage)
