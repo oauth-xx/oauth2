@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 
 ## [1.4.6] - 2021-03-18
 
-
+- [#540](https://github.com/oauth-xx/oauth2/pull/540) - Add VERSION constant (@pboling)
 - [#537](https://github.com/oauth-xx/oauth2/pull/537) - Fix crash in OAuth2::Client#get_token (@anderscarling)
 - [#538](https://github.com/oauth-xx/oauth2/pull/538) - Remove reliance on globally included OAuth2 in tests for version 1.4 (@anderscarling)
 
