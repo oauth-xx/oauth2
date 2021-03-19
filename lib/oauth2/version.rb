@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OAuth2
   module Version
     VERSION = to_s
@@ -22,12 +24,12 @@ module OAuth2
     #
     # @return [Integer]
     def patch
-      6
+      7
     end
 
     # The pre-release version, if any
     #
-    # @return [Integer, NilClass]
+    # @return [String, NilClass]
     def pre
       nil
     end
@@ -55,7 +57,9 @@ module OAuth2
     #
     # @return [String]
     def to_s
-      to_a.join('.')
+      v = [major, minor, patch].compact.join('.')
+      v += "-#{pre}" if pre
+      v
     end
   end
 end
