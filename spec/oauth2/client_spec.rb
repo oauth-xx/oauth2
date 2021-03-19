@@ -371,7 +371,7 @@ describe OAuth2::Client do
         let(:extract_access_token) do
           proc do |client, hash|
             token = hash['data']['access_token']
-            AccessToken.new(client, token, hash)
+            OAuth2::AccessToken.new(client, token, hash)
           end
         end
 
@@ -384,10 +384,10 @@ describe OAuth2::Client do
 
       context 'with depracted Class.from_hash option' do
         let(:extract_access_token) do
-          CustomAccessToken = Class.new(AccessToken)
+          CustomAccessToken = Class.new(OAuth2::AccessToken)
           CustomAccessToken.define_singleton_method(:from_hash) do |client, hash|
             token = hash['data']['access_token']
-            AccessToken.new(client, token, hash)
+            OAuth2::AccessToken.new(client, token, hash)
           end
           CustomAccessToken
         end

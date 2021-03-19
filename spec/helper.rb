@@ -30,11 +30,6 @@ end
 
 Faraday.default_adapter = :test
 
-# This is dangerous - HERE BE DRAGONS.
-# It allows us to refer to classes without the namespace, but at what cost?!?
-# TODO: Refactor to use explicit references everywhere
-include OAuth2
-
 RSpec.configure do |conf|
   conf.include SilentStream
 end

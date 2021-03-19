@@ -8,7 +8,7 @@ describe OAuth2::Response do
       response = double('response', :headers => headers,
                                     :status => status,
                                     :body => body)
-      subject = Response.new(response)
+      subject = described_class.new(response)
       expect(subject.headers).to eq(headers)
       expect(subject.status).to eq(status)
       expect(subject.body).to eq(body)
@@ -43,7 +43,7 @@ describe OAuth2::Response do
       headers = {'Content-Type' => 'application/x-www-form-urlencoded'}
       body = 'foo=bar&answer=42'
       response = double('response', :headers => headers, :body => body)
-      subject = Response.new(response)
+      subject = described_class.new(response)
       expect(subject.parsed.keys.size).to eq(2)
       expect(subject.parsed['foo']).to eq('bar')
       expect(subject.parsed['answer']).to eq('42')
@@ -53,7 +53,7 @@ describe OAuth2::Response do
       headers = {'Content-Type' => 'application/json'}
       body = MultiJson.encode(:foo => 'bar', :answer => 42)
       response = double('response', :headers => headers, :body => body)
-      subject = Response.new(response)
+      subject = described_class.new(response)
       expect(subject.parsed.keys.size).to eq(2)
       expect(subject.parsed['foo']).to eq('bar')
       expect(subject.parsed['answer']).to eq(42)
@@ -69,7 +69,7 @@ describe OAuth2::Response do
       expect(MultiJson).not_to receive(:load)
       expect(Rack::Utils).not_to receive(:parse_query)
 
-      subject = Response.new(response)
+      subject = described_class.new(response)
       expect(subject.parsed).to be_nil
     end
   end
