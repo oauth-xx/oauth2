@@ -15,7 +15,7 @@ RSpec.describe OAuth2::AccessToken do
           stub.send(verb, '/token/query_string') { |env| [200, {}, CGI.unescape(Addressable::URI.parse(env[:url]).query)] }
           stub.send(verb, '/token/body') { |env| [200, {}, env[:body]] }
         end
-        stub.post('/oauth/token') { |env| [200, {'Content-Type' => 'application/json'}, refresh_body] }
+        stub.post('/oauth/token') { |_env| [200, {'Content-Type' => 'application/json'}, refresh_body] }
       end
     end
   end

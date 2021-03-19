@@ -94,7 +94,7 @@ module OAuth2
     end
 
     # Determines the parser (a Proc or other Object which responds to #call)
-    # that will be passed the {#body} (and optionall {#response}) to supply
+    # that will be passed the {#body} (and optional {#response}) to supply
     # {#parsed}.
     #
     # The parser can be supplied as the +:parse+ option in the form of a Proc
@@ -129,5 +129,5 @@ OAuth2::Response.register_parser(:xml, ['text/xml', 'application/rss+xml', 'appl
 end
 
 OAuth2::Response.register_parser(:json, ['application/json', 'text/javascript', 'application/hal+json', 'application/vnd.collection+json', 'application/vnd.api+json']) do |body|
-  MultiJson.load(body) rescue body # rubocop:disable Style/RescueModifier
+  MultiJson.decode(body) rescue body # rubocop:disable Style/RescueModifier
 end

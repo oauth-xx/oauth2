@@ -24,7 +24,7 @@ RSpec.describe OAuth2::Response do
     end
 
     before do
-      described_class.register_parser(:foobar, 'application/foo-bar') do |body|
+      described_class.register_parser(:foobar, ['application/foo-bar']) do |body|
         "foobar #{body}"
       end
     end

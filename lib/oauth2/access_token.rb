@@ -10,7 +10,7 @@ module OAuth2
       #
       # @param client [Client] the OAuth2::Client instance
       # @param hash [Hash] a hash of AccessToken property values
-      # @return [AccessToken] the initalized AccessToken
+      # @return [AccessToken] the initialized AccessToken
       def from_hash(client, hash)
         hash = hash.dup
         new(client, hash.delete('access_token') || hash.delete(:access_token), hash)
@@ -20,13 +20,13 @@ module OAuth2
       #
       # @param [Client] client the OAuth2::Client instance
       # @param [String] kvform the application/x-www-form-urlencoded string
-      # @return [AccessToken] the initalized AccessToken
+      # @return [AccessToken] the initialized AccessToken
       def from_kvform(client, kvform)
         from_hash(client, Rack::Utils.parse_query(kvform))
       end
     end
 
-    # Initalize an AccessToken
+    # Initialize an AccessToken
     #
     # @param [Client] client the OAuth2::Client instance
     # @param [String] token the Access Token value

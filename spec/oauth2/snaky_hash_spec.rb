@@ -67,7 +67,7 @@ RSpec.describe OAuth2::SnakyHash do
       end
     end
 
-    context 'Camel case key with dowcased first letter' do
+    context 'Camel case key with down-cased first letter' do
       subject { described_class.build('accessToken' => '1') }
 
       it 'return correct token' do
@@ -107,7 +107,7 @@ RSpec.describe OAuth2::SnakyHash do
       end
     end
 
-    context 'Camel case key with dowcased first letter' do
+    context 'Camel case key with down-cased first letter' do
       subject { described_class.build('accessToken' => '1') }
 
       it 'return true' do

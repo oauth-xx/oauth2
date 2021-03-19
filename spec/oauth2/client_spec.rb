@@ -7,17 +7,17 @@ RSpec.describe OAuth2::Client do
   subject do
     described_class.new('abc', 'def', {site: 'https://api.example.com'}.merge(options)) do |builder|
       builder.adapter :test do |stub|
-        stub.get('/success')             { |env| [200, {'Content-Type' => 'text/awesome'}, 'yay'] }
+        stub.get('/success')             { |_env| [200, {'Content-Type' => 'text/awesome'}, 'yay'] }
         stub.get('/reflect')             { |env| [200, {}, env[:body]] }
         stub.post('/reflect')            { |env| [200, {}, env[:body]] }
-        stub.get('/unauthorized')        { |env| [401, {'Content-Type' => 'application/json'}, MultiJson.encode(error: error_value, error_description: error_description_value)] }
-        stub.get('/conflict')            { |env| [409, {'Content-Type' => 'text/plain'}, 'not authorized'] }
-        stub.get('/redirect')            { |env| [302, {'Content-Type' => 'text/plain', 'location' => '/success'}, ''] }
-        stub.post('/redirect')           { |env| [303, {'Content-Type' => 'text/plain', 'location' => '/reflect'}, ''] }
-        stub.get('/error')               { |env| [500, {'Content-Type' => 'text/plain'}, 'unknown error'] }
-        stub.get('/empty_get')           { |env| [204, {}, nil] }
-        stub.get('/different_encoding')  { |env| [500, {'Content-Type' => 'application/json'}, NKF.nkf('-We', MultiJson.encode(error: error_value, error_description: '∞'))] }
-        stub.get('/ascii_8bit_encoding') { |env| [500, {'Content-Type' => 'application/json'}, MultiJson.encode(error: 'invalid_request', error_description: 'é').force_encoding('ASCII-8BIT')] }
+        stub.get('/unauthorized')        { |_env| [401, {'Content-Type' => 'application/json'}, MultiJson.encode(error: error_value, error_description: error_description_value)] }
+        stub.get('/conflict')            { |_env| [409, {'Content-Type' => 'text/plain'}, 'not authorized'] }
+        stub.get('/redirect')            { |_env| [302, {'Content-Type' => 'text/plain', 'location' => '/success'}, ''] }
+        stub.post('/redirect')           { |_env| [303, {'Content-Type' => 'text/plain', 'location' => '/reflect'}, ''] }
+        stub.get('/error')               { |_env| [500, {'Content-Type' => 'text/plain'}, 'unknown error'] }
+        stub.get('/empty_get')           { |_env| [204, {}, nil] }
+        stub.get('/different_encoding')  { |_env| [500, {'Content-Type' => 'application/json'}, NKF.nkf('-We', MultiJson.encode(error: error_value, error_description: '∞'))] }
+        stub.get('/ascii_8bit_encoding') { |_env| [500, {'Content-Type' => 'application/json'}, MultiJson.encode(error: 'invalid_request', error_description: 'é').force_encoding('ASCII-8BIT')] }
       end
     end
   end
@@ -71,7 +71,7 @@ RSpec.describe OAuth2::Client do
     it 'allows override of raise_errors option' do
       client = described_class.new('abc', 'def', site: 'https://api.example.com', raise_errors: true) do |builder|
         builder.adapter :test do |stub|
-          stub.get('/notfound') { |env| [404, {}, nil] }
+          stub.get('/notfound') { |_env| [404, {}, nil] }
         end
       end
       expect(client.options[:raise_errors]).to be true
@@ -424,7 +424,7 @@ RSpec.describe OAuth2::Client do
 
     it 'authenticates with request parameters' do
       client = stubbed_client(auth_scheme: :request_body) do |stub|
-        stub.post('/oauth/token', 'client_id' => 'abc', 'client_secret' => 'def') do |env|
+        stub.post('/oauth/token', 'client_id' => 'abc', 'client_secret' => 'def') do |_env|
           [200, {'Content-Type' => 'application/json'}, MultiJson.encode('access_token' => 'the-token')]
         end
       end
@@ -484,7 +484,7 @@ RSpec.describe OAuth2::Client do
 
     it 'forwards given token parameters' do
       client = stubbed_client(auth_scheme: :request_body) do |stub|
-        stub.post('/oauth/token', 'arbitrary' => 'parameter', 'client_id' => 'abc', 'client_secret' => 'def') do |env|
+        stub.post('/oauth/token', 'arbitrary' => 'parameter', 'client_id' => 'abc', 'client_secret' => 'def') do |_env|
           [200, {'Content-Type' => 'application/json'}, MultiJson.encode('access_token' => 'the-token')]
         end
       end
@@ -494,7 +494,7 @@ RSpec.describe OAuth2::Client do
     context 'when token_method is set to post_with_query_string' do
       it 'uses the http post method and passes parameters in the query string' do
         client = stubbed_client(token_method: :post_with_query_string) do |stub|
-          stub.post('/oauth/token?state=abc123') do |env|
+          stub.post('/oauth/token?state=abc123') do |_env|
             [200, {'Content-Type' => 'application/json'}, MultiJson.encode('access_token' => 'the-token')]
           end
         end
