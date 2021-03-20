@@ -403,10 +403,11 @@ describe OAuth2::Client do
     describe ':raise_errors flag' do
       let(:options) { {} }
       let(:token_response) { nil }
+      let(:post_args) { [] }
 
       let(:client) do
         stubbed_client(options.merge(:raise_errors => raise_errors)) do |stub|
-          stub.post('/oauth/token') do
+          stub.post('/oauth/token', *post_args) do
             # stub 200 response so that we're testing the get_token handling of :raise_errors flag not request
             [200, {'Content-Type' => 'application/json'}, token_response]
           end
@@ -427,6 +428,28 @@ describe OAuth2::Client do
 
           it 'returns a nil :access_token' do
             expect(client.get_token({})).to eq(nil)
+          end
+        end
+
+        context 'when the request body has an access token' do
+          let(:token_response) { MultiJson.encode('access_token' => 'the-token') }
+          it 'returns the parsed :access_token from body' do
+            token = client.get_token({})
+            expect(token).to be_a OAuth2::AccessToken
+            expect(token.token).to eq('the-token')
+          end
+
+          context 'when :auth_scheme => :request_body' do
+            context 'when arbitrary params are present' do
+              let(:post_args) { ['arbitrary' => 'parameter', 'client_id' => 'abc', 'client_secret' => 'def'] }
+              let(:options) { {:auth_scheme => :request_body} }
+
+              it 'does not affect access token'  do
+                token = client.get_token(*post_args)
+                expect(token).to be_a OAuth2::AccessToken
+                expect(token.token).to eq('the-token')
+              end
+            end
           end
         end
 
