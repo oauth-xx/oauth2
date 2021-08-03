@@ -5,6 +5,7 @@ require 'cgi'
 require 'time'
 
 # includes gem files
+require 'oauth2/version'
 require 'oauth2/error'
 require 'oauth2/snaky_hash'
 require 'oauth2/authenticator'
