@@ -10,7 +10,7 @@ ruby_version = Gem::Version.new(RUBY_VERSION)
 # No need to get coverage for older versions of Ruby
 coverable_version = Gem::Version.new('2.7')
 
-if ruby_version >= coverable_version
+if ruby_version >= coverable_version && RUBY_ENGINE == "ruby"
   require 'simplecov'
   require 'coveralls'
   SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([
