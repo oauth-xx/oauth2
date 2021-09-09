@@ -122,6 +122,16 @@ RSpec.describe OAuth2::Response do
       expect(subject.parsed['answer']).to eq(42)
     end
 
+    it 'parses application/problem+json body' do
+      headers = {'Content-Type' => 'application/problem+json'}
+      body = MultiJson.encode(type: 'https://tools.ietf.org/html/rfc7231#section-6.5.4', title: 'Not Found')
+      response = double('response', headers: headers, body: body)
+      subject = described_class.new(response)
+      expect(subject.parsed.keys.size).to eq(2)
+      expect(subject.parsed['type']).to eq('https://tools.ietf.org/html/rfc7231#section-6.5.4')
+      expect(subject.parsed['title']).to eq('Not Found')
+    end
+
     it "doesn't try to parse other content-types" do
       headers = {'Content-Type' => 'text/html'}
       body = '<!DOCTYPE html><html><head></head><body></body></html>'
