@@ -35,7 +35,7 @@ group :development, :test do
     gem 'rubocop-rake', platform: :mri
     gem 'rubocop-rspec', platform: :mri
 
-    gem 'coveralls'
+    gem 'coveralls', platform: :mri
     gem 'simplecov', platform: :mri
   end
 end
