@@ -17,6 +17,8 @@ All notable changes to this project will be documented in this file.
 
 - [#535](https://github.com/oauth-xx/oauth2/pull/535) - Compatibility with range of supported Ruby OpenSSL versions, Rubocop updates, Github Actions (@pboling)
 - [#518](https://github.com/oauth-xx/oauth2/pull/518) - Add extract_access_token option to OAuth2::Client (@jonspalmer)
+- [#507](https://github.com/oauth-xx/oauth2/pull/507) - Fix camel case content type, response keys (@anvox)
+- [#500](https://github.com/oauth-xx/oauth2/pull/500) - Fix YARD documentation formatting (@olleolleolle)
 
 ## [1.4.4] - 2020-02-12
 
