@@ -169,4 +169,8 @@ All notable changes to this project will be documented in this file.
 [1.4.1]: https://github.com/oauth-xx/oauth2/compare/v1.4.0...v1.4.1
 [1.4.2]: https://github.com/oauth-xx/oauth2/compare/v1.4.1...v1.4.2
 [1.4.3]: https://github.com/oauth-xx/oauth2/compare/v1.4.2...v1.4.3
+[1.4.4]: https://github.com/oauth-xx/oauth2/compare/v1.4.3...v1.4.4
+[1.4.5]: https://github.com/oauth-xx/oauth2/compare/v1.4.4...v1.4.5
+[1.4.6]: https://github.com/oauth-xx/oauth2/compare/v1.4.5...v1.4.6
+[1.4.7]: https://github.com/oauth-xx/oauth2/compare/v1.4.6...v1.4.7
 [unreleased]: https://github.com/oauth-xx/oauth2/compare/v1.4.1...HEAD
