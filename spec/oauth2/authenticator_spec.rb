@@ -39,6 +39,14 @@ RSpec.describe OAuth2::Authenticator do
         )
       end
 
+      context 'passing nil secret' do
+        let(:client_secret) { nil }
+        it 'does not set nil client_secret' do
+          output = subject.apply({})
+          expect(output).to eq('client_id' => 'foo')
+        end
+      end
+
       context 'using tls client authentication' do
         let(:mode) { :tls_client_auth }
 

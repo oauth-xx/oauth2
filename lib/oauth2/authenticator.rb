@@ -45,13 +45,18 @@ module OAuth2
     # Adds client_id and client_secret request parameters if they are not
     # already set.
     def apply_params_auth(params)
-      {'client_id' => id, 'client_secret' => secret}.merge(params)
+      result = {}
+      result['client_id'] = id unless id.nil?
+      result['client_secret'] = secret unless secret.nil?
+      result.merge(params)
     end
 
     # When using schemes that don't require the client_secret to be passed i.e TLS Client Auth,
     # we don't want to send the secret
     def apply_client_id(params)
-      {'client_id' => id}.merge(params)
+      result = {}
+      result['client_id'] = id unless id.nil?
+      result.merge(params)
     end
 
     # Adds an `Authorization` header with Basic Auth credentials if and only if
