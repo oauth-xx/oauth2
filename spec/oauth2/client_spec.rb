@@ -542,7 +542,7 @@ RSpec.describe OAuth2::Client do
   context 'with SSL options' do
     subject do
       cli = described_class.new('abc', 'def', site: 'https://api.example.com', ssl: {ca_file: 'foo.pem'})
-      cli.connection.build do |b|
+      cli.connection = Faraday.new(cli.site, cli.options[:connection_opts]) do |b|
         b.adapter :test
       end
       cli

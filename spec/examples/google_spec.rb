@@ -72,10 +72,11 @@ RSpec.describe 'using OAuth2 with Google' do
     let(:encoding_options) { {key: key, algorithm: algorithm} }
 
     before do
-      client.connection.build do |builder|
+      client.connection = Faraday.new(client.site, client.options[:connection_opts]) do |builder|
+        builder.request :url_encoded
         builder.adapter :test do |stub|
           stub.post('https://accounts.google.com/o/oauth2/token') do |token_request|
-            @request_body = token_request.body
+            @request_body = Rack::Utils.parse_nested_query(token_request.body).transform_keys(&:to_sym)
 
             [
               200,
