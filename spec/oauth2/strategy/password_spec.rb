@@ -5,7 +5,7 @@ RSpec.describe OAuth2::Strategy::Password do
 
   let(:client) do
     cli = OAuth2::Client.new('abc', 'def', site: 'http://api.example.com')
-    cli.connection.build do |b|
+    cli.connection = Faraday.new do |b|
       b.adapter :test do |stub|
         stub.post('/oauth/token') do |_env|
           case @mode

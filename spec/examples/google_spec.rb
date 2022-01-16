@@ -71,10 +71,10 @@ RSpec.describe 'using OAuth2 with Google' do
 
     let(:encoding_options) { {key: key, algorithm: algorithm} }
 
-    before do
-      client.connection.build do |builder|
+    before(:each) do
+      client.connection = Faraday.new do |builder|
         builder.adapter :test do |stub|
-          stub.post('https://accounts.google.com/o/oauth2/token') do |token_request|
+          stub.post('/o/oauth2/token') do |token_request|
             @request_body = token_request.body
 
             [

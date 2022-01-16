@@ -7,7 +7,8 @@ RSpec.describe OAuth2::Strategy::Assertion do
 
   let(:client) do
     cli = OAuth2::Client.new('abc', 'def', site: 'http://api.example.com', auth_scheme: auth_scheme)
-    cli.connection.build do |b|
+    
+    cli.connection = Faraday.new do |b|
       b.adapter :test do |stub|
         stub.post('/oauth/token') do |token_request|
           @request_body = token_request.body
