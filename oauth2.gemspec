@@ -6,7 +6,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'oauth2/version'
 
 Gem::Specification.new do |spec|
-  spec.add_dependency 'faraday', ['>= 1.0', '< 3.0']
+  spec.add_dependency 'faraday', ['>= 0.8', '< 3.0']
   spec.add_dependency 'jwt', ['>= 1.0', '< 3.0']
   spec.add_dependency 'multi_json', '~> 1.3'
   spec.add_dependency 'multi_xml', '~> 0.5'
@@ -29,7 +29,6 @@ Gem::Specification.new do |spec|
     'documentation_uri' => "https://www.rubydoc.info/gems/oauth2/#{spec.version}",
     'source_code_uri' => "https://github.com/oauth-xx/oauth2/tree/v#{spec.version}",
     'wiki_uri' => 'https://github.com/oauth-xx/oauth2/wiki',
-    'rubygems_mfa_required' => 'true',
   }
 
   spec.require_paths = %w[lib]
@@ -48,4 +47,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec-pending_for'
   spec.add_development_dependency 'rspec-stubbed_env'
   spec.add_development_dependency 'silent_stream'
+  spec.add_development_dependency 'wwtd'
 end
