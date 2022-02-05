@@ -47,5 +47,4 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec-pending_for'
   spec.add_development_dependency 'rspec-stubbed_env'
   spec.add_development_dependency 'silent_stream'
-  spec.add_development_dependency 'wwtd'
 end
