@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 RSpec.describe OAuth2::Response do
+  subject { described_class.new(raw_response) }
+
   let(:raw_response) { Faraday::Response.new(status: status, response_headers: headers, body: body) }
   let(:status) { 200 }
   let(:headers) { {'foo' => 'bar'} }
   let(:body) { 'foo' }
-
-  let(:subject) { described_class.new(raw_response) }
 
   describe '#initialize' do
     it 'returns the status, headers and body' do

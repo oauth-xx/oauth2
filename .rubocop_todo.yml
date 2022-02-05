@@ -15,12 +15,6 @@ Gemspec/RequireMFA:
     - 'oauth2.gemspec'
 
 # Offense count: 1
-# Cop supports --auto-correct.
-Lint/AmbiguousOperatorPrecedence:
-  Exclude:
-    - 'spec/oauth2/strategy/client_credentials_spec.rb'
-
-# Offense count: 1
 # Configuration parameters: AllowedMethods.
 # AllowedMethods: enums
 Lint/ConstantDefinitionInBlock:
@@ -79,35 +73,13 @@ RSpec/LeakyConstantDeclaration:
   Exclude:
     - 'spec/oauth2/access_token_spec.rb'
 
-# Offense count: 27
+# Offense count: 26
 # Configuration parameters: AllowSubject.
 RSpec/MultipleMemoizedHelpers:
   Max: 10
-
-# Offense count: 2
-RSpec/SubjectDeclaration:
-  Exclude:
-    - 'spec/oauth2/error_spec.rb'
-    - 'spec/oauth2/response_spec.rb'
 
 # Offense count: 1
 # Cop supports --auto-correct.
 Rake/Desc:
   Exclude:
     - 'Rakefile'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, AllowedCompactTypes.
-# SupportedStyles: compact, exploded
-Style/RaiseArgs:
-  Exclude:
-    - 'lib/oauth2/client.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle, ConsistentQuotesInMultiline.
-# SupportedStyles: single_quotes, double_quotes
-Style/StringLiterals:
-  Exclude:
-    - 'spec/helper.rb'

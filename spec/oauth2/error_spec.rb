@@ -2,7 +2,8 @@
 # frozen_string_literal: true
 
 RSpec.describe OAuth2::Error do
-  let(:subject) { described_class.new(response) }
+  subject { described_class.new(response) }
+
   let(:response) do
     raw_response = Faraday::Response.new(
       status: 418,
