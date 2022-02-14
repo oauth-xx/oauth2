@@ -108,7 +108,7 @@ module OAuth2
           yield(req) if block_given?
         end
       rescue Faraday::ConnectionFailed => e
-        raise ConnectionError.new(e)
+        raise ConnectionError, e
       end
 
       response = Response.new(response, parse: opts[:parse])

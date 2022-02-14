@@ -7,11 +7,10 @@ RSpec.describe OAuth2::Strategy::Assertion do
 
   let(:client) do
     cli = OAuth2::Client.new('abc', 'def', site: 'http://api.example.com', auth_scheme: auth_scheme)
-    
     cli.connection = Faraday.new do |b|
       b.adapter :test do |stub|
         stub.post('/oauth/token') do |token_request|
-          @request_body = token_request.body
+          @request_body = Rack::Utils.parse_nested_query(token_request.body).transform_keys(&:to_sym)
 
           case @response_format
           when 'formencoded'
@@ -160,22 +159,22 @@ RSpec.describe OAuth2::Strategy::Assertion do
         it 'includes assertion and grant_type, along with the client parameters' do
           subject.get_token(claims, algorithm: algorithm, key: key)
           expect(@request_body).not_to be_nil
-          expect(@request_body.keys).to match_array([:assertion, :grant_type, 'client_id', 'client_secret'])
+          expect(@request_body.keys).to match_array(%i[assertion grant_type client_id client_secret])
           expect(@request_body[:grant_type]).to eq('urn:ietf:params:oauth:grant-type:jwt-bearer')
           expect(@request_body[:assertion]).to be_a(String)
-          expect(@request_body['client_id']).to eq('abc')
-          expect(@request_body['client_secret']).to eq('def')
+          expect(@request_body[:client_id]).to eq('abc')
+          expect(@request_body[:client_secret]).to eq('def')
         end
 
         it 'includes other params via request_options' do
           subject.get_token(claims, {algorithm: algorithm, key: key}, scope: 'dover sole')
           expect(@request_body).not_to be_nil
-          expect(@request_body.keys).to match_array([:assertion, :grant_type, :scope, 'client_id', 'client_secret'])
+          expect(@request_body.keys).to match_array(%i[assertion grant_type scope client_id client_secret])
           expect(@request_body[:grant_type]).to eq('urn:ietf:params:oauth:grant-type:jwt-bearer')
           expect(@request_body[:assertion]).to be_a(String)
           expect(@request_body[:scope]).to eq('dover sole')
-          expect(@request_body['client_id']).to eq('abc')
-          expect(@request_body['client_secret']).to eq('def')
+          expect(@request_body[:client_id]).to eq('abc')
+          expect(@request_body[:client_secret]).to eq('def')
         end
       end
 

@@ -51,7 +51,6 @@ RSpec.describe 'using OAuth2 with Google' do
     let(:algorithm) { 'RS256' }
     # Per Google: "Service accounts rely on the RSA SHA-256 algorithm"
 
-    # rubocop:disable Style/RedundantBegin
     let(:key) do
       begin
         OpenSSL::PKCS12.new(File.read('spec/fixtures/google_service_account_key.p12'), 'notasecret').key
@@ -63,7 +62,6 @@ RSpec.describe 'using OAuth2 with Google' do
         OpenSSL::PKey::RSA.new(1024)
       end
     end
-    # rubocop:enable Style/RedundantBegin
     # Per Google:
 
     # "Take note of the service account's email address and store the service account's P12 private key file in a
@@ -76,7 +74,6 @@ RSpec.describe 'using OAuth2 with Google' do
         builder.adapter :test do |stub|
           stub.post('/o/oauth2/token') do |token_request|
             @request_body = token_request.body
-
             [
               200,
 
