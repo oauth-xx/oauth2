@@ -6,7 +6,7 @@ gemspec
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
-gem 'faraday', ['>= 0.8', '< 2.0'], :platforms => [:jruby_18, :ruby_18]
+gem 'faraday', ['>= 0.8', '< 3.0'], :platforms => [:jruby_18, :ruby_18]
 gem 'jwt'
 gem 'overcommit'
 gem 'rake'
