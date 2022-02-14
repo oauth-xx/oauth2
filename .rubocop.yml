@@ -85,6 +85,14 @@ Style/EmptyMethod:
 Style/Encoding:
   Enabled: false
 
+# Does not work with older rubies
+Style/MapToHash:
+  Enabled: false
+
+# Does not work with older rubies
+Style/RedundantBegin:
+  Enabled: false
+
 Style/TrailingCommaInArrayLiteral:
   EnforcedStyleForMultiline: comma
 
