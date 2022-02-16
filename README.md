@@ -1,11 +1,39 @@
+# OAuth2
+
 ⚠️ **_WARNING_**: You are viewing the README of the master branch which contains unreleased changes for version 2.0.0.
 Please help us reach the [2.0.0 release milestone](https://github.com/oauth-xx/oauth2/milestone/1) by submitting PRs, or reviewing PRs and issues.
 
----
+### Oauth2 gem is _always_ looking for additional maintainers. See [#307](https://github.com/oauth-xx/oauth2/issues/307).
 
-# OAuth2
+## What
 
-If you need the readme for a released version of the gem please find it below:
+<figure>
+  <img style="float:right; margin: 0 0 8px 8px;" width="124px" src="https://oauth.net/images/oauth-2-sm.png" alt="OAuth 2.0 logo">
+  <figcaption>
+    OAuth 2.0 is the industry-standard protocol for authorization.
+    OAuth 2.0 focuses on client developer simplicity while providing specific authorization flows for web applications,
+        desktop applications, mobile phones, and living room devices. (<a src="http://oauth.net/2/">more</a>)
+    This is a RubyGem for implementing OAuth 2.0 clients and servers in Ruby applications.
+    See the sibling <a src="https://github.com/oauth-xx/oauth-ruby">oauth gem</a> for OAuth 1.0 implementations in Ruby.
+  </figcaption>
+</figure>
+
+## Release Documentation
+
+### Version 2.0.x
+
+<details>
+  <summary>2.0.x Readmes</summary>
+
+| Version | Release Date | Readme                                                   |
+|---------|--------------|----------------------------------------------------------|
+| 2.0.0   | Unreleased   | https://github.com/oauth-xx/oauth2/blob/master/README.md |
+</details>
+
+### Older Releases
+
+<details>
+  <summary>1.4.x Readmes</summary>
 
 | Version  | Release Date | Readme                                                   |
 |----------|--------------|----------------------------------------------------------|
@@ -17,12 +45,28 @@ If you need the readme for a released version of the gem please find it below:
 | 1.4.2    | Oct 1, 2019  | https://github.com/oauth-xx/oauth2/blob/v1.4.2/README.md |
 | 1.4.1    | Oct 13, 2018 | https://github.com/oauth-xx/oauth2/blob/v1.4.1/README.md |
 | 1.4.0    | Jun 9, 2017  | https://github.com/oauth-xx/oauth2/blob/v1.4.0/README.md |
+</details>
+
+<details>
+  <summary>1.3.x Readmes</summary>
+
+| Version  | Release Date | Readme                                                   |
+|----------|--------------|----------------------------------------------------------|
 | 1.3.1    | Mar 3, 2017  | https://github.com/oauth-xx/oauth2/blob/v1.3.1/README.md |
 | 1.3.0    | Dec 27, 2016 | https://github.com/oauth-xx/oauth2/blob/v1.3.0/README.md |
+</details>
+
+<details>
+  <summary>&le;= 1.2.x Readmes (2016 and before)</summary>
+
+| Version  | Release Date | Readme                                                   |
+|----------|--------------|----------------------------------------------------------|
 | 1.2.0    | Jun 30, 2016 | https://github.com/oauth-xx/oauth2/blob/v1.2.0/README.md |
 | 1.1.0    | Jan 30, 2016 | https://github.com/oauth-xx/oauth2/blob/v1.1.0/README.md |
 | 1.0.0    | May 23, 2014 | https://github.com/oauth-xx/oauth2/blob/v1.0.0/README.md |
 | < 1.0.0  | Find here    | https://github.com/oauth-xx/oauth2/tags                  |
+</details>
+
 
 [![Gem Version](http://img.shields.io/gem/v/oauth2.svg)][gem]
 [![Total Downloads](https://img.shields.io/gem/dt/oauth2.svg)][gem]
@@ -49,10 +93,6 @@ If you need the readme for a released version of the gem please find it below:
 [code-triage]: https://www.codetriage.com/oauth-xx/oauth2
 [fossa1]: https://app.fossa.io/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2?ref=badge_shield
 
-### Oauth2 gem is looking for additional maintainers. See [#307](https://github.com/oauth-xx/oauth2/issues/307).
-
-A Ruby wrapper for the OAuth 2.0 specification.
-
 ## Installation
 
     gem install oauth2
@@ -60,6 +100,37 @@ A Ruby wrapper for the OAuth 2.0 specification.
 Or inside Gemfile
 
     gem 'oauth2'
+
+## Compatibility
+
+Targeted ruby compatibility is non-EOL versions of Ruby, currently 2.7, 3.0 and
+3.1. Compatibility is further distinguished by supported and unsupported versions of Ruby.
+Ruby is limited to 2.2+ in the gemspec. The `master` branch currently targets 2.0.x releases.
+
+| Ruby OAuth 2 Version | Maintenance Branch | Officially Supported Rubies | Unofficially Supported Rubies |
+|----------------------|--------------------|-----------------------------|-------------------------------|
+| 2.0.x (hypothetical) | `master`           | 2.7, 3.0, 3.1               | 2.6, 2.5                      |
+| 1.4.x                | `1-4-stable`       | 2.5, 2.6, 2.7, 3.0, 3.1     | 2.1, 2.2, 2.3, 2.4            |
+| older                | N/A                | Best of luck to you!        | Please upgrade!               |
+
+NOTE: Once 2.0 is released, the 1.4 series will only receive critical bug and security updates.
+
+<details>
+  <summary>Ruby Compatibility Policy</summary>
+
+If something doesn't work on one of these interpreters, it's a bug.
+
+This library may inadvertently work (or seem to work) on other Ruby
+implementations, however support will only be provided for the versions listed
+above.
+
+If you would like this library to support another Ruby version, you may
+volunteer to be a maintainer. Being a maintainer entails making sure all tests
+run and pass on that implementation. When something breaks on your
+implementation, you will be responsible for providing patches in a timely
+fashion. If critical issues for a particular implementation exist at the time
+of a major release, support for that Ruby version may be dropped.
+</details>
 
 ## Resources
 * [View Source on GitHub][code]
@@ -85,7 +156,8 @@ response.class.name
 # => OAuth2::Response
 ```
 
-### DEBUGGING
+<details>
+  <summary>Debugging</summary>
 
 Set an environment variable, however you would [normally do that](https://github.com/bkeepers/dotenv).
 
@@ -106,6 +178,7 @@ client = OAuth2::Client.new(
   logger: Logger.new('example.log', 'weekly')
 )
 ```
+</details>
 
 ## OAuth2::Response
 
@@ -169,43 +242,6 @@ token = client.auth_code.get_token('code_value', redirect_uri: 'http://localhost
 
 You can always use the `#request` method on the `OAuth2::Client` instance to make
 requests for tokens for any Authentication grant type.
-
-
-## Supported Ruby Versions
-
-This library aims to support and is [tested against][travis] the following Ruby
-implementations:
-
-### Rubies with support ending at Oauth2 1.x
-
-For information on supported Rubies for the current 1.x release of oauth2 see the [README for 1.4.x](https://github.com/oauth-xx/oauth2/blob/1-4-stable/README.md)
-
----
-
-### Rubies with continued support past Oauth2 2.x
-
-* Ruby 2.5 - Support ends with version 3.x series
-  - [JRuby 9.2][jruby-9.2] (targets MRI v2.5)
-  - [truffleruby][truffleruby] (targets MRI 2.5)
-* Ruby 2.6 - Support ends with version 3.x series?
-* Ruby 2.7 - Support ends with version 4.x series?
-* Ruby 3.0 - Support ends with version 5.x series?
-
-[jruby-9.2]: https://www.jruby.org/2018/05/24/jruby-9-2-0-0.html
-[truffleruby]: https://github.com/oracle/truffleruby
-
-If something doesn't work on one of these interpreters, it's a bug.
-
-This library may inadvertently work (or seem to work) on other Ruby
-implementations, however support will only be provided for the versions listed
-above.
-
-If you would like this library to support another Ruby version, you may
-volunteer to be a maintainer. Being a maintainer entails making sure all tests
-run and pass on that implementation. When something breaks on your
-implementation, you will be responsible for providing patches in a timely
-fashion. If critical issues for a particular implementation exist at the time
-of a major release, support for that Ruby version may be dropped.
 
 ## Versioning
 
