@@ -9,6 +9,7 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 gem 'faraday', ['>= 0.8', '< 2.0'], :platforms => [:jruby_18, :ruby_18]
 gem 'jwt', '< 1.5.2', :platforms => [:jruby_18, :ruby_18]
 gem 'rake', '< 11.0'
+gem "overcommit"
 
 platforms :mri do
   ruby_version = Gem::Version.new(RUBY_VERSION)

@@ -1,4 +1,4 @@
-name: Unit Tests
+name: Supported Ruby Unit Tests
 
 on:
   push:
@@ -13,6 +13,14 @@ on:
   pull_request:
     branches:
       - '*'
+  # Allow manually triggering the workflow.
+  workflow_dispatch:
+
+# Cancels all previous workflow runs for the same branch that have not yet completed.
+concurrency:
+  # The concurrency group contains the workflow name and the branch name.
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
@@ -21,13 +29,28 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        rubygems:
+          - latest
+        bundler:
+          - latest
         ruby:
-          - 3.1
-          - 3.0
-          - 2.7
-          - 2.6
+          - ruby-head
+          - truffleruby-head
+          - truffleruby
+          - jruby-head
+          - jruby
+          - "3.1"
+          - "3.0"
+          - "2.7"
+        include:
+          # Includes a new variable allow_failure with a value of false
+          #   for the matrix legs matching rubygems: latest, which is all of them.
+          # This is here for parity with the unsupported.yml
+          - rubygems: latest
+            allow_failures: false
+
     runs-on: ubuntu-20.04
-    continue-on-error: ${{ matrix.allow_failure || endsWith(matrix.ruby, 'head') }}
+    continue-on-error: ${{ matrix.allow_failures || endsWith(matrix.ruby, 'head') }}
     steps:
       - uses: amancevice/setup-code-climate@v0
         name: CodeClimate Install
@@ -41,9 +64,10 @@ jobs:
       - name: Setup Ruby & Bundle
         uses: ruby/setup-ruby@v1
         with:
-          bundler: ${{ matrix.bundler || 2 }}
-          bundler-cache: true
           ruby-version: ${{ matrix.ruby }}
+          rubygems: ${{ matrix.rubygems }}
+          bundler: ${{ matrix.bundler }}
+          bundler-cache: true
       - name: CodeClimate Pre-build Notification
         run: cc-test-reporter before-build
         if: matrix.ruby == '2.7' && github.event_name != 'pull_request'
@@ -54,3 +78,15 @@ jobs:
         run: cc-test-reporter after-build
         if: matrix.ruby == '2.7' && github.event_name != 'pull_request' && always()
         continue-on-error: ${{ matrix.allow_failures != 'false' }}
+
+  # Github doesn't support a real allow_failure directive, and if continue-on-error is ever true,
+  #   it seems the workflow may still succeed?
+  #   ref: https://github.com/actions/toolkit/issues/399#issuecomment-1034689649
+  conclusion:
+    runs-on: ubuntu-latest
+    needs: test
+    if: always()
+
+    steps:
+      - if: steps.test.outcome != 'success'
+        run: exit 1
