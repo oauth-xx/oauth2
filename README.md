@@ -1,22 +1,21 @@
 <p align="center">
-  <a href="http://oauth.net/2/" target="_blank" rel="noopener noreferrer">
-    <img src="docs/images/logo/oauth2-logo.png?raw=true" alt="OAuth 2.0 Logo">
-  </a>
+    <a href="http://oauth.net/2/" target="_blank" rel="noopener noreferrer">
+      <img src="docs/images/logo/oauth2-logo-124px.png?raw=true" alt="OAuth 2.0 Logo by Chris Messina">
+    </a>
+    <a href="https://www.ruby-lang.org/" target="_blank" rel="noopener noreferrer">
+      <img width="124px" src="docs/images/logo/ruby-logo-198px.svg?raw=true" alt="Yukihiro Matsumoto, Ruby Visual Identity Team, CC BY-SA 2.5">
+    </a>
 </p>
 
 ## What
 
-<figure>
-  <img align="left" width="124px" src="docs/images/logo/oauth2-logo.png?raw=true" alt="OAuth 2.0 logo">
-  <figcaption>
-    OAuth 2.0 is the industry-standard protocol for authorization.
-    OAuth 2.0 focuses on client developer simplicity while providing specific authorization flows for web applications,
-        desktop applications, mobile phones, and living room devices.
-    This is a RubyGem for implementing OAuth 2.0 clients and servers in Ruby applications.
-    ⚠️ **_WARNING_**: You are viewing the README of the master branch which contains unreleased changes for version 2.0.0 ⚠️ 
-  </figcaption>
-  <img align="right" width="124px" src="docs/images/logo/oauth2-logo.png?raw=true" alt="OAuth 2.0 logo">
-</figure>
+OAuth 2.0 is the industry-standard protocol for authorization.
+OAuth 2.0 focuses on client developer simplicity while providing specific authorization flows for web applications,
+    desktop applications, mobile phones, and living room devices.
+This is a RubyGem for implementing OAuth 2.0 clients and servers in Ruby applications.
+See the sibling `oauth` gem for OAuth 1.0 implementations in Ruby.
+
+⚠️ **_WARNING_**: You are viewing the `README` of the master branch which contains unreleased changes for version 2.0.0. ⚠️
 
 --- 
 
