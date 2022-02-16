@@ -6,10 +6,34 @@ gemspec
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
-ruby_version = Gem::Version.new(RUBY_VERSION)
-
-# No need to run byebug / pry on earlier versions
-debuggable_version = Gem::Version.new('2.4')
+platforms :mri do
+  ruby_version = Gem::Version.new(RUBY_VERSION)
+  minimum_version = ->(version) { ruby_version >= Gem::Version.new(version) && RUBY_ENGINE == "ruby" }
+  linting = minimum_version.call("2.7")
+  coverage = minimum_version.call("2.7")
+  debug = minimum_version.call("2.5")
+  if linting
+    gem "danger", "~> 8.4"
+    gem "rubocop", "~> 1.22"
+    gem "rubocop-md", "~> 1.0"
+    gem "rubocop-packaging", "~> 0.5"
+    gem "rubocop-performance", "~> 1.11"
+    gem "rubocop-rake", "~> 0.6"
+    gem "rubocop-rspec"
+    gem "rubocop-thread_safety", "~> 0.4"
+  end
+  if coverage
+    gem 'coveralls'
+    gem "simplecov"
+    gem "simplecov-cobertura"
+  end
+  if debug
+    # No need to run byebug / pry on earlier versions
+    gem 'byebug'
+    gem 'pry'
+    gem 'pry-byebug'
+  end
+end
 
 ### deps for documentation and rdoc.info
 group :documentation do
@@ -17,25 +41,4 @@ group :documentation do
   gem 'rdoc'
   gem 'redcarpet', platform: :mri
   gem 'yard', require: false
-end
-
-group :development, :test do
-  if ruby_version >= debuggable_version
-    gem 'byebug', platform: :mri
-    gem 'pry', platform: :mri
-    gem 'pry-byebug', platform: :mri
-  end
-
-  if ruby_version >= Gem::Version.new('2.7')
-    # No need to run rubocop or simplecov on earlier versions
-    gem 'rubocop', '~> 1.25.1', platform: :mri
-    gem 'rubocop-md', '~> 1.0.1', platform: :mri
-    gem 'rubocop-packaging', '~> 0.5.1', platform: :mri
-    gem 'rubocop-performance', '~> 1.13.2', platform: :mri
-    gem 'rubocop-rake', '~> 0.6.0', platform: :mri
-    gem 'rubocop-rspec', '~> 2.8.0', platform: :mri
-
-    gem 'coveralls', platform: :mri
-    gem 'simplecov', platform: :mri
-  end
 end
