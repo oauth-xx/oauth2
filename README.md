@@ -1,20 +1,18 @@
 # OAuth2
 
-⚠️ **_WARNING_**: You are viewing the README of the master branch which contains unreleased changes for version 2.0.0.
-Please help us reach the [2.0.0 release milestone](https://github.com/oauth-xx/oauth2/milestone/1) by submitting PRs, or reviewing PRs and issues.
-
-### Oauth2 gem is _always_ looking for additional maintainers. See [#307](https://github.com/oauth-xx/oauth2/issues/307).
-
 ## What
 
 <figure>
-  <img style="float:right; margin: 0 0 8px 8px;" width="124px" src="https://oauth.net/images/oauth-2-sm.png" alt="OAuth 2.0 logo">
+  <img align="left" width="124px" src="https://oauth.net/images/oauth-2-sm.png" alt="OAuth 2.0 logo">
   <figcaption>
     OAuth 2.0 is the industry-standard protocol for authorization.
     OAuth 2.0 focuses on client developer simplicity while providing specific authorization flows for web applications,
         desktop applications, mobile phones, and living room devices. (<a src="http://oauth.net/2/">more</a>)
     This is a RubyGem for implementing OAuth 2.0 clients and servers in Ruby applications.
     See the sibling <a src="https://github.com/oauth-xx/oauth-ruby">oauth gem</a> for OAuth 1.0 implementations in Ruby.
+    ⚠️ **_WARNING_**: You are viewing the README of the master branch which contains unreleased changes for version 2.0.0.
+    Please help us reach the <a src="https://github.com/oauth-xx/oauth2/milestone/1">2.0.0 release milestone</a> by submitting PRs, or reviewing PRs and issues.
+    Oauth2 gem is <strong>always</strong> looking for additional maintainers. See <a src="https://github.com/oauth-xx/oauth2/issues/307">#307</a>.
   </figcaption>
 </figure>
 
