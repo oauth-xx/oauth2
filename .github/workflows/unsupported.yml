@@ -21,6 +21,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        rubygems: latest
+        bundler: latest
         ruby:
           - "2.6"
           - "2.5"
@@ -35,7 +37,8 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
-          bundler: ${{ matrix.bundler || 2 }}
+          rubygems: ${{ matrix.rubygems || latest }}
+          bundler: ${{ matrix.bundler || latest }}
           bundler-cache: true
       - name: Run tests
         run: bundle exec rake test
