@@ -1,0 +1,41 @@
+name: Unit Tests
+
+on:
+  push:
+    branches:
+      - 'main'
+      - 'master'
+      - '*-maintenance'
+      - '*-dev'
+      - '*-stable'
+    tags:
+      - '!*' # Do not execute on tags
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  test:
+    name: Specs - Ruby ${{ matrix.ruby }} ${{ matrix.name_extra || '' }}
+    if: "!contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]')"
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby:
+          - 2.6
+          - 2.5
+    runs-on: ubuntu-20.04
+    continue-on-error: ${{ matrix.allow_failure || endsWith(matrix.ruby, 'head') }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install cURL Headers
+        run: sudo apt-get install libcurl4-openssl-dev
+      - name: Setup Ruby & Bundle
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler: ${{ matrix.bundler || 2 }}
+          bundler-cache: true
+      - name: Run tests
+        run: bundle exec rake test
