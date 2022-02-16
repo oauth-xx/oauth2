@@ -1,9 +1,9 @@
 <p align="center">
     <a href="http://oauth.net/2/" target="_blank" rel="noopener noreferrer">
-      <img src="docs/images/logo/oauth2-logo-124px.png?raw=true" alt="OAuth 2.0 Logo by Chris Messina">
+      <img src="https://github.com/oauth-xx/oauth2/raw/master/docs/images/logo/oauth2-logo-124px.png?raw=true" alt="OAuth 2.0 Logo by Chris Messina">
     </a>
     <a href="https://www.ruby-lang.org/" target="_blank" rel="noopener noreferrer">
-      <img width="124px" src="docs/images/logo/ruby-logo-198px.svg?raw=true" alt="Yukihiro Matsumoto, Ruby Visual Identity Team, CC BY-SA 2.5">
+      <img width="124px" src="https://github.com/oauth-xx/oauth2/raw/master/docs/images/logo/ruby-logo-198px.svg?raw=true" alt="Yukihiro Matsumoto, Ruby Visual Identity Team, CC BY-SA 2.5">
     </a>
 </p>
 
