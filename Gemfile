@@ -16,7 +16,7 @@ platforms :mri do
   minimum_version = ->(version) { ruby_version >= Gem::Version.new(version) && RUBY_ENGINE == 'ruby' }
   linting = minimum_version.call('2.7')
   coverage = minimum_version.call('2.7')
-  debug = minimum_version.call('2.4')
+  debug = minimum_version.call('2.5')
   if linting
     gem 'danger', '~> 8.4'
     gem 'rubocop', '~> 1.22'

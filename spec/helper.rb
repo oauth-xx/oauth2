@@ -1,8 +1,11 @@
 DEBUG = ENV['DEBUG'] == 'true'
 
 ruby_version = Gem::Version.new(RUBY_VERSION)
+minimum_version = ->(version) { ruby_version >= Gem::Version.new(version) && RUBY_ENGINE == 'ruby' }
+coverage = minimum_version.call('2.7')
+debug = minimum_version.call('2.5')
 
-if ruby_version >= Gem::Version.new('2.7')
+if coverage
   require 'simplecov'
   require 'coveralls'
 
@@ -14,7 +17,7 @@ if ruby_version >= Gem::Version.new('2.7')
   end
 end
 
-require 'byebug' if DEBUG && ruby_version >= Gem::Version.new('2.4')
+require 'byebug' if debug
 
 require 'oauth2'
 require 'addressable/uri'
