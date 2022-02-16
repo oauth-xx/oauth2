@@ -116,7 +116,7 @@ Ruby is limited to 2.2+ in the gemspec. The `master` branch currently targets 2.
 
 | Ruby OAuth 2 Version | Maintenance Branch | Officially Supported Rubies | Unofficially Supported Rubies |
 |----------------------|--------------------|-----------------------------|-------------------------------|
-| 2.0.x (hypothetical) | `master`           | 2.7, 3.0, 3.1               | 2.6, 2.5                      |
+| 2.0.x (unreleased)   | `master`           | 2.7, 3.0, 3.1               | 2.6, 2.5                      |
 | 1.4.x                | `1-4-stable`       | 2.5, 2.6, 2.7, 3.0, 3.1     | 2.1, 2.2, 2.3, 2.4            |
 | older                | N/A                | Best of luck to you!        | Please upgrade!               |
 
