@@ -7,6 +7,7 @@ on:
       - 'master'
       - '*-maintenance'
       - '*-dev'
+      - '*-stable'
     tags:
       - '!*' # Do not execute on tags
   pull_request:
@@ -22,16 +23,16 @@ jobs:
       matrix:
         ruby:
           - 2.7
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Setup Ruby
+      - name: Install cURL Headers
+        run: sudo apt-get install libcurl4-openssl-dev
+      - name: Setup Ruby & Bundle
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
           bundler-cache: true
-      - name: Install dependencies
-        run: bundle install --jobs 3 --retry 3
       - name: Run Rubocop
         run: bundle exec rubocop -DESP
