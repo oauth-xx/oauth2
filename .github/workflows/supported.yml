@@ -7,6 +7,7 @@ on:
       - 'master'
       - '*-maintenance'
       - '*-dev'
+      - '*-stable'
     tags:
       - '!*' # Do not execute on tags
   pull_request:
@@ -21,14 +22,10 @@ jobs:
       fail-fast: false
       matrix:
         ruby:
-          - 3.0.0
+          - 3.1
+          - 3.0
           - 2.7
           - 2.6
-          - 2.5
-          - 2.4
-          - 2.3
-          - 2.2
-          - 2.1
     runs-on: ubuntu-20.04
     continue-on-error: ${{ matrix.allow_failure || endsWith(matrix.ruby, 'head') }}
     steps:
@@ -37,15 +34,16 @@ jobs:
         if: matrix.ruby == '2.7' && github.event_name != 'pull_request'
         with:
           cc_test_reporter_id: ${{ secrets.CC_TEST_REPORTER_ID }}
-      - uses: actions/checkout@v2
-      - name: Setup Ruby
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install cURL Headers
+        run: sudo apt-get install libcurl4-openssl-dev
+      - name: Setup Ruby & Bundle
         uses: ruby/setup-ruby@v1
         with:
           bundler: ${{ matrix.bundler || 2 }}
           bundler-cache: true
           ruby-version: ${{ matrix.ruby }}
-      - name: Install dependencies
-        run: bundle install --jobs 3 --retry 3 --binstubs --standalone
       - name: CodeClimate Pre-build Notification
         run: cc-test-reporter before-build
         if: matrix.ruby == '2.7' && github.event_name != 'pull_request'
