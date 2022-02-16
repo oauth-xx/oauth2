@@ -8,29 +8,29 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 gem 'faraday', ['>= 0.8', '< 2.0'], :platforms => [:jruby_18, :ruby_18]
 gem 'jwt', '< 1.5.2', :platforms => [:jruby_18, :ruby_18]
+gem 'overcommit'
 gem 'rake', '< 11.0'
-gem "overcommit"
 
 platforms :mri do
   ruby_version = Gem::Version.new(RUBY_VERSION)
-  minimum_version = ->(version) { ruby_version >= Gem::Version.new(version) && RUBY_ENGINE == "ruby" }
-  linting = minimum_version.call("2.7")
-  coverage = minimum_version.call("2.7")
-  debug = minimum_version.call("2.4")
+  minimum_version = ->(version) { ruby_version >= Gem::Version.new(version) && RUBY_ENGINE == 'ruby' }
+  linting = minimum_version.call('2.7')
+  coverage = minimum_version.call('2.7')
+  debug = minimum_version.call('2.4')
   if linting
-    gem "danger", "~> 8.4"
-    gem "rubocop", "~> 1.22"
-    gem "rubocop-md", "~> 1.0"
-    gem "rubocop-packaging", "~> 0.5"
-    gem "rubocop-performance", "~> 1.11"
-    gem "rubocop-rake", "~> 0.6"
-    gem "rubocop-rspec"
-    gem "rubocop-thread_safety", "~> 0.4"
+    gem 'danger', '~> 8.4'
+    gem 'rubocop', '~> 1.22'
+    gem 'rubocop-md', '~> 1.0'
+    gem 'rubocop-packaging', '~> 0.5'
+    gem 'rubocop-performance', '~> 1.11'
+    gem 'rubocop-rake', '~> 0.6'
+    gem 'rubocop-rspec'
+    gem 'rubocop-thread_safety', '~> 0.4'
   end
   if coverage
     gem 'coveralls'
-    gem "simplecov", "~> 0.21"
-    gem "simplecov-cobertura", "~> 2.1"
+    gem 'simplecov', '~> 0.21'
+    gem 'simplecov-cobertura', '~> 2.1'
   end
   if debug
     # No need to run byebug / pry on earlier versions

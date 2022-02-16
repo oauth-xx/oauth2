@@ -433,6 +433,7 @@ describe OAuth2::Client do
 
         context 'when the request body has an access token' do
           let(:token_response) { MultiJson.encode('access_token' => 'the-token') }
+
           it 'returns the parsed :access_token from body' do
             token = client.get_token({})
             expect(token).to be_a OAuth2::AccessToken
@@ -444,7 +445,7 @@ describe OAuth2::Client do
               let(:post_args) { ['arbitrary' => 'parameter', 'client_id' => 'abc', 'client_secret' => 'def'] }
               let(:options) { {:auth_scheme => :request_body} }
 
-              it 'does not affect access token'  do
+              it 'does not affect access token' do
                 token = client.get_token(*post_args)
                 expect(token).to be_a OAuth2::AccessToken
                 expect(token.token).to eq('the-token')

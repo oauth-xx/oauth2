@@ -23,7 +23,7 @@ module OAuth2
     def error_message(response_body, opts = {})
       message = []
 
-      opts[:error_description] && message << opts[:error_description]
+      opts[:error_description] && (message << opts[:error_description])
 
       error_message = if opts[:error_description] && opts[:error_description].respond_to?(:encoding)
                         script_encoding = opts[:error_description].encoding

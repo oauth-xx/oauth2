@@ -24,3 +24,6 @@ RSpec/NestedGroups:
   
 RSpec/ExpectInHook:
   Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
