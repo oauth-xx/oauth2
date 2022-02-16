@@ -17,7 +17,7 @@ See the sibling `oauth` gem for OAuth 1.0 implementations in Ruby.
 
 ⚠️ **_WARNING_**: You are viewing the `README` of the master branch which contains unreleased changes for version 2.0.0. ⚠️
 
---- 
+---
 
 * [OAuth 2.0 Spec](http://oauth.net/2/)
 * [OAuth 1.0 sibling gem](https://github.com/oauth-xx/oauth-ruby)
