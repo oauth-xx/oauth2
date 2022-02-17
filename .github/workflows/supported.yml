@@ -92,7 +92,7 @@ jobs:
 
     steps:
       - name: How did it go?
-      run:
-        - echo "${{ steps.test.outcome }} != 'success'"
-        - exit 1
+      run: |
+        echo "${{ steps.test.outcome }} != 'success'"
+        exit 1
       if: steps.test.outcome != 'success'
