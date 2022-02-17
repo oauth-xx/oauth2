@@ -34,7 +34,7 @@ if coverage
   end
 end
 
-require 'byebug' if debug
+require 'byebug' if DEBUG && debug
 
 require 'oauth2'
 require 'addressable/uri'
