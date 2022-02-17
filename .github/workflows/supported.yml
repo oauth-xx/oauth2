@@ -42,14 +42,18 @@ jobs:
           - "3.0"
           - "2.7"
         include:
-          # Includes a new variable allow_failure with a value of false
+          # Includes a new variable experimental with a value of false
           #   for the matrix legs matching rubygems: latest, which is all of them.
           # This is here for parity with the unsupported.yml
+          # This is a hack. Combined with conclusion job it should allow us
+          #   to have a workflow which runs to completion with allowed failure (e.g. for *-head builds),
+          #   while also failing the build if there are *any* failures at all.
+          # This is the "supported" build matrix, so only the "head" builds are experimental here.
           - rubygems: latest
-            allow_failures: false
+            experimental: false
 
     runs-on: ubuntu-20.04
-    continue-on-error: ${{ matrix.allow_failures || endsWith(matrix.ruby, 'head') }}
+    continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
     steps:
       - uses: amancevice/setup-code-climate@v0
         name: CodeClimate Install
@@ -70,13 +74,13 @@ jobs:
       - name: CodeClimate Pre-build Notification
         run: cc-test-reporter before-build
         if: matrix.ruby == '2.7' && github.event_name != 'pull_request'
-        continue-on-error: ${{ matrix.allow_failures != 'false' }}
+        continue-on-error: ${{ matrix.experimental != 'false' }}
       - name: Run tests
         run: bundle exec rake test
       - name: CodeClimate Post-build Notification
         run: cc-test-reporter after-build
         if: matrix.ruby == '2.7' && github.event_name != 'pull_request' && always()
-        continue-on-error: ${{ matrix.allow_failures != 'false' }}
+        continue-on-error: ${{ matrix.experimental != 'false' }}
 
   # Github doesn't support a real allow_failure directive, and if continue-on-error is ever true,
   #   it seems the workflow may still succeed?
