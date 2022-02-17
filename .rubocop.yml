@@ -114,3 +114,6 @@ Style/HashConversion:
 # Turn back on once old Rubies are dropped
 Style/IfUnlessModifier:
   Enabled: false
+
+Style/SafeNavigation:
+  Enabled: false
