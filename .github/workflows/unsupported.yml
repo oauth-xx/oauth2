@@ -44,8 +44,6 @@ jobs:
         include:
           # Includes a new variable experimental with a value of true
           #   for the matrix legs matching rubygems: latest, which is all of them.
-          # This is a hack. Combined with continue-on-error it should allow us
-          #   to have a workflow with allowed failure
           # This is the "unsupported" build matrix, so only many builds are experimental here.
           # Even so, we do want to "support" some of the EOL rubies in the 1.4.x series on a marginal basis.
           - ruby: ruby-head
