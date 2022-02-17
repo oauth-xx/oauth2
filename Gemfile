@@ -23,9 +23,10 @@ platforms :mri do
     gem 'rubocop-thread_safety', '~> 0.4'
   end
   if coverage
-    gem 'coveralls'
-    gem 'simplecov'
-    gem 'simplecov-cobertura'
+    gem 'coveralls_reborn', '~> 0.23', :require => false
+    gem 'simplecov', '~> 0.21', :require => false
+    gem 'simplecov-cobertura' # XML for Jenkins
+    gem 'simplecov-lcov', '~> 0.8', :require => false
   end
   if debug
     # No need to run byebug / pry on earlier versions
