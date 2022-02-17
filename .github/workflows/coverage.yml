@@ -1,0 +1,116 @@
+name: Code Coverage
+
+on:
+  push:
+    branches:
+      - 'main'
+      - 'master'
+      - '*-maintenance'
+      - '*-dev'
+      - '*-stable'
+    tags:
+      - '!*' # Do not execute on tags
+  pull_request:
+    branches:
+      - '*'
+  # Allow manually triggering the workflow.
+  workflow_dispatch:
+
+# Cancels all previous workflow runs for the same branch that have not yet completed.
+concurrency:
+  # The concurrency group contains the workflow name and the branch name.
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Specs with Coverage - Ruby ${{ matrix.ruby }} ${{ matrix.name_extra || '' }}
+    if: "!contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]')"
+    strategy:
+      fail-fast: false
+      matrix:
+        rubygems:
+          - latest
+        bundler:
+          - latest
+        ruby:
+          - "2.7"
+        include:
+          # Includes a new variable experimental with a value of false
+          #   for the matrix legs matching rubygems: latest, which is all of them.
+          # This is here for parity with the unsupported.yml
+          # This is a hack. Combined with continue-on-error it should allow us
+          #   to have a workflow with allowed failure.
+          # This is the "supported" build matrix, so only the "head" builds are experimental here.
+          - rubygems: latest
+            experimental: false
+
+    runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
+    steps:
+      - name: Install cURL Headers
+        run: sudo apt-get install libcurl4-openssl-dev
+
+      - uses: amancevice/setup-code-climate@v0
+        name: CodeClimate Install
+        if: matrix.ruby == '2.7' && github.event_name != 'pull_request' && always()
+        with:
+          cc_test_reporter_id: ${{ secrets.CC_TEST_REPORTER_ID }}
+
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Ruby & Bundle
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          rubygems: ${{ matrix.rubygems }}
+          bundler: ${{ matrix.bundler }}
+          bundler-cache: true
+
+      - name: CodeClimate Pre-build Notification
+        run: cc-test-reporter before-build
+        if: matrix.ruby == '2.7' && github.event_name != 'pull_request' && always()
+        continue-on-error: ${{ matrix.experimental != 'false' }}
+
+      - name: Run tests
+        run: bundle exec rake test
+
+      - name: Code Coverage Summary Report
+        uses: irongut/CodeCoverageSummary@v1.2.0
+        with:
+          filename: ./coverage/coverage.xml
+          badge: true
+          fail_below_min: true
+          format: markdown
+          hide_branch_rate: true
+          hide_complexity: true
+          indicators: true
+          output: both
+          thresholds: '95 97'
+        continue-on-error: ${{ matrix.experimental != 'false' }}
+
+      - name: Add Coverage PR Comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        if: matrix.ruby == '2.7' && github.event_name == 'pull_request' && always()
+        with:
+          recreate: true
+          path: code-coverage-results.md
+        continue-on-error: ${{ matrix.experimental != 'false' }}
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        if: matrix.ruby == '2.7' && github.event_name != 'pull_request' && always()
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: ${{ matrix.experimental != 'false' }}
+
+      - name: CodeCov
+        uses: codecov/codecov-action@v2
+        if: matrix.ruby == '2.7' && github.event_name != 'pull_request' && always()
+        with:
+          files: ./coverage/coverage.xml
+          flags: unittests
+          name: codecov-upload
+          fail_ci_if_error: true
+        continue-on-error: ${{ matrix.experimental != 'false' }}
