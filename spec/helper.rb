@@ -5,6 +5,8 @@ require 'rspec'
 require 'rspec/stubbed_env'
 require 'silent_stream'
 
+DEBUG = ENV['DEBUG'] == 'true'
+
 ruby_version = Gem::Version.new(RUBY_VERSION)
 minimum_version = ->(version) { ruby_version >= Gem::Version.new(version) && RUBY_ENGINE == 'ruby' }
 coverage = minimum_version.call('2.7')
@@ -23,6 +25,8 @@ if coverage
     minimum_coverage(95)
   end
 end
+
+require 'byebug' if DEBUG && debug
 
 require 'addressable/uri'
 
