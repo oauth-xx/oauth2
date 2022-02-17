@@ -110,3 +110,7 @@ Style/ExpandPathArguments:
 # On Ruby 1.9 array.to_h isn't available, needs to be Hash[array]
 Style/HashConversion:
   Enabled: false
+
+# Turn back on once old Rubies are dropped
+Style/IfUnlessModifier:
+  Enabled: false
