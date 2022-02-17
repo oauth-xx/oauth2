@@ -7,11 +7,21 @@ debug = minimum_version.call('2.5')
 
 if coverage
   require 'simplecov'
-  require 'coveralls'
-
-  SimpleCov.formatters = [SimpleCov::Formatter::HTMLFormatter, Coveralls::SimpleCov::Formatter]
 
   SimpleCov.start do
+    if ENV['CI']
+      require 'simplecov-lcov'
+
+      SimpleCov::Formatter::LcovFormatter.config do |c|
+        c.report_with_single_file = true
+        c.single_report_path = 'coverage/lcov.info'
+      end
+
+      SimpleCov.formatters = [SimpleCov::Formatter::LcovFormatter, SimpleCov::Formatter::HTMLFormatter]
+    else
+      formatter SimpleCov::Formatter::HTMLFormatter
+    end
+
     add_filter '/spec'
     minimum_coverage(95)
   end
