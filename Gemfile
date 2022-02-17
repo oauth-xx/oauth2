@@ -18,7 +18,9 @@ platforms :mri do
   coverage = minimum_version.call('2.7')
   debug = minimum_version.call('2.5')
   if linting
-    gem 'danger', '~> 8.4'
+    # Danger is incompatible with Faraday 2 (for now)
+    # see: https://github.com/danger/danger/issues/1349
+    # gem 'danger', '~> 8.4'
     gem 'rubocop', '~> 1.22', :require => false
     gem 'rubocop-md', '~> 1.0', :require => false
     gem 'rubocop-packaging', '~> 0.5', :require => false

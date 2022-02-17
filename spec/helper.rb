@@ -9,7 +9,7 @@ if coverage
   require 'simplecov'
 
   SimpleCov.start do
-    if ENV['CI']
+    if ENV['CI'] || ENV['CODECOV']
       require 'simplecov-lcov'
       require 'simplecov-cobertura'
       require 'coveralls'

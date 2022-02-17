@@ -10,7 +10,8 @@ on:
 jobs:
   danger:
     runs-on: ubuntu-latest
-    if: github.event_name  == 'pull_request' # if only run pull request when multiple trigger workflow
+    if: false
+    # if: github.event_name  == 'pull_request' # if only run pull request when multiple trigger workflow
     strategy:
       fail-fast: false
       matrix:
