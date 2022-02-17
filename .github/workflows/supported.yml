@@ -51,7 +51,7 @@ jobs:
           - rubygems: latest
             experimental: false
 
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
     steps:
       - name: Checkout
