@@ -7,9 +7,9 @@ gemspec
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 gem 'faraday', ['>= 0.8', '< 2.0'], :platforms => [:jruby_18, :ruby_18]
-gem 'jwt', '< 1.5.2', :platforms => [:jruby_18, :ruby_18]
+gem 'jwt'
 gem 'overcommit'
-gem 'rake', '< 11.0'
+gem 'rake'
 
 platforms :mri do
   ruby_version = Gem::Version.new(RUBY_VERSION)
@@ -19,18 +19,19 @@ platforms :mri do
   debug = minimum_version.call('2.5')
   if linting
     gem 'danger', '~> 8.4'
-    gem 'rubocop', '~> 1.22'
-    gem 'rubocop-md', '~> 1.0'
-    gem 'rubocop-packaging', '~> 0.5'
-    gem 'rubocop-performance', '~> 1.11'
-    gem 'rubocop-rake', '~> 0.6'
-    gem 'rubocop-rspec'
-    gem 'rubocop-thread_safety', '~> 0.4'
+    gem 'rubocop', '~> 1.22', require: false
+    gem 'rubocop-md', '~> 1.0', require: false
+    gem 'rubocop-packaging', '~> 0.5', require: false
+    gem 'rubocop-performance', '~> 1.11', require: false
+    gem 'rubocop-rake', '~> 0.6', require: false
+    gem 'rubocop-rspec', require: false
+    gem 'rubocop-thread_safety', '~> 0.4', require: false
   end
   if coverage
-    gem 'simplecov', '~> 0.21'
-    gem 'simplecov-lcov', '~> 0.8'
-    # gem 'simplecov-cobertura' # XML for Jenkins
+    gem 'coveralls_reborn', '~> 0.23.1', require: false
+    gem 'simplecov', '~> 0.21', require: false
+    gem 'simplecov-lcov', '~> 0.8', require: false
+    gem 'simplecov-cobertura' # XML for Jenkins
   end
   if debug
     # No need to run byebug / pry on earlier versions
@@ -51,17 +52,6 @@ end
 group :test do
   gem 'addressable', '~> 2.3.8'
   gem 'backports'
-  gem 'rack', '~> 1.2', :platforms => [:jruby_18, :jruby_19, :ruby_18, :ruby_19, :ruby_20, :ruby_21]
+  gem 'rack', '~> 1.2', :platforms => [:ruby_21]
   gem 'rspec', '>= 3'
-
-  platforms :jruby_18, :ruby_18 do
-    gem 'mime-types', '~> 1.25'
-    gem 'rest-client', '~> 1.6.0'
-  end
-
-  platforms :ruby_18, :ruby_19 do
-    gem 'json', '< 2.0'
-    gem 'term-ansicolor', '< 1.4.0'
-    gem 'tins', '< 1.7'
-  end
 end

@@ -11,13 +11,20 @@ if coverage
   SimpleCov.start do
     if ENV['CI']
       require 'simplecov-lcov'
+      require 'simplecov-cobertura'
+      require 'coveralls'
 
       SimpleCov::Formatter::LcovFormatter.config do |c|
         c.report_with_single_file = true
         c.single_report_path = 'coverage/lcov.info'
       end
 
-      SimpleCov.formatters = [SimpleCov::Formatter::LcovFormatter, SimpleCov::Formatter::HTMLFormatter]
+      SimpleCov.formatters = [
+        SimpleCov::Formatter::HTMLFormatter,
+        SimpleCov::Formatter::LcovFormatter,
+        SimpleCov::Formatter::CoberturaFormatter,
+        Coveralls::SimpleCov::Formatter,
+      ]
     else
       formatter SimpleCov::Formatter::HTMLFormatter
     end

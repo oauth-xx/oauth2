@@ -1,4 +1,4 @@
-name: Supported Ruby Unit Tests
+name: Code Coverage
 
 on:
   push:
@@ -24,7 +24,7 @@ concurrency:
 
 jobs:
   test:
-    name: Specs - Ruby ${{ matrix.ruby }} ${{ matrix.name_extra || '' }}
+    name: Specs with Coverage - Ruby ${{ matrix.ruby }} ${{ matrix.name_extra || '' }}
     if: "!contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]')"
     strategy:
       fail-fast: false
@@ -34,13 +34,7 @@ jobs:
         bundler:
           - latest
         ruby:
-          - truffleruby-head
-          - truffleruby
-          - jruby-head
-          - jruby
-          - "3.1"
-          - "3.0"
-          # - "2.7" tested in coverage workflow
+          - "2.7"
         include:
           # Includes a new variable experimental with a value of false
           #   for the matrix legs matching rubygems: latest, which is all of them.
@@ -54,6 +48,11 @@ jobs:
     runs-on: ubuntu-20.04
     continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
     steps:
+      - uses: amancevice/setup-code-climate@v0
+        name: CodeClimate Install
+        if: matrix.ruby == '2.7' && github.event_name != 'pull_request'
+        with:
+          cc_test_reporter_id: ${{ secrets.CC_TEST_REPORTER_ID }}
       - name: Checkout
         uses: actions/checkout@v2
       - name: Install cURL Headers
@@ -65,5 +64,41 @@ jobs:
           rubygems: ${{ matrix.rubygems }}
           bundler: ${{ matrix.bundler }}
           bundler-cache: true
+      - name: CodeClimate Pre-build Notification
+        run: cc-test-reporter before-build
+        if: matrix.ruby == '2.7' && github.event_name != 'pull_request'
+        continue-on-error: ${{ matrix.experimental != 'false' }}
       - name: Run tests
         run: bundle exec rake test
+      - name: CodeClimate Post-build Notification
+        run: cc-test-reporter after-build
+        if: matrix.ruby == '2.7' && github.event_name != 'pull_request' && always()
+        continue-on-error: ${{ matrix.experimental != 'false' }}
+
+      - name: Code Coverage Summary Report
+        uses: irongut/CodeCoverageSummary@v1.2.0
+        with:
+          filename: coverage.cobertura.xml
+          badge: true
+          fail_below_min: true
+          format: markdown
+          hide_branch_rate: false
+          hide_complexity: true
+          indicators: true
+          output: both
+          thresholds: '95 97'
+        continue-on-error: ${{ matrix.experimental != 'false' }}
+
+      - name: Add Coverage PR Comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        if: github.event_name == 'pull_request'
+        with:
+          recreate: true
+          path: code-coverage-results.md
+        continue-on-error: ${{ matrix.experimental != 'false' }}
+
+      - name: Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: ${{ matrix.experimental != 'false' }}
