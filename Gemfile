@@ -38,7 +38,6 @@ end
 ### deps for documentation and rdoc.info
 group :documentation do
   gem 'github-markup', platform: :mri
-  gem 'rdoc'
   gem 'redcarpet', platform: :mri
   gem 'yard', require: false
 end
