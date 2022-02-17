@@ -59,15 +59,12 @@ module OAuth2
 
     # The Faraday connection object
     def connection
-      @connection ||= begin
-        conn = Faraday.new(site, options[:connection_opts])
-        if options[:connection_build]
-          conn.build do |b|
-            options[:connection_build].call(b)
+      @connection ||=
+        Faraday.new(site, options[:connection_opts]) do |builder|
+          if options[:connection_build]
+            options[:connection_build].call(builder)
           end
         end
-        conn
-      end
     end
 
     # The authorize endpoint URL of the OAuth2 provider
