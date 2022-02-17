@@ -91,5 +91,8 @@ jobs:
     if: always()
 
     steps:
-      - if: steps.test.outcome != 'success'
-        run: exit 1
+      - name: How did it go?
+      run:
+        - echo "${{ steps.test.outcome }} != 'success'"
+        - exit 1
+      if: steps.test.outcome != 'success'
