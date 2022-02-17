@@ -19,19 +19,19 @@ platforms :mri do
   debug = minimum_version.call('2.5')
   if linting
     gem 'danger', '~> 8.4'
-    gem 'rubocop', '~> 1.22', require: false
-    gem 'rubocop-md', '~> 1.0', require: false
-    gem 'rubocop-packaging', '~> 0.5', require: false
-    gem 'rubocop-performance', '~> 1.11', require: false
-    gem 'rubocop-rake', '~> 0.6', require: false
-    gem 'rubocop-rspec', require: false
-    gem 'rubocop-thread_safety', '~> 0.4', require: false
+    gem 'rubocop', '~> 1.22', :require => false
+    gem 'rubocop-md', '~> 1.0', :require => false
+    gem 'rubocop-packaging', '~> 0.5', :require => false
+    gem 'rubocop-performance', '~> 1.11', :require => false
+    gem 'rubocop-rake', '~> 0.6', :require => false
+    gem 'rubocop-rspec', :require => false
+    gem 'rubocop-thread_safety', '~> 0.4', :require => false
   end
   if coverage
-    gem 'coveralls_reborn', '~> 0.23.1', require: false
-    gem 'simplecov', '~> 0.21', require: false
-    gem 'simplecov-lcov', '~> 0.8', require: false
+    gem 'coveralls_reborn', '~> 0.23.1', :require => false
+    gem 'simplecov', '~> 0.21', :require => false
     gem 'simplecov-cobertura' # XML for Jenkins
+    gem 'simplecov-lcov', '~> 0.8', :require => false
   end
   if debug
     # No need to run byebug / pry on earlier versions
