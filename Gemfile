@@ -8,34 +8,36 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 gem 'overcommit'
 
-platforms :mri do
-  ruby_version = Gem::Version.new(RUBY_VERSION)
-  minimum_version = ->(version) { ruby_version >= Gem::Version.new(version) && RUBY_ENGINE == 'ruby' }
-  linting = minimum_version.call('2.7')
-  coverage = minimum_version.call('2.7')
-  debug = minimum_version.call('2.5')
-  if linting
-    # Danger is incompatible with Faraday 2 (for now)
-    # see: https://github.com/danger/danger/issues/1349
-    # gem 'danger', '~> 8.4'
-    gem 'rubocop', '~> 1.22', require: false
-    gem 'rubocop-md', '~> 1.0', require: false
-    gem 'rubocop-packaging', '~> 0.5', require: false
-    gem 'rubocop-performance', '~> 1.11', require: false
-    gem 'rubocop-rake', '~> 0.6', require: false
-    gem 'rubocop-rspec', require: false
-    gem 'rubocop-thread_safety', '~> 0.4', require: false
-  end
-  if coverage
-    gem 'simplecov', '~> 0.21', require: false
-    gem 'simplecov-cobertura' # XML for Jenkins
-    gem 'simplecov-lcov', '~> 0.8', require: false
-  end
-  if debug
-    # No need to run byebug / pry on earlier versions
-    gem 'byebug'
-    gem 'pry'
-    gem 'pry-byebug'
+group :test do
+  platforms :mri do
+    ruby_version = Gem::Version.new(RUBY_VERSION)
+    minimum_version = ->(version) { ruby_version >= Gem::Version.new(version) && RUBY_ENGINE == 'ruby' }
+    linting = minimum_version.call('2.7')
+    coverage = minimum_version.call('2.7')
+    debug = minimum_version.call('2.5')
+    if linting
+      # Danger is incompatible with Faraday 2 (for now)
+      # see: https://github.com/danger/danger/issues/1349
+      # gem 'danger', '~> 8.4'
+      gem 'rubocop', '~> 1.22', require: false
+      gem 'rubocop-md', '~> 1.0', require: false
+      gem 'rubocop-packaging', '~> 0.5', require: false
+      gem 'rubocop-performance', '~> 1.11', require: false
+      gem 'rubocop-rake', '~> 0.6', require: false
+      gem 'rubocop-rspec', require: false
+      gem 'rubocop-thread_safety', '~> 0.4', require: false
+    end
+    if coverage
+      gem 'simplecov', '~> 0.21', require: false
+      gem 'simplecov-cobertura' # XML for Jenkins
+      gem 'simplecov-lcov', '~> 0.8', require: false
+    end
+    if debug
+      # No need to run byebug / pry on earlier versions
+      gem 'byebug'
+      gem 'pry'
+      gem 'pry-byebug'
+    end
   end
 end
 

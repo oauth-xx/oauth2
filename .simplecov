@@ -16,6 +16,7 @@ if RUN_COVERAGE
     primary_coverage :branch
 
     if ENV['COVER_ALL']
+      require 'codecov'
       require 'simplecov-lcov'
       require 'simplecov-cobertura'
 
@@ -28,6 +29,7 @@ if RUN_COVERAGE
         SimpleCov::Formatter::CoberturaFormatter,
         SimpleCov::Formatter::HTMLFormatter,
         SimpleCov::Formatter::LcovFormatter,
+        SimpleCov::Formatter::Codecov,
       ]
     else
       formatter SimpleCov::Formatter::HTMLFormatter
