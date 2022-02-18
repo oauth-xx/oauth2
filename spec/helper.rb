@@ -1,12 +1,13 @@
 DEBUG = ENV['DEBUG'] == 'true'
+RUN_COVERAGE = ENV['CI_CODECOV'] || ENV['CI'].nil?
 
 ruby_version = Gem::Version.new(RUBY_VERSION)
 minimum_version = ->(version) { ruby_version >= Gem::Version.new(version) && RUBY_ENGINE == 'ruby' }
-coverage = minimum_version.call('2.7')
-debug = minimum_version.call('2.5')
+coverage = minimum_version.call('2.7') && RUN_COVERAGE
+debug = minimum_version.call('2.5') && DEBUG
 
 require 'simplecov' if coverage
-require 'byebug' if DEBUG && debug
+require 'byebug' if debug
 
 require 'oauth2'
 require 'addressable/uri'
