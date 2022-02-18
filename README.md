@@ -104,15 +104,15 @@ badge #s:
 📗
 -->
 
-|     | Project               | oauth2                                                                                                                                                                                                                                                             |
-|:----|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1️⃣ | name, license, docs   | [![RubyGems.org][⛳️name-img]][⛳️gem] [![License: MIT][🖇src-license-img]][🖇src-license] [![FOSSA][🏘fossa-img]][🏘fossa] [![RubyDoc.info][🚎yard-img]][🚎yard] [![InchCI][🖐inch-ci-img]][🚎yard]                                                                 |
-| 2️⃣ | version & activity    | [![Gem Version][⛳️version-img]][⛳️gem] [![Total Downloads][🖇DL-total-img]][⛳️gem] [![Download Rank][🏘DL-rank-img]][⛳️gem] [![Source Code][🚎src-home-img]][🚎src-home] [![Open PRs][🖐prs-open-img]][🖐prs-open] [![Closed PRs][🧮prs-closed-img]][🧮prs-closed] |
-| 3️⃣ | maintanence & linting | [![Maintainability][⛳cclim-maint-img]][⛳cclim-maint] [![Helpers][🖇triage-help-img]][🖇triage-help] [![Depfu][🏘depfu-img]][🏘depfu] [![Contributors][🚎contributors-img]][🚎contributors] [![Style][🖐style-wf-img]][🖐style-wf]                                  |
-| 4️⃣ | testing               | [![Build][⛳️tot-bld-img]][⛳️tot-bld] [![supported][🖇supported-wf-img]][🖇supported-wf] [![EOL & Code Coverage Build][🏘eol-wf-img]][🏘eol-wf] [![unsupported][🚎unsupported-wf-img]][🚎unsupported-wf]                                                            |
-| 5️⃣ | coverage & security   | [![CodeClimate][⛳cclim-cov-img]][⛳cclim-cov] [![CodeCov][🖇codecov-img]][🖇codecov] [![Coveralls][🏘coveralls-img]][🏘coveralls] [![Security Policy][🚎sec-pol-img])][🚎sec-pol] [![CodeQL][🖐codeQL-img]][🖐codeQL]                                               |
-| 6️⃣ | resources             | [![Discussion][⛳gh-discussions-img]][⛳gh-discussions] [![Get help on Codementor][🖇codementor-img]][🖇codementor] [![Chat][🏘chat-img]][🏘chat] [![Blog][🚎blog-img]][🚎blog] [![Blog][🖐wiki-img]][🖐wiki]                                                        |
-| 7️⃣ | spread 💖             | [![Liberapay Patrons][⛳liberapay-img]][⛳liberapay] [![Sponsor Me][🖇sponsor-img]][🖇sponsor] [![Tweet @ Peter][🏘tweet-img]][🏘tweet] [🌏][aboutme] [👼][angelme] [💻][coderme] [🌹][politicme]                                                                    |
+|     | Project               | oauth2                                                                                                                                                                                                                                                               |
+|:----|-----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1️⃣ | name, license, docs   | [![RubyGems.org][⛳️name-img]][⛳️gem] [![License: MIT][🖇src-license-img]][🖇src-license] [![FOSSA][🏘fossa-img]][🏘fossa] [![RubyDoc.info][🚎yard-img]][🚎yard] [![InchCI][🖐inch-ci-img]][🚎yard]                                                                   |
+| 2️⃣ | version & activity    | [![Gem Version][⛳️version-img]][⛳️gem] [![Total Downloads][🖇DL-total-img]][⛳️gem] [![Download Rank][🏘DL-rank-img]][⛳️gem] [![Source Code][🚎src-home-img]][🚎src-home] [![Open PRs][🖐prs-open-img]][🖐prs-open] [![Closed PRs][🧮prs-closed-img]][🧮prs-closed]   |
+| 3️⃣ | maintanence & linting | [![Maintainability][⛳cclim-maint-img]][⛳cclim-maint] [![Helpers][🖇triage-help-img]][🖇triage-help] [![Depfu][🏘depfu-img]][🏘depfu] [![Contributors][🚎contributors-img]][🚎contributors] [![Style][🖐style-wf-img]][🖐style-wf] [![Kloc Roll][🧮kloc-img]][🧮kloc] |
+| 4️⃣ | testing               | [![Build][⛳️tot-bld-img]][⛳️tot-bld] [![supported][🖇supported-wf-img]][🖇supported-wf] [![EOL & Code Coverage Build][🏘eol-wf-img]][🏘eol-wf] [![unsupported][🚎unsupported-wf-img]][🚎unsupported-wf]                                                              |
+| 5️⃣ | coverage & security   | [![CodeClimate][⛳cclim-cov-img]][⛳cclim-cov] [![CodeCov][🖇codecov-img]][🖇codecov] [![Coveralls][🏘coveralls-img]][🏘coveralls] [![Security Policy][🚎sec-pol-img])][🚎sec-pol] [![CodeQL][🖐codeQL-img]][🖐codeQL]                                                 |
+| 6️⃣ | resources             | [![Discussion][⛳gh-discussions-img]][⛳gh-discussions] [![Get help on Codementor][🖇codementor-img]][🖇codementor] [![Chat][🏘chat-img]][🏘chat] [![Blog][🚎blog-img]][🚎blog] [![Blog][🖐wiki-img]][🖐wiki]                                                          |
+| 7️⃣ | spread 💖             | [![Liberapay Patrons][⛳liberapay-img]][⛳liberapay] [![Sponsor Me][🖇sponsor-img]][🖇sponsor] [![Tweet @ Peter][🏘tweet-img]][🏘tweet] [🌏][aboutme] [👼][angelme] [💻][coderme] [🌹][politicme]                                                                      |
 
 <!--
 The link tokens in the following sections should be kept ordered by the row and badge numbering scheme
@@ -151,6 +151,8 @@ The link tokens in the following sections should be kept ordered by the row and 
 [🚎contributors-img]: https://img.shields.io/github/contributors-anon/oauth-xx/oauth2
 [🖐style-wf]: https://github.com/oauth-xx/oauth2/actions/workflows/style.yml
 [🖐style-wf-img]: https://github.com/oauth-xx/oauth2/actions/workflows/style.yml/badge.svg
+[🧮kloc]: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+[🧮kloc-img]: https://img.shields.io/tokei/lines/github.com/oauth-xx/oauth2
 
 <!-- 4️⃣ testing -->
 [⛳️tot-bld]: https://actions-badge.atrox.dev/oauth-xx/oauth2/goto
