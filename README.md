@@ -1,6 +1,6 @@
 <p align="center">
     <a href="http://oauth.net/2/" target="_blank" rel="noopener noreferrer">
-      <img src="https://github.com/oauth-xx/oauth2/raw/master/docs/images/logo/oauth2-logo-124px.png?raw=true" alt="OAuth 2.0 Logo by Chris Messina">
+      <img src="https://github.com/oauth-xx/oauth2/raw/master/docs/images/logo/oauth2-logo-124px.png?raw=true" alt="OAuth 2.0 Logo by Chris Messina, CC BY-SA 3.0">
     </a>
     <a href="https://www.ruby-lang.org/" target="_blank" rel="noopener noreferrer">
       <img width="124px" src="https://github.com/oauth-xx/oauth2/raw/master/docs/images/logo/ruby-logo-198px.svg?raw=true" alt="Yukihiro Matsumoto, Ruby Visual Identity Team, CC BY-SA 2.5">
@@ -15,15 +15,21 @@ OAuth 2.0 focuses on client developer simplicity while providing specific author
 This is a RubyGem for implementing OAuth 2.0 clients and servers in Ruby applications.
 See the sibling `oauth` gem for OAuth 1.0 implementations in Ruby.
 
-⚠️ **_WARNING_**: You are viewing the `README` of the master branch which contains unreleased changes for version 2.0.0. ⚠️
+⚠️ **_WARNING_**: You are viewing the `README` of the master branch which contains 
+unreleased changes for version 2.0.0. ⚠️
 
 ---
 
-* [OAuth 2.0 Spec](http://oauth.net/2/)
-* [OAuth 1.0 sibling gem](https://github.com/oauth-xx/oauth-ruby)
-* Help us reach the [2.0.0 release milestone](https://github.com/oauth-xx/oauth2/milestone/1) by submitting PRs, or reviewing PRs and issues.
-* Oauth2 gem is _always_ looking for additional maintainers. See [#307](https://github.com/oauth-xx/oauth2/issues/307).
+* [OAuth 2.0 Spec][oauth2-spec]
+* [OAuth 1.0 sibling gem][sibling-gem]
+* Help us reach the [![2.0.0 release milestone][next-milestone-pct-img]][next-milestone-pct] by submitting or reviewing PRs and issues.
+* Oauth2 gem is _always_ looking for additional maintainers. See [#307][maintainers-discussion].
 
+[oauth2-spec]: https://oauth.net/2/
+[sibling-gem]: https://github.com/oauth-xx/oauth-ruby
+[next-milestone-pct]: https://github.com/oauth-xx/oauth2/milestone/1
+[next-milestone-pct-img]: https://img.shields.io/github/milestones/progress-percent/oauth-xx/oauth2/1
+[maintainers-discussion]: https://github.com/oauth-xx/oauth2/issues/307
 
 ## Release Documentation
 
@@ -74,53 +80,173 @@ See the sibling `oauth` gem for OAuth 1.0 implementations in Ruby.
 | < 1.0.0  | Find here    | https://github.com/oauth-xx/oauth2/tags                  |
 </details>
 
+<!--
+Numbering rows and badges in each row as a visual "database" lookup,
+    as the table is extremely dense, and it can be very difficult to find anything
+Putting one on each row here, to document the emoji that should be used, and for ease of copy/paste.
 
-[![Gem Version](http://img.shields.io/gem/v/oauth2.svg)][gem]
-[![Total Downloads](https://img.shields.io/gem/dt/oauth2.svg)][gem]
-[![Downloads Today](https://img.shields.io/gem/rt/oauth2.svg)][gem]
-[![Build Status](http://img.shields.io/travis/oauth-xx/oauth2.svg)][travis]
-[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Foauth-xx%2Foauth2%2Fbadge&style=flat)][github-actions]
-[![Test Coverage](https://api.codeclimate.com/v1/badges/688c612528ff90a46955/test_coverage)][codeclimate-coverage]
-[![Maintainability](https://api.codeclimate.com/v1/badges/688c612528ff90a46955/maintainability)][codeclimate-maintainability]
-[![Depfu](https://badges.depfu.com/badges/6d34dc1ba682bbdf9ae2a97848241743/count.svg)][depfu]
-[![Open Source Helpers](https://www.codetriage.com/oauth-xx/oauth2/badges/users.svg)][code-triage]
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)][source-license]
-[![Documentation](http://inch-ci.org/github/oauth-xx/oauth2.png)][inch-ci]
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2.svg?type=shield)][fossa1]
+row #s:
+1️⃣
+2️⃣
+3️⃣
+4️⃣
+5️⃣
+6️⃣
+7️⃣
 
-[gem]: https://rubygems.org/gems/oauth2
-[travis]: https://travis-ci.org/oauth-xx/oauth2
-[github-actions]: https://actions-badge.atrox.dev/oauth-xx/oauth2/goto
-[coveralls]: https://coveralls.io/r/oauth-xx/oauth2
-[codeclimate-maintainability]: https://codeclimate.com/github/oauth-xx/oauth2/maintainability
-[codeclimate-coverage]: https://codeclimate.com/github/oauth-xx/oauth2/test_coverage
-[depfu]: https://depfu.com/github/oauth-xx/oauth2
-[source-license]: https://opensource.org/licenses/MIT
-[inch-ci]: http://inch-ci.org/github/oauth-xx/oauth2
-[code-triage]: https://www.codetriage.com/oauth-xx/oauth2
-[fossa1]: https://app.fossa.io/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2?ref=badge_shield
+badge #s:
+⛳️
+🖇
+🏘
+🚎
+🖐
+🧮
+📗
+-->
+
+|     | Project               | oauth2                                                                                                                                                                                                                                                             |
+|:----|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1️⃣ | name, license, docs   | [![RubyGems.org][⛳️name-img]][⛳️gem] [![License: MIT][🖇src-license-img]][🖇src-license] [![FOSSA][🏘fossa-img]][🏘fossa] [![RubyDoc.info][🚎yard-img]][🚎yard] [![InchCI][🖐inch-ci-img]][🚎yard]                                                                 |
+| 2️⃣ | version & activity    | [![Gem Version][⛳️version-img]][⛳️gem] [![Total Downloads][🖇DL-total-img]][⛳️gem] [![Download Rank][🏘DL-rank-img]][⛳️gem] [![Source Code][🚎src-home-img]][🚎src-home] [![Open PRs][🖐prs-open-img]][🖐prs-open] [![Closed PRs][🧮prs-closed-img]][🧮prs-closed] |
+| 3️⃣ | maintanence & linting | [![Maintainability][⛳cclim-maint-img]][⛳cclim-maint] [![Helpers][🖇triage-help-img]][🖇triage-help] [![Depfu][🏘depfu-img]][🏘depfu] [![Contributors][🚎contributors-img]][🚎contributors] [![Style][🖐style-wf-img]][🖐style-wf]                                  |
+| 4️⃣ | testing               | [![Build][⛳️tot-bld-img]][⛳️tot-bld] [![supported][🖇supported-wf-img]][🖇supported-wf] [![EOL & Code Coverage Build][🏘eol-wf-img]][🏘eol-wf] [![unsupported][🚎unsupported-wf-img]][🚎unsupported-wf]                                                            |
+| 5️⃣ | coverage & security   | [![CodeClimate][⛳cclim-cov-img]][⛳cclim-cov] [![CodeCov][🖇codecov-img]][🖇codecov] [![Coveralls][🏘coveralls-img]][🏘coveralls] [![Security Policy][🚎sec-pol-img])][🚎sec-pol] [![CodeQL][🖐codeQL-img]][🖐codeQL]                                               |
+| 7️⃣ | resources             | [![Discussion][⛳gh-discussions-img]][⛳gh-discussions] [![Get help on Codementor][🖇codementor-img]][🖇codementor] [![Chat][🏘chat-img]][🏘chat] [![Blog][🚎blog-img]][🚎blog] [![Blog][🖐wiki-img]][🖐wiki]                                                        |
+| 8️⃣ | spread 💖             | [![Liberapay Patrons][⛳liberapay-img]][⛳liberapay] [![Sponsor Me][🖇sponsor-img]][🖇sponsor] [![Tweet @ Peter][🏘tweet-img]][🏘tweet] [🌏][aboutme] [👼][angelme] [💻][coderme] [🌹][politicme]                                                                    |
+
+<!--
+The link tokens in the following sections should be kept ordered by the row and badge numbering scheme
+-->
+
+<!-- 1️⃣ name, license, docs -->
+[⛳️gem]: https://rubygems.org/gems/oauth2
+[⛳️name-img]: https://img.shields.io/badge/name-oauth2-brightgreen.svg?style=flat
+[🖇src-license]: https://opensource.org/licenses/MIT
+[🖇src-license-img]: https://img.shields.io/badge/License-MIT-green.svg
+[🏘fossa]: https://app.fossa.io/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2?ref=badge_shield
+[🏘fossa-img]: https://app.fossa.io/api/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2.svg?type=shield
+[🚎yard]: https://www.rubydoc.info/github/oauth-xx/oauth2
+[🚎yard-img]: https://img.shields.io/badge/documentation-rubydoc-brightgreen.svg?style=flat
+[🖐inch-ci-img]: http://inch-ci.org/github/oauth-xx/oauth2.png
+
+<!-- 2️⃣ version & activity -->
+[⛳️version-img]: http://img.shields.io/gem/v/oauth2.svg
+[🖇DL-total-img]: https://img.shields.io/gem/dt/oauth2.svg
+[🏘DL-rank-img]: https://img.shields.io/gem/rt/oauth2.svg
+[🚎src-home]: https://github.com/oauth-xx/oauth2
+[🚎src-home-img]: https://img.shields.io/badge/source-github-brightgreen.svg?style=flat
+[🖐prs-open]: https://github.com/oauth-xx/oauth2/pulls
+[🖐prs-open-img]: https://img.shields.io/github/issues-pr/oauth-xx/oauth2
+[🧮prs-closed]: https://github.com/oauth-xx/oauth2/pulls?q=is%3Apr+is%3Aclosed
+[🧮prs-closed-img]: https://img.shields.io/github/issues-pr-closed/oauth-xx/oauth2
+
+<!-- 3️⃣ maintanence & linting -->
+[⛳cclim-maint]: https://codeclimate.com/github/oauth-xx/oauth2/maintainability
+[⛳cclim-maint-img]: https://api.codeclimate.com/v1/badges/688c612528ff90a46955/maintainability
+[🖇triage-help]: https://www.codetriage.com/oauth-xx/oauth2
+[🖇triage-help-img]: https://www.codetriage.com/oauth-xx/oauth2/badges/users.svg
+[🏘depfu]: https://depfu.com/github/oauth-xx/oauth2?project_id=4445
+[🏘depfu-img]: https://badges.depfu.com/badges/6d34dc1ba682bbdf9ae2a97848241743/count.svg
+[🚎contributors]: https://github.com/oauth-xx/oauth2/graphs/contributors
+[🚎contributors-img]: https://img.shields.io/github/contributors-anon/oauth-xx/oauth2
+[🖐style-wf]: https://github.com/oauth-xx/oauth2/actions/workflows/style.yml
+[🖐style-wf-img]: https://github.com/oauth-xx/oauth2/actions/workflows/style.yml/badge.svg
+
+<!-- 4️⃣ testing -->
+[⛳️tot-bld]: https://actions-badge.atrox.dev/oauth-xx/oauth2/goto
+[⛳️tot-bld-img]: https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Foauth-xx%2Foauth2%2Fbadge&style=flat
+[🖇supported-wf]: https://github.com/oauth-xx/oauth2/actions/workflows/supported.yml
+[🖇supported-wf-img]: https://github.com/oauth-xx/oauth2/actions/workflows/supported.yml/badge.svg
+[🏘eol-wf]: https://github.com/oauth-xx/oauth2/actions/workflows/coverage.yml
+[🏘eol-wf-img]: https://github.com/oauth-xx/oauth2/actions/workflows/coverage.yml/badge.svg
+[🚎unsupported-wf]: https://github.com/oauth-xx/oauth2/actions/workflows/unsupported.yml
+[🚎unsupported-wf-img]: https://github.com/oauth-xx/oauth2/actions/workflows/unsupported.yml/badge.svg
+[🖐issues]: https://github.com/oauth-xx/oauth2/issues
+[🖐issues-img]: https://github.com/oauth-xx/oauth2/issues
+
+<!-- 5️⃣ coverage & security -->
+[⛳cclim-cov]: https://codeclimate.com/github/oauth-xx/oauth2/test_coverage
+[⛳cclim-cov-img]: https://api.codeclimate.com/v1/badges/688c612528ff90a46955/test_coverage
+[🖇codecov-img]: https://codecov.io/gh/oauth-xx/oauth2/branch/master/graph/badge.svg?token=bNqSzNiuo2
+[🖇codecov]: https://codecov.io/gh/oauth-xx/oauth2
+[🏘coveralls]: https://coveralls.io/github/oauth-xx/oauth2?branch=master
+[🏘coveralls-img]: https://coveralls.io/repos/github/oauth-xx/oauth2/badge.svg?branch=master
+[🚎sec-pol]: SECURITY.md
+[🚎sec-pol-img]: https://img.shields.io/badge/security-policy-brightgreen.svg?style=flat
+[🖐codeQL]: https://github.com/oauth-xx/oauth2/security/code-scanning
+[🖐codeQL-img]: https://github.com/oauth-xx/oauth2/actions/workflows/codeql-analysis.yml/badge.svg
+
+<!-- 7️⃣ resources -->
+[⛳gh-discussions]: https://github.com/oauth-xx/oauth2/discussions
+[⛳gh-discussions-img]: https://img.shields.io/github/discussions/oauth-xx/oauth2
+[🖇codementor]: https://www.codementor.io/peterboling?utm_source=github&utm_medium=button&utm_term=peterboling&utm_campaign=github
+[🖇codementor-img]: https://cdn.codementor.io/badges/get_help_github.svg
+[🏘chat]: https://gitter.im/oauth-xx/oauth2
+[🏘chat-img]: https://img.shields.io/gitter/room/oauth-xx/oauth2.svg
+[🚎blog]: http://www.railsbling.com/tags/oauth2/
+[🚎blog-img]: https://img.shields.io/badge/blog-railsbling-brightgreen.svg?style=flat
+[🖐wiki]: https://github.com/oauth-xx/oauth2/wiki
+[🖐wiki-img]: https://img.shields.io/badge/wiki-examples-brightgreen.svg?style=flat
+
+<!-- 8️⃣ spread 💖 -->
+[⛳liberapay-img]: https://img.shields.io/liberapay/patrons/pboling.svg?logo=liberapay
+[⛳liberapay]: https://liberapay.com/pboling/donate
+[🖇sponsor-img]: https://img.shields.io/badge/sponsor-pboling.svg?style=social&logo=github
+[🖇sponsor]: https://github.com/sponsors/pboling
+[🏘tweet-img]: https://img.shields.io/twitter/follow/galtzo.svg?style=social&label=Follow
+[🏘tweet]: http://twitter.com/galtzo
+
+<!-- Maintainer Contact Links -->
+[railsbling]: http://www.railsbling.com
+[peterboling]: http://www.peterboling.com
+[aboutme]: https://about.me/peter.boling
+[angelme]: https://angel.co/peter-boling
+[coderme]:http://coderwall.com/pboling
+[politicme]: https://nationalprogressiveparty.org
+
 
 ## Installation
 
-    gem install oauth2
+```shell
+gem install oauth2
+```
 
-Or inside Gemfile
+Or inside a `Gemfile`
 
-    gem 'oauth2'
+```ruby
+gem 'oauth2'
+```
+And then execute in a shell:
+```shell
+bundle
+```
+
 
 ## Compatibility
 
 Targeted ruby compatibility is non-EOL versions of Ruby, currently 2.7, 3.0 and
 3.1. Compatibility is further distinguished by supported and unsupported versions of Ruby.
-Ruby is limited to 2.2+ in the gemspec. The `master` branch currently targets 2.0.x releases.
+Ruby is limited to 2.2+ for 2.x releases. See `1-4-stable` branch for older rubies.
 
-| Ruby OAuth 2 Version | Maintenance Branch | Officially Supported Rubies | Unofficially Supported Rubies |
-|----------------------|--------------------|-----------------------------|-------------------------------|
-| 2.0.x (unreleased)   | `master`           | 2.7, 3.0, 3.1               | 2.6, 2.5                      |
-| 1.4.x                | `1-4-stable`       | 2.5, 2.6, 2.7, 3.0, 3.1     | 2.1, 2.2, 2.3, 2.4            |
-| older                | N/A                | Best of luck to you!        | Please upgrade!               |
+<details>
+  <summary>Ruby Engine Compatibility</summary>
+
+This gem is tested against MRI, JRuby, and Truffleruby.
+Each of those has varying versions that target a specific version of MRI Ruby.
+This gem should work in the just-listed Ruby engines according to the targeted MRI compatibility in the table below.
+If you would like to add support for additional engines, 
+  first make sure Github Actions supports the engine,
+  then submit a PR to the correct maintenance branch as according to the table below.
+</details>
+
+| Ruby OAuth 2 Version | Maintenance Branch | Supported Officially    | Supported Unofficially | Supported Incidentally |
+|----------------------|--------------------|-------------------------|-------------------------------------------------|
+| 2.0.x (unreleased)   | `master`           | 2.7, 3.0, 3.1           | 2.6, 2.5               | 2.4, 2.3, 2.2          |
+| 1.4.x                | `1-4-stable`       | 2.5, 2.6, 2.7, 3.0, 3.1 | 2.1, 2.2, 2.3, 2.4     | 2.0, 1.9               |
+| older                | N/A                | Best of luck to you!    | Please upgrade!        |                        |
 
 NOTE: Once 2.0 is released, the 1.4 series will only receive critical bug and security updates.
+See [SECURITY.md][🚎sec-pol]
 
 <details>
   <summary>Ruby Compatibility Policy</summary>
@@ -138,15 +264,6 @@ implementation, you will be responsible for providing patches in a timely
 fashion. If critical issues for a particular implementation exist at the time
 of a major release, support for that Ruby version may be dropped.
 </details>
-
-## Resources
-* [View Source on GitHub][code]
-* [Report Issues on GitHub][issues]
-* [Read More at the Wiki][wiki]
-
-[code]: https://github.com/oauth-xx/oauth2
-[issues]: https://github.com/oauth-xx/oauth2/issues
-[wiki]: https://github.com/oauth-xx/oauth2/wiki
 
 ## Usage Examples
 
@@ -273,7 +390,7 @@ spec.add_dependency 'oauth2', '~> 1.4'
 
 ## License
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)][source-license]
+[![License: MIT][🖇src-license-img]][🖇src-license]
 
 - Copyright (c) 2011-2013 Michael Bleigh and Intridea, Inc.
 - Copyright (c) 2017-2018 [oauth-xx organization][oauth-xx]
