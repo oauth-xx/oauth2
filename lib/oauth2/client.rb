@@ -4,7 +4,7 @@ require 'faraday'
 require 'logger'
 
 module OAuth2
-  ConnectionError = Class.new(StandardError)
+  ConnectionError = Class.new(Faraday::ConnectionFailed)
   # The OAuth2::Client class
   class Client # rubocop:disable Metrics/ClassLength
     RESERVED_PARAM_KEYS = %w[headers parse].freeze
@@ -28,9 +28,8 @@ module OAuth2
     # @option options [Symbol] :auth_scheme (:basic_auth) HTTP method to use to authorize request (:basic_auth or :request_body)
     # @option options [Hash] :connection_opts ({}) Hash of connection options to pass to initialize Faraday with
     # @option options [FixNum] :max_redirects (5) maximum number of redirects to follow
-    # @option options [Boolean] :raise_errors (true) whether or not to raise an OAuth2::Error
+    # @option options [Boolean] :raise_errors (true) whether or not to raise an OAuth2::Error on responses with 400+ status codes
     # @option options [Logger] :logger (::Logger.new($stdout)) which logger to use when OAUTH_DEBUG is enabled
-    #  on responses with 400+ status codes
     # @yield [builder] The Faraday connection builder
     def initialize(client_id, client_secret, options = {}, &block)
       opts = options.dup
@@ -151,10 +150,6 @@ module OAuth2
     # @param access_token_class [Class] class of access token for easier subclassing OAuth2::AccessToken
     # @return [AccessToken] the initialized AccessToken
     def get_token(params, access_token_opts = {}, access_token_class = AccessToken) # rubocop:disable Metrics/PerceivedComplexity
-      # if ruby version >= 2.4
-      # params.transform_keys! do |key|
-      #   RESERVED_PARAM_KEYS.include?(key) ? key.to_sym : key
-      # end
       params = params.map do |key, value|
         if RESERVED_PARAM_KEYS.include?(key)
           [key.to_sym, value]
