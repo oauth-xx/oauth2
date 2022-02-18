@@ -17,7 +17,6 @@ if RUN_COVERAGE
     if ENV['COVER_ALL']
       require 'simplecov-lcov'
       require 'simplecov-cobertura'
-      require 'coveralls'
 
       SimpleCov::Formatter::LcovFormatter.config do |c|
         c.report_with_single_file = true
