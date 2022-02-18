@@ -34,7 +34,9 @@ jobs:
         bundler:
           - latest
         ruby:
-          - ruby-head
+          - truffleruby-head
+          - truffleruby
+          - jruby-head
           - "2.6"
           - "2.5"
         include:
