@@ -381,7 +381,7 @@ spec.add_dependency 'oauth2', '~> 1.4'
 [![License: MIT][🖇src-license-img]][🖇src-license]
 
 - Copyright (c) 2011-2013 Michael Bleigh and Intridea, Inc.
-- Copyright (c) 2017-2018 [oauth-xx organization][oauth-xx]
+- Copyright (c) 2017-2022 [oauth-xx organization][oauth-xx]
 - See [LICENSE][license] for details.
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2.svg?type=large)][fossa2]
