@@ -35,7 +35,7 @@ if RUN_COVERAGE
       formatter SimpleCov::Formatter::HTMLFormatter
     end
 
-    add_filter '/spec'
+    add_filter 'spec'
     minimum_coverage(85)
   end
 end

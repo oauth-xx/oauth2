@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
-require 'oauth2'
+# Third Party Libraries
 require 'rspec'
 require 'rspec/stubbed_env'
 require 'silent_stream'
+require 'addressable/uri'
 
 DEBUG = ENV['DEBUG'] == 'true'
 RUN_COVERAGE = ENV['CI_CODECOV'] || ENV['CI'].nil?
@@ -14,13 +15,12 @@ coverage = minimum_version.call('2.7') && RUN_COVERAGE
 debug = minimum_version.call('2.5') && DEBUG
 
 require 'simplecov' if coverage
-require 'byebug' if debug
+require 'byebug' if DEBUG && debug
 
-require 'addressable/uri'
+# This gem
+require 'oauth2'
 
 Faraday.default_adapter = :test
-
-require 'byebug' if DEBUG && debug
 
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
