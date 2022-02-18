@@ -12,6 +12,7 @@ require:
 AllCops:
   NewCops: enable
   DisplayCopNames: true # Display the name of the failing cops
+  TargetRubyVersion: 2.5
   Exclude:
     - 'gemfiles/vendor/**/*'
     - 'vendor/**/*'
