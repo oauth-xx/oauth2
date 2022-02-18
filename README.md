@@ -229,7 +229,7 @@ Targeted ruby compatibility is non-EOL versions of Ruby, currently 2.7, 3.0 and
 Ruby is limited to 2.2+ for 2.x releases. See `1-4-stable` branch for older rubies.
 
 <details>
-  <summary>Ruby Engine Compatibility</summary>
+  <summary>Ruby Engine Compatibility Policy</summary>
 
 This gem is tested against MRI, JRuby, and Truffleruby.
 Each of those has varying versions that target a specific version of MRI Ruby.
@@ -239,17 +239,8 @@ If you would like to add support for additional engines,
   then submit a PR to the correct maintenance branch as according to the table below.
 </details>
 
-| Ruby OAuth 2 Version | Maintenance Branch | Supported Officially    | Supported Unofficially | Supported Incidentally |
-|----------------------|--------------------|-------------------------|-------------------------------------------------|
-| 2.0.x (unreleased)   | `master`           | 2.7, 3.0, 3.1           | 2.6, 2.5               | 2.4, 2.3, 2.2          |
-| 1.4.x                | `1-4-stable`       | 2.5, 2.6, 2.7, 3.0, 3.1 | 2.1, 2.2, 2.3, 2.4     | 2.0, 1.9               |
-| older                | N/A                | Best of luck to you!    | Please upgrade!        |                        |
-
-NOTE: Once 2.0 is released, the 1.4 series will only receive critical bug and security updates.
-See [SECURITY.md][🚎sec-pol]
-
 <details>
-  <summary>Ruby Compatibility Policy</summary>
+  <summary>Ruby Version Compatibility Policy</summary>
 
 If something doesn't work on one of these interpreters, it's a bug.
 
@@ -264,6 +255,15 @@ implementation, you will be responsible for providing patches in a timely
 fashion. If critical issues for a particular implementation exist at the time
 of a major release, support for that Ruby version may be dropped.
 </details>
+
+|     | Ruby OAuth 2 Version | Maintenance Branch | Supported Officially    | Supported Unofficially | Supported Incidentally |
+|:----|----------------------|--------------------|-------------------------|------------------------|------------------------|
+| 1️⃣ | 2.0.x (unreleased)   | `master`           | 2.7, 3.0, 3.1           | 2.6, 2.5               | 2.4, 2.3, 2.2          |
+| 2️⃣ | 1.4.x                | `1-4-stable`       | 2.5, 2.6, 2.7, 3.0, 3.1 | 2.1, 2.2, 2.3, 2.4     | 2.0, 1.9               |
+| 3️⃣ | older                | N/A                | Best of luck to you!    | Please upgrade!        |                        |
+
+NOTE: Once 2.0 is released, the 1.4 series will only receive critical bug and security updates.
+See [SECURITY.md][🚎sec-pol]
 
 ## Usage Examples
 
