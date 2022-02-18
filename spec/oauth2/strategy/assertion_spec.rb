@@ -61,20 +61,20 @@ describe OAuth2::Strategy::Assertion do
 
     it_behaves_like "get_token #{mode}"
     describe "#build_assertion (#{mode})" do
-      context "with hmac_secret" do
+      context 'with hmac_secret' do
+        subject(:build_assertion) { client_assertion.build_assertion(params) }
+
         let(:hmac_secret) { '1883be842495c3b58f68ca71fbf1397fbb9ed2fdf8990f8404a25d0a1b995943' }
         let(:params) do
           {
             :iss => 2345,
-            :aud => "too",
-            :prn => "much",
-            :exp => 123456789,
+            :aud => 'too',
+            :prn => 'much',
+            :exp => 123_456_789,
             :hmac_secret => hmac_secret,
           }
         end
         let(:jwt) { 'eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOjIzNDUsImF1ZCI6InRvbyIsInBybiI6Im11Y2giLCJleHAiOjEyMzQ1Njc4OX0.GnZjgcdc5WSWKNW0p9S4GuhpBs3LJCEqjPm6turLG-c' }
-
-        subject(:build_assertion) { client_assertion.build_assertion(params) }
 
         it 'returns JWT' do
           expect(build_assertion).to eq(jwt)
@@ -83,22 +83,22 @@ describe OAuth2::Strategy::Assertion do
         it_behaves_like "get_token #{mode}"
       end
 
-      context "with private_key" do
+      context 'with private_key' do
+        subject(:build_assertion) { client_assertion.build_assertion(params) }
+
         let(:private_key_file) { 'spec/fixtures/RS256/jwtRS256.key' }
         let(:password) { '' }
         let(:private_key) { OpenSSL::PKey::RSA.new(File.read(private_key_file), password) }
         let(:params) do
           {
             :iss => 2345,
-            :aud => "too",
-            :prn => "much",
-            :exp => 123456789,
+            :aud => 'too',
+            :prn => 'much',
+            :exp => 123_456_789,
             :private_key => private_key,
           }
         end
         let(:jwt) { 'eyJhbGciOiJSUzI1NiJ9.eyJpc3MiOjIzNDUsImF1ZCI6InRvbyIsInBybiI6Im11Y2giLCJleHAiOjEyMzQ1Njc4OX0.vJ32OiPVMdJrlNkPw02Y9u6beiFY0Mfndhg_CkEDLtOYn8dscQIEpWoR4GzH8tiQVOQ1fOkqxE95tNIKOTjnIoskmYnfzhzIl9fnfQ_lsEuLC-nq45KhPzSM2wYgF2ZEIjDq51daK70bRPzTBr1Id45cTY-jJSito0lbKXj2nPa_Gs-_vyEU2MSxjiMaIxxccfY4Ow5zN3AUMTKp6LjrpDKFxag3fJ1nrb6iDATa504gyJHVLift3ovhAwYidkA81WnmEtISWBY904CKIcZD9Cx3ifS5bc3JaLAteIBKAAyD8o7D60vOKutsjCMHUCKL357BQ36bW7fmaEtW367Ri-xgOsCY0_HeWp991vrJ-DxhFPeuF-8hn_9KggBzKbA2eKEOOY4iDKSFwjWQUFOcRdvHw9RgbGt0IjY3wdo8CaJVlhynh54YlaLgOFhTBPeMgZdqQUHOztljaK9zubeVkrDGNnGuSuq0KR82KArb1x2z7XyZpxiV5ZatP9SNyhn-YIWk7UeQYXaS0UfsBX7L5T1y_FZj84r7Vl42lj1DfdR5DyGvHfZyHotTnejdIrDuQfDL_bGe24eHsilzuEFaajYmu10hxflZ6Apm-lekRRV47tbxTF1zI5we14XsTeklrTXqgDkSw6gyOoNUJm-cQkJpfdvBgUHYGInC1ttz7NU' }
-
-        subject(:build_assertion) { client_assertion.build_assertion(params) }
 
         it 'returns JWT' do
           expect(build_assertion).to eq(jwt)
