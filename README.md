@@ -15,7 +15,7 @@ OAuth 2.0 focuses on client developer simplicity while providing specific author
 This is a RubyGem for implementing OAuth 2.0 clients and servers in Ruby applications.
 See the sibling `oauth` gem for OAuth 1.0 implementations in Ruby.
 
-⚠️ **_WARNING_**: You are viewing the `README` of the master branch which contains 
+⚠️ **_WARNING_**: You are viewing the `README` of the master branch which contains
 unreleased changes for version 2.0.0. ⚠️
 
 ---
@@ -236,7 +236,7 @@ Ruby is limited to 2.2+ for 2.x releases. See `1-4-stable` branch for older rubi
 This gem is tested against MRI, JRuby, and Truffleruby.
 Each of those has varying versions that target a specific version of MRI Ruby.
 This gem should work in the just-listed Ruby engines according to the targeted MRI compatibility in the table below.
-If you would like to add support for additional engines, 
+If you would like to add support for additional engines,
   first make sure Github Actions supports the engine,
   then submit a PR to the correct maintenance branch as according to the table below.
 </details>
