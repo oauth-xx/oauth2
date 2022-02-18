@@ -67,7 +67,7 @@ module OAuth2
       params.merge(headers: headers)
     end
 
-    # @see https://tools.ietf.org/html/rfc2617#section-2
+    # @see https://datatracker.ietf.org/doc/html/rfc2617#section-2
     def basic_auth_header
       {'Authorization' => self.class.encode_basic_auth(id, secret)}
     end

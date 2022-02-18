@@ -6,7 +6,7 @@ module OAuth2
   module Strategy
     # The Client Assertion Strategy
     #
-    # @see https://tools.ietf.org/html/rfc7523
+    # @see https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-10#section-4.1.3
     #
     # Sample usage:
     #   client = OAuth2::Client.new(client_id, client_secret,
@@ -43,15 +43,15 @@ module OAuth2
       #
       # For reading on JWT and claim keys:
       #   @see https://github.com/jwt/ruby-jwt
-      #   @see https://tools.ietf.org/html/rfc7519#section-4.1
-      #   @see https://tools.ietf.org/html/rfc7523#section-3
+      #   @see https://datatracker.ietf.org/doc/html/rfc7519#section-4.1
+      #   @see https://datatracker.ietf.org/doc/html/rfc7523#section-3
       #   @see https://www.iana.org/assignments/jwt/jwt.xhtml
       #
       # There are many possible claim keys, and applications may ask for their own custom keys.
       # Some typically required ones:
       #   :iss (issuer)
       #   :aud (audience)
-      #   :sub (subject) -- formerly :prn https://tools.ietf.org/html/draft-ietf-oauth-json-web-token-06#appendix-F
+      #   :sub (subject) -- formerly :prn https://datatracker.ietf.org/doc/html/draft-ietf-oauth-json-web-token-06#appendix-F
       #   :exp, (expiration time) -- in seconds, e.g. Time.now.utc.to_i + 3600
       #
       # Note that this method does *not* validate presence of those four claim keys indicated as required by RFC 7523.
@@ -63,7 +63,7 @@ module OAuth2
       #
       # These two options are passed directly to `JWT.encode`.  For supported encoding arguments:
       #   @see https://github.com/jwt/ruby-jwt#algorithms-and-usage
-      #   @see https://tools.ietf.org/html/rfc7518#section-3.1
+      #   @see https://datatracker.ietf.org/doc/html/rfc7518#section-3.1
       #
       # The object type of `:key` may depend on the value of `:algorithm`.  Sample arguments:
       #   get_token(claim_set, {:algorithm => 'HS256', :key => 'secret_key'})
@@ -71,7 +71,7 @@ module OAuth2
       #
       # @param [Hash] request_opts options that will be used to assemble the request
       # @option request_opts [String] :scope the url parameter `scope` that may be required by some endpoints
-      #   @see https://tools.ietf.org/html/rfc7521#section-4.1
+      #   @see https://datatracker.ietf.org/doc/html/rfc7521#section-4.1
       #
       # @param [Hash] response_opts this will be merged with the token response to create the AccessToken object
       #   @see the access_token_opts argument to Client#get_token
