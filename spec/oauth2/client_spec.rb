@@ -4,7 +4,7 @@ require 'nkf'
 
 describe OAuth2::Client do
   subject do
-    described_class.new('abc', 'def', :site => 'https://api.example.com') do |builder|
+    described_class.new('abc', 'def', {:site => 'https://api.example.com'}.merge(options)) do |builder|
       builder.adapter :test do |stub|
         stub.get('/success')             { |env| [200, {'Content-Type' => 'text/awesome'}, 'yay'] }
         stub.get('/reflect')             { |env| [200, {}, env[:body]] }
@@ -109,6 +109,30 @@ describe OAuth2::Client do
       it 'allows a different host than the site' do
         subject.options[:"#{url_type}_url"] = 'https://api.foo.com/oauth/custom'
         expect(subject.send("#{url_type}_url")).to eq('https://api.foo.com/oauth/custom')
+      end
+
+      context 'when a URL with path is used in the site' do
+        let(:options) do
+          {:site => 'https://example.com/blog'}
+        end
+
+        it 'generates an authorization URL relative to the site' do
+          expect(subject.send("#{url_type}_url")).to eq("https://example.com/blog/oauth/#{url_type}")
+        end
+      end
+
+      context 'when a URL with path is used in the site and urls overridden' do
+        let(:options) do
+          {
+            :site => 'https://example.com/blog',
+            :authorize_url => "oauth/#{url_type}/lampoon",
+            :token_url => "oauth/#{url_type}/lampoon",
+          }
+        end
+
+        it 'generates an authorization URL relative to the site' do
+          expect(subject.send("#{url_type}_url")).to eq("https://example.com/blog/oauth/#{url_type}/lampoon")
+        end
       end
     end
   end

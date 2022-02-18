@@ -20,8 +20,8 @@ module OAuth2
     # @param [Hash] options the options to create the client with
     # @option options [String] :site the OAuth2 provider site host
     # @option options [String] :redirect_uri the absolute URI to the Redirection Endpoint for use in authorization grants and token exchange
-    # @option options [String] :authorize_url ('/oauth/authorize') absolute or relative URL path to the Authorization endpoint
-    # @option options [String] :token_url ('/oauth/token') absolute or relative URL path to the Token endpoint
+    # @option options [String] :authorize_url ('oauth/authorize') absolute or relative URL path to the Authorization endpoint
+    # @option options [String] :token_url ('oauth/token') absolute or relative URL path to the Token endpoint
     # @option options [Symbol] :token_method (:post) HTTP method to use to request token (:get or :post)
     # @option options [Symbol] :auth_scheme (:basic_auth) HTTP method to use to authorize request (:basic_auth or :request_body)
     # @option options [Hash] :connection_opts ({}) Hash of connection options to pass to initialize Faraday with
@@ -36,8 +36,8 @@ module OAuth2
       @secret = client_secret
       @site = opts.delete(:site)
       ssl = opts.delete(:ssl)
-      @options = {:authorize_url => '/oauth/authorize',
-                  :token_url => '/oauth/token',
+      @options = {:authorize_url => 'oauth/authorize',
+                  :token_url => 'oauth/token',
                   :token_method => :post,
                   :auth_scheme => :request_body,
                   :connection_opts => {},
