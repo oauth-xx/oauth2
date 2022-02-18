@@ -3,6 +3,16 @@ All notable changes to this project will be documented in this file.
 
 ## unreleased
 
+## [1.4.8] - 2022-02-18
+
+- MFA is now required to push new gem versions (@pboling)
+- README overhaul w/ new Ruby Verion and Engine compatibility policies (@pboling)
+- [#569](https://github.com/oauth-xx/oauth2/pull/569) Backport fixes ([#561](https://github.com/oauth-xx/oauth2/pull/561) by @ryogift), and add more fixes, to allow faraday 1.x and 2.x (@jrochkind)
+- Improve Code Coverage tracking (Coveralls, CodeCov, CodeClimate), and enable branch coverage (@pboling)
+- Add CodeQL, Security Policy, Funding info (@pboling)
+- Added Ruby 3.1, jruby, jruby-head, truffleruby, truffleruby-head to build matrix (@pboling)
+- [#543](https://github.com/oauth-xx/oauth2/pull/543) - Support for more modern Open SSL libraries (@pboling)
+
 ## [1.4.7] - 2021-03-19
 
 - [#541](https://github.com/oauth-xx/oauth2/pull/541) - Backport fix to expires_at handling [#533](https://github.com/oauth-xx/oauth2/pull/533) to 1-4-stable branch. (@dobon)
