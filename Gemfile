@@ -6,6 +6,8 @@ gemspec
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
+gem 'overcommit'
+
 platforms :mri do
   ruby_version = Gem::Version.new(RUBY_VERSION)
   minimum_version = ->(version) { ruby_version >= Gem::Version.new(version) && RUBY_ENGINE == 'ruby' }
@@ -16,16 +18,15 @@ platforms :mri do
     # Danger is incompatible with Faraday 2 (for now)
     # see: https://github.com/danger/danger/issues/1349
     # gem 'danger', '~> 8.4'
-    gem 'rubocop', '~> 1.22'
-    gem 'rubocop-md', '~> 1.0'
-    gem 'rubocop-packaging', '~> 0.5'
-    gem 'rubocop-performance', '~> 1.11'
-    gem 'rubocop-rake', '~> 0.6'
-    gem 'rubocop-rspec'
-    gem 'rubocop-thread_safety', '~> 0.4'
+    gem 'rubocop', '~> 1.22', :require => false
+    gem 'rubocop-md', '~> 1.0', :require => false
+    gem 'rubocop-packaging', '~> 0.5', :require => false
+    gem 'rubocop-performance', '~> 1.11', :require => false
+    gem 'rubocop-rake', '~> 0.6', :require => false
+    gem 'rubocop-rspec', :require => false
+    gem 'rubocop-thread_safety', '~> 0.4', :require => false
   end
   if coverage
-    gem 'coveralls_reborn', '~> 0.23', require: false
     gem 'simplecov', '~> 0.21', require: false
     gem 'simplecov-cobertura' # XML for Jenkins
     gem 'simplecov-lcov', '~> 0.8', require: false
