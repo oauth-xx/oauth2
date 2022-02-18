@@ -2,7 +2,7 @@ module OAuth2
   module Strategy
     # The Authorization Code Strategy
     #
-    # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.1
+    # @see http://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-15#section-4.1
     class AuthCode < Base
       # The required query parameters for the authorize URL
       #

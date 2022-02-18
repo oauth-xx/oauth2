@@ -2,7 +2,7 @@ module OAuth2
   module Strategy
     # The Implicit Strategy
     #
-    # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-26#section-4.2
+    # @see http://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-26#section-4.2
     class Implicit < Base
       # The required query parameters for the authorize URL
       #

@@ -2,7 +2,7 @@ module OAuth2
   module Strategy
     # The Resource Owner Password Credentials Authorization Strategy
     #
-    # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.3
+    # @see http://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-15#section-4.3
     class Password < Base
       # Not used for this strategy
       #

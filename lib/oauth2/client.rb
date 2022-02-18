@@ -197,28 +197,28 @@ module OAuth2
 
     # The Authorization Code strategy
     #
-    # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.1
+    # @see http://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-15#section-4.1
     def auth_code
       @auth_code ||= OAuth2::Strategy::AuthCode.new(self)
     end
 
     # The Implicit strategy
     #
-    # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-26#section-4.2
+    # @see http://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-26#section-4.2
     def implicit
       @implicit ||= OAuth2::Strategy::Implicit.new(self)
     end
 
     # The Resource Owner Password Credentials strategy
     #
-    # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.3
+    # @see http://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-15#section-4.3
     def password
       @password ||= OAuth2::Strategy::Password.new(self)
     end
 
     # The Client Credentials strategy
     #
-    # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.4
+    # @see http://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-15#section-4.4
     def client_credentials
       @client_credentials ||= OAuth2::Strategy::ClientCredentials.new(self)
     end
@@ -238,10 +238,10 @@ module OAuth2
     #
     # @api semipublic
     #
-    # @see https://tools.ietf.org/html/rfc6749#section-4.1
-    # @see https://tools.ietf.org/html/rfc6749#section-4.1.3
-    # @see https://tools.ietf.org/html/rfc6749#section-4.2.1
-    # @see https://tools.ietf.org/html/rfc6749#section-10.6
+    # @see https://datatracker.ietf.org/doc/html/rfc6749#section-4.1
+    # @see https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.3
+    # @see https://datatracker.ietf.org/doc/html/rfc6749#section-4.2.1
+    # @see https://datatracker.ietf.org/doc/html/rfc6749#section-10.6
     # @return [Hash] the params to add to a request or URL
     def redirection_params
       if options[:redirect_uri]

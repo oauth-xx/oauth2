@@ -4,7 +4,7 @@ module OAuth2
   module Strategy
     # The Client Assertion Strategy
     #
-    # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-10#section-4.1.3
+    # @see https://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-10#section-4.1.3
     #
     # Sample usage:
     #   client = OAuth2::Client.new(client_id, client_secret,
