@@ -1,6 +1,5 @@
 # coding: utf-8
 
-require 'helper'
 require 'nkf'
 
 describe OAuth2::Client do
@@ -13,6 +12,7 @@ describe OAuth2::Client do
         stub.get('/unauthorized')        { |env| [401, {'Content-Type' => 'application/json'}, MultiJson.encode(:error => error_value, :error_description => error_description_value)] }
         stub.get('/conflict')            { |env| [409, {'Content-Type' => 'text/plain'}, 'not authorized'] }
         stub.get('/redirect')            { |env| [302, {'Content-Type' => 'text/plain', 'location' => '/success'}, ''] }
+        stub.get('/redirect_no_loc')     { |_env| [302, {'Content-Type' => 'text/plain'}, ''] }
         stub.post('/redirect')           { |env| [303, {'Content-Type' => 'text/plain', 'location' => '/reflect'}, ''] }
         stub.get('/error')               { |env| [500, {'Content-Type' => 'text/plain'}, 'unknown error'] }
         stub.get('/empty_get')           { |env| [204, {}, nil] }
@@ -24,6 +24,7 @@ describe OAuth2::Client do
 
   let!(:error_value) { 'invalid_token' }
   let!(:error_description_value) { 'bad bad token' }
+  let(:options) { {} }
 
   describe '#initialize' do
     it 'assigns id and secret' do
@@ -44,10 +45,10 @@ describe OAuth2::Client do
     end
 
     it 'is able to pass a block to configure the connection' do
-      connection = double('connection')
       builder = double('builder')
+
       allow(Faraday).to receive(:new).and_yield(builder)
-      allow(Faraday::Connection).to receive(:new).and_return(connection)
+      allow(builder).to receive(:response)
 
       expect(builder).to receive(:adapter).with(:test)
 
@@ -70,7 +71,7 @@ describe OAuth2::Client do
     it 'allows override of raise_errors option' do
       client = described_class.new('abc', 'def', :site => 'https://api.example.com', :raise_errors => true) do |builder|
         builder.adapter :test do |stub|
-          stub.get('/notfound') { |env| [404, {}, nil] }
+          stub.get('/notfound') { |_env| [404, {}, nil] }
         end
       end
       expect(client.options[:raise_errors]).to be true
