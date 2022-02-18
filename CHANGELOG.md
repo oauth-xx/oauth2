@@ -17,11 +17,21 @@ All notable changes to this project will be documented in this file.
 - Fix logging to `$stdout` of request and response bodies via Faraday's logger and `ENV["OAUTH_DEBUG"] == 'true'` (@pboling)
 - **Security**: Add checks to enforce `client_secret` is *never* passed in authorize_url query params (@dfockler)
 
-## [1.4.7] - 2021-03-18
+## [1.4.8] - 2022-02-18
+
+- MFA is now required to push new gem versions (@pboling)
+- README overhaul w/ new Ruby Verion and Engine compatibility policies (@pboling)
+- [#569](https://github.com/oauth-xx/oauth2/pull/569) Backport fixes ([#561](https://github.com/oauth-xx/oauth2/pull/561) by @ryogift), and add more fixes, to allow faraday 1.x and 2.x (@jrochkind)
+- Improve Code Coverage tracking (Coveralls, CodeCov, CodeClimate), and enable branch coverage (@pboling)
+- Add CodeQL, Security Policy, Funding info (@pboling)
+- Added Ruby 3.1, jruby, jruby-head, truffleruby, truffleruby-head to build matrix (@pboling)
+- [#543](https://github.com/oauth-xx/oauth2/pull/543) - Support for more modern Open SSL libraries (@pboling)
+
+## [1.4.7] - 2021-03-19
 
 - [#541](https://github.com/oauth-xx/oauth2/pull/541) - Backport fix to expires_at handling [#533](https://github.com/oauth-xx/oauth2/pull/533) to 1-4-stable branch. (@dobon)
 
-## [1.4.6] - 2021-03-18
+## [1.4.6] - 2021-03-19
 
 - [#540](https://github.com/oauth-xx/oauth2/pull/540) - Add VERSION constant (@pboling)
 - [#537](https://github.com/oauth-xx/oauth2/pull/537) - Fix crash in OAuth2::Client#get_token (@anderscarling)
@@ -29,8 +39,10 @@ All notable changes to this project will be documented in this file.
 
 ## [1.4.5] - 2021-03-18
 
-- [#535](https://github.com/oauth-xx/oauth2/pull/535) - Compatibility with range of supported Ruby OpenSSL versions, Rubocop updates, Github Actions, analogous to  [#536](https://github.com/oauth-xx/oauth2/pull/536) on master branch (@pboling)
+- [#535](https://github.com/oauth-xx/oauth2/pull/535) - Compatibility with range of supported Ruby OpenSSL versions, Rubocop updates, Github Actions, analogous to [#536](https://github.com/oauth-xx/oauth2/pull/536) on master branch (@pboling)
 - [#518](https://github.com/oauth-xx/oauth2/pull/518) - Add extract_access_token option to OAuth2::Client (@jonspalmer)
+- [#507](https://github.com/oauth-xx/oauth2/pull/507) - Fix camel case content type, response keys (@anvox)
+- [#500](https://github.com/oauth-xx/oauth2/pull/500) - Fix YARD documentation formatting (@olleolleolle)
 
 ## [1.4.4] - 2020-02-12
 
@@ -181,4 +193,8 @@ All notable changes to this project will be documented in this file.
 [1.4.1]: https://github.com/oauth-xx/oauth2/compare/v1.4.0...v1.4.1
 [1.4.2]: https://github.com/oauth-xx/oauth2/compare/v1.4.1...v1.4.2
 [1.4.3]: https://github.com/oauth-xx/oauth2/compare/v1.4.2...v1.4.3
+[1.4.4]: https://github.com/oauth-xx/oauth2/compare/v1.4.3...v1.4.4
+[1.4.5]: https://github.com/oauth-xx/oauth2/compare/v1.4.4...v1.4.5
+[1.4.6]: https://github.com/oauth-xx/oauth2/compare/v1.4.5...v1.4.6
+[1.4.7]: https://github.com/oauth-xx/oauth2/compare/v1.4.6...v1.4.7
 [unreleased]: https://github.com/oauth-xx/oauth2/compare/v1.4.1...HEAD

@@ -22,7 +22,7 @@ unreleased changes for version 2.0.0. ⚠️
 
 * [OAuth 2.0 Spec][oauth2-spec]
 * [OAuth 1.0 sibling gem][sibling-gem]
-* Help us reach the [![2.0.0 release milestone][next-milestone-pct-img]][next-milestone-pct] by submitting or reviewing PRs and issues.
+* Help us finish release [![2.0.0 release milestone][next-milestone-pct-img]][next-milestone-pct] by submitting or reviewing PRs and issues.
 * Oauth2 gem is _always_ looking for additional maintainers. See [#307][maintainers-discussion].
 
 [oauth2-spec]: https://oauth.net/2/
@@ -48,16 +48,17 @@ unreleased changes for version 2.0.0. ⚠️
 <details>
   <summary>1.4.x Readmes</summary>
 
-| Version  | Release Date | Readme                                                   |
-|----------|--------------|----------------------------------------------------------|
-| 1.4.7    | Mar 18, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.7/README.md |
-| 1.4.6    | Mar 18, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.6/README.md |
-| 1.4.5    | Mar 18, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.5/README.md |
-| 1.4.4    | Feb 12, 2020 | https://github.com/oauth-xx/oauth2/blob/v1.4.4/README.md |
-| 1.4.3    | Jan 29, 2020 | https://github.com/oauth-xx/oauth2/blob/v1.4.3/README.md |
-| 1.4.2    | Oct 1, 2019  | https://github.com/oauth-xx/oauth2/blob/v1.4.2/README.md |
-| 1.4.1    | Oct 13, 2018 | https://github.com/oauth-xx/oauth2/blob/v1.4.1/README.md |
-| 1.4.0    | Jun 9, 2017  | https://github.com/oauth-xx/oauth2/blob/v1.4.0/README.md |
+| Version | Release Date | Readme                                                   |
+|---------|--------------|----------------------------------------------------------|
+| 1.4.8   | Feb 18, 2022 | https://github.com/oauth-xx/oauth2/blob/v1.4.8/README.md |
+| 1.4.7   | Mar 18, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.7/README.md |
+| 1.4.6   | Mar 18, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.6/README.md |
+| 1.4.5   | Mar 18, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.5/README.md |
+| 1.4.4   | Feb 12, 2020 | https://github.com/oauth-xx/oauth2/blob/v1.4.4/README.md |
+| 1.4.3   | Jan 29, 2020 | https://github.com/oauth-xx/oauth2/blob/v1.4.3/README.md |
+| 1.4.2   | Oct 1, 2019  | https://github.com/oauth-xx/oauth2/blob/v1.4.2/README.md |
+| 1.4.1   | Oct 13, 2018 | https://github.com/oauth-xx/oauth2/blob/v1.4.1/README.md |
+| 1.4.0   | Jun 9, 2017  | https://github.com/oauth-xx/oauth2/blob/v1.4.0/README.md |
 </details>
 
 <details>
