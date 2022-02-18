@@ -29,6 +29,7 @@ Gem::Specification.new do |spec|
     'documentation_uri' => "https://www.rubydoc.info/gems/oauth2/#{spec.version}",
     'source_code_uri' => "https://github.com/oauth-xx/oauth2/tree/v#{spec.version}",
     'wiki_uri' => 'https://github.com/oauth-xx/oauth2/wiki',
+    'rubygems_mfa_required' => 'true',
   }
 
   spec.require_paths = %w[lib]

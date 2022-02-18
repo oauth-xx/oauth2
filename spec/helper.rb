@@ -19,7 +19,6 @@ require 'addressable/uri'
 
 Faraday.default_adapter = :test
 
-DEBUG = ENV['DEBUG'] == 'true'
 require 'byebug' if DEBUG && debug
 
 RSpec.configure do |config|

@@ -40,7 +40,7 @@ module OAuth2
     # @option opts [String] :header_format ('Bearer %s') the string format to use for the Authorization header
     # @option opts [String] :param_name ('access_token') the parameter name to use for transmission of the
     #    Access Token value in :body or :query transmission mode
-    def initialize(client, token, opts = {}) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
+    def initialize(client, token, opts = {}) # rubocop:disable Metrics/CyclomaticComplexity
       @client = client
       @token = token.to_s
       opts = opts.dup
@@ -158,7 +158,7 @@ module OAuth2
 
   private
 
-    def configure_authentication!(opts) # rubocop:disable Metrics/AbcSize
+    def configure_authentication!(opts)
       case options[:mode]
       when :header
         opts[:headers] ||= {}

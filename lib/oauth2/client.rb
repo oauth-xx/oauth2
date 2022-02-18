@@ -99,7 +99,7 @@ module OAuth2
     #   code response for this request.  Will default to client option
     # @option opts [Symbol] :parse @see Response::initialize
     # @yield [req] The Faraday request
-    def request(verb, url, opts = {}) # rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/AbcSize
+    def request(verb, url, opts = {}) # rubocop:disable Metrics/CyclomaticComplexity
       url = connection.build_url(url).to_s
 
       begin
@@ -150,7 +150,7 @@ module OAuth2
     # @param access_token_opts [Hash] access token options, to pass to the AccessToken object
     # @param access_token_class [Class] class of access token for easier subclassing OAuth2::AccessToken
     # @return [AccessToken] the initialized AccessToken
-    def get_token(params, access_token_opts = {}, access_token_class = AccessToken) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
+    def get_token(params, access_token_opts = {}, access_token_class = AccessToken) # rubocop:disable Metrics/PerceivedComplexity
       # if ruby version >= 2.4
       # params.transform_keys! do |key|
       #   RESERVED_PARAM_KEYS.include?(key) ? key.to_sym : key
