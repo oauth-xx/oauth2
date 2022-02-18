@@ -36,6 +36,6 @@ if RUN_COVERAGE
     end
 
     add_filter '/spec'
-    minimum_coverage(86)
+    minimum_coverage(85)
   end
 end

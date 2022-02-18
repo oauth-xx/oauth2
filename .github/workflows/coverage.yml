@@ -109,12 +109,13 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: ${{ matrix.experimental != 'false' }}
 
-      - name: CodeCov
-        uses: codecov/codecov-action@v2
-        if: matrix.ruby == '2.7' && github.event_name != 'pull_request' && always()
-        with:
-          files: ./coverage/coverage.xml
-          flags: unittests
-          name: codecov-upload
-          fail_ci_if_error: true
-        continue-on-error: ${{ matrix.experimental != 'false' }}
+#      Using the codecov gem instead.
+#      - name: CodeCov
+#        uses: codecov/codecov-action@v2
+#        if: matrix.ruby == '2.7' && github.event_name != 'pull_request' && always()
+#        with:
+#          files: ./coverage/coverage.xml
+#          flags: unittests
+#          name: codecov-upload
+#          fail_ci_if_error: true
+#        continue-on-error: ${{ matrix.experimental != 'false' }}
