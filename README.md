@@ -29,7 +29,6 @@ branch which for version 1.4.x releases. Version 2.0 is coming! ⚠️
 [sibling-gem]: https://github.com/oauth-xx/oauth-ruby
 [next-milestone-pct]: https://github.com/oauth-xx/oauth2/milestone/1
 [next-milestone-pct-img]: https://img.shields.io/github/milestones/progress-percent/oauth-xx/oauth2/1
-
 [maintainers-discussion]: https://github.com/oauth-xx/oauth2/issues/307
 
 ## Release Documentation
@@ -254,12 +253,6 @@ fashion. If critical issues for a particular implementation exist at the time
 of a major release, support for that Ruby version may be dropped.
 </details>
 
-## Resources
-
-* [View Source on GitHub][🚎src-home]
-* [Report Issues on GitHub][issues]
-* [Read More at the Wiki][wiki]
-
 ## Usage Examples
 
 ```ruby
@@ -385,7 +378,7 @@ spec.add_dependency 'oauth2', '~> 1.4'
 
 ## License
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)][src-license]
+[![License: MIT][🖇src-license-img]][🖇src-license]
 
 - Copyright (c) 2011-2013 Michael Bleigh and Intridea, Inc.
 - Copyright (c) 2017-2018 [oauth-xx organization][oauth-xx]
