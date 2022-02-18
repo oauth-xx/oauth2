@@ -111,8 +111,8 @@ badge #s:
 | 3️⃣ | maintanence & linting | [![Maintainability][⛳cclim-maint-img]][⛳cclim-maint] [![Helpers][🖇triage-help-img]][🖇triage-help] [![Depfu][🏘depfu-img]][🏘depfu] [![Contributors][🚎contributors-img]][🚎contributors] [![Style][🖐style-wf-img]][🖐style-wf]                                  |
 | 4️⃣ | testing               | [![Build][⛳️tot-bld-img]][⛳️tot-bld] [![supported][🖇supported-wf-img]][🖇supported-wf] [![EOL & Code Coverage Build][🏘eol-wf-img]][🏘eol-wf] [![unsupported][🚎unsupported-wf-img]][🚎unsupported-wf]                                                            |
 | 5️⃣ | coverage & security   | [![CodeClimate][⛳cclim-cov-img]][⛳cclim-cov] [![CodeCov][🖇codecov-img]][🖇codecov] [![Coveralls][🏘coveralls-img]][🏘coveralls] [![Security Policy][🚎sec-pol-img])][🚎sec-pol] [![CodeQL][🖐codeQL-img]][🖐codeQL]                                               |
-| 7️⃣ | resources             | [![Discussion][⛳gh-discussions-img]][⛳gh-discussions] [![Get help on Codementor][🖇codementor-img]][🖇codementor] [![Chat][🏘chat-img]][🏘chat] [![Blog][🚎blog-img]][🚎blog] [![Blog][🖐wiki-img]][🖐wiki]                                                        |
-| 8️⃣ | spread 💖             | [![Liberapay Patrons][⛳liberapay-img]][⛳liberapay] [![Sponsor Me][🖇sponsor-img]][🖇sponsor] [![Tweet @ Peter][🏘tweet-img]][🏘tweet] [🌏][aboutme] [👼][angelme] [💻][coderme] [🌹][politicme]                                                                    |
+| 6️⃣ | resources             | [![Discussion][⛳gh-discussions-img]][⛳gh-discussions] [![Get help on Codementor][🖇codementor-img]][🖇codementor] [![Chat][🏘chat-img]][🏘chat] [![Blog][🚎blog-img]][🚎blog] [![Blog][🖐wiki-img]][🖐wiki]                                                        |
+| 7️⃣ | spread 💖             | [![Liberapay Patrons][⛳liberapay-img]][⛳liberapay] [![Sponsor Me][🖇sponsor-img]][🖇sponsor] [![Tweet @ Peter][🏘tweet-img]][🏘tweet] [🌏][aboutme] [👼][angelme] [💻][coderme] [🌹][politicme]                                                                    |
 
 <!--
 The link tokens in the following sections should be kept ordered by the row and badge numbering scheme
@@ -176,7 +176,7 @@ The link tokens in the following sections should be kept ordered by the row and 
 [🖐codeQL]: https://github.com/oauth-xx/oauth2/security/code-scanning
 [🖐codeQL-img]: https://github.com/oauth-xx/oauth2/actions/workflows/codeql-analysis.yml/badge.svg
 
-<!-- 7️⃣ resources -->
+<!-- 6️⃣ resources -->
 [⛳gh-discussions]: https://github.com/oauth-xx/oauth2/discussions
 [⛳gh-discussions-img]: https://img.shields.io/github/discussions/oauth-xx/oauth2
 [🖇codementor]: https://www.codementor.io/peterboling?utm_source=github&utm_medium=button&utm_term=peterboling&utm_campaign=github
@@ -188,7 +188,7 @@ The link tokens in the following sections should be kept ordered by the row and 
 [🖐wiki]: https://github.com/oauth-xx/oauth2/wiki
 [🖐wiki-img]: https://img.shields.io/badge/wiki-examples-brightgreen.svg?style=flat
 
-<!-- 8️⃣ spread 💖 -->
+<!-- 7️⃣ spread 💖 -->
 [⛳liberapay-img]: https://img.shields.io/liberapay/patrons/pboling.svg?logo=liberapay
 [⛳liberapay]: https://liberapay.com/pboling/donate
 [🖇sponsor-img]: https://img.shields.io/badge/sponsor-pboling.svg?style=social&logo=github
