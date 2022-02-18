@@ -159,7 +159,7 @@ The link tokens in the following sections should be kept ordered by the row and 
 [🖇codecov]: https://codecov.io/gh/oauth-xx/oauth2
 [🏘coveralls]: https://coveralls.io/github/oauth-xx/oauth2?branch=1-4-stable
 [🏘coveralls-img]: https://coveralls.io/repos/github/oauth-xx/oauth2/badge.svg?branch=1-4-stable
-[🚎sec-pol]: SECURITY.md
+[🚎sec-pol]: https://github.com/oauth-xx/oauth2/blob/master/SECURITY.md
 [🚎sec-pol-img]: https://img.shields.io/badge/security-policy-brightgreen.svg?style=flat
 [🖐codeQL]: https://github.com/oauth-xx/oauth2/security/code-scanning
 [🖐codeQL-img]: https://github.com/oauth-xx/oauth2/actions/workflows/codeql-analysis.yml/badge.svg
@@ -386,7 +386,7 @@ spec.add_dependency 'oauth2', '~> 1.4'
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2.svg?type=large)][fossa2]
 
-[license]: LICENSE
+[license]: https://github.com/oauth-xx/oauth2/blob/master/LICENSE
 [oauth-xx]: https://github.com/oauth-xx
 [fossa2]: https://app.fossa.io/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2?ref=badge_large
 
