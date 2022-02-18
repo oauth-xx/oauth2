@@ -30,7 +30,7 @@ describe OAuth2::AccessToken do
       expect(target.params['foo']).to eq('bar')
     end
 
-    def assert_initialized_token(target) # rubocop:disable Metrics/AbcSize
+    def assert_initialized_token(target)
       expect(target.token).to eq(token)
       expect(target).to be_expires
       expect(target.params.keys).to include('foo')

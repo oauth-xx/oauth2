@@ -2,6 +2,7 @@ require 'faraday'
 require 'logger'
 
 module OAuth2
+  ConnectionError = Class.new(Faraday::ConnectionFailed)
   # The OAuth2::Client class
   class Client # rubocop:disable Metrics/ClassLength
     RESERVED_PARAM_KEYS = %w[headers parse].freeze
@@ -16,17 +17,18 @@ module OAuth2
     #
     # @param [String] client_id the client_id value
     # @param [String] client_secret the client_secret value
-    # @param [Hash] opts the options to create the client with
-    # @option opts [String] :site the OAuth2 provider site host
-    # @option opts [String] :redirect_uri the absolute URI to the Redirection Endpoint for use in authorization grants and token exchange
-    # @option opts [String] :authorize_url ('/oauth/authorize') absolute or relative URL path to the Authorization endpoint
-    # @option opts [String] :token_url ('/oauth/token') absolute or relative URL path to the Token endpoint
-    # @option opts [Symbol] :token_method (:post) HTTP method to use to request token (:get or :post)
-    # @option opts [Symbol] :auth_scheme (:basic_auth) HTTP method to use to authorize request (:basic_auth or :request_body)
-    # @option opts [Hash] :connection_opts ({}) Hash of connection options to pass to initialize Faraday with
-    # @option opts [FixNum] :max_redirects (5) maximum number of redirects to follow
-    # @option opts [Boolean] :raise_errors (true) whether or not to raise an OAuth2::Error on responses with 400+ status codes
-    # @option opts [Proc] :extract_access_token  proc that extracts the access token from the response
+    # @param [Hash] options the options to create the client with
+    # @option options [String] :site the OAuth2 provider site host
+    # @option options [String] :redirect_uri the absolute URI to the Redirection Endpoint for use in authorization grants and token exchange
+    # @option options [String] :authorize_url ('/oauth/authorize') absolute or relative URL path to the Authorization endpoint
+    # @option options [String] :token_url ('/oauth/token') absolute or relative URL path to the Token endpoint
+    # @option options [Symbol] :token_method (:post) HTTP method to use to request token (:get or :post)
+    # @option options [Symbol] :auth_scheme (:basic_auth) HTTP method to use to authorize request (:basic_auth or :request_body)
+    # @option options [Hash] :connection_opts ({}) Hash of connection options to pass to initialize Faraday with
+    # @option options [FixNum] :max_redirects (5) maximum number of redirects to follow
+    # @option options [Boolean] :raise_errors (true) whether or not to raise an OAuth2::Error on responses with 400+ status codes
+    # @option options [Logger] :logger (::Logger.new($stdout)) which logger to use when OAUTH_DEBUG is enabled
+    # @option options [Proc] (DEPRECATED) :extract_access_token  proc that extracts the access token from the response
     # @yield [builder] The Faraday connection builder
     def initialize(client_id, client_secret, options = {}, &block)
       opts = options.dup
@@ -34,24 +36,22 @@ module OAuth2
       @secret = client_secret
       @site = opts.delete(:site)
       ssl = opts.delete(:ssl)
-
-      @options = {
-        :authorize_url => '/oauth/authorize',
-        :token_url => '/oauth/token',
-        :token_method => :post,
-        :auth_scheme => :request_body,
-        :connection_opts => {},
-        :connection_build => block,
-        :max_redirects => 5,
-        :raise_errors => true,
-        :extract_access_token => DEFAULT_EXTRACT_ACCESS_TOKEN,
-      }.merge(opts)
+      @options = {:authorize_url => '/oauth/authorize',
+                  :token_url => '/oauth/token',
+                  :token_method => :post,
+                  :auth_scheme => :request_body,
+                  :connection_opts => {},
+                  :connection_build => block,
+                  :max_redirects => 5,
+                  :raise_errors => true,
+                  :extract_access_token => DEFAULT_EXTRACT_ACCESS_TOKEN, # DEPRECATED
+                  :logger => ::Logger.new($stdout)}.merge(opts)
       @options[:connection_opts][:ssl] = ssl if ssl
     end
 
     # Set the site host
     #
-    # @param [String] the OAuth2 provider site host
+    # @param value [String] the OAuth2 provider site host
     def site=(value)
       @connection = nil
       @site = value
@@ -61,8 +61,12 @@ module OAuth2
     def connection
       @connection ||=
         Faraday.new(site, options[:connection_opts]) do |builder|
+          oauth_debug_logging(builder)
           if options[:connection_build]
             options[:connection_build].call(builder)
+          else
+            builder.request :url_encoded             # form-encode POST params
+            builder.adapter Faraday.default_adapter  # make requests with Net::HTTP
           end
         end
     end
@@ -94,15 +98,18 @@ module OAuth2
     #   code response for this request.  Will default to client option
     # @option opts [Symbol] :parse @see Response::initialize
     # @yield [req] The Faraday request
-    def request(verb, url, opts = {}) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-      connection.response :logger, ::Logger.new($stdout) if ENV['OAUTH_DEBUG'] == 'true'
-
+    def request(verb, url, opts = {}) # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/AbcSize
       url = connection.build_url(url).to_s
 
-      response = connection.run_request(verb, url, opts[:body], opts[:headers]) do |req|
-        req.params.update(opts[:params]) if opts[:params]
-        yield(req) if block_given?
+      begin
+        response = connection.run_request(verb, url, opts[:body], opts[:headers]) do |req|
+          req.params.update(opts[:params]) if opts[:params]
+          yield(req) if block_given?
+        end
+      rescue Faraday::ConnectionFailed => e
+        raise ConnectionError, e
       end
+
       response = Response.new(response, :parse => opts[:parse])
 
       case response.status
@@ -115,7 +122,13 @@ module OAuth2
           verb = :get
           opts.delete(:body)
         end
-        request(verb, response.headers['location'], opts)
+        location = response.headers['location']
+        if location
+          request(verb, location, opts)
+        else
+          error = Error.new(response)
+          raise(error, "Got #{response.status} status code, but no Location header was present")
+        end
       when 200..299, 300..399
         # on non-redirecting 3xx statuses, just return the response
         response
@@ -133,11 +146,11 @@ module OAuth2
 
     # Initializes an AccessToken by making a request to the token endpoint
     #
-    # @param [Hash] params a Hash of params for the token endpoint
-    # @param [Hash] access token options, to pass to the AccessToken object
-    # @param [Class] class of access token for easier subclassing OAuth2::AccessToken
+    # @param params [Hash] a Hash of params for the token endpoint
+    # @param access_token_opts [Hash] access token options, to pass to the AccessToken object
+    # @param access_token_class [Class] class of access token for easier subclassing OAuth2::AccessToken
     # @return [AccessToken] the initialized AccessToken
-    def get_token(params, access_token_opts = {}, extract_access_token = options[:extract_access_token]) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    def get_token(params, access_token_opts = {}, extract_access_token = options[:extract_access_token]) # # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity Metrics/AbcSize, Metrics/MethodLength
       params = params.map do |key, value|
         if RESERVED_PARAM_KEYS.include?(key)
           [key.to_sym, value]
@@ -147,7 +160,7 @@ module OAuth2
       end
       params = Hash[params]
 
-      params = Authenticator.new(id, secret, options[:auth_scheme]).apply(params)
+      params = authenticator.apply(params)
       opts = {:raise_errors => options[:raise_errors], :parse => params.delete(:parse)}
       headers = params.delete(:headers) || {}
       if options[:token_method] == :post
@@ -157,8 +170,9 @@ module OAuth2
         opts[:params] = params
         opts[:headers] = {}
       end
-      opts[:headers].merge!(headers)
-      response = request(options[:token_method], token_url, opts)
+      opts[:headers] = opts[:headers].merge(headers)
+      http_method = options[:token_method]
+      response = request(http_method, token_url, opts)
 
       access_token = begin
         build_access_token(response, access_token_opts, extract_access_token)
@@ -166,10 +180,18 @@ module OAuth2
         nil
       end
 
-      if options[:raise_errors] && !access_token
+      response_contains_token = access_token || (
+                                  response.parsed.is_a?(Hash) &&
+                                  (response.parsed['access_token'] || response.parsed['id_token'])
+                                )
+
+      if options[:raise_errors] && !response_contains_token
         error = Error.new(response)
         raise(error)
+      elsif !response_contains_token
+        return nil
       end
+
       access_token
     end
 
@@ -236,19 +258,33 @@ module OAuth2
 
   private
 
+    # Returns the authenticator object
+    #
+    # @return [Authenticator] the initialized Authenticator
+    def authenticator
+      Authenticator.new(id, secret, options[:auth_scheme])
+    end
+
+    # Builds the access token from the response of the HTTP call
+    #
+    # @return [AccessToken] the initialized AccessToken
     def build_access_token(response, access_token_opts, extract_access_token)
       parsed_response = response.parsed.dup
       return unless parsed_response.is_a?(Hash)
 
       hash = parsed_response.merge(access_token_opts)
 
-      # Provide backwards compatibility for old AcessToken.form_hash pattern
-      # Should be deprecated in 2.x
+      # Provide backwards compatibility for old AccessToken.form_hash pattern
+      # Will be deprecated in 2.x
       if extract_access_token.is_a?(Class) && extract_access_token.respond_to?(:from_hash)
         extract_access_token.from_hash(self, hash)
       else
         extract_access_token.call(self, hash)
       end
+    end
+
+    def oauth_debug_logging(builder)
+      builder.response :logger, options[:logger], :bodies => true if ENV['OAUTH_DEBUG'] == 'true'
     end
   end
 end
