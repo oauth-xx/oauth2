@@ -49,13 +49,13 @@ jobs:
           - gemfile: f0
         include:
           - ruby: "1.9"
-          - gemfile: f0
+            gemfile: f0
           - ruby: "2.0"
-          - gemfile: f0
+            gemfile: f0
           - ruby: "2.1"
-          - gemfile: f0
+            gemfile: f0
           - ruby: "2.2"
-          - gemfile: f0
+            gemfile: f0
 
     runs-on: ubuntu-18.04
     continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
