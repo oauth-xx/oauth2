@@ -23,8 +23,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        gemfile:
-          - f2
+        experimental: [false]
+        rubygems:
+          - latest
+        bundler:
+          - latest
         ruby:
           - 2.7
     runs-on: ubuntu-latest
@@ -37,6 +40,8 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
+          rubygems: ${{ matrix.rubygems }}
+          bundler: ${{ matrix.bundler }}
           bundler-cache: true
       - name: Run Rubocop
         run: bundle exec rubocop -DESP

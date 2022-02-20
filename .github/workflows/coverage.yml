@@ -35,23 +35,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        gemfile:
-          - f2
+        experimental: [false]
         rubygems:
           - latest
         bundler:
           - latest
         ruby:
           - "2.7"
-        include:
-          # Includes a new variable experimental with a value of false
-          #   for the matrix legs matching rubygems: latest, which is all of them.
-          # This is here for parity with the unsupported.yml
-          # This is a hack. Combined with continue-on-error it should allow us
-          #   to have a workflow with allowed failure.
-          # This is the "supported" build matrix, so only the "head" builds are experimental here.
-          - rubygems: latest
-            experimental: false
 
     runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
