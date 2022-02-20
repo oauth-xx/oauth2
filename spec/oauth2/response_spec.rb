@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe OAuth2::Response do
   describe '#initialize' do
     let(:status) { 200 }

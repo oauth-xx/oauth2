@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'openssl'
 
 describe OAuth2::Strategy::Assertion do

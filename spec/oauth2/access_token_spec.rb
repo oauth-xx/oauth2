@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe OAuth2::AccessToken do
   subject { described_class.new(client, token) }
 

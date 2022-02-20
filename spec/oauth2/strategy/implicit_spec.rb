@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe OAuth2::Strategy::Implicit do
   subject { client.implicit }
 

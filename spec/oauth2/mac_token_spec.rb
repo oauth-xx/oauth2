@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe OAuth2::MACToken do
   subject { described_class.new(client, token, 'abc123') }
 

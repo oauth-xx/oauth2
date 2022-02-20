@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe OAuth2::Authenticator do
   subject do
     described_class.new(client_id, client_secret, mode)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe OAuth2::Strategy::Password do
   subject { client.password }
 

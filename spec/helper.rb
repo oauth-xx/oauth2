@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 DEBUG = ENV['DEBUG'] == 'true'
 RUN_COVERAGE = ENV['CI_CODECOV'] || ENV['CI'].nil?
 
