@@ -17,10 +17,14 @@ on:
 jobs:
   rubocop:
     name: Rubocop
+    env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
+      BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
     if: "!contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]')"
     strategy:
       fail-fast: false
       matrix:
+        gemfile:
+          - f2
         ruby:
           - 2.7
     runs-on: ubuntu-latest

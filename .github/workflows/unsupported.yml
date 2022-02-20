@@ -32,9 +32,9 @@ jobs:
       fail-fast: false
       matrix:
         gemfile:
-          - F0
-          - F1
-          - F2
+          - f0
+          - f1
+          - f2
         rubygems:
           - latest
         bundler:
