@@ -52,9 +52,9 @@ jobs:
         experimental: [false]
         exclude:
           - ruby: ["1.9", "2.0", "2.1", "2.2", "2.3"]
-            gemfile: ["F1", "F2"]
+            gemfile: ["f1", "f2"]
           - ruby: ["2.4", "2.5"]
-            gemfile: ["F2"]
+            gemfile: ["f2"]
         include:
           # Includes a new variable experimental with a value of true
           #   for the matrix legs matching rubygems: latest, which is all of them.
