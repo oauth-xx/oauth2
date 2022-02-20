@@ -6,12 +6,6 @@
 require 'bundler/gem_tasks'
 
 begin
-  require 'wwtd/tasks'
-rescue LoadError
-  puts 'failed to load wwtd'
-end
-
-begin
   require 'rspec/core/rake_task'
   RSpec::Core::RakeTask.new(:spec)
 rescue LoadError
