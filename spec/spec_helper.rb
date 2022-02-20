@@ -7,6 +7,9 @@ require 'silent_stream'
 require 'addressable/uri'
 require 'rspec/pending_for'
 
+# Extensions
+require 'ext/backports'
+
 DEBUG = ENV['DEBUG'] == 'true'
 RUN_COVERAGE = ENV['CI_CODECOV'] || ENV['CI'].nil?
 

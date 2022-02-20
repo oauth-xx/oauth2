@@ -39,6 +39,7 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
 
   spec.add_development_dependency 'addressable', '>= 2'
+  spec.add_development_dependency 'backports', '>= 3'
   spec.add_development_dependency 'bundler', '>= 2'
   spec.add_development_dependency 'rake', '>= 12'
   spec.add_development_dependency 'rexml', '>= 3'
