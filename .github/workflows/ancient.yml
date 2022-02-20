@@ -34,29 +34,15 @@ jobs:
         experimental: [true]
         gemfile:
           - f0
-          - f1
-          - f2
         rubygems:
-          - latest
+          - "2.7.11"
         bundler:
-          - latest
+          - "1.17.3"
         ruby:
           - "1.9"
           - "2.0"
           - "2.1"
           - "2.2"
-        exclude:
-          - gemfile: f0
-        include:
-          - ruby: "1.9"
-            gemfile: f0
-          - ruby: "2.0"
-            gemfile: f0
-          - ruby: "2.1"
-            gemfile: f0
-          - ruby: "2.2"
-            gemfile: f0
-        name_extra: ["Ancient"]
 
     runs-on: ubuntu-18.04
     continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
