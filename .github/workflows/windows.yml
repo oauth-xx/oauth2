@@ -1,4 +1,4 @@
-name: Windows Test
+name: Windows
 
 on:
   push:

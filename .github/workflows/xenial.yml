@@ -1,4 +1,4 @@
-name: MacOS
+name: Xenial Xerus
 
 on:
   push:
@@ -33,29 +33,27 @@ jobs:
       matrix:
         experimental: [true]
         gemfile:
-          - f2
+          - f0
         rubygems:
-          - latest
-        bundler:
-          - latest
+          - "2.7.11"
         ruby:
-          - "2.7"
-          - "3.0"
-          - "3.1"
-          - truffleruby
-          - jruby
+          - "1.9"
+          - "2.0"
+          - "2.1"
+          - "2.2"
 
-    runs-on: macos-latest
+    runs-on: ubuntu-16.04
     continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Install cURL Headers
+        run: sudo apt-get install libcurl4-openssl-dev
       - name: Setup Ruby & Bundle
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
           rubygems: ${{ matrix.rubygems }}
-          bundler: ${{ matrix.bundler }}
           bundler-cache: true
       - name: Run tests
         run: bundle exec rake test

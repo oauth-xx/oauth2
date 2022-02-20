@@ -1,4 +1,4 @@
-name: Ancient Support
+name: Bionic Beaver
 
 on:
   push:
@@ -36,8 +36,6 @@ jobs:
           - f0
         rubygems:
           - "2.7.11"
-        bundler:
-          - "1.17.3"
         ruby:
           - "1.9"
           - "2.0"
@@ -56,7 +54,6 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby }}
           rubygems: ${{ matrix.rubygems }}
-          bundler: ${{ matrix.bundler }}
           bundler-cache: true
       - name: Run tests
         run: bundle exec rake test
