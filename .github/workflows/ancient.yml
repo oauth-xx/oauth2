@@ -1,4 +1,4 @@
-name: Windows Test
+name: Ancient Support
 
 on:
   push:
@@ -31,26 +31,39 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        experimental: [false]
+        experimental: [true]
         gemfile:
+          - f0
+          - f1
           - f2
         rubygems:
           - latest
         bundler:
           - latest
         ruby:
-          - "2.7"
-          - "3.0"
-          - "3.1"
-          - truffleruby
-          - jruby
-        name_extra: Windows
+          - "1.9"
+          - "2.0"
+          - "2.1"
+          - "2.2"
+        exclude:
+          - gemfile: f0
+        include:
+          - ruby: "1.9"
+          - gemfile: f0
+          - ruby: "2.0"
+          - gemfile: f0
+          - ruby: "2.1"
+          - gemfile: f0
+          - ruby: "2.2"
+          - gemfile: f0
 
-    runs-on: windows-latest
+    runs-on: ubuntu-18.04
     continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Install cURL Headers
+        run: sudo apt-get install libcurl4-openssl-dev
       - name: Setup Ruby & Bundle
         uses: ruby/setup-ruby@v1
         with:
