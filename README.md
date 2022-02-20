@@ -50,6 +50,7 @@ unreleased changes for version 2.0.0. ⚠️
 
 | Version | Release Date | Readme                                                   |
 |---------|--------------|----------------------------------------------------------|
+| 1.4.9   | Feb 20, 2022 | https://github.com/oauth-xx/oauth2/blob/v1.4.9/README.md |
 | 1.4.8   | Feb 18, 2022 | https://github.com/oauth-xx/oauth2/blob/v1.4.8/README.md |
 | 1.4.7   | Mar 19, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.7/README.md |
 | 1.4.6   | Mar 19, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.6/README.md |
