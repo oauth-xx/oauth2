@@ -1,11 +1,12 @@
 # coding: utf-8
+# frozen_string_literal: true
 
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'oauth2/version'
 
 Gem::Specification.new do |spec|
-  spec.add_dependency 'faraday', ['>= 0.8', '< 3.0']
+  spec.add_dependency 'faraday', ['>= 0.17.3', '< 3.0']
   spec.add_dependency 'jwt', ['>= 1.0', '< 3.0']
   spec.add_dependency 'multi_json', '~> 1.3'
   spec.add_dependency 'multi_xml', '~> 0.5'

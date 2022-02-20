@@ -25,22 +25,36 @@ concurrency:
 jobs:
   test:
     name: Specs - Ruby ${{ matrix.ruby }} ${{ matrix.name_extra || '' }}
+    env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
+      BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
     if: "!contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]')"
     strategy:
       fail-fast: false
       matrix:
+        gemfile:
+          - F0
+          - F1
+          - F2
         rubygems:
           - latest
         bundler:
           - latest
         ruby:
-          - ruby-head
-          - "2.6"
-          - "2.5"
-          - "2.4"
-          - "2.3"
-          - "2.2"
+          - "1.9"
+          - "2.0"
           - "2.1"
+          - "2.2"
+          - "2.3"
+          - "2.4"
+          - "2.5"
+          - "2.6"
+          - ruby-head
+        experimental: [false]
+        exclude:
+          - ruby: ["1.9", "2.0", "2.1", "2.2", "2.3"]
+            gemfile: ["F1", "F2"]
+          - ruby: ["2.4", "2.5"]
+            gemfile: ["F2"]
         include:
           # Includes a new variable experimental with a value of true
           #   for the matrix legs matching rubygems: latest, which is all of them.
