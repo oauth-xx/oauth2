@@ -356,12 +356,14 @@ RSpec.describe OAuth2::Client do
       expect(response.body).to eq('yay')
       expect(response.status).to eq(200)
       expect(response.headers).to eq('Content-Type' => 'text/awesome')
+      expect(response.response.env.url.to_s).to eq('https://api.example.com/success')
     end
 
     it 'redirects using GET on a 303' do
       response = subject.request(:post, '/redirect', body: 'foo=bar')
       expect(response.body).to be_empty
       expect(response.status).to eq(200)
+      expect(response.response.env.url.to_s).to eq('https://api.example.com/reflect')
     end
 
     it 'raises an error if a redirect has no Location header' do
