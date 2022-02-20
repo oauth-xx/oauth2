@@ -56,6 +56,7 @@ jobs:
             gemfile: f0
           - ruby: "2.2"
             gemfile: f0
+        name_extra: ["Ancient"]
 
     runs-on: ubuntu-18.04
     continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
