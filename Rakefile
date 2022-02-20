@@ -26,15 +26,15 @@ rescue LoadError
   end
 end
 
-namespace :doc do
-  require 'rdoc/task'
-  require 'oauth2/version'
-  RDoc::Task.new do |rdoc|
-    rdoc.rdoc_dir = 'rdoc'
-    rdoc.title = "oauth2 #{OAuth2::Version}"
-    rdoc.main = 'README.md'
-    rdoc.rdoc_files.include('README.md', 'LICENSE.md', 'lib/**/*.rb')
-  end
-end
+# namespace :doc do
+#   require 'rdoc/task'
+#   require 'oauth2/version'
+#   RDoc::Task.new do |rdoc|
+#     rdoc.rdoc_dir = 'rdoc'
+#     rdoc.title = "oauth2 #{OAuth2::Version}"
+#     rdoc.main = 'README.md'
+#     rdoc.rdoc_files.include('README.md', 'LICENSE.md', 'lib/**/*.rb')
+#   end
+# end
 
 task :default => [:test, :rubocop]
