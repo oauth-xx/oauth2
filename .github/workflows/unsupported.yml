@@ -51,10 +51,30 @@ jobs:
           - ruby-head
         experimental: [false]
         exclude:
-          - ruby: ["1.9", "2.0", "2.1", "2.2", "2.3"]
-            gemfile: ["f1", "f2"]
-          - ruby: ["2.4", "2.5"]
-            gemfile: ["f2"]
+          - ruby: "1.9"
+            gemfile: "f1"
+          - ruby: "2.0"
+            gemfile: "f1"
+          - ruby: "2.1"
+            gemfile: "f1"
+          - ruby: "2.2"
+            gemfile: "f1"
+          - ruby: "2.3"
+            gemfile: "f1"
+          - ruby: "1.9"
+            gemfile: "f2"
+          - ruby: "2.0"
+            gemfile: "f2"
+          - ruby: "2.1"
+            gemfile: "f2"
+          - ruby: "2.2"
+            gemfile: "f2"
+          - ruby: "2.3"
+            gemfile: "f2"
+          - ruby: "2.4"
+            gemfile: "f2"
+          - ruby: "2.5"
+            gemfile: "f2"
         include:
           # Includes a new variable experimental with a value of true
           #   for the matrix legs matching rubygems: latest, which is all of them.
