@@ -17,6 +17,15 @@ All notable changes to this project will be documented in this file.
 - Fix logging to `$stdout` of request and response bodies via Faraday's logger and `ENV["OAUTH_DEBUG"] == 'true'` (@pboling)
 - **Security**: Add checks to enforce `client_secret` is *never* passed in authorize_url query params (@dfockler)
 
+## [1.4.9] - 2022-02-20
+
+- Fixes compatibility with Faraday v2 [572](https://github.com/oauth-xx/oauth2/issues/572)
+- Includes supported versions of Faraday in test matrix:
+  - Faraday ~> 2.2.0 with Ruby >= 2.6
+  - Faraday ~> 1.10 with Ruby >= 2.4
+  - Faraday ~> 0.17.3 with Ruby >= 1.9
+- Add Windows and MacOS to test matrix
+
 ## [1.4.8] - 2022-02-18
 
 - MFA is now required to push new gem versions (@pboling)
