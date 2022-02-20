@@ -1,4 +1,4 @@
-name: Bionic Beaver
+name: Old MacOS
 
 on:
   push:
@@ -42,13 +42,11 @@ jobs:
           - "2.1"
           - "2.2"
 
-    runs-on: ubuntu-18.04
+    runs-on: macos-10.15
     continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install cURL Headers
-        run: sudo apt-get install libcurl4-openssl-dev
       - name: Setup Ruby & Bundle
         uses: ruby/setup-ruby@v1
         with:
