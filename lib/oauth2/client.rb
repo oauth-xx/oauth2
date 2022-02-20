@@ -98,7 +98,7 @@ module OAuth2
     #   code response for this request.  Will default to client option
     # @option opts [Symbol] :parse @see Response::initialize
     # @yield [req] The Faraday request
-    def request(verb, url, opts = {}) # rubocop:disable Metrics/CyclomaticComplexity
+    def request(verb, url, opts = {})
       url = connection.build_url(url).to_s
 
       begin

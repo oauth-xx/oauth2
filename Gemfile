@@ -18,13 +18,13 @@ platforms :mri do
     # Danger is incompatible with Faraday 2 (for now)
     # see: https://github.com/danger/danger/issues/1349
     # gem 'danger', '~> 8.4'
-    gem 'rubocop', '~> 1.22', :require => false
-    gem 'rubocop-md', '~> 1.0', :require => false
-    gem 'rubocop-packaging', '~> 0.5', :require => false
-    gem 'rubocop-performance', '~> 1.11', :require => false
-    gem 'rubocop-rake', '~> 0.6', :require => false
-    gem 'rubocop-rspec', :require => false
-    gem 'rubocop-thread_safety', '~> 0.4', :require => false
+    gem 'rubocop', '~> 1.22', require: false
+    gem 'rubocop-md', '~> 1.0', require: false
+    gem 'rubocop-packaging', '~> 0.5', require: false
+    gem 'rubocop-performance', '~> 1.11', require: false
+    gem 'rubocop-rake', '~> 0.6', require: false
+    gem 'rubocop-rspec', require: false
+    gem 'rubocop-thread_safety', '~> 0.4', require: false
   end
   if coverage
     gem 'simplecov', '~> 0.21', require: false
