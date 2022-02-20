@@ -1,4 +1,4 @@
-name: Unofficial Support
+name: Old MacOS
 
 on:
   push:
@@ -27,47 +27,32 @@ jobs:
     name: Specs - Ruby ${{ matrix.ruby }} ${{matrix.gemfile}} ${{ matrix.name_extra || '' }}
     env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
-    if: "!contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]')"
+    if: false
+    # if: "!contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]')"
     strategy:
       fail-fast: false
       matrix:
-        experimental: [false]
+        experimental: [true]
         gemfile:
           - f0
-          - f1
-          - f2
         rubygems:
-          - latest
-        bundler:
-          - latest
+          - "2.7.11"
         ruby:
-          - "2.3"
-          - "2.4"
-          - "2.5"
-          - "2.6"
-        exclude:
-          - ruby: "2.3"
-            gemfile: "f1"
-          - ruby: "2.3"
-            gemfile: "f2"
-          - ruby: "2.4"
-            gemfile: "f2"
-          - ruby: "2.5"
-            gemfile: "f2"
+          - "1.9"
+          - "2.0"
+          - "2.1"
+          - "2.2"
 
-    runs-on: ubuntu-20.04
+    runs-on: macos-10.15
     continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Install cURL Headers
-        run: sudo apt-get install libcurl4-openssl-dev
       - name: Setup Ruby & Bundle
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
           rubygems: ${{ matrix.rubygems }}
-          bundler: ${{ matrix.bundler }}
           bundler-cache: true
       - name: Run tests
         run: bundle exec rake test

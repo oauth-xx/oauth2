@@ -217,7 +217,7 @@ RSpec.describe OAuth2::Response do
   end
 
   context 'with xml parser registration' do
-    it 'tries to load multi_xml and use it' do
+    it 'tries to load multi_xml.rb and use it' do
       expect(described_class.send(:class_variable_get, :@@parsers)[:xml]).not_to be_nil
     end
 

@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+source 'https://rubygems.org'
+
+# See README.md in this directory
+
+gem 'faraday', '~> 1.10'
+
+gemspec path: '../'
