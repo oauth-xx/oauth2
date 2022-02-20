@@ -1,4 +1,5 @@
 # encoding: utf-8
+# frozen_string_literal: true
 
 describe OAuth2::Strategy::AuthCode do
   subject { client.auth_code }

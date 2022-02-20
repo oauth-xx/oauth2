@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OAuth2
   module Strategy
     # The Resource Owner Password Credentials Authorization Strategy

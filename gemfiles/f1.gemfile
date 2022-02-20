@@ -2,10 +2,8 @@
 
 source 'https://rubygems.org'
 
-group :development do
-  gem 'byebug'
-  gem 'pry'
-  gem 'pry-byebug'
-end
+# See README.md in this directory
+
+gem 'faraday', '~> 1.10'
 
 gemspec :path => '../'

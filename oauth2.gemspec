@@ -1,11 +1,12 @@
 # coding: utf-8
+# frozen_string_literal: true
 
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'oauth2/version'
 
 Gem::Specification.new do |spec|
-  spec.add_dependency 'faraday', ['>= 0.8', '< 3.0']
+  spec.add_dependency 'faraday', ['>= 0.17.3', '< 3.0']
   spec.add_dependency 'jwt', ['>= 1.0', '< 3.0']
   spec.add_dependency 'multi_json', '~> 1.3'
   spec.add_dependency 'multi_xml', '~> 0.5'
@@ -41,11 +42,10 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'backports', '~> 3.11'
   spec.add_development_dependency 'bundler', '>= 1.16'
   spec.add_development_dependency 'rake', '~> 12.3'
-  spec.add_development_dependency 'rdoc', ['>= 5.0', '< 7']
+  spec.add_development_dependency 'rexml', '~> 3.2'
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'rspec-block_is_expected'
   spec.add_development_dependency 'rspec-pending_for'
   spec.add_development_dependency 'rspec-stubbed_env'
   spec.add_development_dependency 'silent_stream'
-  spec.add_development_dependency 'wwtd'
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # To get coverage
 # On Local, default (HTML) output, it just works, coverage is turned on:
 #   bundle exec rspec spec

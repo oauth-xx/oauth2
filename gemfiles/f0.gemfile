@@ -1,0 +1,11 @@
+# frozen_string_literal: true
+
+source 'https://rubygems.org'
+
+# See README.md in this directory
+
+# 0.17.3 is the first version that stops using &Proc.new for block forwarding,
+#   and thus is the oldest version oauth2 is compatible with.
+gem 'faraday', '~> 0.17.4'
+
+gemspec :path => '../'

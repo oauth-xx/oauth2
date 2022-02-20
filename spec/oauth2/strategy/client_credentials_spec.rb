@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe OAuth2::Strategy::ClientCredentials do
   subject { client.client_credentials }
 

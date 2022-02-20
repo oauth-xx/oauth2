@@ -1,14 +1,9 @@
 # encoding: utf-8
+# frozen_string_literal: true
 
 # !/usr/bin/env rake
 
 require 'bundler/gem_tasks'
-
-begin
-  require 'wwtd/tasks'
-rescue LoadError
-  puts 'failed to load wwtd'
-end
 
 begin
   require 'rspec/core/rake_task'
@@ -31,15 +26,15 @@ rescue LoadError
   end
 end
 
-namespace :doc do
-  require 'rdoc/task'
-  require 'oauth2/version'
-  RDoc::Task.new do |rdoc|
-    rdoc.rdoc_dir = 'rdoc'
-    rdoc.title = "oauth2 #{OAuth2::Version}"
-    rdoc.main = 'README.md'
-    rdoc.rdoc_files.include('README.md', 'LICENSE.md', 'lib/**/*.rb')
-  end
-end
+# namespace :doc do
+#   require 'rdoc/task'
+#   require 'oauth2/version'
+#   RDoc::Task.new do |rdoc|
+#     rdoc.rdoc_dir = 'rdoc'
+#     rdoc.title = "oauth2 #{OAuth2::Version}"
+#     rdoc.main = 'README.md'
+#     rdoc.rdoc_files.include('README.md', 'LICENSE.md', 'lib/**/*.rb')
+#   end
+# end
 
 task :default => [:test, :rubocop]
