@@ -6,14 +6,10 @@ gemspec
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
-gem 'jwt'
 gem 'overcommit'
-gem 'rake'
 
 group :test do
-  gem 'addressable', '~> 2.3.8'
-  gem 'backports'
-  gem 'rack', '~> 1.2', :platforms => [:ruby_21]
+  gem 'addressable', '>= 2.3'
   gem 'rspec', '>= 3'
   platforms :mri do
     ruby_version = Gem::Version.new(RUBY_VERSION)
