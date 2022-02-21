@@ -324,29 +324,6 @@ RSpec.describe OAuth2::Client do
           ]
           expect(output).to include(*logs)
         end
-
-        context 'logger is set to log to /dev/null' do
-          around do |example|
-            original_logger = subject.options[:logger]
-            subject.options[:logger] = Logger.new('/dev/null')
-
-            example.call
-
-            subject.options[:logger] = original_logger
-          end
-
-          it 'will not log anything to standard out if logger is overridden to use /dev/null' do
-            pending_for(engine: 'mingw', versions: '2.7.5', reason: 'there is no /dev/null')
-            pending_for(engine: 'mingw', versions: '3.0.3', reason: 'there is no /dev/null')
-            pending_for(engine: 'mingw', versions: '3.1.1', reason: 'there is no /dev/null')
-            pending_for(engine: 'mswin', versions: '2.6.8', reason: 'there is no /dev/null') # JRuby
-            output = capture(:stdout) do
-              subject.request(:get, '/success')
-            end
-
-            expect(output).to be_empty
-          end
-        end
       end
     end
 
