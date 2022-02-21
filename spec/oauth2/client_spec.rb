@@ -336,6 +336,10 @@ RSpec.describe OAuth2::Client do
           end
 
           it 'will not log anything to standard out if logger is overridden to use /dev/null' do
+            pending_for(engine: 'mingw', versions: '2.7.5', reason: 'there is no /dev/null')
+            pending_for(engine: 'mingw', versions: '3.0.3', reason: 'there is no /dev/null')
+            pending_for(engine: 'mingw', versions: '3.1.1', reason: 'there is no /dev/null')
+            pending_for(engine: 'mswin', versions: '2.6.8', reason: 'there is no /dev/null') # JRuby
             output = capture(:stdout) do
               subject.request(:get, '/success')
             end
