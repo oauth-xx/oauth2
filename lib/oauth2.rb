@@ -4,6 +4,9 @@
 require 'cgi'
 require 'time'
 
+# third party gems
+require 'rash'
+
 # includes gem files
 require 'oauth2/version'
 require 'oauth2/error'

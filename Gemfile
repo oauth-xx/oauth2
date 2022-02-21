@@ -8,13 +8,15 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 gem 'overcommit'
 
+ruby_version = Gem::Version.new(RUBY_VERSION)
+minimum_version = ->(version, engine = 'ruby') { ruby_version >= Gem::Version.new(version) && RUBY_ENGINE == engine }
+linting = minimum_version.call('2.7')
+coverage = minimum_version.call('2.7')
+debug = minimum_version.call('2.5')
+
 group :test do
+  gem 'pry', platforms: %i[mri jruby]
   platforms :mri do
-    ruby_version = Gem::Version.new(RUBY_VERSION)
-    minimum_version = ->(version) { ruby_version >= Gem::Version.new(version) && RUBY_ENGINE == 'ruby' }
-    linting = minimum_version.call('2.7')
-    coverage = minimum_version.call('2.7')
-    debug = minimum_version.call('2.5')
     if linting
       # Danger is incompatible with Faraday 2 (for now)
       # see: https://github.com/danger/danger/issues/1349
@@ -33,11 +35,14 @@ group :test do
       gem 'simplecov-lcov', '~> 0.8', require: false
     end
     if debug
-      # No need to run byebug / pry on earlier versions
+      # Add `byebug` to your code where you want to drop to REPL
       gem 'byebug'
-      gem 'pry'
       gem 'pry-byebug'
     end
+  end
+  platforms :jruby do
+    # Add `binding.pry` to your code where you want to drop to REPL
+    gem 'pry-debugger-jruby'
   end
 end
 

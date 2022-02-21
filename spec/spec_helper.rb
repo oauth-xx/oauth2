@@ -14,11 +14,18 @@ DEBUG = ENV['DEBUG'] == 'true'
 RUN_COVERAGE = ENV['CI_CODECOV'] || ENV['CI'].nil?
 
 ruby_version = Gem::Version.new(RUBY_VERSION)
-minimum_version = ->(version) { ruby_version >= Gem::Version.new(version) && RUBY_ENGINE == 'ruby' }
+minimum_version = ->(version, engine = 'ruby') { ruby_version >= Gem::Version.new(version) && RUBY_ENGINE == engine }
 coverage = minimum_version.call('2.7') && RUN_COVERAGE
 debug = minimum_version.call('2.5') && DEBUG
 
-require 'byebug' if DEBUG && debug
+if DEBUG
+  if debug
+    require 'byebug'
+  elsif minimum_version.call('2.7', 'jruby')
+    require 'pry-debugger-jruby'
+  end
+end
+
 require 'simplecov' if coverage
 
 # This gem
