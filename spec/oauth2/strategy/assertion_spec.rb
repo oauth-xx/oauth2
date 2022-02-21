@@ -244,7 +244,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
           end
 
           context 'with custom response_opts' do
-            let(:response_opts) { {custom_token_option: 'mackerel'} }
+            let(:response_opts) { {'custom_token_option' => 'mackerel'} }
 
             it 'passes them into the token params' do
               expect(access_token.params).to eq(response_opts)

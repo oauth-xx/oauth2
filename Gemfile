@@ -15,6 +15,7 @@ coverage = minimum_version.call('2.7')
 debug = minimum_version.call('2.5')
 
 group :test do
+  gem 'pry', platforms: [:mri, :jruby]
   platforms :mri do
     if linting
       # Danger is incompatible with Faraday 2 (for now)
@@ -36,13 +37,11 @@ group :test do
     if debug
       # Add `byebug` to your code where you want to drop to REPL
       gem 'byebug'
-      gem 'pry'
       gem 'pry-byebug'
     end
   end
   platforms :jruby do
     # Add `binding.pry` to your code where you want to drop to REPL
-    gem 'pry'
     gem 'pry-debugger-jruby'
   end
 end
