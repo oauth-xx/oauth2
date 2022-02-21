@@ -15,7 +15,7 @@ coverage = minimum_version.call('2.7')
 debug = minimum_version.call('2.5')
 
 group :test do
-  gem 'pry', platforms: [:mri, :jruby]
+  gem 'pry', platforms: %i[mri jruby]
   platforms :mri do
     if linting
       # Danger is incompatible with Faraday 2 (for now)

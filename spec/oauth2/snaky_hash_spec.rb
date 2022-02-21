@@ -4,7 +4,7 @@ RSpec.describe OAuth2::SnakyHash do
   subject { described_class.new }
 
   describe '.build' do
-    context 'build from hash' do
+    context 'when build from hash' do
       subject { described_class.new({'AccessToken' => '1'}) }
 
       it 'create correct snake hash' do
@@ -14,7 +14,7 @@ RSpec.describe OAuth2::SnakyHash do
       end
     end
 
-    context 'build from snake_hash' do
+    context 'when build from snake_hash' do
       subject do
         h = described_class.new
         h['AccessToken'] = '1'
@@ -59,7 +59,7 @@ RSpec.describe OAuth2::SnakyHash do
   end
 
   describe '#fetch' do
-    context 'Camel case key' do
+    context 'when Camel case key' do
       subject { described_class.new('AccessToken' => '1') }
 
       it 'return correct token' do
@@ -67,7 +67,7 @@ RSpec.describe OAuth2::SnakyHash do
       end
     end
 
-    context 'Camel case key with down-cased first letter' do
+    context 'when Camel case key with down-cased first letter' do
       subject { described_class.new('accessToken' => '1') }
 
       it 'return correct token' do
@@ -75,7 +75,7 @@ RSpec.describe OAuth2::SnakyHash do
       end
     end
 
-    context 'snake case key' do
+    context 'when snake case key' do
       subject { described_class.new('access_token' => '1') }
 
       it 'return correct token' do
@@ -83,7 +83,7 @@ RSpec.describe OAuth2::SnakyHash do
       end
     end
 
-    context 'missing any key' do
+    context 'when missing any key' do
       subject { described_class.new }
 
       it 'raise KeyError with key' do
@@ -100,7 +100,7 @@ RSpec.describe OAuth2::SnakyHash do
   end
 
   describe '#key?' do
-    context 'Camel case key' do
+    context 'when Camel case key' do
       subject { described_class.new('AccessToken' => '1') }
 
       it 'return true' do
@@ -108,7 +108,7 @@ RSpec.describe OAuth2::SnakyHash do
       end
     end
 
-    context 'Camel case key with down-cased first letter' do
+    context 'when Camel case key with down-cased first letter' do
       subject { described_class.new('accessToken' => '1') }
 
       it 'return true' do
@@ -116,7 +116,7 @@ RSpec.describe OAuth2::SnakyHash do
       end
     end
 
-    context 'snake case key' do
+    context 'when snake case key' do
       subject { described_class.new('access_token' => '1') }
 
       it 'return true' do
@@ -124,7 +124,7 @@ RSpec.describe OAuth2::SnakyHash do
       end
     end
 
-    context 'missing any key' do
+    context 'when missing any key' do
       subject { described_class.new }
 
       it 'return false' do
