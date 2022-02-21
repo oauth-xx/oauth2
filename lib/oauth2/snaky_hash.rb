@@ -12,17 +12,28 @@ module OAuth2
     end
 
     def [](key)
-      super(key) || super(camelize(key)) || super(camelize_upcase_first_letter(key))
+      fetch(key)
+    rescue KeyError
+      nil
     end
 
     def fetch(key, *extras)
-      super(key) { nil } || super(camelize(key)) { nil } || super(camelize_upcase_first_letter(key), *extras)
-    rescue KeyError
-      raise KeyError, "key not found: \"#{key}\""
+      super(key) do |_|
+        super(camelize_upcase_first_letter(key)) do |_|
+          if extras.any?
+            super(camelize(key), *extras)
+          else
+            super(camelize(key))
+          end
+        end
+      end
     end
 
     def key?(key)
-      super(key) || super(camelize(key)) || super(camelize_upcase_first_letter(key))
+      fetch(key)
+      true
+    rescue KeyError
+      false
     end
 
   private

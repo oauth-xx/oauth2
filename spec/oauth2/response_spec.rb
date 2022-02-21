@@ -66,34 +66,107 @@ RSpec.describe OAuth2::Response do
   end
 
   describe '#parsed' do
-    it 'parses application/x-www-form-urlencoded body' do
-      headers = {'Content-Type' => 'application/x-www-form-urlencoded'}
-      body = 'foo=bar&answer=42'
+    subject(:parsed) do
+      headers = {'Content-Type' => content_type}
       response = double('response', headers: headers, body: body)
-      subject = described_class.new(response)
-      expect(subject.parsed.keys.size).to eq(2)
-      expect(subject.parsed['foo']).to eq('bar')
-      expect(subject.parsed['answer']).to eq('42')
+      instance = described_class.new(response)
+      instance.parsed
     end
 
-    it 'parses application/json body' do
-      headers = {'Content-Type' => 'application/json'}
-      body = MultiJson.encode(foo: 'bar', answer: 42)
-      response = double('response', headers: headers, body: body)
-      subject = described_class.new(response)
-      expect(subject.parsed.keys.size).to eq(2)
-      expect(subject.parsed['foo']).to eq('bar')
-      expect(subject.parsed['answer']).to eq(42)
+    shared_examples_for 'parsing JSON-like' do
+      it 'has num keys' do
+        expect(parsed.keys.size).to eq(6)
+      end
+
+      it 'parses string' do
+        expect(parsed['foo']).to eq('bar')
+        expect(parsed.key('bar')).to eq('foo')
+      end
+
+      it 'parses non-zero number' do
+        expect(parsed['answer']).to eq(42)
+        expect(parsed.key(42)).to eq('answer')
+      end
+
+      it 'parses nil as NilClass' do
+        expect(parsed['krill']).to be_nil
+        expect(parsed.key(nil)).to eq('krill')
+      end
+
+      it 'parses zero as number' do
+        expect(parsed['zero']).to eq(0)
+        expect(parsed.key(0)).to eq('zero')
+      end
+
+      it 'parses false as FalseClass' do
+        expect(parsed['malign']).to eq(false)
+        expect(parsed.key(false)).to eq('malign')
+      end
+
+      it 'parses false as TrueClass' do
+        expect(parsed['shine']).to eq(true)
+        expect(parsed.key(true)).to eq('shine')
+      end
     end
 
-    it 'parses alternative application/json extension bodies' do
-      headers = {'Content-Type' => 'application/hal+json'}
-      body = MultiJson.encode(foo: 'bar', answer: 42)
-      response = double('response', headers: headers, body: body)
-      subject = described_class.new(response)
-      expect(subject.parsed.keys.size).to eq(2)
-      expect(subject.parsed['foo']).to eq('bar')
-      expect(subject.parsed['answer']).to eq(42)
+    context 'when application/json' do
+      let(:content_type) { 'application/json' }
+      let(:body) { MultiJson.encode(foo: 'bar', answer: 42, krill: nil, zero: 0, malign: false, shine: true) }
+
+      it_behaves_like 'parsing JSON-like'
+    end
+
+    context 'when application/Json' do
+      let(:content_type) { 'application/Json' }
+      let(:body) { MultiJson.encode(foo: 'bar', answer: 42, krill: nil, zero: 0, malign: false, shine: true) }
+
+      it_behaves_like 'parsing JSON-like'
+    end
+
+    context 'when application/hal+json' do
+      let(:content_type) { 'application/hal+json' }
+      let(:body) { MultiJson.encode(foo: 'bar', answer: 42, krill: nil, zero: 0, malign: false, shine: true) }
+
+      it_behaves_like 'parsing JSON-like'
+    end
+
+    context 'when application/x-www-form-urlencoded' do
+      let(:content_type) { 'application/x-www-form-urlencoded' }
+      let(:body) { 'foo=bar&answer=42&krill=&zero=0&malign=false&shine=true' }
+
+      it 'has num keys' do
+        expect(parsed.keys.size).to eq(6)
+      end
+
+      it 'parses string' do
+        expect(parsed['foo']).to eq('bar')
+        expect(parsed.key('bar')).to eq('foo')
+      end
+
+      it 'parses non-zero number as string' do
+        expect(parsed['answer']).to eq('42')
+        expect(parsed.key('42')).to eq('answer')
+      end
+
+      it 'parses nil as empty string' do
+        expect(parsed['krill']).to eq('')
+        expect(parsed.key('')).to eq('krill')
+      end
+
+      it 'parses zero as string' do
+        expect(parsed['zero']).to eq('0')
+        expect(parsed.key('0')).to eq('zero')
+      end
+
+      it 'parses false as string' do
+        expect(parsed['malign']).to eq('false')
+        expect(parsed.key('false')).to eq('malign')
+      end
+
+      it 'parses true as string' do
+        expect(parsed['shine']).to eq('true')
+        expect(parsed.key('true')).to eq('shine')
+      end
     end
 
     it 'parses application/vnd.collection+json body' do
@@ -110,16 +183,6 @@ RSpec.describe OAuth2::Response do
       response = double('response', headers: headers, body: body)
       subject = described_class.new(response)
       expect(subject.parsed.keys.size).to eq(1)
-    end
-
-    it 'parses application/Json body' do
-      headers = {'Content-Type' => 'application/Json'}
-      body = MultiJson.encode(foo: 'bar', answer: 42)
-      response = double('response', headers: headers, body: body)
-      subject = described_class.new(response)
-      expect(subject.parsed.keys.size).to eq(2)
-      expect(subject.parsed['foo']).to eq('bar')
-      expect(subject.parsed['answer']).to eq(42)
     end
 
     it 'parses application/problem+json body' do

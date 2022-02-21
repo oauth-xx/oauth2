@@ -87,6 +87,7 @@ RSpec.describe OAuth2::SnakyHash do
       subject { described_class.new }
 
       it 'raise KeyError with key' do
+        pending_for(engine: 'jruby', versions: '3.1.0', reason: 'https://github.com/jruby/jruby/issues/7112')
         expect do
           subject.fetch('access_token')
         end.to raise_error(KeyError, /access_token/)
