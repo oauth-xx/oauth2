@@ -90,7 +90,7 @@ module OAuth2
     def content_type
       return nil unless response.headers
 
-      ((response.headers.values_at('content-type', 'Content-Type').compact.first || '').split(';').first || '').strip.downcase
+      ((response.headers.values_at('content-type', 'Content-Type', 'Content-type').compact.first || '').split(';').first || '').strip.downcase
     end
 
     # Determines the parser (a Proc or other Object which responds to #call)
