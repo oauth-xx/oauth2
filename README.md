@@ -233,6 +233,24 @@ Available as part of the Tidelift Subscription.
 
 The maintainers of OAuth2 and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source packages you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact packages you use. [Learn more.](https://tidelift.com/subscription/pkg/rubygems-oauth2?utm_source=undefined&utm_medium=referral&utm_campaign=enterprise)
 
+## What is new for v2.0 (unreleased, `master` branch)?
+
+- Officially support Ruby versions >= 2.7
+- Unofficially support Ruby versions >= 2.5
+- Incidentally support Ruby versions >= 2.2
+- Drop support for MAC Draft versions < 0.3
+- Add support for MAC Draft version 0.5
+- Support IETF rfc7523 JWT Bearer Tokens
+- Support IETF rfc7231 Relative Location in Redirect
+- Support IETF rfc6749 Don't set oauth params when nil
+- Support [OIDC 1.0 Private Key JWT](https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication); based on the OAuth JWT assertion specification [(RFC 7523)](https://tools.ietf.org/html/rfc7523)
+- Support new formats, including from [jsonapi.org](http://jsonapi.org/format/): `application/vdn.api+json`, `application/vnd.collection+json`, `application/hal+json`, `application/problem+json`
+- Adds new option to `OAuth2::Client#get_token`:
+    - `:access_token_class` (`AccessToken`); user specified class to use for all calls to `get_token`
+- Adds new option to `OAuth2::AccessToken#initialize`:
+    - `:expires_latency` (`nil`); number of seconds by which AccessToken validity will be reduced to offset latency
+- [... A lot more](https://github.com/oauth-xx/oauth2/blob/master/CHANGELOG.md#unreleased)
+
 ## Compatibility
 
 Targeted ruby compatibility is non-EOL versions of Ruby, currently 2.7, 3.0 and

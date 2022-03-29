@@ -5,28 +5,13 @@ The format (since v2.0.0) is based on [Keep a Changelog v1](https://keepachangel
 and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-- Officially support Ruby versions >= 2.7
-- Unofficially support Ruby versions >= 2.5
-- Incidentally support Ruby versions >= 2.2
-- Drop support for MAC Draft versions < 0.3
-- Add support for MAC Draft version 0.5
-- Support IETF rfc7523 JWT Bearer Tokens
-- Support IETF rfc7231 Relative Location in Redirect
-- Support IETF rfc6749 Don't set oauth params when nil
-- Support [OIDC 1.0 Private Key JWT](https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication); based on the OAuth JWT assertion specification [(RFC 7523)](https://tools.ietf.org/html/rfc7523)
-- Support new formats, including from [jsonapi.org](http://jsonapi.org/format/): `application/vdn.api+json`, `application/vnd.collection+json`, `application/hal+json`, `application/problem+json`
-- Adds new option to `OAuth2::Client#get_token`:
-  - `:access_token_class` (`AccessToken`); user specified class to use for all calls to `get_token`
-- Adds new option to `OAuth2::AccessToken#initialize`:
-  - `:expires_latency` (`nil`); number of seconds by which AccessToken validity will be reduced to offset latency
-- ... A lot more.
 
 ### Added
 - [#158](https://github.com/oauth-xx/oauth2/pull/158), [#344](https://github.com/oauth-xx/oauth2/pull/344) - Optionally pass raw response to parsers (@niels)
+- [#190](https://github.com/oauth-xx/oauth2/pull/190), [#332](https://github.com/oauth-xx/oauth2/pull/332), [#334](https://github.com/oauth-xx/oauth2/pull/334), [#335](https://github.com/oauth-xx/oauth2/pull/335), [#360](https://github.com/oauth-xx/oauth2/pull/360), [#426](https://github.com/oauth-xx/oauth2/pull/426), [#427](https://github.com/oauth-xx/oauth2/pull/427), [#461](https://github.com/oauth-xx/oauth2/pull/461) - Documentation (@josephpage, @pboling, @meganemura, @joshRpowell, @elliotcm)
 - [#220](https://github.com/oauth-xx/oauth2/pull/220) - Support IETF rfc7523 JWT Bearer Tokens Draft 04+ (@jhmoore)
 - [#298](https://github.com/oauth-xx/oauth2/pull/298) - Set the response object on the access token on Client#get_token for debugging (@cpetschnig)
 - [#305](https://github.com/oauth-xx/oauth2/pull/305) - Option: `OAuth2::Client#get_token` - `:access_token_class` (`AccessToken`); user specified class to use for all calls to `get_token` (@styd)
-- [#332](https://github.com/oauth-xx/oauth2/pull/332), [#334](https://github.com/oauth-xx/oauth2/pull/334), [#335](https://github.com/oauth-xx/oauth2/pull/335), [#360](https://github.com/oauth-xx/oauth2/pull/360), [#426](https://github.com/oauth-xx/oauth2/pull/426), [#427](https://github.com/oauth-xx/oauth2/pull/427), [#461](https://github.com/oauth-xx/oauth2/pull/461) - Documentation (@josephpage, @pboling, @meganemura, @joshRpowell, @elliotcm)
 - [#346](https://github.com/oauth-xx/oauth2/pull/571) - Modern gem structure (@pboling)
 - [#351](https://github.com/oauth-xx/oauth2/pull/351) - Support Jruby 9k (@pboling)
 - [#362](https://github.com/oauth-xx/oauth2/pull/362) - Support SemVer release version scheme (@pboling)
