@@ -369,6 +369,7 @@ RSpec.describe OAuth2::Client do
 
     %w[/unauthorized /conflict /error /different_encoding /ascii_8bit_encoding].each do |error_path|
       it "raises OAuth2::Error on error response to path #{error_path}" do
+        pending_for(engine: 'jruby', reason: 'https://github.com/jruby/jruby/issues/4921') if error_path == '/different_encoding'
         expect { subject.request(:get, error_path) }.to raise_error(OAuth2::Error)
       end
     end
