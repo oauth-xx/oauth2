@@ -239,7 +239,7 @@ The maintainers of OAuth2 and thousands of other packages are working with Tidel
 - Unofficially support Ruby versions >= 2.5
 - Incidentally support Ruby versions >= 2.2
 - Drop support for MAC Draft versions < 0.3
-- Add support for MAC Draft version 0.5
+- Add support for MAC Draft version 05
 - Support IETF rfc7523 JWT Bearer Tokens
 - Support IETF rfc7231 Relative Location in Redirect
 - Support IETF rfc6749 Don't set oauth params when nil
