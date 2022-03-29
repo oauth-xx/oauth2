@@ -278,17 +278,46 @@ See [SECURITY.md][🚎sec-pol]
 
 ## Usage Examples
 
+### `authorize_url` and `token_url` are on site root (Just Works!)
+
 ```ruby
 require 'oauth2'
 client = OAuth2::Client.new('client_id', 'client_secret', site: 'https://example.org')
-
+# => #<OAuth2::Client:0x00000001204c8288 @id="client_id", @secret="client_sec...
 client.auth_code.authorize_url(redirect_uri: 'http://localhost:8080/oauth2/callback')
-# => "https://example.org/oauth/authorization?response_type=code&client_id=client_id&redirect_uri=http://localhost:8080/oauth2/callback"
+# => "https://example.org/oauth/authorize?client_id=client_id&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth2%2Fcallback&response_type=code"
 
 token = client.auth_code.get_token('authorization_code_value', redirect_uri: 'http://localhost:8080/oauth2/callback', headers: {'Authorization' => 'Basic some_password'})
 response = token.get('/api/resource', params: {'query_foo' => 'bar'})
 response.class.name
 # => OAuth2::Response
+```
+
+### Relative `authorize_url` and `token_url` (Not on site root, Just Works!)
+
+In above example, the default Authorization URL is `oauth/authorize` and default Access Token URL is `oauth/token`, and, as they are missing a leading `/`, both are relative.
+
+```ruby
+client = OAuth2::Client.new('client_id', 'client_secret', site: 'https://example.org/nested/directory/on/your/server')
+# => #<OAuth2::Client:0x00000001204c8288 @id="client_id", @secret="client_sec...
+client.auth_code.authorize_url(redirect_uri: 'http://localhost:8080/oauth2/callback')
+# => "https://example.org/nested/directory/on/your/server/oauth/authorize?client_id=client_id&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth2%2Fcallback&response_type=code"
+```
+
+### Customize `authorize_url` and `token_url`
+
+You can specify custom URLs for authorization and access token, and when using a leading `/` they will _not be relative_, as shown below:
+
+```ruby
+client = OAuth2::Client.new('client_id', 'client_secret',
+                            site: 'https://example.org/nested/directory/on/your/server',
+                            authorize_url: '/jaunty/authorize/',
+                            token_url: '/stirrups/access_token')
+# => #<OAuth2::Client:0x00000001204c8288 @id="client_id", @secret="client_sec...
+client.auth_code.authorize_url(redirect_uri: 'http://localhost:8080/oauth2/callback')
+# => "https://example.org/jaunty/authorize/?client_id=client_id&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth2%2Fcallback&response_type=code"
+client.class.name
+# => OAuth2::Client
 ```
 
 <details>
