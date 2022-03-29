@@ -1,11 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+The format (since v2.0.0) is based on [Keep a Changelog v1](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
-
 - Officially support Ruby versions >= 2.7
 - Unofficially support Ruby versions >= 2.5
 - Incidentally support Ruby versions >= 2.2
@@ -20,11 +19,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `:access_token_class` (`AccessToken`); user specified class to use for all calls to `get_token`
 - Adds new option to `OAuth2::AccessToken#initialize`:
   - `:expires_latency` (`nil`); number of seconds by which AccessToken validity will be reduced to offset latency
-
-... A lot more.
+- ... A lot more.
 
 ### Added
-
 - [#158](https://github.com/oauth-xx/oauth2/pull/158), [#344](https://github.com/oauth-xx/oauth2/pull/344) - Optionally pass raw response to parsers (@niels)
 - [#220](https://github.com/oauth-xx/oauth2/pull/220) - Support IETF rfc7523 JWT Bearer Tokens Draft 04+ (@jhmoore)
 - [#298](https://github.com/oauth-xx/oauth2/pull/298) - Set the response object on the access token on Client#get_token for debugging (@cpetschnig)
@@ -53,7 +50,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [#575](https://github.com/oauth-xx/oauth2/pull/575) - Support IETF rfc7231, section 7.1.2 - relative location in redirect (@pboling)
 
 ### Changed
-
 - [#191](https://github.com/oauth-xx/oauth2/pull/191) - **BREAKING**: Token is expired if `expired_at` time is `now` (@davestevens)
 - [#312](https://github.com/oauth-xx/oauth2/pull/312) - **BREAKING**: Set `:basic_auth` as default for `:auth_scheme` instead of `:request_body`. This was default behavior before 1.3.0. (@tetsuya, @wy193777)
 - [#317](https://github.com/oauth-xx/oauth2/pull/317) - _Dependency_: Upgrade `jwt` to 2.x.x (@travisofthenorth)
@@ -66,7 +62,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [#576](https://github.com/oauth-xx/oauth2/pull/576) - **BREAKING**: Stop rescuing parsing errors (@pboling)
 
 ### Fixed
-
 - [#158](https://github.com/oauth-xx/oauth2/pull/158), [#344](https://github.com/oauth-xx/oauth2/pull/344) - Handling of errors when using `omniauth-facebook` (@niels)
 - [#294](https://github.com/oauth-xx/oauth2/pull/294) - Fix: "Unexpected middleware set" issue with Faraday when `OAUTH_DEBUG=true` (@spectator, @gafrom)
 - [#300](https://github.com/oauth-xx/oauth2/pull/300) - _Documentation_: `Oauth2::Error` - Error codes are strings, not symbols (@NobodysNightmare)
@@ -84,7 +79,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [#536](https://github.com/oauth-xx/oauth2/pull/536) - **Security**: Compatibility with more (and recent) Ruby OpenSSL versions, Github Actions, Rubocop updated, analogous to [#535](https://github.com/oauth-xx/oauth2/pull/535) on `1-4-stable` branch (@pboling)
 
 ### Removed
-
 - [#341](https://github.com/oauth-xx/oauth2/pull/341) - Remove Rdoc & Jeweler related files (@josephpage)
 - [#342](https://github.com/oauth-xx/oauth2/pull/342) - **BREAKING**: Dropped support for Ruby 1.8 (@josephpage)
 - [#539](https://github.com/oauth-xx/oauth2/pull/539) - Remove reliance on globally included OAuth2 in tests, analog of [#538](https://github.com/oauth-xx/oauth2/pull/538) for 1-4-stable (@anderscarling)
