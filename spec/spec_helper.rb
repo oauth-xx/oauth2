@@ -6,6 +6,7 @@ require 'rspec/stubbed_env'
 require 'silent_stream'
 require 'addressable/uri'
 require 'rspec/pending_for'
+require 'rspec/block_is_expected'
 
 # Extensions
 require 'ext/backports'

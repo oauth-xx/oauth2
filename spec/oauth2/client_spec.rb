@@ -460,14 +460,18 @@ RSpec.describe OAuth2::Client do
 
     context 'when the :raise_errors flag is set to false' do
       context 'when the request body is nil' do
-        it 'returns a nil :access_token' do
-          client = stubbed_client(raise_errors: false) do |stub|
+        subject(:get_token) { client.get_token({}) }
+
+        let(:client) do
+          stubbed_client(raise_errors: false) do |stub|
             stub.post('/oauth/token') do
               [500, {'Content-Type' => 'application/json'}, nil]
             end
           end
+        end
 
-          expect(client.get_token({})).to be_nil
+        it 'raises error MultiJson::ParseError' do
+          block_is_expected { get_token }.to raise_error(MultiJson::ParseError)
         end
       end
 
