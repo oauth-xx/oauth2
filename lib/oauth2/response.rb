@@ -125,9 +125,9 @@ module OAuth2
 end
 
 OAuth2::Response.register_parser(:xml, ['text/xml', 'application/rss+xml', 'application/rdf+xml', 'application/atom+xml', 'application/xml']) do |body|
-  MultiXml.parse(body) rescue body # rubocop:disable Style/RescueModifier
+  MultiXml.parse(body)
 end
 
 OAuth2::Response.register_parser(:json, ['application/json', 'text/javascript', 'application/hal+json', 'application/vnd.collection+json', 'application/vnd.api+json', 'application/problem+json']) do |body|
-  MultiJson.decode(body) rescue body # rubocop:disable Style/RescueModifier
+  MultiJson.decode(body)
 end

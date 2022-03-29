@@ -71,7 +71,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
           expect(header['alg']).to eq(algorithm)
         end
 
-        it 'encodes the JWT as HS256' do
+        it 'has claims' do
           expect(payload).not_to be_nil
           expect(payload.keys).to match_array(%w[iss scope aud exp iat sub custom_claim])
           payload.each do |key, claim|
