@@ -239,7 +239,7 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 
 ## [0.0.4] + [0.0.3] + [0.0.2] + [0.0.1] - 2010-04-22
 
-
+[Unreleased]: https://github.com/oauth-xx/oauth2/compare/v1.4.9...HEAD
 [0.0.1]: https://github.com/oauth-xx/oauth2/compare/311d9f4...v0.0.1
 [0.0.2]: https://github.com/oauth-xx/oauth2/compare/v0.0.1...v0.0.2
 [0.0.3]: https://github.com/oauth-xx/oauth2/compare/v0.0.2...v0.0.3
@@ -275,5 +275,4 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 [1.4.7]: https://github.com/oauth-xx/oauth2/compare/v1.4.6...v1.4.7
 [1.4.8]: https://github.com/oauth-xx/oauth2/compare/v1.4.7...v1.4.8
 [1.4.9]: https://github.com/oauth-xx/oauth2/compare/v1.4.8...v1.4.9
-[Unreleased]: https://github.com/oauth-xx/oauth2/compare/v1.4.9...HEAD
 [gemfiles/readme]: gemfiles/README.md
