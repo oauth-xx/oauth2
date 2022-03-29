@@ -467,7 +467,7 @@ RSpec.describe OAuth2::Client do
             end
           end
 
-          expect(client.get_token({})).to eq(nil)
+          expect(client.get_token({})).to be_nil
         end
       end
 

@@ -240,7 +240,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
           end
 
           it 'sets AccessToken#refresh_token to nil' do
-            expect(access_token.refresh_token).to eq(nil)
+            expect(access_token.refresh_token).to be_nil
           end
 
           context 'with custom response_opts' do

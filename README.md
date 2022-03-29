@@ -106,7 +106,7 @@ badge #s:
 📗
 -->
 
-|     | Project               | oauth2                                                                                                                                                                                                                                                                                   |
+|     | Project               | bundle add oauth2                                                                                                                                                                                                                                                                        |
 |:----|-----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 1️⃣ | name, license, docs   | [![RubyGems.org][⛳️name-img]][⛳️gem] [![License: MIT][🖇src-license-img]][🖇src-license] [![FOSSA][🏘fossa-img]][🏘fossa] [![RubyDoc.info][🚎yard-img]][🚎yard] [![InchCI][🖐inch-ci-img]][🚎yard]                                                                                       |
 | 2️⃣ | version & activity    | [![Gem Version][⛳️version-img]][⛳️gem] [![Total Downloads][🖇DL-total-img]][⛳️gem] [![Download Rank][🏘DL-rank-img]][⛳️gem] [![Source Code][🚎src-home-img]][🚎src-home] [![Open PRs][🖐prs-o-img]][🖐prs-o] [![Closed PRs][🧮prs-c-img]][🧮prs-c] [![Next Version][📗next-img]][📗next] |
@@ -219,20 +219,19 @@ The link tokens in the following sections should be kept ordered by the row and 
 
 ## Installation
 
-```shell
-gem install oauth2
-```
+Install the gem and add to the application's Gemfile by executing:
 
-Or inside a `Gemfile`
+    $ bundle add oauth2
 
-```ruby
-gem 'oauth2'
-```
-And then execute in a shell:
-```shell
-bundle
-```
+If bundler is not being used to manage dependencies, install the gem by executing:
 
+    $ gem install oauth2
+
+## OAuth2 for Enterprise
+
+Available as part of the Tidelift Subscription.
+
+The maintainers of OAuth2 and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source packages you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact packages you use. [Learn more.](https://tidelift.com/subscription/pkg/rubygems-oauth2?utm_source=undefined&utm_medium=referral&utm_campaign=enterprise)
 
 ## Compatibility
 

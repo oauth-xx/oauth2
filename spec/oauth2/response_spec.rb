@@ -99,12 +99,12 @@ RSpec.describe OAuth2::Response do
       end
 
       it 'parses false as FalseClass' do
-        expect(parsed['malign']).to eq(false)
+        expect(parsed['malign']).to be(false)
         expect(parsed.key(false)).to eq('malign')
       end
 
       it 'parses false as TrueClass' do
-        expect(parsed['shine']).to eq(true)
+        expect(parsed['shine']).to be(true)
         expect(parsed.key(true)).to eq('shine')
       end
     end

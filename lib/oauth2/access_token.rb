@@ -34,7 +34,7 @@ module OAuth2
     # @option opts [String] :refresh_token (nil) the refresh_token value
     # @option opts [FixNum, String] :expires_in (nil) the number of seconds in which the AccessToken will expire
     # @option opts [FixNum, String] :expires_at (nil) the epoch time in seconds in which AccessToken will expire
-    # @option opts [FixNum, String] :expires_latency (nil) the number of seconds by which AccessToken validity will be reduced to offset latency
+    # @option opts [FixNum, String] :expires_latency (nil) the number of seconds by which AccessToken validity will be reduced to offset latency, @version 2.0+
     # @option opts [Symbol] :mode (:header) the transmission mode of the Access Token parameter value
     #    one of :header, :body or :query
     # @option opts [String] :header_format ('Bearer %s') the string format to use for the Authorization header

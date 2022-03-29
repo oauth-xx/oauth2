@@ -9,10 +9,12 @@ begin
   require 'rspec/core/rake_task'
   RSpec::Core::RakeTask.new(:spec)
 rescue LoadError
+  desc 'spec task stub'
   task :spec do
     warn 'rspec is disabled'
   end
 end
+desc 'alias test task to spec'
 task test: :spec
 
 begin
@@ -21,6 +23,7 @@ begin
     task.options = ['-D'] # Display the name of the failing cops
   end
 rescue LoadError
+  desc 'rubocop task stub'
   task :rubocop do
     warn 'RuboCop is disabled'
   end

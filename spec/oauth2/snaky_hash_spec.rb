@@ -104,7 +104,7 @@ RSpec.describe OAuth2::SnakyHash do
       subject { described_class.new('AccessToken' => '1') }
 
       it 'return true' do
-        expect(subject.key?('access_token')).to eq(true)
+        expect(subject.key?('access_token')).to be(true)
       end
     end
 
@@ -112,7 +112,7 @@ RSpec.describe OAuth2::SnakyHash do
       subject { described_class.new('accessToken' => '1') }
 
       it 'return true' do
-        expect(subject.key?('access_token')).to eq(true)
+        expect(subject.key?('access_token')).to be(true)
       end
     end
 
@@ -120,7 +120,7 @@ RSpec.describe OAuth2::SnakyHash do
       subject { described_class.new('access_token' => '1') }
 
       it 'return true' do
-        expect(subject.key?('access_token')).to eq(true)
+        expect(subject.key?('access_token')).to be(true)
       end
     end
 
@@ -128,7 +128,7 @@ RSpec.describe OAuth2::SnakyHash do
       subject { described_class.new }
 
       it 'return false' do
-        expect(subject.key?('access_token')).to eq(false)
+        expect(subject.key?('access_token')).to be(false)
       end
     end
   end
