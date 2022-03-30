@@ -28,7 +28,7 @@ concurrency:
 
 jobs:
   test:
-    name: Specs with Coverage - Ruby ${{ matrix.ruby }} ${{matrix.gemfile}} ${{ matrix.name_extra || '' }}
+    name: Specs with Coverage - Ruby ${{ matrix.ruby }} ${{ matrix.name_extra || '' }}
     if: "!contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]')"
     strategy:
       fail-fast: false
@@ -54,7 +54,7 @@ jobs:
           cc_test_reporter_id: ${{ secrets.CC_TEST_REPORTER_ID }}
 
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Ruby & Bundle
         uses: ruby/setup-ruby@v1
@@ -83,7 +83,7 @@ jobs:
           hide_complexity: true
           indicators: true
           output: both
-          thresholds: '95 97'
+          thresholds: '35 40'
         continue-on-error: ${{ matrix.experimental != 'false' }}
 
       - name: Add Coverage PR Comment
