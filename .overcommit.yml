@@ -22,12 +22,10 @@ PreCommit:
 
   TrailingWhitespace:
     enabled: true
-    exclude:
-      - '**/db/structure.sql' # Ignore trailing whitespace in generated files
 
-#PostCheckout:
-#  ALL: # Special hook name that customizes all hooks of this type
-#    quiet: true # Change all post-checkout hooks to only display output on failure
+PostCheckout:
+  ALL: # Special hook name that customizes all hooks of this type
+    quiet: true # Change all post-checkout hooks to only display output on failure
 #
 #  IndexTags:
 #    enabled: true # Generate a tags file with `ctags` each time HEAD changes
