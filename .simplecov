@@ -10,15 +10,20 @@
 #   and COVER_ALL, and CI_CODECOV, are set in the coverage.yml workflow only,
 #   so coverage only runs in that workflow, and outputs all formats.
 #
+
 if RUN_COVERAGE
+  require 'codecov'
+  require 'simplecov-lcov'
+  require 'simplecov-cobertura'
+
   SimpleCov.start do
     enable_coverage :branch
     primary_coverage :branch
+    add_filter 'spec'
+    track_files '**/*.rb'
 
-    if ENV['COVER_ALL']
-      require 'codecov'
-      require 'simplecov-lcov'
-      require 'simplecov-cobertura'
+    if ALL_FORMATTERS
+      command_name "#{ENV['GITHUB_WORKFLOW']} Job #{ENV['GITHUB_RUN_ID']}:#{ENV['GITHUB_RUN_NUMBER']}"
 
       SimpleCov::Formatter::LcovFormatter.config do |c|
         c.report_with_single_file = true
@@ -26,16 +31,18 @@ if RUN_COVERAGE
       end
 
       SimpleCov.formatters = [
-        SimpleCov::Formatter::CoberturaFormatter,
         SimpleCov::Formatter::HTMLFormatter,
+        SimpleCov::Formatter::CoberturaFormatter,
         SimpleCov::Formatter::LcovFormatter,
-        SimpleCov::Formatter::Codecov,
+        SimpleCov::Formatter::JSONFormatter, # For CodeClimate
+        SimpleCov::Formatter::Codecov, # For CodeCov
       ]
     else
       formatter SimpleCov::Formatter::HTMLFormatter
     end
 
-    add_filter 'spec'
-    minimum_coverage(85)
+    minimum_coverage(88)
   end
+else
+  puts "Not running coverage on #{RUBY_ENGINE} #{RUBY_VERSION}"
 end

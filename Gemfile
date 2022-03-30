@@ -6,6 +6,10 @@ gemspec
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
+gem 'rake', '~> 13.0'
+
+gem 'rspec', '~> 3.0'
+
 gem 'overcommit'
 
 ruby_version = Gem::Version.new(RUBY_VERSION)
@@ -30,6 +34,7 @@ group :test do
       gem 'rubocop-thread_safety', '~> 0.4', require: false
     end
     if coverage
+      gem 'codecov', '~> 0.6'
       gem 'simplecov', '~> 0.21', require: false
       gem 'simplecov-cobertura' # XML for Jenkins
       gem 'simplecov-lcov', '~> 0.8', require: false

@@ -72,6 +72,11 @@ jobs:
       - name: Run tests
         run: bundle exec rake test
 
+      - name: CodeClimate Post-build Notification
+        run: cc-test-reporter after-build
+        if: matrix.ruby == '2.7' && github.event_name != 'pull_request' && always()
+        continue-on-error: ${{ matrix.experimental != 'false' }}
+
       - name: Code Coverage Summary Report
         uses: irongut/CodeCoverageSummary@v1.2.0
         with:
@@ -83,7 +88,7 @@ jobs:
           hide_complexity: true
           indicators: true
           output: both
-          thresholds: '35 40'
+          thresholds: '86 88'
         continue-on-error: ${{ matrix.experimental != 'false' }}
 
       - name: Add Coverage PR Comment
