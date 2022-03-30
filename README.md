@@ -1,8 +1,8 @@
 <p align="center">
-    <a href="http://oauth.net/2/" target="_blank" rel="noopener noreferrer">
+    <a href="http://oauth.net/2/" target="_blank" rel="noopener">
       <img src="https://github.com/oauth-xx/oauth2/raw/master/docs/images/logo/oauth2-logo-124px.png?raw=true" alt="OAuth 2.0 Logo by Chris Messina, CC BY-SA 3.0">
     </a>
-    <a href="https://www.ruby-lang.org/" target="_blank" rel="noopener noreferrer">
+    <a href="https://www.ruby-lang.org/" target="_blank" rel="noopener">
       <img width="124px" src="https://github.com/oauth-xx/oauth2/raw/master/docs/images/logo/ruby-logo-198px.svg?raw=true" alt="Yukihiro Matsumoto, Ruby Visual Identity Team, CC BY-SA 2.5">
     </a>
 </p>
@@ -21,15 +21,13 @@ unreleased changes for version 2.0.0. ⚠️
 ---
 
 * [OAuth 2.0 Spec][oauth2-spec]
-* [OAuth 1.0 sibling gem][sibling-gem]
+* [oauth sibling gem][sibling-gem] for OAuth 1.0 implementations in Ruby.
 * Help us finish release [![2.0.0 release milestone][next-milestone-pct-img]][next-milestone-pct] by submitting or reviewing PRs and issues.
-* Oauth2 gem is _always_ looking for additional maintainers. See [#307][maintainers-discussion].
 
 [oauth2-spec]: https://oauth.net/2/
 [sibling-gem]: https://github.com/oauth-xx/oauth-ruby
 [next-milestone-pct]: https://github.com/oauth-xx/oauth2/milestone/1
 [next-milestone-pct-img]: https://img.shields.io/github/milestones/progress-percent/oauth-xx/oauth2/1
-[maintainers-discussion]: https://github.com/oauth-xx/oauth2/issues/307
 
 ## Release Documentation
 
@@ -82,6 +80,8 @@ unreleased changes for version 2.0.0. ⚠️
 | < 1.0.0  | Find here    | https://github.com/oauth-xx/oauth2/tags                  |
 </details>
 
+## Status
+
 <!--
 Numbering rows and badges in each row as a visual "database" lookup,
     as the table is extremely dense, and it can be very difficult to find anything
@@ -104,15 +104,18 @@ badge #s:
 🖐
 🧮
 📗
+
+appended indicators:
+♻️ - URL needs to be updated from SASS integration. Find / Replace is insufficient.
 -->
 
 |     | Project               | bundle add oauth2                                                                                                                                                                                                                                                                        |
 |:----|-----------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 1️⃣ | name, license, docs   | [![RubyGems.org][⛳️name-img]][⛳️gem] [![License: MIT][🖇src-license-img]][🖇src-license] [![FOSSA][🏘fossa-img]][🏘fossa] [![RubyDoc.info][🚎yard-img]][🚎yard] [![InchCI][🖐inch-ci-img]][🚎yard]                                                                                       |
 | 2️⃣ | version & activity    | [![Gem Version][⛳️version-img]][⛳️gem] [![Total Downloads][🖇DL-total-img]][⛳️gem] [![Download Rank][🏘DL-rank-img]][⛳️gem] [![Source Code][🚎src-home-img]][🚎src-home] [![Open PRs][🖐prs-o-img]][🖐prs-o] [![Closed PRs][🧮prs-c-img]][🧮prs-c] [![Next Version][📗next-img]][📗next] |
-| 3️⃣ | maintanence & linting | [![Maintainability][⛳cclim-maint-img]][⛳cclim-maint] [![Helpers][🖇triage-help-img]][🖇triage-help] [![Depfu][🏘depfu-img]][🏘depfu] [![Contributors][🚎contributors-img]][🚎contributors] [![Style][🖐style-wf-img]][🖐style-wf] [![Kloc Roll][🧮kloc-img]][🧮kloc]                     |
+| 3️⃣ | maintanence & linting | [![Maintainability][⛳cclim-maint-img♻️]][⛳cclim-maint] [![Helpers][🖇triage-help-img]][🖇triage-help] [![Depfu][🏘depfu-img♻️]][🏘depfu♻️] [![Contributors][🚎contributors-img]][🚎contributors] [![Style][🖐style-wf-img]][🖐style-wf] [![Kloc Roll][🧮kloc-img]][🧮kloc]               |
 | 4️⃣ | testing               | [![Open Issues][⛳iss-o-img]][⛳iss-o] [![Closed Issues][🖇iss-c-img]][🖇iss-c] [![Supported][🏘sup-wf-img]][🏘sup-wf] [![Heads][🚎heads-wf-img]][🚎heads-wf] [![Unofficial Support][🖐uns-wf-img]][🖐uns-wf] [![MacOS][🧮mac-wf-img]][🧮mac-wf] [![Windows][📗win-wf-img]][📗win-wf]      |
-| 5️⃣ | coverage & security   | [![CodeClimate][⛳cclim-cov-img]][⛳cclim-cov] [![CodeCov][🖇codecov-img]][🖇codecov] [![Coveralls][🏘coveralls-img]][🏘coveralls] [![Security Policy][🚎sec-pol-img]][🚎sec-pol] [![CodeQL][🖐codeQL-img]][🖐codeQL] [![Code Coverage][🧮cov-wf-img]][🧮cov-wf]                           |
+| 5️⃣ | coverage & security   | [![CodeClimate][⛳cclim-cov-img♻️]][⛳cclim-cov] [![CodeCov][🖇codecov-img♻️]][🖇codecov] [![Coveralls][🏘coveralls-img]][🏘coveralls] [![Security Policy][🚎sec-pol-img]][🚎sec-pol] [![CodeQL][🖐codeQL-img]][🖐codeQL] [![Code Coverage][🧮cov-wf-img]][🧮cov-wf]                       |
 | 6️⃣ | resources             | [![Discussion][⛳gh-discussions-img]][⛳gh-discussions] [![Get help on Codementor][🖇codementor-img]][🖇codementor] [![Chat][🏘chat-img]][🏘chat] [![Blog][🚎blog-img]][🚎blog] [![Blog][🖐wiki-img]][🖐wiki]                                                                              |
 | 7️⃣ | spread 💖             | [![Liberapay Patrons][⛳liberapay-img]][⛳liberapay] [![Sponsor Me][🖇sponsor-img]][🖇sponsor] [![Tweet @ Peter][🏘tweet-img]][🏘tweet] [🌏][aboutme] [👼][angelme] [💻][coderme] [🌹][politicme]                                                                                          |
 
@@ -146,11 +149,11 @@ The link tokens in the following sections should be kept ordered by the row and 
 
 <!-- 3️⃣ maintanence & linting -->
 [⛳cclim-maint]: https://codeclimate.com/github/oauth-xx/oauth2/maintainability
-[⛳cclim-maint-img]: https://api.codeclimate.com/v1/badges/688c612528ff90a46955/maintainability
+[⛳cclim-maint-img♻️]: https://api.codeclimate.com/v1/badges/688c612528ff90a46955/maintainability
 [🖇triage-help]: https://www.codetriage.com/oauth-xx/oauth2
 [🖇triage-help-img]: https://www.codetriage.com/oauth-xx/oauth2/badges/users.svg
-[🏘depfu]: https://depfu.com/github/oauth-xx/oauth2?project_id=4445
-[🏘depfu-img]: https://badges.depfu.com/badges/6d34dc1ba682bbdf9ae2a97848241743/count.svg
+[🏘depfu♻️]: https://depfu.com/github/oauth-xx/oauth2?project_id=4445
+[🏘depfu-img♻️]: https://badges.depfu.com/badges/6d34dc1ba682bbdf9ae2a97848241743/count.svg
 [🚎contributors]: https://github.com/oauth-xx/oauth2/graphs/contributors
 [🚎contributors-img]: https://img.shields.io/github/contributors-anon/oauth-xx/oauth2
 [🖐style-wf]: https://github.com/oauth-xx/oauth2/actions/workflows/style.yml
@@ -176,8 +179,8 @@ The link tokens in the following sections should be kept ordered by the row and 
 
 <!-- 5️⃣ coverage & security -->
 [⛳cclim-cov]: https://codeclimate.com/github/oauth-xx/oauth2/test_coverage
-[⛳cclim-cov-img]: https://api.codeclimate.com/v1/badges/688c612528ff90a46955/test_coverage
-[🖇codecov-img]: https://codecov.io/gh/oauth-xx/oauth2/branch/master/graph/badge.svg?token=bNqSzNiuo2
+[⛳cclim-cov-img♻️]: https://api.codeclimate.com/v1/badges/688c612528ff90a46955/test_coverage
+[🖇codecov-img♻️]: https://codecov.io/gh/oauth-xx/oauth2/branch/master/graph/badge.svg?token=bNqSzNiuo2
 [🖇codecov]: https://codecov.io/gh/oauth-xx/oauth2
 [🏘coveralls]: https://coveralls.io/github/oauth-xx/oauth2?branch=master
 [🏘coveralls-img]: https://coveralls.io/repos/github/oauth-xx/oauth2/badge.svg?branch=master
@@ -216,7 +219,6 @@ The link tokens in the following sections should be kept ordered by the row and 
 [coderme]:http://coderwall.com/pboling
 [politicme]: https://nationalprogressiveparty.org
 
-
 ## Installation
 
 Install the gem and add to the application's Gemfile by executing:
@@ -231,14 +233,21 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
 Available as part of the Tidelift Subscription.
 
-The maintainers of OAuth2 and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source packages you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact packages you use. [Learn more.](https://tidelift.com/subscription/pkg/rubygems-oauth2?utm_source=undefined&utm_medium=referral&utm_campaign=enterprise)
+The maintainers of OAuth2 and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source packages you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact packages you use. [Learn more.](https://tidelift.com/subscription/pkg/rubygems-oauth2?utm_source=rubygems-oauth2&utm_medium=referral&utm_campaign=enterprise)
+
+## Security contact information
+
+To report a security vulnerability, please use the [Tidelift security contact](https://tidelift.com/security).
+Tidelift will coordinate the fix and disclosure.
+
+For more see [SECURITY.md][🚎sec-pol].
 
 ## What is new for v2.0 (unreleased, `master` branch)?
 
 - Officially support Ruby versions >= 2.7
 - Unofficially support Ruby versions >= 2.5
 - Incidentally support Ruby versions >= 2.2
-- Drop support for MAC Draft versions < 0.3
+- Drop support for MAC Draft versions < 03
 - Add support for MAC Draft version 05
 - Support IETF rfc7523 JWT Bearer Tokens
 - Support IETF rfc7231 Relative Location in Redirect

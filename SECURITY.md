@@ -10,4 +10,5 @@
 
 ## Reporting a Vulnerability
 
-Follow [these instructions](https://tidelift.com/security) to report any security vulnerabilities.
+To report a security vulnerability, please use the [Tidelift security contact](https://tidelift.com/security).
+Tidelift will coordinate the fix and disclosure.
