@@ -33,9 +33,10 @@ platforms :mri do
     gem 'rubocop-thread_safety', '~> 0.4', require: false
   end
   if coverage
-    gem 'codecov', '~> 0.6'
+    gem 'codecov', '~> 0.6' # For CodeCov
     gem 'simplecov', '~> 0.21', require: false
     gem 'simplecov-cobertura' # XML for Jenkins
+    gem 'simplecov-json' # For CodeClimate
     gem 'simplecov-lcov', '~> 0.8', require: false
   end
   if debug

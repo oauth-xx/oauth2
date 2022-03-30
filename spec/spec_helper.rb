@@ -35,10 +35,26 @@ if DEBUG
 end
 
 if RUN_COVERAGE
-  require 'simplecov'
+  require 'simplecov' # Config file `.simplecov` is run immediately when simplecov loads
   require 'codecov'
+  require 'simplecov-json'
   require 'simplecov-lcov'
   require 'simplecov-cobertura'
+  # This will override the formatter set in .simplecov
+  if ALL_FORMATTERS
+    SimpleCov::Formatter::LcovFormatter.config do |c|
+      c.report_with_single_file = true
+      c.single_report_path = 'coverage/lcov.info'
+    end
+
+    SimpleCov.formatters = [
+      SimpleCov::Formatter::HTMLFormatter,
+      SimpleCov::Formatter::CoberturaFormatter, # XML for Jenkins
+      SimpleCov::Formatter::LcovFormatter,
+      SimpleCov::Formatter::JSONFormatter, # For CodeClimate
+      SimpleCov::Formatter::Codecov, # For CodeCov
+    ]
+  end
 end
 
 # This gem
