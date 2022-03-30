@@ -12,10 +12,6 @@
 #
 
 if RUN_COVERAGE
-  require 'codecov'
-  require 'simplecov-lcov'
-  require 'simplecov-cobertura'
-
   SimpleCov.start do
     enable_coverage :branch
     primary_coverage :branch
