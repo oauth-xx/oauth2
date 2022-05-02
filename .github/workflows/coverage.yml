@@ -44,9 +44,6 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
     steps:
-      - name: Install cURL Headers
-        run: sudo apt-get install libcurl4-openssl-dev
-
       - uses: amancevice/setup-code-climate@v0
         name: CodeClimate Install
         if: matrix.ruby == '2.7' && github.event_name != 'pull_request' && always()
