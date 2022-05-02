@@ -176,7 +176,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
         end
 
         it 'includes other params via request_options' do
-          client_assertion.get_token(claims, {algorithm: algorithm, key: key}, scope: 'dover sole')
+          client_assertion.get_token(claims, {algorithm: algorithm, key: key}, {scope: 'dover sole'})
           expect(@request_body).not_to be_nil
           expect(@request_body.keys).to match_array(%i[assertion grant_type scope client_id client_secret])
           expect(@request_body[:grant_type]).to eq('urn:ietf:params:oauth:grant-type:jwt-bearer')
@@ -199,7 +199,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
         end
 
         it 'includes other params via request_options' do
-          client_assertion.get_token(claims, {algorithm: algorithm, key: key}, scope: 'dover sole')
+          client_assertion.get_token(claims, {algorithm: algorithm, key: key}, {scope: 'dover sole'})
           expect(@request_body).not_to be_nil
           expect(@request_body.keys).to match_array(%i[assertion grant_type scope])
           expect(@request_body[:grant_type]).to eq('urn:ietf:params:oauth:grant-type:jwt-bearer')

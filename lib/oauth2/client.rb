@@ -153,7 +153,7 @@ module OAuth2
     # @param access_token_opts [Hash] access token options, to pass to the AccessToken object
     # @param access_token_class [Class] class of access token for easier subclassing OAuth2::AccessToken, @version 2.0+
     # @return [AccessToken] the initialized AccessToken
-    def get_token(params, access_token_opts = {}, access_token_class = AccessToken) # rubocop:disable Metrics/PerceivedComplexity
+    def get_token(params, access_token_opts = {}, access_token_class = AccessToken)
       params = params.map do |key, value|
         if RESERVED_PARAM_KEYS.include?(key)
           [key.to_sym, value]

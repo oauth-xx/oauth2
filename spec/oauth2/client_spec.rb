@@ -176,7 +176,7 @@ RSpec.describe OAuth2::Client do
           client = described_class.new('abc', 'def', site: 'https://api.example.com', auth_scheme: :request_body) do |builder|
             builder.adapter :test do |stub|
               stub.post('/oauth/token') do |env|
-                expect(env.request_headers).to include({'CustomHeader' => 'CustomHeader'})
+                expect(env.request_headers).to include('CustomHeader' => 'CustomHeader')
                 [200, {'Content-Type' => 'application/json'}, '{"access_token":"token"}']
               end
             end
@@ -191,7 +191,7 @@ RSpec.describe OAuth2::Client do
           client = described_class.new('abc', 'def', site: 'https://api.example.com', auth_scheme: :request_body) do |builder|
             builder.adapter :test do |stub|
               stub.post('/oauth/token') do |env|
-                expect(env.request_headers).to include({'CustomHeader' => 'CustomHeader'})
+                expect(env.request_headers).to include('CustomHeader' => 'CustomHeader')
                 [200, {'Content-Type' => 'application/json'}, '{"access_token":"token"}']
               end
             end
@@ -206,7 +206,7 @@ RSpec.describe OAuth2::Client do
           client = described_class.new('abc', 'def', site: 'https://api.example.com') do |builder|
             builder.adapter :test do |stub|
               stub.post('/oauth/token') do |env|
-                expect(env.request_headers).to include({'CustomHeader' => 'CustomHeader'})
+                expect(env.request_headers).to include('CustomHeader' => 'CustomHeader')
                 [200, {'Content-Type' => 'application/json'}, '{"access_token":"token"}']
               end
             end
@@ -221,7 +221,7 @@ RSpec.describe OAuth2::Client do
           client = described_class.new('abc', 'def', site: 'https://api.example.com') do |builder|
             builder.adapter :test do |stub|
               stub.post('/oauth/token') do |env|
-                expect(env.request_headers).to include({'CustomHeader' => 'CustomHeader'})
+                expect(env.request_headers).to include('CustomHeader' => 'CustomHeader')
                 [200, {'Content-Type' => 'application/json'}, '{"access_token":"token"}']
               end
             end

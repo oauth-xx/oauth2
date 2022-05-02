@@ -5,7 +5,7 @@ RSpec.describe OAuth2::SnakyHash do
 
   describe '.build' do
     context 'when build from hash' do
-      subject { described_class.new({'AccessToken' => '1'}) }
+      subject { described_class.new('AccessToken' => '1') }
 
       it 'create correct snake hash' do
         expect(subject).to be_a(described_class)
