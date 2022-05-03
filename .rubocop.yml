@@ -1,53 +1,57 @@
+inherit_gem:
+  rubocop-ruby1_9: rubocop.yml
+
+require:
+  - 'rubocop-rspec'
+  - 'rubocop-thread_safety'
+
 inherit_from:
   - .rubocop_todo.yml
   - .rubocop_rspec.yml
 
-require:
-  - 'rubocop-md'
-  - 'rubocop-packaging'
-  - 'rubocop-performance'
-  - 'rubocop-rake'
-  - 'rubocop-rspec'
-
 AllCops:
-  NewCops: enable
   DisplayCopNames: true # Display the name of the failing cops
-  TargetRubyVersion: 2.5
   Exclude:
     - 'gemfiles/vendor/**/*'
     - 'vendor/**/*'
     - '**/.irbrc'
 
-Metrics/BlockLength:
-  IgnoredMethods:
-    - context
-    - describe
-    - it
-    - shared_context
-    - shared_examples
-    - shared_examples_for
-    - namespace
-    - draw
+#Metrics/BlockLength:
+#  IgnoredMethods:
+#    - context
+#    - describe
+#    - it
+#    - shared_context
+#    - shared_examples
+#    - shared_examples_for
+#    - namespace
+#    - draw
 
-Gemspec/RequiredRubyVersion:
-  Enabled: false
+#Gemspec/RequiredRubyVersion:
+#  Enabled: false
+
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: '[]'
+    '%i':    '()'
+    '%w':    '[]'
 
 Metrics/BlockNesting:
   Max: 2
 
-Layout/LineLength:
+Metrics/LineLength:
   Enabled: false
 
 Metrics/ParameterLists:
   Max: 4
 
-Layout/AccessModifierIndentation:
+Style/AccessModifierIndentation:
   EnforcedStyle: outdent
 
-Layout/DotPosition:
+Style/DotPosition:
   EnforcedStyle: trailing
 
-Layout/SpaceInsideHashLiteralBraces:
+Style/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
 
 Lint/UnusedBlockArgument:
@@ -56,13 +60,6 @@ Lint/UnusedBlockArgument:
     - 'gemfiles/vendor/**/*'
     - 'vendor/**/*'
     - '**/.irbrc'
-
-RSpec/DescribeClass:
-  Exclude:
-    - 'spec/examples/*'
-
-RSpec/NestedGroups:
-  Enabled: false
 
 Style/ClassVars:
   Enabled: false
@@ -80,17 +77,20 @@ Style/Documentation:
 Style/DoubleNegation:
   Enabled: false
 
-Style/EmptyMethod:
-  EnforcedStyle: expanded
+#Style/EmptyMethod:
+#  EnforcedStyle: expanded
 
 Style/Encoding:
   Enabled: false
 
-Style/TrailingCommaInArrayLiteral:
+Style/TrailingCommaInLiteral:
   EnforcedStyleForMultiline: comma
 
-Style/TrailingCommaInHashLiteral:
-  EnforcedStyleForMultiline: comma
+#Style/TrailingCommaInArrayLiteral:
+#  EnforcedStyleForMultiline: comma
+#
+#Style/TrailingCommaInHashLiteral:
+#  EnforcedStyleForMultiline: comma
 
 Style/HashSyntax:
   EnforcedStyle: hash_rockets
@@ -105,16 +105,16 @@ Style/EachWithObject:
   Enabled: false
 
 # Once we drop Rubies that lack support for __dir__ we can turn this on.
-Style/ExpandPathArguments:
-  Enabled: false
+#Style/ExpandPathArguments:
+#  Enabled: false
 
 # On Ruby 1.9 array.to_h isn't available, needs to be Hash[array]
-Style/HashConversion:
-  Enabled: false
+#Style/HashConversion:
+#  Enabled: false
 
 # Turn back on once old Rubies are dropped
 Style/IfUnlessModifier:
   Enabled: false
 
-Style/SafeNavigation:
-  Enabled: false
+#Style/SafeNavigation:
+#  Enabled: false

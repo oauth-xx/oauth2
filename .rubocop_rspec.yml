@@ -1,3 +1,7 @@
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/examples/*'
+
 RSpec/FilePath:
   Enabled: false
 

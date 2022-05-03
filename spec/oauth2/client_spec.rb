@@ -190,7 +190,7 @@ describe OAuth2::Client do
           client = described_class.new('abc', 'def', :site => 'https://api.example.com', :auth_scheme => :request_body) do |builder|
             builder.adapter :test do |stub|
               stub.post('/oauth/token') do |env|
-                expect(env.request_headers).to include({'CustomHeader' => 'CustomHeader'})
+                expect(env.request_headers).to include('CustomHeader' => 'CustomHeader')
                 [200, {'Content-Type' => 'application/json'}, '{"access_token":"token"}']
               end
             end
@@ -205,7 +205,7 @@ describe OAuth2::Client do
           client = described_class.new('abc', 'def', :site => 'https://api.example.com', :auth_scheme => :request_body) do |builder|
             builder.adapter :test do |stub|
               stub.post('/oauth/token') do |env|
-                expect(env.request_headers).to include({'CustomHeader' => 'CustomHeader'})
+                expect(env.request_headers).to include('CustomHeader' => 'CustomHeader')
                 [200, {'Content-Type' => 'application/json'}, '{"access_token":"token"}']
               end
             end
@@ -220,7 +220,7 @@ describe OAuth2::Client do
           client = described_class.new('abc', 'def', :site => 'https://api.example.com') do |builder|
             builder.adapter :test do |stub|
               stub.post('/oauth/token') do |env|
-                expect(env.request_headers).to include({'CustomHeader' => 'CustomHeader'})
+                expect(env.request_headers).to include('CustomHeader' => 'CustomHeader')
                 [200, {'Content-Type' => 'application/json'}, '{"access_token":"token"}']
               end
             end
@@ -235,7 +235,7 @@ describe OAuth2::Client do
           client = described_class.new('abc', 'def', :site => 'https://api.example.com') do |builder|
             builder.adapter :test do |stub|
               stub.post('/oauth/token') do |env|
-                expect(env.request_headers).to include({'CustomHeader' => 'CustomHeader'})
+                expect(env.request_headers).to include('CustomHeader' => 'CustomHeader')
                 [200, {'Content-Type' => 'application/json'}, '{"access_token":"token"}']
               end
             end
@@ -299,8 +299,6 @@ describe OAuth2::Client do
         expect { subject.request(:get, error_path) }.to raise_error(OAuth2::Error)
       end
     end
-
-    # rubocop:disable Style/RedundantBegin
     it 're-encodes response body in the error message' do
       begin
         subject.request(:get, '/ascii_8bit_encoding')
