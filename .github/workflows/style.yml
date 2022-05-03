@@ -40,4 +40,4 @@ jobs:
           bundler: ${{ matrix.bundler }}
           bundler-cache: true
       - name: Run Rubocop
-        run: bundle exec rubocop -DESP
+        run: bundle exec rubocop -DES
