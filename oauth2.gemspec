@@ -46,5 +46,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec-block_is_expected'
   spec.add_development_dependency 'rspec-pending_for'
   spec.add_development_dependency 'rspec-stubbed_env'
+  spec.add_development_dependency 'rubocop-lts', ['>= 2.0.3', '~>2.0']
   spec.add_development_dependency 'silent_stream'
 end

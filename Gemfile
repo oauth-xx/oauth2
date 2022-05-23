@@ -18,7 +18,6 @@ group :test do
     coverage = minimum_version.call('2.7')
     debug = minimum_version.call('2.5')
     if linting
-      gem 'rubocop-ruby1_9', '~> 1.0', :require => false
       gem 'rubocop-rspec', '1.5.0', :require => false
       gem 'rubocop-thread_safety', '0.3.1', :require => false
     end
