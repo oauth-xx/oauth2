@@ -1,5 +1,5 @@
 inherit_gem:
-  rubocop-ruby1_9: rubocop.yml
+  rubocop-lts: rubocop-lts.yml
 
 require:
   - 'rubocop-rspec'
