@@ -1,19 +1,37 @@
-require: rubocop-rspec
 inherit_from:
   - .rubocop_todo.yml
   - .rubocop_rspec.yml
+
+inherit_gem:
+  rubocop-lts: rubocop-lts.yml
+
+require:
+  - 'rubocop-md'
+  # Can be added once we reach rubocop-ruby2_3
+  #  - 'rubocop-packaging'
+  - 'rubocop-performance'
+  - 'rubocop-rake'
+  - 'rubocop-rspec'
+
 AllCops:
   DisplayCopNames: true # Display the name of the failing cops
-  TargetRubyVersion: 2.1
   Exclude:
     - 'gemfiles/vendor/**/*'
     - 'vendor/**/*'
     - '**/.irbrc'
 
-Gemspec/RequiredRubyVersion:
-  Enabled: false
-
 Metrics/BlockLength:
+  ExcludedMethods:
+    - context
+    - describe
+    - it
+    - shared_context
+    - shared_examples
+    - shared_examples_for
+    - namespace
+    - draw
+
+Gemspec/RequiredRubyVersion:
   Enabled: false
 
 Metrics/BlockNesting:
@@ -21,9 +39,6 @@ Metrics/BlockNesting:
 
 Metrics/LineLength:
   Enabled: false
-
-Metrics/MethodLength:
-  Max: 15
 
 Metrics/ParameterLists:
   Max: 4
@@ -72,6 +87,14 @@ Style/EmptyMethod:
 
 Style/Encoding:
   Enabled: false
+
+# Does not work with older rubies
+#Style/MapToHash:
+#  Enabled: false
+
+# Does not work with older rubies
+#Style/RedundantBegin:
+#  Enabled: false
 
 Style/TrailingCommaInArrayLiteral:
   EnforcedStyleForMultiline: comma

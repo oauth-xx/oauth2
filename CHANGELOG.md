@@ -1,18 +1,109 @@
-# Change Log
+# Changelog
 All notable changes to this project will be documented in this file.
 
-## [unreleased]
+The format (since v2.0.0) is based on [Keep a Changelog v1](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.0.0.html).
 
-- Update testing infrastructure for all supported Rubies (@pboling and @josephpage)
-- **Breaking**: Set `:basic_auth` as default for `:auth_scheme` instead of `:request_body`. This was default behavior before 1.3.0. See [#285](https://github.com/oauth-xx/oauth2/issues/285) (@tetsuya, @wy193777)
-- Token is expired if `expired_at` time is now (@davestevens)
-- Set the response object on the access token on Client#get_token (@cpetschnig)
-- Fix "Unexpected middleware set" issue with Faraday when `OAUTH_DEBUG=true` (@spectator, @gafrom)
-- Oauth2::Error : Error codes are strings instead of symbols (@NobodysNightmare)
-- _Dependency_: Upgrade Faraday to 0.13.x (@zacharywelch)
-- _Dependency_: Upgrade jwt to 2.x.x (@travisofthenorth)
-- Fix logging to `$stdout` of request and response bodies via Faraday's logger and `ENV["OAUTH_DEBUG"] == 'true'` (@pboling)
-- **Security**: Add checks to enforce `client_secret` is *never* passed in authorize_url query params (@dfockler)
+## [Unreleased]
+
+### Added
+- [#158](https://github.com/oauth-xx/oauth2/pull/158), [#344](https://github.com/oauth-xx/oauth2/pull/344) - Optionally pass raw response to parsers (@niels)
+- [#190](https://github.com/oauth-xx/oauth2/pull/190), [#332](https://github.com/oauth-xx/oauth2/pull/332), [#334](https://github.com/oauth-xx/oauth2/pull/334), [#335](https://github.com/oauth-xx/oauth2/pull/335), [#360](https://github.com/oauth-xx/oauth2/pull/360), [#426](https://github.com/oauth-xx/oauth2/pull/426), [#427](https://github.com/oauth-xx/oauth2/pull/427), [#461](https://github.com/oauth-xx/oauth2/pull/461) - Documentation (@josephpage, @pboling, @meganemura, @joshRpowell, @elliotcm)
+- [#220](https://github.com/oauth-xx/oauth2/pull/220) - Support IETF rfc7523 JWT Bearer Tokens Draft 04+ (@jhmoore)
+- [#298](https://github.com/oauth-xx/oauth2/pull/298) - Set the response object on the access token on Client#get_token for debugging (@cpetschnig)
+- [#305](https://github.com/oauth-xx/oauth2/pull/305) - Option: `OAuth2::Client#get_token` - `:access_token_class` (`AccessToken`); user specified class to use for all calls to `get_token` (@styd)
+- [#346](https://github.com/oauth-xx/oauth2/pull/571) - Modern gem structure (@pboling)
+- [#351](https://github.com/oauth-xx/oauth2/pull/351) - Support Jruby 9k (@pboling)
+- [#362](https://github.com/oauth-xx/oauth2/pull/362) - Support SemVer release version scheme (@pboling)
+- [#363](https://github.com/oauth-xx/oauth2/pull/363) - New method `OAuth2::AccessToken#refresh!` same as old `refresh`, with backwards compatibility alias (@pboling)
+- [#364](https://github.com/oauth-xx/oauth2/pull/364) - Support `application/hal+json` format (@pboling)
+- [#365](https://github.com/oauth-xx/oauth2/pull/365) - Support `application/vnd.collection+json` format (@pboling)
+- [#376](https://github.com/oauth-xx/oauth2/pull/376) - _Documentation_: Example / Test for Google 2-legged JWT (@jhmoore)
+- [#381](https://github.com/oauth-xx/oauth2/pull/381) - Spec for extra header params on client credentials (@nikz)
+- [#394](https://github.com/oauth-xx/oauth2/pull/394) - Option: `OAuth2::AccessToken#initialize` - `:expires_latency` (`nil`); number of seconds by which AccessToken validity will be reduced to offset latency (@klippx)
+- [#412](https://github.com/oauth-xx/oauth2/pull/412) - Support `application/vdn.api+json` format (from jsonapi.org) (@david-christensen)
+- [#413](https://github.com/oauth-xx/oauth2/pull/413) - _Documentation_: License scan and report (@meganemura)
+- [#442](https://github.com/oauth-xx/oauth2/pull/442) - Option: `OAuth2::Client#initialize` - `:logger` (`::Logger.new($stdout)`) logger to use when OAUTH_DEBUG is enabled (for parity with `1-4-stable` branch) (@rthbound)
+- [#494](https://github.com/oauth-xx/oauth2/pull/494) - Support [OIDC 1.0 Private Key JWT](https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication); based on the OAuth JWT assertion specification [(RFC 7523)](https://tools.ietf.org/html/rfc7523) (@SteveyblamWork)
+- [#509](https://github.com/oauth-xx/oauth2/pull/509) - Support IETF MAC Draft 05 (@anvox)
+- [#549](https://github.com/oauth-xx/oauth2/pull/549) - Wrap `Faraday::ConnectionFailed` in `OAuth2::ConnectionFailed` (@nikkypx)
+- [#550](https://github.com/oauth-xx/oauth2/pull/550) - Raise error if location header not present when redirecting (@stanhu)
+- [#552](https://github.com/oauth-xx/oauth2/pull/552) - Add missing `version.rb` require (@ahorek)
+- [#553](https://github.com/oauth-xx/oauth2/pull/553) - Support `application/problem+json` format (@janz93)
+- [#560](https:/˚/github.com/oauth-xx/oauth2/pull/560) - Support IETF rfc6749, section 2.3.1 - don't set auth params when `nil` (@bouk)
+- [#571](https://github.com/oauth-xx/oauth2/pull/571) - Support Ruby 3.1 (@pboling)
+- [#575](https://github.com/oauth-xx/oauth2/pull/575) - Support IETF rfc7231, section 7.1.2 - relative location in redirect (@pboling)
+
+### Changed
+- [#191](https://github.com/oauth-xx/oauth2/pull/191) - **BREAKING**: Token is expired if `expired_at` time is `now` (@davestevens)
+- [#312](https://github.com/oauth-xx/oauth2/pull/312) - **BREAKING**: Set `:basic_auth` as default for `:auth_scheme` instead of `:request_body`. This was default behavior before 1.3.0. (@tetsuya, @wy193777)
+- [#317](https://github.com/oauth-xx/oauth2/pull/317) - _Dependency_: Upgrade `jwt` to 2.x.x (@travisofthenorth)
+- [#338](https://github.com/oauth-xx/oauth2/pull/338) - _Dependency_: Switch from `Rack::Utils.escape` to `CGI.escape` (@josephpage)
+- [#339](https://github.com/oauth-xx/oauth2/pull/339), [#368](https://github.com/oauth-xx/oauth2/pull/368), [#424](https://github.com/oauth-xx/oauth2/pull/424), [#479](https://github.com/oauth-xx/oauth2/pull/479), [#493](https://github.com/oauth-xx/oauth2/pull/493), [#539](https://github.com/oauth-xx/oauth2/pull/539), [#542](https://github.com/oauth-xx/oauth2/pull/542), [#553](https://github.com/oauth-xx/oauth2/pull/553) - CI Updates, code coverage, linting, spelling, type fixes, New VERSION constant (@pboling, @josephpage, @ahorek)
+- [#410](https://github.com/oauth-xx/oauth2/pull/410) - **BREAKING**: Removed the ability to call .error from an OAuth2::Response object (@jhmoore)
+- [#414](https://github.com/oauth-xx/oauth2/pull/414) - Use Base64.strict_encode64 instead of custom internal logic (@meganemura)
+- [#489](https://github.com/oauth-xx/oauth2/pull/489) - **BREAKING** default value for option `OAuth2::Client` - `:authorize_url` removed leading slash to work with relative paths by default (`'oauth/authorize'`) (@ghost)
+- [#489](https://github.com/oauth-xx/oauth2/pull/489) - **BREAKING** default value for option `OAuth2::Client` - `:token_url` removed leading slash to work with relative paths by default (`'oauth/token'`) (@ghost)
+- [#576](https://github.com/oauth-xx/oauth2/pull/576) - **BREAKING**: Stop rescuing parsing errors (@pboling)
+
+### Fixed
+- [#158](https://github.com/oauth-xx/oauth2/pull/158), [#344](https://github.com/oauth-xx/oauth2/pull/344) - Handling of errors when using `omniauth-facebook` (@niels)
+- [#294](https://github.com/oauth-xx/oauth2/pull/294) - Fix: "Unexpected middleware set" issue with Faraday when `OAUTH_DEBUG=true` (@spectator, @gafrom)
+- [#300](https://github.com/oauth-xx/oauth2/pull/300) - _Documentation_: `Oauth2::Error` - Error codes are strings, not symbols (@NobodysNightmare)
+- [#318](https://github.com/oauth-xx/oauth2/pull/318), [#326](https://github.com/oauth-xx/oauth2/pull/326), [#343](https://github.com/oauth-xx/oauth2/pull/343), [#347](https://github.com/oauth-xx/oauth2/pull/347), [#397](https://github.com/oauth-xx/oauth2/pull/397), [#464](https://github.com/oauth-xx/oauth2/pull/464), [#561](https://github.com/oauth-xx/oauth2/pull/561), [#565](https://github.com/oauth-xx/oauth2/pull/565) - _Dependency_: Support all versions of `faraday` (see [gemfiles/README.md][gemfiles/readme] for compatibility matrix with Ruby engines & versions) (@pboling, @raimondasv, @zacharywelch, @Fudoshiki, @ryogift, @sj26, @jdelStrother)
+- [#322](https://github.com/oauth-xx/oauth2/pull/322), [#331](https://github.com/oauth-xx/oauth2/pull/331), [#337](https://github.com/oauth-xx/oauth2/pull/337), [#361](https://github.com/oauth-xx/oauth2/pull/361), [#371](https://github.com/oauth-xx/oauth2/pull/371), [#377](https://github.com/oauth-xx/oauth2/pull/377), [#383](https://github.com/oauth-xx/oauth2/pull/383), [#392](https://github.com/oauth-xx/oauth2/pull/392), [#395](https://github.com/oauth-xx/oauth2/pull/395), [#400](https://github.com/oauth-xx/oauth2/pull/400), [#401](https://github.com/oauth-xx/oauth2/pull/401), [#403](https://github.com/oauth-xx/oauth2/pull/403), [#415](https://github.com/oauth-xx/oauth2/pull/415), [#567](https://github.com/oauth-xx/oauth2/pull/567) - Updated Rubocop, Rubocop plugins and improved code style (@pboling, @bquorning, @lautis, @spectator)
+- [#328](https://github.com/oauth-xx/oauth2/pull/328) - _Documentation_: Homepage URL is SSL (@amatsuda)
+- [#339](https://github.com/oauth-xx/oauth2/pull/339), [#479](https://github.com/oauth-xx/oauth2/pull/479) - Update testing infrastructure for all supported Rubies (@pboling and @josephpage)
+- [#366](https://github.com/oauth-xx/oauth2/pull/366) - **Security**: Fix logging to `$stdout` of request and response bodies via Faraday's logger and `ENV["OAUTH_DEBUG"] == 'true'` (@pboling)
+- [#380](https://github.com/oauth-xx/oauth2/pull/380) - Fix: Stop attempting to encode non-encodable objects in `Oauth2::Error` (@jhmoore)
+- [#399](https://github.com/oauth-xx/oauth2/pull/399) - Fix: stop duplicating `redirect_uri` in `get_token` (@markus)
+- [#410](https://github.com/oauth-xx/oauth2/pull/410) - Fix: `SystemStackError` caused by circular reference between Error and Response classes (@jhmoore)
+- [#460](https://github.com/oauth-xx/oauth2/pull/460) - Fix: stop throwing errors when `raise_errors` is set to `false`; analog of [#524](https://github.com/oauth-xx/oauth2/pull/524) for `1-4-stable` branch (@joaolrpaulo)
+- [#472](https://github.com/oauth-xx/oauth2/pull/472) - **Security**: Add checks to enforce `client_secret` is *never* passed in authorize_url query params for `implicit` and `auth_code` grant types (@dfockler)
+- [#482](https://github.com/oauth-xx/oauth2/pull/482) - _Documentation_: Update last of `intridea` links to `oauth-xx` (@pboling)
+- [#536](https://github.com/oauth-xx/oauth2/pull/536) - **Security**: Compatibility with more (and recent) Ruby OpenSSL versions, Github Actions, Rubocop updated, analogous to [#535](https://github.com/oauth-xx/oauth2/pull/535) on `1-4-stable` branch (@pboling)
+
+### Removed
+- [#341](https://github.com/oauth-xx/oauth2/pull/341) - Remove Rdoc & Jeweler related files (@josephpage)
+- [#342](https://github.com/oauth-xx/oauth2/pull/342) - **BREAKING**: Dropped support for Ruby 1.8 (@josephpage)
+- [#539](https://github.com/oauth-xx/oauth2/pull/539) - Remove reliance on globally included OAuth2 in tests, analog of [#538](https://github.com/oauth-xx/oauth2/pull/538) for 1-4-stable (@anderscarling)
+- [#566](https://github.com/oauth-xx/oauth2/pull/566) - _Dependency_: Removed `wwtd` (@bquorning)
+
+## [1.4.9] - 2022-02-20
+
+- Fixes compatibility with Faraday v2 [572](https://github.com/oauth-xx/oauth2/issues/572)
+- Includes supported versions of Faraday in test matrix:
+  - Faraday ~> 2.2.0 with Ruby >= 2.6
+  - Faraday ~> 1.10 with Ruby >= 2.4
+  - Faraday ~> 0.17.3 with Ruby >= 1.9
+- Add Windows and MacOS to test matrix
+
+## [1.4.8] - 2022-02-18
+
+- MFA is now required to push new gem versions (@pboling)
+- README overhaul w/ new Ruby Verion and Engine compatibility policies (@pboling)
+- [#569](https://github.com/oauth-xx/oauth2/pull/569) Backport fixes ([#561](https://github.com/oauth-xx/oauth2/pull/561) by @ryogift), and add more fixes, to allow faraday 1.x and 2.x (@jrochkind)
+- Improve Code Coverage tracking (Coveralls, CodeCov, CodeClimate), and enable branch coverage (@pboling)
+- Add CodeQL, Security Policy, Funding info (@pboling)
+- Added Ruby 3.1, jruby, jruby-head, truffleruby, truffleruby-head to build matrix (@pboling)
+- [#543](https://github.com/oauth-xx/oauth2/pull/543) - Support for more modern Open SSL libraries (@pboling)
+
+## [1.4.7] - 2021-03-19
+
+- [#541](https://github.com/oauth-xx/oauth2/pull/541) - Backport fix to expires_at handling [#533](https://github.com/oauth-xx/oauth2/pull/533) to 1-4-stable branch. (@dobon)
+
+## [1.4.6] - 2021-03-19
+
+- [#540](https://github.com/oauth-xx/oauth2/pull/540) - Add VERSION constant (@pboling)
+- [#537](https://github.com/oauth-xx/oauth2/pull/537) - Fix crash in OAuth2::Client#get_token (@anderscarling)
+- [#538](https://github.com/oauth-xx/oauth2/pull/538) - Remove reliance on globally included OAuth2 in tests, analogous to [#539](https://github.com/oauth-xx/oauth2/pull/539) on master branch (@anderscarling)
+
+## [1.4.5] - 2021-03-18
+
+- [#535](https://github.com/oauth-xx/oauth2/pull/535) - Compatibility with range of supported Ruby OpenSSL versions, Rubocop updates, Github Actions, analogous to [#536](https://github.com/oauth-xx/oauth2/pull/536) on master branch (@pboling)
+- [#518](https://github.com/oauth-xx/oauth2/pull/518) - Add extract_access_token option to OAuth2::Client (@jonspalmer)
+- [#507](https://github.com/oauth-xx/oauth2/pull/507) - Fix camel case content type, response keys (@anvox)
+- [#500](https://github.com/oauth-xx/oauth2/pull/500) - Fix YARD documentation formatting (@olleolleolle)
 
 ## [1.4.4] - 2020-02-12
 
@@ -133,7 +224,7 @@ All notable changes to this project will be documented in this file.
 
 ## [0.0.4] + [0.0.3] + [0.0.2] + [0.0.1] - 2010-04-22
 
-
+[Unreleased]: https://github.com/oauth-xx/oauth2/compare/v1.4.9...HEAD
 [0.0.1]: https://github.com/oauth-xx/oauth2/compare/311d9f4...v0.0.1
 [0.0.2]: https://github.com/oauth-xx/oauth2/compare/v0.0.1...v0.0.2
 [0.0.3]: https://github.com/oauth-xx/oauth2/compare/v0.0.2...v0.0.3
@@ -163,4 +254,10 @@ All notable changes to this project will be documented in this file.
 [1.4.1]: https://github.com/oauth-xx/oauth2/compare/v1.4.0...v1.4.1
 [1.4.2]: https://github.com/oauth-xx/oauth2/compare/v1.4.1...v1.4.2
 [1.4.3]: https://github.com/oauth-xx/oauth2/compare/v1.4.2...v1.4.3
-[unreleased]: https://github.com/oauth-xx/oauth2/compare/v1.4.1...HEAD
+[1.4.4]: https://github.com/oauth-xx/oauth2/compare/v1.4.3...v1.4.4
+[1.4.5]: https://github.com/oauth-xx/oauth2/compare/v1.4.4...v1.4.5
+[1.4.6]: https://github.com/oauth-xx/oauth2/compare/v1.4.5...v1.4.6
+[1.4.7]: https://github.com/oauth-xx/oauth2/compare/v1.4.6...v1.4.7
+[1.4.8]: https://github.com/oauth-xx/oauth2/compare/v1.4.7...v1.4.8
+[1.4.9]: https://github.com/oauth-xx/oauth2/compare/v1.4.8...v1.4.9
+[gemfiles/readme]: gemfiles/README.md

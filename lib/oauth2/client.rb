@@ -1,10 +1,13 @@
+# frozen_string_literal: true
+
 require 'faraday'
 require 'logger'
 
 module OAuth2
+  ConnectionError = Class.new(Faraday::ConnectionFailed)
   # The OAuth2::Client class
   class Client # rubocop:disable Metrics/ClassLength
-    RESERVED_PARAM_KEYS = ['headers', 'parse'].freeze
+    RESERVED_PARAM_KEYS = %w[headers parse].freeze
 
     attr_reader :id, :secret, :site
     attr_accessor :options
@@ -21,13 +24,12 @@ module OAuth2
     # @option options [String] :redirect_uri the absolute URI to the Redirection Endpoint for use in authorization grants and token exchange
     # @option options [String] :authorize_url ('/oauth/authorize') absolute or relative URL path to the Authorization endpoint
     # @option options [String] :token_url ('/oauth/token') absolute or relative URL path to the Token endpoint
-    # @option options [Symbol] :token_method (:post) HTTP method to use to request token (:get or :post)
+    # @option options [Symbol] :token_method (:post) HTTP method to use to request token (:get, :post, :post_with_query_string)
     # @option options [Symbol] :auth_scheme (:basic_auth) HTTP method to use to authorize request (:basic_auth or :request_body)
     # @option options [Hash] :connection_opts ({}) Hash of connection options to pass to initialize Faraday with
     # @option options [FixNum] :max_redirects (5) maximum number of redirects to follow
-    # @option options [Boolean] :raise_errors (true) whether or not to raise an OAuth2::Error
+    # @option options [Boolean] :raise_errors (true) whether or not to raise an OAuth2::Error on responses with 400+ status codes
     # @option options [Logger] :logger (::Logger.new($stdout)) which logger to use when OAUTH_DEBUG is enabled
-    #  on responses with 400+ status codes
     # @yield [builder] The Faraday connection builder
     def initialize(client_id, client_secret, options = {}, &block)
       opts = options.dup
@@ -35,15 +37,15 @@ module OAuth2
       @secret = client_secret
       @site = opts.delete(:site)
       ssl = opts.delete(:ssl)
-      @options = {:authorize_url    => 'oauth/authorize',
-                  :token_url        => 'oauth/token',
-                  :token_method     => :post,
-                  :auth_scheme      => :basic_auth,
-                  :connection_opts  => {},
-                  :connection_build => block,
-                  :max_redirects    => 5,
-                  :raise_errors     => true,
-                  :logger           => ::Logger.new($stdout)}.merge!(opts)
+      @options = {authorize_url: 'oauth/authorize',
+                  token_url: 'oauth/token',
+                  token_method: :post,
+                  auth_scheme: :basic_auth,
+                  connection_opts: {},
+                  connection_build: block,
+                  max_redirects: 5,
+                  raise_errors: true,
+                  logger: ::Logger.new($stdout)}.merge!(opts)
       @options[:connection_opts][:ssl] = ssl if ssl
     end
 
@@ -85,6 +87,9 @@ module OAuth2
     end
 
     # Makes a request relative to the specified site root.
+    # Updated HTTP 1.1 specification (IETF RFC 7231) relaxed the original constraint (IETF RFC 2616),
+    #   allowing the use of relative URLs in Location headers.
+    # @see https://datatracker.ietf.org/doc/html/rfc7231#section-7.1.2
     #
     # @param [Symbol] verb one of :get, :post, :put, :delete
     # @param [String] url URL path of request
@@ -96,30 +101,45 @@ module OAuth2
     #   code response for this request.  Will default to client option
     # @option opts [Symbol] :parse @see Response::initialize
     # @yield [req] The Faraday request
-    def request(verb, url, opts = {}) # rubocop:disable CyclomaticComplexity, MethodLength, Metrics/AbcSize
+    def request(verb, url, opts = {})
       url = connection.build_url(url).to_s
-      response = connection.run_request(verb, url, opts[:body], opts[:headers]) do |req|
-        req.params.update(opts[:params]) if opts[:params]
-        yield(req) if block_given?
+
+      begin
+        response = connection.run_request(verb, url, opts[:body], opts[:headers]) do |req|
+          req.params.update(opts[:params]) if opts[:params]
+          yield(req) if block_given?
+        end
+      rescue Faraday::ConnectionFailed => e
+        raise ConnectionError, e
       end
-      response = Response.new(response, :parse => opts[:parse])
+
+      response = Response.new(response, parse: opts[:parse])
 
       case response.status
       when 301, 302, 303, 307
         opts[:redirect_count] ||= 0
         opts[:redirect_count] += 1
         return response if opts[:redirect_count] > options[:max_redirects]
+
         if response.status == 303
           verb = :get
           opts.delete(:body)
         end
-        request(verb, response.headers['location'], opts)
+        location = response.headers['location']
+        if location
+          full_location = response.response.env.url.merge(location)
+          request(verb, full_location, opts)
+        else
+          error = Error.new(response)
+          raise(error, "Got #{response.status} status code, but no Location header was present")
+        end
       when 200..299, 300..399
         # on non-redirecting 3xx statuses, just return the response
         response
       when 400..599
         error = Error.new(response)
         raise(error) if opts.fetch(:raise_errors, options[:raise_errors])
+
         response
       else
         error = Error.new(response)
@@ -131,13 +151,9 @@ module OAuth2
     #
     # @param params [Hash] a Hash of params for the token endpoint
     # @param access_token_opts [Hash] access token options, to pass to the AccessToken object
-    # @param access_token_class [Class] class of access token for easier subclassing OAuth2::AccessToken
+    # @param access_token_class [Class] class of access token for easier subclassing OAuth2::AccessToken, @version 2.0+
     # @return [AccessToken] the initialized AccessToken
-    def get_token(params, access_token_opts = {}, access_token_class = AccessToken) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
-      # if ruby version >= 2.4
-      # params.transform_keys! do |key|
-      #   RESERVED_PARAM_KEYS.include?(key) ? key.to_sym : key
-      # end
+    def get_token(params, access_token_opts = {}, access_token_class = AccessToken)
       params = params.map do |key, value|
         if RESERVED_PARAM_KEYS.include?(key)
           [key.to_sym, value]
@@ -147,7 +163,7 @@ module OAuth2
       end.to_h
 
       params = authenticator.apply(params)
-      opts = {:raise_errors => options[:raise_errors], :parse => params.delete(:parse)}
+      opts = {raise_errors: options[:raise_errors], parse: params.delete(:parse)}
       headers = params.delete(:headers) || {}
       if options[:token_method] == :post
         opts[:body] = params
@@ -157,7 +173,9 @@ module OAuth2
         opts[:headers] = {}
       end
       opts[:headers].merge!(headers)
-      response = request(options[:token_method], token_url, opts)
+      http_method = options[:token_method]
+      http_method = :post if http_method == :post_with_query_string
+      response = request(http_method, token_url, opts)
       response_contains_token = response.parsed.is_a?(Hash) &&
                                 (response.parsed['access_token'] || response.parsed['id_token'] || response.parsed['token'])
 
@@ -173,28 +191,28 @@ module OAuth2
 
     # The Authorization Code strategy
     #
-    # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.1
+    # @see http://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-15#section-4.1
     def auth_code
       @auth_code ||= OAuth2::Strategy::AuthCode.new(self)
     end
 
     # The Implicit strategy
     #
-    # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-26#section-4.2
+    # @see http://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-26#section-4.2
     def implicit
       @implicit ||= OAuth2::Strategy::Implicit.new(self)
     end
 
     # The Resource Owner Password Credentials strategy
     #
-    # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.3
+    # @see http://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-15#section-4.3
     def password
       @password ||= OAuth2::Strategy::Password.new(self)
     end
 
     # The Client Credentials strategy
     #
-    # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.4
+    # @see http://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-15#section-4.4
     def client_credentials
       @client_credentials ||= OAuth2::Strategy::ClientCredentials.new(self)
     end
@@ -214,10 +232,10 @@ module OAuth2
     #
     # @api semipublic
     #
-    # @see https://tools.ietf.org/html/rfc6749#section-4.1
-    # @see https://tools.ietf.org/html/rfc6749#section-4.1.3
-    # @see https://tools.ietf.org/html/rfc6749#section-4.2.1
-    # @see https://tools.ietf.org/html/rfc6749#section-10.6
+    # @see https://datatracker.ietf.org/doc/html/rfc6749#section-4.1
+    # @see https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.3
+    # @see https://datatracker.ietf.org/doc/html/rfc6749#section-4.2.1
+    # @see https://datatracker.ietf.org/doc/html/rfc6749#section-10.6
     # @return [Hash] the params to add to a request or URL
     def redirection_params
       if options[:redirect_uri]
@@ -246,7 +264,7 @@ module OAuth2
     end
 
     def oauth_debug_logging(builder)
-      builder.response :logger, options[:logger], :bodies => true if ENV['OAUTH_DEBUG'] == 'true'
+      builder.response :logger, options[:logger], bodies: true if ENV['OAUTH_DEBUG'] == 'true'
     end
   end
 end

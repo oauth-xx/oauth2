@@ -1,8 +1,14 @@
+# frozen_string_literal: true
+
 # includes modules from stdlib
 require 'cgi'
 require 'time'
 
+# third party gems
+require 'rash'
+
 # includes gem files
+require 'oauth2/version'
 require 'oauth2/error'
 require 'oauth2/snaky_hash'
 require 'oauth2/authenticator'

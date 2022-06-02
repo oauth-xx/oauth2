@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OAuth2
   class AccessToken
     attr_reader :client, :token, :expires_in, :expires_at, :expires_latency, :params
@@ -8,7 +10,7 @@ module OAuth2
       #
       # @param client [Client] the OAuth2::Client instance
       # @param hash [Hash] a hash of AccessToken property values
-      # @return [AccessToken] the initalized AccessToken
+      # @return [AccessToken] the initialized AccessToken
       def from_hash(client, hash)
         hash = hash.dup
         new(client, hash.delete('access_token') || hash.delete(:access_token) || hash.delete('token') || hash.delete(:token), hash)
@@ -18,13 +20,13 @@ module OAuth2
       #
       # @param [Client] client the OAuth2::Client instance
       # @param [String] kvform the application/x-www-form-urlencoded string
-      # @return [AccessToken] the initalized AccessToken
+      # @return [AccessToken] the initialized AccessToken
       def from_kvform(client, kvform)
         from_hash(client, Rack::Utils.parse_query(kvform))
       end
     end
 
-    # Initalize an AccessToken
+    # Initialize an AccessToken
     #
     # @param [Client] client the OAuth2::Client instance
     # @param [String] token the Access Token value
@@ -32,17 +34,17 @@ module OAuth2
     # @option opts [String] :refresh_token (nil) the refresh_token value
     # @option opts [FixNum, String] :expires_in (nil) the number of seconds in which the AccessToken will expire
     # @option opts [FixNum, String] :expires_at (nil) the epoch time in seconds in which AccessToken will expire
-    # @option opts [FixNum, String] :expires_latency (nil) the number of seconds by which AccessToken validity will be reduced to offset latency
+    # @option opts [FixNum, String] :expires_latency (nil) the number of seconds by which AccessToken validity will be reduced to offset latency, @version 2.0+
     # @option opts [Symbol] :mode (:header) the transmission mode of the Access Token parameter value
     #    one of :header, :body or :query
     # @option opts [String] :header_format ('Bearer %s') the string format to use for the Authorization header
     # @option opts [String] :param_name ('access_token') the parameter name to use for transmission of the
     #    Access Token value in :body or :query transmission mode
-    def initialize(client, token, opts = {}) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
+    def initialize(client, token, opts = {})
       @client = client
       @token = token.to_s
       opts = opts.dup
-      [:refresh_token, :expires_in, :expires_at, :expires_latency].each do |arg|
+      %i[refresh_token expires_in expires_at expires_latency].each do |arg|
         instance_variable_set("@#{arg}", opts.delete(arg) || opts.delete(arg.to_s))
       end
       @expires_in ||= opts.delete('expires')
@@ -51,9 +53,9 @@ module OAuth2
       @expires_latency &&= @expires_latency.to_i
       @expires_at ||= Time.now.to_i + @expires_in if @expires_in
       @expires_at -= @expires_latency if @expires_latency
-      @options = {:mode          => opts.delete(:mode) || :header,
-                  :header_format => opts.delete(:header_format) || 'Bearer %s',
-                  :param_name    => opts.delete(:param_name) || 'access_token'}
+      @options = {mode: opts.delete(:mode) || :header,
+                  header_format: opts.delete(:header_format) || 'Bearer %s',
+                  param_name: opts.delete(:param_name) || 'access_token'}
       @params = opts
     end
 
@@ -84,6 +86,7 @@ module OAuth2
     # @note options should be carried over to the new AccessToken
     def refresh(params = {}, access_token_opts = {}, access_token_class = self.class)
       raise('A refresh_token is not available') unless refresh_token
+
       params[:grant_type] = 'refresh_token'
       params[:refresh_token] = refresh_token
       new_token = @client.get_token(params, access_token_opts, access_token_class)
@@ -99,7 +102,7 @@ module OAuth2
     #
     # @return [Hash] a hash of AccessToken property values
     def to_hash
-      params.merge(:access_token => token, :refresh_token => refresh_token, :expires_at => expires_at)
+      params.merge(access_token: token, refresh_token: refresh_token, expires_at: expires_at)
     end
 
     # Make a request with the Access Token
@@ -155,7 +158,7 @@ module OAuth2
 
   private
 
-    def configure_authentication!(opts) # rubocop:disable MethodLength, Metrics/AbcSize
+    def configure_authentication!(opts)
       case options[:mode]
       when :header
         opts[:headers] ||= {}
@@ -168,7 +171,7 @@ module OAuth2
         if opts[:body].is_a?(Hash)
           opts[:body][options[:param_name]] = token
         else
-          opts[:body] << "&#{options[:param_name]}=#{token}"
+          opts[:body] += "&#{options[:param_name]}=#{token}"
         end
         # @todo support for multi-part (file uploads)
       else
@@ -177,10 +180,9 @@ module OAuth2
     end
 
     def convert_expires_at(expires_at)
-      expires_at_i = expires_at.to_i
-      return expires_at_i if expires_at_i > Time.now.utc.to_i
-      return Time.parse(expires_at).to_i if expires_at.is_a?(String)
-      expires_at_i
+      Time.iso8601(expires_at.to_s).to_i
+    rescue ArgumentError
+      expires_at.to_i
     end
   end
 end

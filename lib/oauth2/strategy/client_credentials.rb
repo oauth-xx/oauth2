@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module OAuth2
   module Strategy
     # The Client Credentials Strategy
     #
-    # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.4
+    # @see http://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-15#section-4.4
     class ClientCredentials < Base
       # Not used for this strategy
       #

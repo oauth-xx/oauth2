@@ -1,10 +1,12 @@
-RSpec.describe AccessToken do
+# frozen_string_literal: true
+
+RSpec.describe OAuth2::AccessToken do
   subject { described_class.new(client, token) }
 
   let(:token) { 'monkey' }
-  let(:refresh_body) { MultiJson.encode(:access_token => 'refreshed_foo', :expires_in => 600, :refresh_token => 'refresh_bar') }
+  let(:refresh_body) { MultiJson.encode(access_token: 'refreshed_foo', expires_in: 600, refresh_token: 'refresh_bar') }
   let(:client) do
-    Client.new('abc', 'def', :site => 'https://api.example.com') do |builder|
+    OAuth2::Client.new('abc', 'def', site: 'https://api.example.com') do |builder|
       builder.request :url_encoded
       builder.adapter :test do |stub|
         VERBS.each do |verb|
@@ -13,7 +15,7 @@ RSpec.describe AccessToken do
           stub.send(verb, '/token/query_string') { |env| [200, {}, CGI.unescape(Addressable::URI.parse(env[:url]).query)] }
           stub.send(verb, '/token/body') { |env| [200, {}, env[:body]] }
         end
-        stub.post('/oauth/token') { |env| [200, {'Content-Type' => 'application/json'}, refresh_body] }
+        stub.post('/oauth/token') { |_env| [200, {'Content-Type' => 'application/json'}, refresh_body] }
       end
     end
   end
@@ -30,7 +32,7 @@ RSpec.describe AccessToken do
       expect(target.params['foo']).to eq('bar')
     end
 
-    def assert_initialized_token(target) # rubocop:disable Metrics/AbcSize
+    def assert_initialized_token(target)
       expect(target.token).to eq(token)
       expect(target).to be_expires
       expect(target.params.keys).to include('foo')
@@ -44,39 +46,59 @@ RSpec.describe AccessToken do
     end
 
     it 'from_hash does not modify opts hash' do
-      hash = {:access_token => token, :expires_at => Time.now.to_i}
+      hash = {access_token: token, expires_at: Time.now.to_i}
       hash_before = hash.dup
       described_class.from_hash(client, hash)
       expect(hash).to eq(hash_before)
     end
 
-    it 'initalizes with a form-urlencoded key/value string' do
+    it 'initializes with a form-urlencoded key/value string' do
       kvform = "access_token=#{token}&expires_at=#{Time.now.to_i + 200}&foo=bar"
       target = described_class.from_kvform(client, kvform)
       assert_initialized_token(target)
     end
 
     it 'sets options' do
-      target = described_class.new(client, token, :param_name => 'foo', :header_format => 'Bearer %', :mode => :body)
+      target = described_class.new(client, token, param_name: 'foo', header_format: 'Bearer %', mode: :body)
       expect(target.options[:param_name]).to eq('foo')
       expect(target.options[:header_format]).to eq('Bearer %')
       expect(target.options[:mode]).to eq(:body)
     end
 
     it 'does not modify opts hash' do
-      opts = {:param_name => 'foo', :header_format => 'Bearer %', :mode => :body}
+      opts = {param_name: 'foo', header_format: 'Bearer %', mode: :body}
       opts_before = opts.dup
       described_class.new(client, token, opts)
       expect(opts).to eq(opts_before)
     end
 
-    it 'initializes with a string expires_at' do
-      future = Time.now.utc + 100_000
-      hash = {:access_token => token, :expires_at => future.iso8601, 'foo' => 'bar'}
-      target = described_class.from_hash(client, hash)
-      assert_initialized_token(target)
-      expect(target.expires_at).to be_a(Integer)
-      expect(target.expires_at).to eql(future.to_i)
+    describe 'expires_at' do
+      let(:expires_at) { 1_361_396_829 }
+      let(:hash) do
+        {
+          :access_token => token,
+          :expires_at => expires_at.to_s,
+          'foo' => 'bar',
+        }
+      end
+
+      it 'initializes with an integer timestamp expires_at' do
+        target = described_class.from_hash(client, hash.merge(expires_at: expires_at))
+        assert_initialized_token(target)
+        expect(target.expires_at).to eql(expires_at)
+      end
+
+      it 'initializes with a string timestamp expires_at' do
+        target = described_class.from_hash(client, hash)
+        assert_initialized_token(target)
+        expect(target.expires_at).to eql(expires_at)
+      end
+
+      it 'initializes with a string time expires_at' do
+        target = described_class.from_hash(client, hash.merge(expires_at: Time.at(expires_at).iso8601))
+        assert_initialized_token(target)
+        expect(target.expires_at).to eql(expires_at)
+      end
     end
 
     describe 'expires_latency' do
@@ -85,14 +107,14 @@ RSpec.describe AccessToken do
       let(:expires_latency) { 10 }
       let(:hash) do
         {
-          :access_token => token,
-          :expires_latency => expires_latency,
-          :expires_in => expires_in,
+          access_token: token,
+          expires_latency: expires_latency,
+          expires_in: expires_in,
         }
       end
 
       it 'sets it via options' do
-        target = described_class.from_hash(client, hash.merge(:expires_latency => expires_latency.to_s))
+        target = described_class.from_hash(client, hash.merge(expires_latency: expires_latency.to_s))
         expect(target.expires_latency).to eq expires_latency
       end
 
@@ -109,7 +131,7 @@ RSpec.describe AccessToken do
       end
 
       it 'reduces expires_at by the given amount if expires_at is provided as option' do
-        target = described_class.from_hash(client, hash.merge(:expires_at => expires_at))
+        target = described_class.from_hash(client, hash.merge(expires_at: expires_at))
         expect(target.expires_at).to eq(expires_at - expires_latency)
       end
     end
@@ -160,7 +182,7 @@ RSpec.describe AccessToken do
     context 'params include [number]' do
       VERBS.each do |verb|
         it "sends #{verb.to_s.upcase} correct query" do
-          expect(subject.__send__(verb, '/token/query_string', :params => {'foo[bar][1]' => 'val'}).body).to include('foo[bar][1]=val')
+          expect(subject.__send__(verb, '/token/query_string', params: {'foo[bar][1]' => 'val'}).body).to include('foo[bar][1]=val')
         end
       end
     end
@@ -172,11 +194,11 @@ RSpec.describe AccessToken do
     end
 
     it 'is true if there is an expires_in' do
-      expect(described_class.new(client, token, :refresh_token => 'abaca', :expires_in => 600)).to be_expires
+      expect(described_class.new(client, token, refresh_token: 'abaca', expires_in: 600)).to be_expires
     end
 
     it 'is true if there is an expires_at' do
-      expect(described_class.new(client, token, :refresh_token => 'abaca', :expires_in => Time.now.getutc.to_i + 600)).to be_expires
+      expect(described_class.new(client, token, refresh_token: 'abaca', expires_in: Time.now.getutc.to_i + 600)).to be_expires
     end
   end
 
@@ -186,11 +208,11 @@ RSpec.describe AccessToken do
     end
 
     it 'is false if expires_in is in the future' do
-      expect(described_class.new(client, token, :refresh_token => 'abaca', :expires_in => 10_800)).not_to be_expired
+      expect(described_class.new(client, token, refresh_token: 'abaca', expires_in: 10_800)).not_to be_expired
     end
 
     it 'is true if expires_at is in the past' do
-      access = described_class.new(client, token, :refresh_token => 'abaca', :expires_in => 600)
+      access = described_class.new(client, token, refresh_token: 'abaca', expires_in: 600)
       @now = Time.now + 10_800
       allow(Time).to receive(:now).and_return(@now)
       expect(access).to be_expired
@@ -198,7 +220,7 @@ RSpec.describe AccessToken do
 
     it 'is true if expires_at is now' do
       @now = Time.now
-      access = described_class.new(client, token, :refresh_token => 'abaca', :expires_at => @now.to_i)
+      access = described_class.new(client, token, refresh_token: 'abaca', expires_at: @now.to_i)
       allow(Time).to receive(:now).and_return(@now)
       expect(access).to be_expired
     end
@@ -206,13 +228,13 @@ RSpec.describe AccessToken do
 
   describe '#refresh' do
     let(:access) do
-      described_class.new(client, token, :refresh_token => 'abaca',
-                                         :expires_in     => 600,
-                                         :param_name     => 'o_param')
+      described_class.new(client, token, refresh_token: 'abaca',
+                                         expires_in: 600,
+                                         param_name: 'o_param')
     end
     let(:new_access) do
       NewAccessToken = Class.new(described_class)
-      NewAccessToken.new(client, token, :refresh_token => 'abaca')
+      NewAccessToken.new(client, token, refresh_token: 'abaca')
     end
 
     it 'returns a refresh token with appropriate values carried over' do
@@ -227,7 +249,7 @@ RSpec.describe AccessToken do
     end
 
     context 'with a nil refresh_token in the response' do
-      let(:refresh_body) { MultiJson.encode(:access_token => 'refreshed_foo', :expires_in => 600, :refresh_token => nil) }
+      let(:refresh_body) { MultiJson.encode(access_token: 'refreshed_foo', expires_in: 600, refresh_token: nil) }
 
       it 'copies the refresh_token from the original token' do
         refreshed = access.refresh

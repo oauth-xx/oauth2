@@ -1,33 +1,37 @@
+# frozen_string_literal: true
+
 module OAuth2
   module Version
+    VERSION = to_s
+
   module_function
 
     # The major version
     #
     # @return [Integer]
     def major
-      1
+      2
     end
 
     # The minor version
     #
     # @return [Integer]
     def minor
-      4
+      0
     end
 
     # The patch version
     #
     # @return [Integer]
     def patch
-      3
+      0
     end
 
     # The pre-release version, if any
     #
-    # @return [Integer, NilClass]
+    # @return [String, NilClass]
     def pre
-      nil
+      'alpha'
     end
 
     # The version number as a hash
@@ -35,10 +39,10 @@ module OAuth2
     # @return [Hash]
     def to_h
       {
-        :major => major,
-        :minor => minor,
-        :patch => patch,
-        :pre => pre,
+        major: major,
+        minor: minor,
+        patch: patch,
+        pre: pre,
       }
     end
 
@@ -53,7 +57,9 @@ module OAuth2
     #
     # @return [String]
     def to_s
-      to_a.join('.')
+      v = [major, minor, patch].compact.join('.')
+      v += "-#{pre}" if pre
+      v
     end
   end
 end

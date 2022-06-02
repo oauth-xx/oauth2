@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'jwt'
 
 RSpec.describe 'using OAuth2 with Google' do
@@ -9,10 +11,10 @@ RSpec.describe 'using OAuth2 with Google' do
       OAuth2::Client.new(
         '',
         '',
-        :site => 'https://accounts.google.com',
-        :authorize_url => '/o/oauth2/auth',
-        :token_url => '/o/oauth2/token',
-        :auth_scheme => :request_body
+        site: 'https://accounts.google.com',
+        authorize_url: '/o/oauth2/auth',
+        token_url: '/o/oauth2/token',
+        auth_scheme: :request_body
       )
     end
 
@@ -41,7 +43,7 @@ RSpec.describe 'using OAuth2 with Google' do
 
     let(:optional_claims) do
       {
-        'sub' => 'some.user@example.com'
+        'sub' => 'some.user@example.com',
         # The email address of the user for which the application is requesting delegated access.
       }
     end
@@ -65,13 +67,14 @@ RSpec.describe 'using OAuth2 with Google' do
     # "Take note of the service account's email address and store the service account's P12 private key file in a
     # location accessible to your application. Your application needs them to make authorized API calls."
 
-    let(:encoding_options) { {:key => key, :algorithm => algorithm} }
+    let(:encoding_options) { {key: key, algorithm: algorithm} }
 
     before do
-      client.connection.build do |builder|
+      client.connection = Faraday.new(client.site, client.options[:connection_opts]) do |builder|
+        builder.request :url_encoded
         builder.adapter :test do |stub|
           stub.post('https://accounts.google.com/o/oauth2/token') do |token_request|
-            @request_body = token_request.body
+            @request_body = Rack::Utils.parse_nested_query(token_request.body).transform_keys(&:to_sym)
 
             [
               200,
@@ -101,7 +104,7 @@ RSpec.describe 'using OAuth2 with Google' do
         expect(@request_body[:grant_type]).to eq('urn:ietf:params:oauth:grant-type:jwt-bearer')
         expect(@request_body[:assertion]).to be_a(String)
 
-        payload, header = JWT.decode(@request_body[:assertion], key, true, :algorithm => algorithm)
+        payload, header = JWT.decode(@request_body[:assertion], key, true, algorithm: algorithm)
         expect(header['alg']).to eq('RS256')
         expect(payload.keys).to match_array(%w[iss scope aud exp iat])
 
@@ -125,7 +128,7 @@ RSpec.describe 'using OAuth2 with Google' do
         expect(@request_body[:grant_type]).to eq('urn:ietf:params:oauth:grant-type:jwt-bearer')
         expect(@request_body[:assertion]).to be_a(String)
 
-        payload, header = JWT.decode(@request_body[:assertion], key, true, :algorithm => algorithm)
+        payload, header = JWT.decode(@request_body[:assertion], key, true, algorithm: algorithm)
         expect(header['alg']).to eq('RS256')
         expect(payload.keys).to match_array(%w[iss scope aud exp iat sub])
 

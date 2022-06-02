@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module OAuth2
   module Strategy
     # The Authorization Code Strategy
     #
-    # @see http://tools.ietf.org/html/draft-ietf-oauth-v2-15#section-4.1
+    # @see http://datatracker.ietf.org/doc/html/draft-ietf-oauth-v2-15#section-4.1
     class AuthCode < Base
       # The required query parameters for the authorize URL
       #
@@ -27,11 +29,12 @@ module OAuth2
       # @note that you must also provide a :redirect_uri with most OAuth 2.0 providers
       def get_token(code, params = {}, opts = {})
         params = {'grant_type' => 'authorization_code', 'code' => code}.merge(@client.redirection_params).merge(params)
-        params.keys.each do |key|
-          params[key.to_s] = params.delete(key) if key.is_a?(Symbol)
+        params_dup = params.dup
+        params.each_key do |key|
+          params_dup[key.to_s] = params_dup.delete(key) if key.is_a?(Symbol)
         end
 
-        @client.get_token(params, opts)
+        @client.get_token(params_dup, opts)
       end
 
     private

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'multi_json'
 require 'multi_xml'
 require 'rack'
@@ -11,8 +13,8 @@ module OAuth2
     # Procs that, when called, will parse a response body according
     # to the specified format.
     @@parsers = {
-      :query => lambda { |body| Rack::Utils.parse_query(body) },
-      :text  => lambda { |body| body },
+      query: ->(body) { Rack::Utils.parse_query(body) },
+      text: ->(body) { body },
     }
 
     # Content type assignments for various potential HTTP content types.
@@ -42,7 +44,7 @@ module OAuth2
     #   :json, or :automatic (determined by Content-Type response header)
     def initialize(response, opts = {})
       @response = response
-      @options = {:parse => :automatic}.merge(opts)
+      @options = {parse: :automatic}.merge(opts)
     end
 
     # The HTTP response headers
@@ -79,7 +81,7 @@ module OAuth2
           end
         end
 
-      @parsed = OAuth2::SnakyHash.build(@parsed) if @parsed.is_a?(Hash)
+      @parsed = OAuth2::SnakyHash.new(@parsed) if @parsed.is_a?(Hash)
 
       @parsed
     end
@@ -87,11 +89,12 @@ module OAuth2
     # Attempts to determine the content type of the response.
     def content_type
       return nil unless response.headers
+
       ((response.headers.values_at('content-type', 'Content-Type').compact.first || '').split(';').first || '').strip.downcase
     end
 
     # Determines the parser (a Proc or other Object which responds to #call)
-    # that will be passed the {#body} (and optionall {#response}) to supply
+    # that will be passed the {#body} (and optional {#response}) to supply
     # {#parsed}.
     #
     # The parser can be supplied as the +:parse+ option in the form of a Proc
@@ -122,9 +125,9 @@ module OAuth2
 end
 
 OAuth2::Response.register_parser(:xml, ['text/xml', 'application/rss+xml', 'application/rdf+xml', 'application/atom+xml', 'application/xml']) do |body|
-  MultiXml.parse(body) rescue body # rubocop:disable RescueModifier
+  MultiXml.parse(body)
 end
 
-OAuth2::Response.register_parser(:json, ['application/json', 'text/javascript', 'application/hal+json', 'application/vnd.collection+json', 'application/vnd.api+json']) do |body|
-  MultiJson.load(body) rescue body # rubocop:disable RescueModifier
+OAuth2::Response.register_parser(:json, ['application/json', 'text/javascript', 'application/hal+json', 'application/vnd.collection+json', 'application/vnd.api+json', 'application/problem+json']) do |body|
+  MultiJson.decode(body)
 end

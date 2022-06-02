@@ -1,14 +1,18 @@
+# frozen_string_literal: true
+
+require 'openssl'
 require 'jwt'
 
 RSpec.describe OAuth2::Strategy::Assertion do
-  subject { client.assertion }
+  let(:client_assertion) { client.assertion }
 
   let(:client) do
-    cli = OAuth2::Client.new('abc', 'def', :site => 'http://api.example.com', :auth_scheme => auth_scheme)
-    cli.connection.build do |b|
+    cli = OAuth2::Client.new('abc', 'def', site: 'http://api.example.com', auth_scheme: auth_scheme)
+    cli.connection = Faraday.new(cli.site, cli.options[:connection_opts]) do |b|
+      b.request :url_encoded
       b.adapter :test do |stub|
         stub.post('/oauth/token') do |token_request|
-          @request_body = token_request.body
+          @request_body = Rack::Utils.parse_nested_query(token_request.body).transform_keys(&:to_sym)
 
           case @response_format
           when 'formencoded'
@@ -28,7 +32,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
 
   describe '#authorize_url' do
     it 'raises NotImplementedError' do
-      expect { subject.authorize_url }.to raise_error(NotImplementedError)
+      expect { client_assertion.authorize_url }.to raise_error(NotImplementedError)
     end
   end
 
@@ -38,13 +42,13 @@ RSpec.describe OAuth2::Strategy::Assertion do
     let(:timestamp) { Time.now.to_i }
     let(:claims) do
       {
-        :iss => 'carp@example.com',
-        :scope => 'https://oauth.example.com/auth/flounder',
-        :aud => 'https://sturgeon.example.com/oauth2/token',
-        :exp => timestamp + 3600,
-        :iat => timestamp,
-        :sub => '12345',
-        :custom_claim => 'ling cod',
+        iss: 'carp@example.com',
+        scope: 'https://oauth.example.com/auth/flounder',
+        aud: 'https://sturgeon.example.com/oauth2/token',
+        exp: timestamp + 3600,
+        iat: timestamp,
+        sub: '12345',
+        custom_claim: 'ling cod',
       }
     end
 
@@ -54,33 +58,43 @@ RSpec.describe OAuth2::Strategy::Assertion do
 
     describe 'assembling a JWT assertion' do
       let(:jwt) do
-        payload, header = JWT.decode(@request_body[:assertion], key, true, :algorithm => algorithm)
-        {:payload => payload, :header => header}
+        payload, header = JWT.decode(@request_body[:assertion], key, true, algorithm: algorithm)
+        {payload: payload, header: header}
       end
 
       let(:payload) { jwt[:payload] }
       let(:header) { jwt[:header] }
+
+      shared_examples_for 'encodes the JWT' do
+        it 'indicates algorithm in the header' do
+          expect(header).not_to be_nil
+          expect(header['alg']).to eq(algorithm)
+        end
+
+        it 'has claims' do
+          expect(payload).not_to be_nil
+          expect(payload.keys).to match_array(%w[iss scope aud exp iat sub custom_claim])
+          payload.each do |key, claim|
+            expect(claims[key.to_sym]).to eq(claim)
+          end
+        end
+      end
 
       context 'when encoding as HS256' do
         let(:algorithm) { 'HS256' }
         let(:key) { 'super_secret!' }
 
         before do
-          subject.get_token(claims, :algorithm => algorithm, :key => key)
+          client_assertion.get_token(claims, algorithm: algorithm, key: key)
           raise 'No request made!' if @request_body.nil?
         end
 
-        it 'indicates HS256 in the header' do
-          expect(header).not_to be_nil
-          expect(header['alg']).to eq('HS256')
-        end
+        it_behaves_like 'encodes the JWT'
 
-        it 'encodes the JWT as HS256' do
-          expect(payload).not_to be_nil
-          expect(payload.keys).to match_array(%w[iss scope aud exp iat sub custom_claim])
-          payload.each do |key, claim|
-            expect(claims[key.to_sym]).to eq(claim)
-          end
+        context 'with real key' do
+          let(:key) { '1883be842495c3b58f68ca71fbf1397fbb9ed2fdf8990f8404a25d0a1b995943' }
+
+          it_behaves_like 'encodes the JWT'
         end
       end
 
@@ -89,26 +103,23 @@ RSpec.describe OAuth2::Strategy::Assertion do
         let(:key) { OpenSSL::PKey::RSA.new(1024) }
 
         before do
-          subject.get_token(claims, :algorithm => algorithm, :key => key)
+          client_assertion.get_token(claims, algorithm: algorithm, key: key)
           raise 'No request made!' if @request_body.nil?
         end
 
-        it 'indicates RS256 in the header' do
-          expect(header).not_to be_nil
-          expect(header['alg']).to eq('RS256')
-        end
+        it_behaves_like 'encodes the JWT'
 
-        it 'encodes the JWT as RS256' do
-          expect(payload).not_to be_nil
-          expect(payload.keys).to match_array(%w[iss scope aud exp iat sub custom_claim])
-          payload.each do |key, claim|
-            expect(claims[key.to_sym]).to eq(claim)
-          end
+        context 'with private key' do
+          let(:private_key_file) { 'spec/fixtures/RS256/jwtRS256.key' }
+          let(:password) { '' }
+          let(:key) { OpenSSL::PKey::RSA.new(File.read(private_key_file), password) }
+
+          it_behaves_like 'encodes the JWT'
         end
       end
 
       context 'with bad encoding params' do
-        let(:encoding_opts) { {:algorithm => algorithm, :key => key} }
+        let(:encoding_opts) { {algorithm: algorithm, key: key} }
 
         describe 'non-supported algorithms' do
           let(:algorithm) { 'the blockchain' }
@@ -116,7 +127,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
 
           it 'raises NotImplementedError' do
             # this behavior is handled by the JWT gem, but this should make sure it is consistent
-            expect { subject.get_token(claims, encoding_opts) }.to raise_error(NotImplementedError)
+            expect { client_assertion.get_token(claims, encoding_opts) }.to raise_error(NotImplementedError)
           end
         end
 
@@ -124,7 +135,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
           let(:encoding_opts) { 'the cloud' }
 
           it 'raises ArgumentError' do
-            expect { subject.get_token(claims, encoding_opts) }.to raise_error(ArgumentError, /encoding_opts/)
+            expect { client_assertion.get_token(claims, encoding_opts) }.to raise_error(ArgumentError, /encoding_opts/)
           end
         end
 
@@ -134,7 +145,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
           end
 
           it 'raises ArgumentError' do
-            expect { subject.get_token(claims, encoding_opts) }.to raise_error(ArgumentError, /encoding_opts/)
+            expect { client_assertion.get_token(claims, encoding_opts) }.to raise_error(ArgumentError, /encoding_opts/)
           end
         end
 
@@ -144,7 +155,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
           end
 
           it 'raises ArgumentError' do
-            expect { subject.get_token(claims, encoding_opts) }.to raise_error(ArgumentError, /encoding_opts/)
+            expect { client_assertion.get_token(claims, encoding_opts) }.to raise_error(ArgumentError, /encoding_opts/)
           end
         end
       end
@@ -155,24 +166,24 @@ RSpec.describe OAuth2::Strategy::Assertion do
         let(:auth_scheme) { :request_body }
 
         it 'includes assertion and grant_type, along with the client parameters' do
-          subject.get_token(claims, :algorithm => algorithm, :key => key)
+          client_assertion.get_token(claims, algorithm: algorithm, key: key)
           expect(@request_body).not_to be_nil
-          expect(@request_body.keys).to match_array([:assertion, :grant_type, 'client_id', 'client_secret'])
+          expect(@request_body.keys).to match_array(%i[assertion grant_type client_id client_secret])
           expect(@request_body[:grant_type]).to eq('urn:ietf:params:oauth:grant-type:jwt-bearer')
           expect(@request_body[:assertion]).to be_a(String)
-          expect(@request_body['client_id']).to eq('abc')
-          expect(@request_body['client_secret']).to eq('def')
+          expect(@request_body[:client_id]).to eq('abc')
+          expect(@request_body[:client_secret]).to eq('def')
         end
 
         it 'includes other params via request_options' do
-          subject.get_token(claims, {:algorithm => algorithm, :key => key}, :scope => 'dover sole')
+          client_assertion.get_token(claims, {algorithm: algorithm, key: key}, {scope: 'dover sole'})
           expect(@request_body).not_to be_nil
-          expect(@request_body.keys).to match_array([:assertion, :grant_type, :scope, 'client_id', 'client_secret'])
+          expect(@request_body.keys).to match_array(%i[assertion grant_type scope client_id client_secret])
           expect(@request_body[:grant_type]).to eq('urn:ietf:params:oauth:grant-type:jwt-bearer')
           expect(@request_body[:assertion]).to be_a(String)
           expect(@request_body[:scope]).to eq('dover sole')
-          expect(@request_body['client_id']).to eq('abc')
-          expect(@request_body['client_secret']).to eq('def')
+          expect(@request_body[:client_id]).to eq('abc')
+          expect(@request_body[:client_secret]).to eq('def')
         end
       end
 
@@ -180,17 +191,17 @@ RSpec.describe OAuth2::Strategy::Assertion do
         let(:auth_scheme) { :basic_auth }
 
         it 'includes assertion and grant_type by default' do
-          subject.get_token(claims, :algorithm => algorithm, :key => key)
+          client_assertion.get_token(claims, algorithm: algorithm, key: key)
           expect(@request_body).not_to be_nil
-          expect(@request_body.keys).to match_array([:assertion, :grant_type])
+          expect(@request_body.keys).to match_array(%i[assertion grant_type])
           expect(@request_body[:grant_type]).to eq('urn:ietf:params:oauth:grant-type:jwt-bearer')
           expect(@request_body[:assertion]).to be_a(String)
         end
 
         it 'includes other params via request_options' do
-          subject.get_token(claims, {:algorithm => algorithm, :key => key}, :scope => 'dover sole')
+          client_assertion.get_token(claims, {algorithm: algorithm, key: key}, {scope: 'dover sole'})
           expect(@request_body).not_to be_nil
-          expect(@request_body.keys).to match_array([:assertion, :grant_type, :scope])
+          expect(@request_body.keys).to match_array(%i[assertion grant_type scope])
           expect(@request_body[:grant_type]).to eq('urn:ietf:params:oauth:grant-type:jwt-bearer')
           expect(@request_body[:assertion]).to be_a(String)
           expect(@request_body[:scope]).to eq('dover sole')
@@ -199,7 +210,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
     end
 
     describe 'returning the response' do
-      let(:access_token) { subject.get_token(claims, {:algorithm => algorithm, :key => key}, {}, response_opts) }
+      let(:access_token) { client_assertion.get_token(claims, {algorithm: algorithm, key: key}, {}, response_opts) }
       let(:response_opts) { {} }
 
       %w[json formencoded].each do |mode|
@@ -209,7 +220,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
           end
 
           it 'returns an AccessToken' do
-            expect(access_token).to be_an(AccessToken)
+            expect(access_token).to be_an(OAuth2::AccessToken)
           end
 
           it 'returns AccessToken with same Client' do
@@ -229,11 +240,11 @@ RSpec.describe OAuth2::Strategy::Assertion do
           end
 
           it 'sets AccessToken#refresh_token to nil' do
-            expect(access_token.refresh_token).to eq(nil)
+            expect(access_token.refresh_token).to be_nil
           end
 
           context 'with custom response_opts' do
-            let(:response_opts) { {:custom_token_option => 'mackerel'} }
+            let(:response_opts) { {'custom_token_option' => 'mackerel'} }
 
             it 'passes them into the token params' do
               expect(access_token.params).to eq(response_opts)
