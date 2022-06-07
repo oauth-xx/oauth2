@@ -511,6 +511,33 @@ RSpec.describe OAuth2::Client do
       end
     end
 
+    context 'when a MACToken is requested' do
+      let(:token_params) do
+        {
+          "access_token": 'SlAV32hkKG',
+          "token_type": 'mac',
+          "expires_in": 3600,
+          "refresh_token": '8xLOxBtZp8',
+          "secret": '23sasd#adf@#',
+          "algorithm": 'hmac-sha-1',
+        }
+      end
+
+      it 'returns a MACToken' do
+        client = stubbed_client do |stub|
+          stub.post('/oauth/token') do
+            [200, {'Content-Type' => 'application/json'}, MultiJson.encode('access_token' => 'the-token')]
+          end
+        end
+
+        token = client.get_token({}, token_params, OAuth2::MACToken)
+        expect(token).to be_a(OAuth2::MACToken)
+        expect(token.signature(Time.now.to_i, 'GET', URI('http://example.com'))).to be_a String
+        expect(token.response).to be_a OAuth2::Response
+        expect(token.response.parsed).to eq('access_token' => 'the-token')
+      end
+    end
+
     def stubbed_client(params = {}, &stubs)
       params = {site: 'https://api.example.com'}.merge(params)
       OAuth2::Client.new('abc', 'def', params) do |builder|

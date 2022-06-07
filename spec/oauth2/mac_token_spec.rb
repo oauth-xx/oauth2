@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 RSpec.describe OAuth2::MACToken do
-  subject { described_class.new(client, token, 'abc123', kid: kid) }
+  subject { described_class.new(client, token, secret, kid: kid) }
 
   let(:kid) { 'this-token' }
   let(:token) { 'monkey' }
+  let(:secret) { 'abc123' }
   let(:client) do
     OAuth2::Client.new('abc', 'def', site: 'https://api.example.com') do |builder|
       builder.request :url_encoded
@@ -135,6 +136,28 @@ RSpec.describe OAuth2::MACToken do
 
     it 'initializes params' do
       expect(subject.params).to eq(random: 1)
+    end
+  end
+
+  describe '.from_hash' do
+    subject { described_class.from_hash(client, token_params) }
+
+    let(:token_params) do
+      {
+        "access_token": token,
+        "token_type": 'mac',
+        "expires_in": 3600,
+        "refresh_token": '8xLOxBtZp8',
+        "secret": secret,
+        "algorithm": 'hmac-sha-1',
+      }
+    end
+
+    it 'initializes client, token, secret, and algorithm properly' do
+      expect(subject.client).to eq(client)
+      expect(subject.token).to eq(token)
+      expect(subject.secret).to eq(secret)
+      expect(subject.algorithm).to be_instance_of(OpenSSL::Digest('SHA1'))
     end
   end
 end

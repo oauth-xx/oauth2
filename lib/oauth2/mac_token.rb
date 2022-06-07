@@ -7,6 +7,19 @@ require 'securerandom'
 
 module OAuth2
   class MACToken < AccessToken
+    # Initializes an MACToken from a Hash
+    #
+    # @param client [Client] the OAuth2::Client instance
+    # @param hash [Hash] a hash of MACToken property values
+    # @return [MACToken] the initialized AccessToken
+    def self.from_hash(client, hash)
+      hash = hash.dup
+      new(client,
+          hash.delete('access_token') || hash.delete(:access_token),
+          hash.delete('secret') || hash.delete(:secret),
+          hash)
+    end
+
     # Generates a MACToken from an AccessToken and secret
     #
     # @param [AccessToken] token the OAuth2::Token instance
