@@ -29,13 +29,6 @@ Metrics/MethodLength:
 Metrics/PerceivedComplexity:
   Max: 13
 
-# Offense count: 2
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: snake_case, normalcase, non_integer
-Naming/VariableNumber:
-  Exclude:
-    - 'spec/oauth2/mac_token_spec.rb'
-
 # Offense count: 8
 # Configuration parameters: Prefixes.
 # Prefixes: when, with, without
