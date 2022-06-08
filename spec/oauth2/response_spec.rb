@@ -111,21 +111,21 @@ RSpec.describe OAuth2::Response do
 
     context 'when application/json' do
       let(:content_type) { 'application/json' }
-      let(:body) { MultiJson.encode(foo: 'bar', answer: 42, krill: nil, zero: 0, malign: false, shine: true) }
+      let(:body) { JSON.dump(foo: 'bar', answer: 42, krill: nil, zero: 0, malign: false, shine: true) }
 
       it_behaves_like 'parsing JSON-like'
     end
 
     context 'when application/Json' do
       let(:content_type) { 'application/Json' }
-      let(:body) { MultiJson.encode(foo: 'bar', answer: 42, krill: nil, zero: 0, malign: false, shine: true) }
+      let(:body) { JSON.dump(foo: 'bar', answer: 42, krill: nil, zero: 0, malign: false, shine: true) }
 
       it_behaves_like 'parsing JSON-like'
     end
 
     context 'when application/hal+json' do
       let(:content_type) { 'application/hal+json' }
-      let(:body) { MultiJson.encode(foo: 'bar', answer: 42, krill: nil, zero: 0, malign: false, shine: true) }
+      let(:body) { JSON.dump(foo: 'bar', answer: 42, krill: nil, zero: 0, malign: false, shine: true) }
 
       it_behaves_like 'parsing JSON-like'
     end
@@ -171,7 +171,7 @@ RSpec.describe OAuth2::Response do
 
     it 'parses application/vnd.collection+json body' do
       headers = {'Content-Type' => 'application/vnd.collection+json'}
-      body = MultiJson.encode(collection: {})
+      body = JSON.dump(collection: {})
       response = double('response', headers: headers, body: body)
       subject = described_class.new(response)
       expect(subject.parsed.keys.size).to eq(1)
@@ -179,7 +179,7 @@ RSpec.describe OAuth2::Response do
 
     it 'parses application/vnd.api+json body' do
       headers = {'Content-Type' => 'application/vnd.api+json'}
-      body = MultiJson.encode(collection: {})
+      body = JSON.dump(collection: {})
       response = double('response', headers: headers, body: body)
       subject = described_class.new(response)
       expect(subject.parsed.keys.size).to eq(1)
@@ -187,7 +187,7 @@ RSpec.describe OAuth2::Response do
 
     it 'parses application/problem+json body' do
       headers = {'Content-Type' => 'application/problem+json'}
-      body = MultiJson.encode(type: 'https://tools.ietf.org/html/rfc7231#section-6.5.4', title: 'Not Found')
+      body = JSON.dump(type: 'https://tools.ietf.org/html/rfc7231#section-6.5.4', title: 'Not Found')
       response = double('response', headers: headers, body: body)
       subject = described_class.new(response)
       expect(subject.parsed.keys.size).to eq(2)
@@ -201,8 +201,7 @@ RSpec.describe OAuth2::Response do
 
       response = double('response', headers: headers, body: body)
 
-      expect(MultiJson).not_to receive(:decode)
-      expect(MultiJson).not_to receive(:load)
+      expect(JSON).not_to receive(:parse)
       expect(Rack::Utils).not_to receive(:parse_query)
 
       subject = described_class.new(response)
@@ -211,7 +210,7 @@ RSpec.describe OAuth2::Response do
 
     it 'snakecases json keys when parsing' do
       headers = {'Content-Type' => 'application/json'}
-      body = MultiJson.encode('accessToken' => 'bar', 'MiGever' => 'Ani')
+      body = JSON.dump('accessToken' => 'bar', 'MiGever' => 'Ani')
       response = double('response', headers: headers, body: body)
       subject = described_class.new(response)
       expect(subject.parsed.keys.size).to eq(2)

@@ -4,7 +4,7 @@ RSpec.describe OAuth2::AccessToken do
   subject { described_class.new(client, token) }
 
   let(:token) { 'monkey' }
-  let(:refresh_body) { MultiJson.encode(access_token: 'refreshed_foo', expires_in: 600, refresh_token: 'refresh_bar') }
+  let(:refresh_body) { JSON.dump(access_token: 'refreshed_foo', expires_in: 600, refresh_token: 'refresh_bar') }
   let(:client) do
     OAuth2::Client.new('abc', 'def', site: 'https://api.example.com') do |builder|
       builder.request :url_encoded
@@ -249,7 +249,7 @@ RSpec.describe OAuth2::AccessToken do
     end
 
     context 'with a nil refresh_token in the response' do
-      let(:refresh_body) { MultiJson.encode(access_token: 'refreshed_foo', expires_in: 600, refresh_token: nil) }
+      let(:refresh_body) { JSON.dump(access_token: 'refreshed_foo', expires_in: 600, refresh_token: nil) }
 
       it 'copies the refresh_token from the original token' do
         refreshed = access.refresh

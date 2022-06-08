@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'multi_json'
+require 'json'
 require 'multi_xml'
 require 'rack'
 
@@ -129,5 +129,9 @@ OAuth2::Response.register_parser(:xml, ['text/xml', 'application/rss+xml', 'appl
 end
 
 OAuth2::Response.register_parser(:json, ['application/json', 'text/javascript', 'application/hal+json', 'application/vnd.collection+json', 'application/vnd.api+json', 'application/problem+json']) do |body|
-  MultiJson.decode(body)
+  if body.respond_to?(:force_encoding)
+    body = body.dup.force_encoding(::Encoding::ASCII_8BIT)
+  end
+
+  ::JSON.parse(body)
 end

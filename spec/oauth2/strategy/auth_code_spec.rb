@@ -7,7 +7,7 @@ RSpec.describe OAuth2::Strategy::AuthCode do
   let(:code) { 'sushi' }
   let(:kvform_token) { 'expires_in=600&access_token=salmon&refresh_token=trout&extra_param=steve' }
   let(:facebook_token) { kvform_token.gsub('_in', '') }
-  let(:json_token) { MultiJson.encode(expires_in: 600, access_token: 'salmon', refresh_token: 'trout', extra_param: 'steve') }
+  let(:json_token) { JSON.dump(expires_in: 600, access_token: 'salmon', refresh_token: 'trout', extra_param: 'steve') }
   let(:redirect_uri) { 'http://example.com/redirect_uri' }
   let(:microsoft_token) { 'id_token=jwt' }
 
@@ -86,7 +86,7 @@ RSpec.describe OAuth2::Strategy::AuthCode do
   end
 
   describe '#get_token (handling utf-8 data)' do
-    let(:json_token) { MultiJson.encode(expires_in: 600, access_token: 'salmon', refresh_token: 'trout', extra_param: 'André') }
+    let(:json_token) { JSON.dump(expires_in: 600, access_token: 'salmon', refresh_token: 'trout', extra_param: 'André') }
 
     before do
       @mode = 'json'
