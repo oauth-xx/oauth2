@@ -62,7 +62,7 @@ module OAuth2
     # @param [String] url the HTTP URL path of the request
     def header(verb, url)
       timestamp = Time.now.utc.to_i
-      nonce = Digest::MD5.hexdigest([timestamp, SecureRandom.hex].join(':'))
+      nonce = Digest::SHA256.hexdigest([timestamp, SecureRandom.hex].join(':'))
 
       uri = URI.parse(url)
 
