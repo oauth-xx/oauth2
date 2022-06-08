@@ -56,7 +56,7 @@ RSpec.describe OAuth2::Error do
       end
 
       context 'when the response needs to be encoded' do
-        let(:response_body) { MultiJson.encode(response_hash).force_encoding('ASCII-8BIT') }
+        let(:response_body) { JSON.dump(response_hash).force_encoding('ASCII-8BIT') }
 
         context 'with invalid characters present' do
           before do
