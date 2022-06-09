@@ -16,6 +16,7 @@ if RUN_COVERAGE
     enable_coverage :branch
     primary_coverage :branch
     add_filter 'spec'
+    add_filter 'lib/oauth2/version.rb'
     track_files '**/*.rb'
 
     if ALL_FORMATTERS
