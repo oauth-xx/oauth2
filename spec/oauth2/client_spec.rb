@@ -525,7 +525,7 @@ RSpec.describe OAuth2::Client do
       end
 
       it 'returns the parsed :custom_token from body' do
-        client.get_token({}, {}, {access_token_class: CustomAccessToken})
+        client.get_token({}, {}, nil, access_token_class: CustomAccessToken)
       end
     end
 
@@ -558,7 +558,7 @@ RSpec.describe OAuth2::Client do
           [200, {'Content-Type' => 'application/json'}, JSON.dump('access_token' => 'the-token')]
         end
       end
-      client.get_token('arbitrary' => 'parameter')
+      client.get_token({'arbitrary' => 'parameter'}) # rubocop:disable Style/BracesAroundHashParameters
     end
 
     context 'when token_method is set to post_with_query_string' do
@@ -568,7 +568,7 @@ RSpec.describe OAuth2::Client do
             [200, {'Content-Type' => 'application/json'}, JSON.dump('access_token' => 'the-token')]
           end
         end
-        client.get_token('state' => 'abc123')
+        client.get_token({'state' => 'abc123'}) # rubocop:disable Style/BracesAroundHashParameters
       end
     end
 
