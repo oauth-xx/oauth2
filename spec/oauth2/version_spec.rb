@@ -20,4 +20,28 @@ RSpec.describe OAuth2::Version do
   it 'is pre-release' do
     expect(Gem::Version.new(described_class).prerelease?).to be(true)
   end
+
+  it 'major version is an integer' do
+    expect(described_class.major).to be_a(Integer)
+  end
+
+  it 'minor version is an integer' do
+    expect(described_class.minor).to be_a(Integer)
+  end
+
+  it 'patch version is an integer' do
+    expect(described_class.patch).to be_a(Integer)
+  end
+
+  it 'pre version is an String' do
+    expect(described_class.pre).to be_a(String)
+  end
+
+  it 'returns a Hash' do
+    expect(described_class.to_h.keys).to match_array(%i[major minor patch pre])
+  end
+
+  it 'returns an Array' do
+    expect(described_class.to_a).to be_a(Array)
+  end
 end
