@@ -502,10 +502,11 @@ RSpec.describe OAuth2::Client do
     end
 
     describe 'with custom access_token_class option' do
+      let(:payload) { {'custom_token' => 'the-token'} }
       let(:client) do
         stubbed_client do |stub|
           stub.post('/oauth/token') do
-            [200, {'Content-Type' => 'application/json'}, JSON.dump('custom_token' => 'the-token')]
+            [200, {'Content-Type' => 'application/json'}, JSON.dump(payload)]
           end
         end
       end
@@ -526,6 +527,15 @@ RSpec.describe OAuth2::Client do
 
       it 'returns the parsed :custom_token from body' do
         client.get_token({}, {}, nil, access_token_class: CustomAccessToken)
+      end
+
+      context 'when the :raise_errors flag is set to true' do
+        let(:options) { {raise_errors: true} }
+        let(:payload) { {} }
+
+        it 'raise an error' do
+          expect { client.get_token({}, {}, nil, access_token_class: CustomAccessToken) }.to raise_error(OAuth2::Error)
+        end
       end
     end
 
