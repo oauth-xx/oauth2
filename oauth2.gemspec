@@ -17,7 +17,6 @@ Gem::Specification.new do |spec|
   spec.licenses      = %w[MIT]
   spec.name          = 'oauth2'
   spec.required_ruby_version = '>= 2.2.0'
-  spec.required_rubygems_version = '>= 2.7.11'
   spec.summary       = 'A Ruby wrapper for the OAuth 2.0 protocol.'
   spec.version       = OAuth2::Version::VERSION
 
