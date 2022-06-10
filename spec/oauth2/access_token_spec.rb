@@ -233,8 +233,21 @@ RSpec.describe OAuth2::AccessToken do
                                          param_name: 'o_param')
     end
     let(:new_access) do
-      NewAccessToken = Class.new(described_class)
       NewAccessToken.new(client, token, refresh_token: 'abaca')
+    end
+
+    before do
+      custom_class = Class.new(described_class) do
+        def self.from_hash(client, hash)
+          new(client, hash.delete('refresh_token'))
+        end
+
+        def self.contains_token?(hash)
+          hash.key?('refresh_token')
+        end
+      end
+
+      stub_const('NewAccessToken', custom_class)
     end
 
     it 'returns a refresh token with appropriate values carried over' do
@@ -255,6 +268,14 @@ RSpec.describe OAuth2::AccessToken do
         refreshed = access.refresh
 
         expect(refreshed.refresh_token).to eq(access.refresh_token)
+      end
+    end
+
+    context 'with a custom access_token_class' do
+      it 'returns a refresh token of NewAccessToken' do
+        refreshed = access.refresh!(access_token_class: new_access.class)
+
+        expect(new_access.class).to eq(refreshed.class)
       end
     end
   end
