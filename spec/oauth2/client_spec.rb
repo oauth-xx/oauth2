@@ -460,17 +460,19 @@ RSpec.describe OAuth2::Client do
     end
 
     context 'when the :raise_errors flag is set to false' do
-      context 'when the request body is nil' do
-        subject(:get_token) { client.get_token({}) }
-
-        let(:status_code) { 500 }
-        let(:client) do
-          stubbed_client(raise_errors: false) do |stub|
-            stub.post('/oauth/token') do
-              [status_code, {'Content-Type' => 'application/json'}, nil]
-            end
+      let(:body) { nil }
+      let(:status_code) { 500 }
+      let(:content_type) { 'application/json' }
+      let(:client) do
+        stubbed_client(raise_errors: false) do |stub|
+          stub.post('/oauth/token') do
+            [status_code, {'Content-Type' => content_type}, body]
           end
         end
+      end
+
+      context 'when the request body is nil' do
+        subject(:get_token) { client.get_token({}) }
 
         it 'raises error JSON::ParserError' do
           block_is_expected { get_token }.to raise_error(JSON::ParserError)
@@ -487,16 +489,21 @@ RSpec.describe OAuth2::Client do
       end
 
       context 'when the request body is not nil' do
-        it 'returns the parsed :access_token from body' do
-          client = stubbed_client do |stub|
-            stub.post('/oauth/token') do
-              [200, {'Content-Type' => 'application/json'}, JSON.dump('access_token' => 'the-token')]
-            end
-          end
+        let(:body) { JSON.dump('access_token' => 'the-token') }
 
+        it 'returns the parsed :access_token from body' do
           token = client.get_token({})
           expect(token.response).to be_a OAuth2::Response
           expect(token.response.parsed).to eq('access_token' => 'the-token')
+        end
+      end
+
+      context 'when Content-Type is not JSON' do
+        let(:content_type) { 'text/plain' }
+        let(:body) { 'hello world' }
+
+        it 'returns the parsed :access_token from body' do
+          expect(client.get_token({})).to be_nil
         end
       end
     end
