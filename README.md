@@ -247,8 +247,7 @@ For more see [SECURITY.md][🚎sec-pol].
 - Officially support Ruby versions >= 2.7
 - Unofficially support Ruby versions >= 2.5
 - Incidentally support Ruby versions >= 2.2
-- Drop support for MAC Draft versions < 03
-- Add support for MAC Draft version 05
+- Drop support for the expired MAC Draft (all versions)
 - Support IETF rfc7523 JWT Bearer Tokens
 - Support IETF rfc7231 Relative Location in Redirect
 - Support IETF rfc6749 Don't set oauth params when nil
