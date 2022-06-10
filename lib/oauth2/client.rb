@@ -182,7 +182,7 @@ module OAuth2
       http_method = :post if http_method == :post_with_query_string
       response = request(http_method, token_url, opts)
 
-      # In v1.49, the deprecated extract_access_token option retrieves the token from the response.
+      # In v1.4.x, the deprecated extract_access_token option retrieves the token from the response.
       # We preserve this behavior here, but a custom access_token_class that implements #from_hash
       # should be used instead.
       if extract_access_token
