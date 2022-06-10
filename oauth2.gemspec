@@ -21,13 +21,13 @@ Gem::Specification.new do |spec|
   spec.summary       = 'A Ruby wrapper for the OAuth 2.0 protocol.'
   spec.version       = OAuth2::Version.to_s
 
-  spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "#{spec.homepage}/tree/v#{spec.version}"
-  spec.metadata["changelog_uri"] = "#{spec.homepage}/blob/v#{spec.version}/CHANGELOG.md"
-  spec.metadata["bug_tracker_uri"] = "#{spec.homepage}/issues"
-  spec.metadata["documentation_uri"] = "https://www.rubydoc.info/gems/#{spec.name}/#{spec.version}"
-  spec.metadata["wiki_uri"] = "#{spec.homepage}/wiki"
-  spec.metadata["rubygems_mfa_required"] = "true"
+  spec.metadata['homepage_uri'] = spec.homepage
+  spec.metadata['source_code_uri'] = "#{spec.homepage}/tree/v#{spec.version}"
+  spec.metadata['changelog_uri'] = "#{spec.homepage}/blob/v#{spec.version}/CHANGELOG.md"
+  spec.metadata['bug_tracker_uri'] = "#{spec.homepage}/issues"
+  spec.metadata['documentation_uri'] = "https://www.rubydoc.info/gems/#{spec.name}/#{spec.version}"
+  spec.metadata['wiki_uri'] = "#{spec.homepage}/wiki"
+  spec.metadata['rubygems_mfa_required'] = 'true'
 
   spec.require_paths = %w[lib]
   spec.bindir        = 'exe'
