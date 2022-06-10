@@ -31,7 +31,7 @@ module OAuth2
     #
     # @return [String, NilClass]
     def pre
-      'alpha'
+      'rc1'
     end
 
     # The version number as a hash

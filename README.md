@@ -15,14 +15,10 @@ OAuth 2.0 focuses on client developer simplicity while providing specific author
 This is a RubyGem for implementing OAuth 2.0 clients and servers in Ruby applications.
 See the sibling `oauth` gem for OAuth 1.0 implementations in Ruby.
 
-⚠️ **_WARNING_**: You are viewing the `README` of the master branch which contains
-unreleased changes for version 2.0.0. ⚠️
-
 ---
 
 * [OAuth 2.0 Spec][oauth2-spec]
 * [oauth sibling gem][sibling-gem] for OAuth 1.0 implementations in Ruby.
-* Help us finish release [![2.0.0 release milestone][next-milestone-pct-img]][next-milestone-pct] by submitting or reviewing PRs and issues.
 
 [oauth2-spec]: https://oauth.net/2/
 [sibling-gem]: https://github.com/oauth-xx/oauth-ruby
@@ -38,7 +34,7 @@ unreleased changes for version 2.0.0. ⚠️
 
 | Version | Release Date | Readme                                                   |
 |---------|--------------|----------------------------------------------------------|
-| 2.0.0   | Unreleased   | https://github.com/oauth-xx/oauth2/blob/master/README.md |
+| 2.0.0   | Soon         | https://github.com/oauth-xx/oauth2/blob/master/README.md |
 </details>
 
 ### Older Releases
@@ -299,7 +295,7 @@ of a major release, support for that Ruby version may be dropped.
 | 2️⃣ | 1.4.x                | `1-4-stable`       | 2.5, 2.6, 2.7, 3.0, 3.1 | 2.1, 2.2, 2.3, 2.4     | 1.9, 2.0               |
 | 3️⃣ | older                | N/A                | Best of luck to you!    | Please upgrade!        |                        |
 
-NOTE: Once 2.0 is released, the 1.4 series will only receive critical bug and security updates.
+NOTE: The 1.4 series will only receive critical bug and security updates.
 See [SECURITY.md][🚎sec-pol]
 
 ## Usage Examples
@@ -448,7 +444,7 @@ dependency on this gem using the [Pessimistic Version Constraint][pvc] with two 
 For example:
 
 ```ruby
-spec.add_dependency 'oauth2', '~> 1.4'
+spec.add_dependency 'oauth2', '~> 2.0'
 ```
 
 [semver]: http://semver.org/
