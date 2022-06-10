@@ -1,7 +1,7 @@
 # encoding: utf-8
 # frozen_string_literal: true
 
-require_relative "lib/oauth2/version"
+require_relative 'lib/oauth2/version'
 
 Gem::Specification.new do |spec|
   spec.add_dependency 'faraday', ['>= 0.17.3', '< 3.0']
@@ -17,22 +17,29 @@ Gem::Specification.new do |spec|
   spec.licenses      = %w[MIT]
   spec.name          = 'oauth2'
   spec.required_ruby_version = '>= 2.2.0'
-  spec.required_rubygems_version = '>= 1.3.5'
+  spec.required_rubygems_version = '>= 2.7.11'
   spec.summary       = 'A Ruby wrapper for the OAuth 2.0 protocol.'
-  spec.version       = OAuth2::Version
+  spec.version       = OAuth2::Version.to_s
 
-  spec.metadata = {
-    'bug_tracker_uri' => 'https://github.com/oauth-xx/oauth2/issues',
-    'changelog_uri' => "https://github.com/oauth-xx/oauth2/blob/v#{spec.version}/CHANGELOG.md",
-    'documentation_uri' => "https://www.rubydoc.info/gems/oauth2/#{spec.version}",
-    'source_code_uri' => "https://github.com/oauth-xx/oauth2/tree/v#{spec.version}",
-    'wiki_uri' => 'https://github.com/oauth-xx/oauth2/wiki',
-    'rubygems_mfa_required' => 'true',
-  }
+  spec.metadata["homepage_uri"] = spec.homepage
+  spec.metadata["source_code_uri"] = "#{spec.homepage}/tree/v#{spec.version}"
+  spec.metadata["changelog_uri"] = "#{spec.homepage}/blob/v#{spec.version}/CHANGELOG.md"
+  spec.metadata["bug_tracker_uri"] = "#{spec.homepage}/issues"
+  spec.metadata["documentation_uri"] = "https://www.rubydoc.info/gems/#{spec.name}/#{spec.version}"
+  spec.metadata["wiki_uri"] = "#{spec.homepage}/wiki"
+  spec.metadata["rubygems_mfa_required"] = "true"
 
   spec.require_paths = %w[lib]
   spec.bindir        = 'exe'
-  spec.files = Dir['lib/**/*', 'LICENSE', 'README.md', 'CHANGELOG.md', 'CODE_OF_CONDUCT.md']
+  spec.files = Dir[
+    'lib/**/*',
+    'CHANGELOG.md',
+    'CODE_OF_CONDUCT.md',
+    'CONTRIBUTING.md',
+    'LICENSE',
+    'README.md',
+    'SECURITY.md',
+  ]
   spec.executables = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
 
   spec.add_development_dependency 'addressable', '>= 2'
