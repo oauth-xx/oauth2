@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 2.2.0'
   spec.required_rubygems_version = '>= 2.7.11'
   spec.summary       = 'A Ruby wrapper for the OAuth 2.0 protocol.'
-  spec.version       = OAuth2::Version.to_s
+  spec.version       = OAuth2::Version::VERSION
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = "#{spec.homepage}/tree/v#{spec.version}"

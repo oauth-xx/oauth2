@@ -2,36 +2,43 @@
 
 module OAuth2
   module Version
-    VERSION = to_s
+    VERSION = '2.0.0.rc1'.freeze
 
   module_function
+
+    # The version number as a string
+    #
+    # @return [String]
+    def to_s
+      VERSION
+    end
 
     # The major version
     #
     # @return [Integer]
     def major
-      2
+      to_a[0].to_i
     end
 
     # The minor version
     #
     # @return [Integer]
     def minor
-      0
+      to_a[1].to_i
     end
 
     # The patch version
     #
     # @return [Integer]
     def patch
-      0
+      to_a[2].to_i
     end
 
     # The pre-release version, if any
     #
     # @return [String, NilClass]
     def pre
-      'rc1'
+      to_a[3]
     end
 
     # The version number as a hash
@@ -50,16 +57,7 @@ module OAuth2
     #
     # @return [Array]
     def to_a
-      [major, minor, patch, pre].compact
-    end
-
-    # The version number as a string
-    #
-    # @return [String]
-    def to_s
-      v = [major, minor, patch].compact.join('.')
-      v += "-#{pre}" if pre
-      v
+      VERSION.split('.')
     end
   end
 end
