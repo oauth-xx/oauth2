@@ -278,6 +278,8 @@ module OAuth2
         raise(error)
       end
 
+      return unless data.is_a?(Hash)
+
       build_access_token(response, access_token_opts, access_token_class)
     end
 
