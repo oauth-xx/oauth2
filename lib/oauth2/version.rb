@@ -2,7 +2,7 @@
 
 module OAuth2
   module Version
-    VERSION = '2.0.0.rc1'.freeze
+    VERSION = '2.0.0.rc2'.freeze
 
   module_function
 
