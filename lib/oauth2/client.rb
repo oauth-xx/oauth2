@@ -273,12 +273,12 @@ module OAuth2
     def parse_response(response, access_token_opts, access_token_class)
       data = response.parsed
 
-      if options[:raise_errors] && data.is_a?(Hash) && !access_token_class.contains_token?(data)
+      unless data.is_a?(Hash) && access_token_class.contains_token?(data)
+        return unless options[:raise_errors]
+
         error = Error.new(response)
         raise(error)
       end
-
-      return unless data.is_a?(Hash)
 
       build_access_token(response, access_token_opts, access_token_class)
     end

@@ -488,22 +488,26 @@ RSpec.describe OAuth2::Client do
         end
       end
 
-      context 'when the request body is not nil' do
-        let(:body) { JSON.dump('access_token' => 'the-token') }
+      context 'when status code is 200' do
+        let(:status_code) { 200 }
 
-        it 'returns the parsed :access_token from body' do
-          token = client.get_token({})
-          expect(token.response).to be_a OAuth2::Response
-          expect(token.response.parsed).to eq('access_token' => 'the-token')
+        context 'when the request body is not nil' do
+          let(:body) { JSON.dump('access_token' => 'the-token') }
+
+          it 'returns the parsed :access_token from body' do
+            token = client.get_token({})
+            expect(token.response).to be_a OAuth2::Response
+            expect(token.response.parsed).to eq('access_token' => 'the-token')
+          end
         end
-      end
 
-      context 'when Content-Type is not JSON' do
-        let(:content_type) { 'text/plain' }
-        let(:body) { 'hello world' }
+        context 'when Content-Type is not JSON' do
+          let(:content_type) { 'text/plain' }
+          let(:body) { 'hello world' }
 
-        it 'returns the parsed :access_token from body' do
-          expect(client.get_token({})).to be_nil
+          it 'returns the parsed :access_token from body' do
+            expect(client.get_token({})).to be_nil
+          end
         end
       end
     end
@@ -542,6 +546,27 @@ RSpec.describe OAuth2::Client do
 
         it 'raise an error' do
           expect { client.get_token({}, {}, nil, access_token_class: CustomAccessToken) }.to raise_error(OAuth2::Error)
+        end
+      end
+
+      context 'when status code is 200' do
+        let(:status_code) { 200 }
+
+        context 'when the request body is blank' do
+          let(:payload) { {} }
+
+          it 'raises an error' do
+            expect { client.get_token({}) }.to raise_error(OAuth2::Error)
+          end
+        end
+
+        context 'when Content-Type is not JSON' do
+          let(:content_type) { 'text/plain' }
+          let(:body) { 'hello world' }
+
+          it 'raises an error' do
+            expect { client.get_token({}) }.to raise_error(OAuth2::Error)
+          end
         end
       end
     end
