@@ -1,4 +1,4 @@
-name: Windows
+name: Windows JRuby
 
 on:
   push:
@@ -34,14 +34,8 @@ jobs:
         experimental: [true]
         gemfile:
           - f2
-        rubygems:
-          - latest
-        bundler:
-          - latest
         ruby:
-          - "2.7"
-          - "3.0"
-          - "3.1"
+          - jruby
 
     runs-on: windows-latest
     continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
