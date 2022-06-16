@@ -34,6 +34,8 @@ jobs:
         experimental: [true]
         gemfile:
           - f2
+        bundler:
+          - none
         ruby:
           - jruby
 
