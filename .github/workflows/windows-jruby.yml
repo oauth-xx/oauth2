@@ -27,7 +27,8 @@ jobs:
     name: Specs - Ruby ${{ matrix.ruby }} ${{matrix.gemfile}} ${{ matrix.name_extra || '' }}
     env: # $BUNDLE_GEMFILE must be set at the job level, so it is set for all steps
       BUNDLE_GEMFILE: ${{ github.workspace }}/gemfiles/${{ matrix.gemfile }}.gemfile
-    if: "!contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]')"
+    if: "false"
+    # if: "!contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]')"
     strategy:
       fail-fast: false
       matrix:
