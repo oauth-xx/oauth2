@@ -1,10 +1,10 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
-The format (since v2.0.0) is based on [Keep a Changelog v1](https://keepachangelog.com/en/1.0.0/),
+The format (since v2) is based on [Keep a Changelog v1](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.0.0.rc3] - 2022-06-16
 ### Added
 - [#158](https://github.com/oauth-xx/oauth2/pull/158), [#344](https://github.com/oauth-xx/oauth2/pull/344) - Optionally pass raw response to parsers (@niels)
 - [#190](https://github.com/oauth-xx/oauth2/pull/190), [#332](https://github.com/oauth-xx/oauth2/pull/332), [#334](https://github.com/oauth-xx/oauth2/pull/334), [#335](https://github.com/oauth-xx/oauth2/pull/335), [#360](https://github.com/oauth-xx/oauth2/pull/360), [#426](https://github.com/oauth-xx/oauth2/pull/426), [#427](https://github.com/oauth-xx/oauth2/pull/427), [#461](https://github.com/oauth-xx/oauth2/pull/461) - Documentation (@josephpage, @pboling, @meganemura, @joshRpowell, @elliotcm)
@@ -60,6 +60,9 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 - [#472](https://github.com/oauth-xx/oauth2/pull/472) - **Security**: Add checks to enforce `client_secret` is *never* passed in authorize_url query params for `implicit` and `auth_code` grant types (@dfockler)
 - [#482](https://github.com/oauth-xx/oauth2/pull/482) - _Documentation_: Update last of `intridea` links to `oauth-xx` (@pboling)
 - [#536](https://github.com/oauth-xx/oauth2/pull/536) - **Security**: Compatibility with more (and recent) Ruby OpenSSL versions, Github Actions, Rubocop updated, analogous to [#535](https://github.com/oauth-xx/oauth2/pull/535) on `1-4-stable` branch (@pboling)
+- [#595](https://github.com/oauth-xx/oauth2/pull/595) - Graceful handling of empty responses from `Client#get_token`, respecting `:raise_errors` config (@stanhu)
+- [#596](https://github.com/oauth-xx/oauth2/pull/596) - Consistency between `AccessToken#refresh` and `Client#get_token` named arguments (@stanhu)
+- [#598](https://github.com/oauth-xx/oauth2/pull/598) - Fix unparseable data not raised as error in `Client#get_token`, respecting `:raise_errors` config (@stanhu)
 ### Removed
 - [#341](https://github.com/oauth-xx/oauth2/pull/341) - Remove Rdoc & Jeweler related files (@josephpage)
 - [#342](https://github.com/oauth-xx/oauth2/pull/342) - **BREAKING**: Dropped support for Ruby 1.8 (@josephpage)
