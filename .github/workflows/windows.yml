@@ -31,7 +31,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        experimental: [true]
+        experimental: [false]
         gemfile:
           - f2
         rubygems:
