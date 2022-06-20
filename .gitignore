@@ -34,3 +34,4 @@ Gemfile.lock
 # Other
 /measurement/
 /.byebug_history
+.DS_Store
