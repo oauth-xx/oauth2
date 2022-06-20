@@ -6,6 +6,7 @@ require 'time'
 
 # third party gems
 require 'rash'
+require 'version_gem'
 
 # includes gem files
 require 'oauth2/version'
@@ -24,4 +25,8 @@ require 'oauth2/response'
 
 # The namespace of this library
 module OAuth2
+end
+
+OAuth2::Version.class_eval do
+  extend VersionGem::Basic
 end

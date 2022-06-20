@@ -18,7 +18,6 @@ debug = minimum_version.call('2.5')
 
 gem 'overcommit', '~> 0.58' if linting
 
-gem 'pry', platforms: %i[mri jruby]
 platforms :mri do
   if linting
     # Danger is incompatible with Faraday 2 (for now)
@@ -43,7 +42,6 @@ platforms :mri do
   if debug
     # Add `byebug` to your code where you want to drop to REPL
     gem 'byebug'
-    gem 'pry-byebug'
   end
 end
 platforms :jruby do
