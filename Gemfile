@@ -24,8 +24,7 @@ platforms :mri do
     # see: https://github.com/danger/danger/issues/1349
     # gem 'danger', '~> 8.4'
     gem 'rubocop-md', require: false
-    gem 'rubocop-ruby2_2', require: false
-    # Can be added once we reach rubocop-ruby2_3
+    # Can be added once we reach rubocop-lts >= v10 (i.e. drop Ruby 2.2)
     # gem 'rubocop-packaging', require: false
     gem 'rubocop-performance', require: false
     gem 'rubocop-rake', require: false
