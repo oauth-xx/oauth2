@@ -15,7 +15,7 @@ module OAuth2
     #
     #   claim_set = {
     #     :iss => "http://localhost:3001",
-    #     :aud => "http://localhost:8080/oauth2/token"
+    #     :aud => "http://localhost:8080/oauth2/token",
     #     :sub => "me@example.com",
     #     :exp => Time.now.utc.to_i + 3600,
     #   }
