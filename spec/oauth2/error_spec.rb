@@ -64,9 +64,6 @@ RSpec.describe OAuth2::Error do
           end
 
           it 'replaces them' do
-            # The skip can be removed once support for < 2.1 is dropped.
-            encoding = {reason: 'encode/scrub only works as of Ruby 2.1'}
-            skip_for(encoding.merge(engine: 'ruby', versions: %w[1.8.7 1.9.3 2.0.0]))
             skip_for(encoding.merge(engine: 'jruby'))
             # See https://bibwild.wordpress.com/2013/03/12/removing-illegal-bytes-for-encoding-in-ruby-1-9-strings/
 

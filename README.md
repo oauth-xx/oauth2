@@ -34,7 +34,7 @@ See the sibling `oauth` gem for OAuth 1.0 implementations in Ruby.
 
 | Version | Release Date | Readme                                                   |
 |---------|--------------|----------------------------------------------------------|
-| 2.0.0   | Soon         | https://github.com/oauth-xx/oauth2/blob/master/README.md |
+| 2.0.0   | 2022-06-21   | https://github.com/oauth-xx/oauth2/blob/master/README.md |
 </details>
 
 ### Older Releases
