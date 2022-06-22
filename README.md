@@ -140,8 +140,8 @@ The link tokens in the following sections should be kept ordered by the row and 
 [🖐prs-o-img]: https://img.shields.io/github/issues-pr/oauth-xx/oauth2
 [🧮prs-c]: https://github.com/oauth-xx/oauth2/pulls?q=is%3Apr+is%3Aclosed
 [🧮prs-c-img]: https://img.shields.io/github/issues-pr-closed/oauth-xx/oauth2
-[📗next]: https://github.com/oauth-xx/oauth2/milestone/1
-[📗next-img]: https://img.shields.io/github/milestones/progress/oauth-xx/oauth2/1?label=Next%20Version
+[📗next]: https://github.com/oauth-xx/oauth2/milestone/12
+[📗next-img]: https://img.shields.io/github/milestones/progress/oauth-xx/oauth2/12?label=Next%20Version
 
 <!-- 3️⃣ maintanence & linting -->
 [⛳cclim-maint]: https://codeclimate.com/github/oauth-xx/oauth2/maintainability
