@@ -42,17 +42,17 @@ RSpec.describe OAuth2::Error do
 
     context 'when the response has an error and error_description' do
       before do
-        response_hash[:error_description] = 'Short and stout'
-        response_hash[:error] = 'i_am_a_teapot'
+        response_hash['error_description'] = 'Short and stout'
+        response_hash['error'] = 'i_am_a_teapot'
       end
 
       it 'prepends to the error message with a return character' do
         expect(subject.message.each_line.to_a).to eq(
-          [
-            "i_am_a_teapot: Short and stout\n",
-            '{"text":"Coffee brewing failed","error_description":"Short and stout","error":"i_am_a_teapot"}',
-          ]
-        )
+                                                    [
+                                                      "i_am_a_teapot: Short and stout\n",
+                                                      '{"text":"Coffee brewing failed","error_description":"Short and stout","error":"i_am_a_teapot"}',
+                                                    ]
+                                                  )
       end
 
       context 'when the response needs to be encoded' do
@@ -76,7 +76,7 @@ RSpec.describe OAuth2::Error do
 
         context 'with undefined characters present' do
           before do
-            response_hash[:error_description] += ": 'A magical voyage of tea 🍵'"
+            response_hash['error_description'] += ": 'A magical voyage of tea 🍵'"
           end
 
           it 'replaces them' do
@@ -111,8 +111,8 @@ RSpec.describe OAuth2::Error do
 
     context 'when there is no error description' do
       before do
-        expect(response_hash).not_to have_key(:error)
-        expect(response_hash).not_to have_key(:error_description)
+        expect(response_hash).not_to have_key('error')
+        expect(response_hash).not_to have_key('error_description')
       end
 
       it 'does not prepend anything to the message' do
@@ -126,6 +126,81 @@ RSpec.describe OAuth2::Error do
 
       it 'does not set description' do
         expect(subject.description).to be_nil
+      end
+    end
+
+    context 'when there is code' do
+      before do
+        response_hash['error_description'] = 'Short and stout'
+        response_hash['error'] = 'i_am_a_teapot'
+        response_hash['code'] = '418'
+      end
+
+      it 'prepends to the error message with a return character' do
+        expect(subject.message.each_line.to_a).to eq(
+                                                    [
+                                                      "i_am_a_teapot: Short and stout\n",
+                                                      {
+                                                        "text": "Coffee brewing failed",
+                                                        "error_description": "Short and stout",
+                                                        "error": "i_am_a_teapot",
+                                                        "code": "418",
+                                                      }.to_json,
+                                                    ]
+                                                  )
+      end
+
+      context 'when the response needs to be encoded' do
+        let(:response_body) { JSON.dump(response_hash).force_encoding('ASCII-8BIT') }
+
+        context 'with invalid characters present' do
+          before do
+            response_body.gsub!('stout', "\255 invalid \255")
+          end
+
+          it 'replaces them' do
+            # The skip can be removed once support for < 2.1 is dropped.
+            encoding = {reason: 'encode/scrub only works as of Ruby 2.1'}
+            skip_for(encoding.merge(engine: 'jruby'))
+            # See https://bibwild.wordpress.com/2013/03/12/removing-illegal-bytes-for-encoding-in-ruby-1-9-strings/
+
+            raise 'Invalid characters not replaced' unless subject.message.include?('� invalid �')
+            # This will fail if {:invalid => replace} is not passed into `encode`
+          end
+        end
+
+        context 'with undefined characters present' do
+          before do
+            response_hash['error_description'] += ": 'A magical voyage of tea 🍵'"
+          end
+
+          it 'replaces them' do
+            raise 'Undefined characters not replaced' unless subject.message.include?('tea �')
+            # This will fail if {:undef => replace} is not passed into `encode`
+          end
+        end
+      end
+
+      context 'when the response is not an encodable thing' do
+        let(:response_headers) { {'Content-Type' => 'who knows'} }
+        let(:response_body) { {text: 'Coffee brewing failed'} }
+
+        before do
+          expect(response_body).not_to respond_to(:encode)
+          # i.e. a Ruby hash
+        end
+
+        it 'does not try to encode the message string' do
+          expect(subject.message).to eq(response_body.to_s)
+        end
+      end
+
+      it 'sets the code attribute' do
+        expect(subject.code).to eq('i_am_a_teapot')
+      end
+
+      it 'sets the description attribute' do
+        expect(subject.description).to eq('Short and stout')
       end
     end
   end
