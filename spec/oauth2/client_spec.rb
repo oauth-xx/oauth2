@@ -4,7 +4,7 @@
 require 'nkf'
 
 RSpec.describe OAuth2::Client do
-  subject do
+  subject(:instance) do
     described_class.new('abc', 'def', {site: 'https://api.example.com'}.merge(options)) do |builder|
       builder.adapter :test do |stub|
         stub.get('/success')             { |_env| [200, {'Content-Type' => 'text/awesome'}, 'yay'] }
@@ -19,6 +19,7 @@ RSpec.describe OAuth2::Client do
         stub.get('/empty_get')           { |_env| [204, {}, nil] }
         stub.get('/different_encoding')  { |_env| [500, {'Content-Type' => 'application/json'}, NKF.nkf('-We', JSON.dump(error: error_value, error_description: '∞'))] }
         stub.get('/ascii_8bit_encoding') { |_env| [500, {'Content-Type' => 'application/json'}, JSON.dump(error: 'invalid_request', error_description: 'é').force_encoding('ASCII-8BIT')] }
+        stub.get('/unhandled_status')    { |_env| [600, {}, nil] }
       end
     end
   end
@@ -93,6 +94,29 @@ RSpec.describe OAuth2::Client do
       opts2 = opts.dup
       described_class.new 'abc', 'def', opts
       expect(opts).to eq(opts2)
+    end
+  end
+
+  describe '#site=(val)' do
+    subject(:site) { instance.site = new_site }
+
+    let(:options) do
+      {site: 'https://example.com/blog'}
+    end
+    let(:new_site) { 'https://example.com/sharpie' }
+
+    it 'sets site' do
+      block_is_expected.to change(instance, :site).from('https://example.com/blog').to('https://example.com/sharpie')
+    end
+
+    context 'with connection' do
+      before do
+        instance.connection
+      end
+
+      it 'allows connection to reset with new url prefix' do
+        block_is_expected.to change { instance.connection.url_prefix }.from(URI('https://example.com/blog')).to(URI('https://example.com/sharpie'))
+      end
     end
   end
 
@@ -394,6 +418,13 @@ RSpec.describe OAuth2::Client do
       expect { subject.request(:get, '/error') }.to raise_error do |ex|
         expect(ex.response).not_to be_nil
         expect(ex.to_s).to match(/unknown error/)
+      end
+    end
+
+    it 'informs about unhandled status code' do
+      expect { subject.request(:get, '/unhandled_status') }.to raise_error do |ex|
+        expect(ex.response).not_to be_nil
+        expect(ex.to_s).to match(/Unhandled status code value of 600/)
       end
     end
 
