@@ -253,7 +253,7 @@ For more see [SECURITY.md][🚎sec-pol].
     - `:access_token_class` (`AccessToken`); user specified class to use for all calls to `get_token`
 - Adds new option to `OAuth2::AccessToken#initialize`:
     - `:expires_latency` (`nil`); number of seconds by which AccessToken validity will be reduced to offset latency
-- [... A lot more](https://github.com/oauth-xx/oauth2/blob/master/CHANGELOG.md#unreleased)
+- [... A lot more](https://github.com/oauth-xx/oauth2/blob/master/CHANGELOG.md#2.0.0)
 
 ## Compatibility
 
