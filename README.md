@@ -238,7 +238,7 @@ Tidelift will coordinate the fix and disclosure.
 
 For more see [SECURITY.md][🚎sec-pol].
 
-## What is new for v2.0 (unreleased, `master` branch)?
+## What is new for v2.0?
 
 - Officially support Ruby versions >= 2.7
 - Unofficially support Ruby versions >= 2.5
@@ -291,7 +291,7 @@ of a major release, support for that Ruby version may be dropped.
 
 |     | Ruby OAuth 2 Version | Maintenance Branch | Supported Officially    | Supported Unofficially | Supported Incidentally |
 |:----|----------------------|--------------------|-------------------------|------------------------|------------------------|
-| 1️⃣ | 2.0.x (unreleased)   | `master`           | 2.7, 3.0, 3.1           | 2.5, 2.6               | 2.2, 2.3, 2.4          |
+| 1️⃣ | 2.0.x                | `master`           | 2.7, 3.0, 3.1           | 2.5, 2.6               | 2.2, 2.3, 2.4          |
 | 2️⃣ | 1.4.x                | `1-4-stable`       | 2.5, 2.6, 2.7, 3.0, 3.1 | 2.1, 2.2, 2.3, 2.4     | 1.9, 2.0               |
 | 3️⃣ | older                | N/A                | Best of luck to you!    | Please upgrade!        |                        |
 
