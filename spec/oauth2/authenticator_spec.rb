@@ -22,6 +22,15 @@ RSpec.describe OAuth2::Authenticator do
         expect(output).to eq('client_id' => 'foo', 'client_secret' => 'bar')
       end
 
+      context 'when client_id nil' do
+        let(:client_id) { nil }
+
+        it 'ignores client_id, but adds client_secret to params' do
+          output = subject.apply({})
+          expect(output).to eq('client_secret' => 'bar')
+        end
+      end
+
       it 'does not overwrite existing credentials' do
         input = {'client_secret' => 's3cr3t'}
         output = subject.apply(input)
@@ -61,6 +70,28 @@ RSpec.describe OAuth2::Authenticator do
         let(:mode) { :private_key_jwt }
 
         it 'does not include client_id or client_secret' do
+          output = subject.apply({})
+          expect(output).to eq({})
+        end
+      end
+    end
+
+    context 'using tls_client_auth' do
+      let(:mode) { :tls_client_auth }
+
+      context 'when client_id present' do
+        let(:client_id) { 'foobar' }
+
+        it 'adds client_id to params' do
+          output = subject.apply({})
+          expect(output).to eq({"client_id" => "foobar"})
+        end
+      end
+
+      context 'when client_id nil' do
+        let(:client_id) { nil }
+
+        it 'ignores client_id for params' do
           output = subject.apply({})
           expect(output).to eq({})
         end
