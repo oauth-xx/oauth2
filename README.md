@@ -309,8 +309,8 @@ client = OAuth2::Client.new('client_id', 'client_secret', site: 'https://example
 client.auth_code.authorize_url(redirect_uri: 'http://localhost:8080/oauth2/callback')
 # => "https://example.org/oauth/authorize?client_id=client_id&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth2%2Fcallback&response_type=code"
 
-token = client.auth_code.get_token('authorization_code_value', redirect_uri: 'http://localhost:8080/oauth2/callback', headers: {'Authorization' => 'Basic some_password'})
-response = token.get('/api/resource', params: {'query_foo' => 'bar'})
+access = client.auth_code.get_token('authorization_code_value', redirect_uri: 'http://localhost:8080/oauth2/callback', headers: {'Authorization' => 'Basic some_password'})
+response = access.get('/api/resource', params: {'query_foo' => 'bar'})
 response.class.name
 # => OAuth2::Response
 ```
@@ -402,28 +402,42 @@ Response instance will contain the `OAuth2::Error` instance.
 
 Currently the Authorization Code, Implicit, Resource Owner Password Credentials, Client Credentials, and Assertion
 authentication grant types have helper strategy classes that simplify client
-use. They are available via the `#auth_code`, `#implicit`, `#password`, `#client_credentials`, and `#assertion` methods respectively.
+use. They are available via the [`#auth_code`](https://github.com/oauth-xx/oauth2/blob/master/lib/oauth2/strategy/auth_code.rb), [`#implicit`](https://github.com/oauth-xx/oauth2/blob/master/lib/oauth2/strategy/implicit.rb), [`#password`](https://github.com/oauth-xx/oauth2/blob/master/lib/oauth2/strategy/password.rb), [`#client_credentials`](https://github.com/oauth-xx/oauth2/blob/master/lib/oauth2/strategy/client_credentials.rb), and [`#assertion`](https://github.com/oauth-xx/oauth2/blob/master/lib/oauth2/strategy/assertion.rb) methods respectively.
 
+These aren't full examples, but demonstrative of the differences between usage for each strategy.
 ```ruby
 auth_url = client.auth_code.authorize_url(redirect_uri: 'http://localhost:8080/oauth/callback')
-token = client.auth_code.get_token('code_value', redirect_uri: 'http://localhost:8080/oauth/callback')
+access = client.auth_code.get_token('code_value', redirect_uri: 'http://localhost:8080/oauth/callback')
 
 auth_url = client.implicit.authorize_url(redirect_uri: 'http://localhost:8080/oauth/callback')
 # get the token params in the callback and
-token = OAuth2::AccessToken.from_kvform(client, query_string)
+access = OAuth2::AccessToken.from_kvform(client, query_string)
 
-token = client.password.get_token('username', 'password')
+access = client.password.get_token('username', 'password')
 
-token = client.client_credentials.get_token
+access = client.client_credentials.get_token
 
-token = client.assertion.get_token(assertion_params)
+# Client Assertion Strategy
+# see: https://tools.ietf.org/html/rfc7523
+claimset = {
+  :iss => "http://localhost:3001",
+  :aud => "http://localhost:8080/oauth2/token",
+  :sub => "me@example.com",
+  :exp => Time.now.utc.to_i + 3600
+}
+assertion_params = [claimset, 'HS256', 'secret_key']
+access = client.assertion.get_token(assertion_params)
+
+# The `access` (i.e. access token) is then used like so:
+access.token # actual access_token string, if you need it somewhere
+access.get("/api/stuff") # making api calls with access token
 ```
 
 If you want to specify additional headers to be sent out with the
 request, add a 'headers' hash under 'params':
 
 ```ruby
-token = client.auth_code.get_token('code_value', redirect_uri: 'http://localhost:8080/oauth/callback', headers: {'Some' => 'Header'})
+access = client.auth_code.get_token('code_value', redirect_uri: 'http://localhost:8080/oauth/callback', headers: {'Some' => 'Header'})
 ```
 
 You can always use the `#request` method on the `OAuth2::Client` instance to make
