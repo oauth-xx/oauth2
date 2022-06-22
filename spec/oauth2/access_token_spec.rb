@@ -58,11 +58,57 @@ RSpec.describe OAuth2::AccessToken do
       assert_initialized_token(target)
     end
 
-    it 'sets options' do
-      target = described_class.new(client, token, param_name: 'foo', header_format: 'Bearer %', mode: :body)
-      expect(target.options[:param_name]).to eq('foo')
-      expect(target.options[:header_format]).to eq('Bearer %')
-      expect(target.options[:mode]).to eq(:body)
+    context 'with options' do
+      subject(:target) { described_class.new(client, token, **options) }
+
+      context 'with body mode' do
+        let(:mode) { :body }
+        let(:options) { {param_name: 'foo', header_format: 'Bearer %', mode: mode} }
+
+        it 'sets options' do
+          expect(target.options[:param_name]).to eq('foo')
+          expect(target.options[:header_format]).to eq('Bearer %')
+          expect(target.options[:mode]).to eq(mode)
+        end
+      end
+
+      context 'with header mode' do
+        let(:mode) { :header }
+        let(:options) { {headers: {}, mode: mode} }
+
+        it 'sets options' do
+          expect(target.options[:headers]).to be_nil
+          expect(target.options[:mode]).to eq(mode)
+        end
+      end
+
+      context 'with query mode' do
+        let(:mode) { :query }
+        let(:options) { {params: {}, param_name: 'foo', mode: mode} }
+
+        it 'sets options' do
+          expect(target.options[:param_name]).to eq('foo')
+          expect(target.options[:params]).to be_nil
+          expect(target.options[:mode]).to eq(mode)
+        end
+      end
+
+      context 'with invalid mode' do
+        let(:mode) { :this_is_bad }
+        let(:options) { {mode: mode} }
+
+        it 'does not raise on initialize' do
+          block_is_expected.not_to raise_error
+        end
+
+        context 'with request' do
+          subject(:request) { target.post('/token/header') }
+
+          it 'raises' do
+            block_is_expected.to raise_error("invalid :mode option of #{mode}")
+          end
+        end
+      end
     end
 
     it 'does not modify opts hash' do
@@ -156,7 +202,7 @@ RSpec.describe OAuth2::AccessToken do
       end
 
       VERBS.each do |verb|
-        it "sends the token in the Authorization header for a #{verb.to_s.upcase} request" do
+        it "sends the token in the body for a #{verb.to_s.upcase} request" do
           expect(subject.post('/token/query').body).to eq(token)
         end
 
@@ -173,8 +219,20 @@ RSpec.describe OAuth2::AccessToken do
       end
 
       VERBS.each do |verb|
-        it "sends the token in the Authorization header for a #{verb.to_s.upcase} request" do
+        it "sends the token in the body for a #{verb.to_s.upcase} request" do
           expect(subject.post('/token/body').body.split('=').last).to eq(token)
+        end
+
+        context 'when options[:param_name] include [number]' do
+          it "sends a #{verb.to_s.upcase} request when body is a hash" do
+            subject.options[:param_name] = 'auth[1]'
+            expect(subject.__send__(verb, '/token/body', body: {hi: 'there'}).body).to include("auth%5B1%5D=#{token}")
+          end
+
+          it "sends a #{verb.to_s.upcase} request when body is overridden as string" do
+            subject.options[:param_name] = 'snoo[1]'
+            expect(subject.__send__(verb, '/token/body', body: "hi_there").body).to include("hi_there&snoo[1]=#{token}")
+          end
         end
       end
     end
