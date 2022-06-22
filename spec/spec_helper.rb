@@ -68,4 +68,4 @@ require 'config/faraday'
 require 'config/rspec/rspec_core'
 require 'config/rspec/silent_stream'
 
-VERBS = %i[get post put delete].freeze
+VERBS = %i[get post put delete patch].freeze

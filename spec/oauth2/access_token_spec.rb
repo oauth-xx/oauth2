@@ -250,6 +250,19 @@ RSpec.describe OAuth2::AccessToken do
       stub_const('NewAccessToken', custom_class)
     end
 
+    context 'without refresh_token' do
+      let(:no_access) do
+        described_class.new(client, token, refresh_token: nil,
+                            expires_in: 600,
+                            param_name: 'o_param')
+      end
+      subject(:no_refresh) { no_access.refresh }
+
+      it 'raises when no refresh_token' do
+        block_is_expected.to raise_error('A refresh_token is not available')
+      end
+    end
+
     it 'returns a refresh token with appropriate values carried over' do
       refreshed = access.refresh
       expect(access.client).to eq(refreshed.client)
