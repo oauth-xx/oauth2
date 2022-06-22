@@ -231,7 +231,7 @@ RSpec.describe OAuth2::AccessToken do
 
           it "sends a #{verb.to_s.upcase} request when body is overridden as string" do
             subject.options[:param_name] = 'snoo[1]'
-            expect(subject.__send__(verb, '/token/body', body: "hi_there").body).to include("hi_there&snoo[1]=#{token}")
+            expect(subject.__send__(verb, '/token/body', body: 'hi_there').body).to include("hi_there&snoo[1]=#{token}")
           end
         end
       end
@@ -309,12 +309,13 @@ RSpec.describe OAuth2::AccessToken do
     end
 
     context 'without refresh_token' do
+      subject(:no_refresh) { no_access.refresh }
+
       let(:no_access) do
         described_class.new(client, token, refresh_token: nil,
-                            expires_in: 600,
-                            param_name: 'o_param')
+                                           expires_in: 600,
+                                           param_name: 'o_param')
       end
-      subject(:no_refresh) { no_access.refresh }
 
       it 'raises when no refresh_token' do
         block_is_expected.to raise_error('A refresh_token is not available')

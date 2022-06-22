@@ -48,11 +48,11 @@ RSpec.describe OAuth2::Error do
 
       it 'prepends to the error message with a return character' do
         expect(subject.message.each_line.to_a).to eq(
-                                                    [
-                                                      "i_am_a_teapot: Short and stout\n",
-                                                      '{"text":"Coffee brewing failed","error_description":"Short and stout","error":"i_am_a_teapot"}',
-                                                    ]
-                                                  )
+          [
+            "i_am_a_teapot: Short and stout\n",
+            '{"text":"Coffee brewing failed","error_description":"Short and stout","error":"i_am_a_teapot"}',
+          ]
+        )
       end
 
       context 'when the response needs to be encoded' do
@@ -138,16 +138,16 @@ RSpec.describe OAuth2::Error do
 
       it 'prepends to the error message with a return character' do
         expect(subject.message.each_line.to_a).to eq(
-                                                    [
-                                                      "i_am_a_teapot: Short and stout\n",
-                                                      {
-                                                        "text": "Coffee brewing failed",
-                                                        "error_description": "Short and stout",
-                                                        "error": "i_am_a_teapot",
-                                                        "code": "418",
-                                                      }.to_json,
-                                                    ]
-                                                  )
+          [
+            "i_am_a_teapot: Short and stout\n",
+            {
+              "text": 'Coffee brewing failed',
+              "error_description": 'Short and stout',
+              "error": 'i_am_a_teapot',
+              "code": '418',
+            }.to_json,
+          ]
+        )
       end
 
       context 'when the response needs to be encoded' do

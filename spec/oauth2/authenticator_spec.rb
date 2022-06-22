@@ -84,7 +84,7 @@ RSpec.describe OAuth2::Authenticator do
 
         it 'adds client_id to params' do
           output = subject.apply({})
-          expect(output).to eq({"client_id" => "foobar"})
+          expect(output).to eq('client_id' => 'foobar')
         end
       end
 
