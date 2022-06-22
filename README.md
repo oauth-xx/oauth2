@@ -421,17 +421,17 @@ access = client.client_credentials.get_token
 # Client Assertion Strategy
 # see: https://tools.ietf.org/html/rfc7523
 claimset = {
-  :iss => "http://localhost:3001",
-  :aud => "http://localhost:8080/oauth2/token",
-  :sub => "me@example.com",
-  :exp => Time.now.utc.to_i + 3600
+  iss: 'http://localhost:3001',
+  aud: 'http://localhost:8080/oauth2/token',
+  sub: 'me@example.com',
+  exp: Time.now.utc.to_i + 3600,
 }
 assertion_params = [claimset, 'HS256', 'secret_key']
 access = client.assertion.get_token(assertion_params)
 
 # The `access` (i.e. access token) is then used like so:
 access.token # actual access_token string, if you need it somewhere
-access.get("/api/stuff") # making api calls with access token
+access.get('/api/stuff') # making api calls with access token
 ```
 
 If you want to specify additional headers to be sent out with the
