@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'rash_alt', ['>= 0.4', '< 1']
   spec.add_dependency 'version_gem', '~> 1.0'
 
-  spec.authors       = ['Peter Boling', 'Michael Bleigh', 'Erik Michaels-Ober']
+  spec.authors       = ['Peter Boling', 'Erik Michaels-Ober', 'Michael Bleigh']
   spec.description   = 'A Ruby wrapper for the OAuth 2.0 protocol built with a similar style to the original OAuth spec.'
   spec.email         = ['peter.boling@gmail.com']
   spec.homepage      = 'https://github.com/oauth-xx/oauth2'
