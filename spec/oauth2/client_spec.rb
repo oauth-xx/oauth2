@@ -431,16 +431,34 @@ RSpec.describe OAuth2::Client do
     context 'when errors are raised by Faraday' do
       let(:connection) { instance_double(Faraday::Connection, build_url: double) }
 
-      it 'rescues Faraday::ConnectionFailed' do
+      before do
         allow(connection).to(
-          receive(:run_request).and_raise(Faraday::ConnectionFailed.new('fail'))
+          receive(:run_request).and_raise(faraday_exception)
         )
         allow(subject).to receive(:connection).and_return(connection) # rubocop:disable RSpec/SubjectStub
+      end
 
-        expect { subject.request(:get, '/redirect') }.to raise_error do |e|
-          expect(e.class).to eq(OAuth2::ConnectionError)
-          expect(e.message).to eq('fail')
+      shared_examples 'failed connection handler' do
+        it 'rescues the exception' do
+          expect { subject.request(:get, '/redirect') }.to raise_error do |e|
+            expect(e.class).to eq(expected_exception)
+            expect(e.message).to eq(faraday_exception.message)
+          end
         end
+      end
+
+      context 'with Faraday::ConnectionFailed' do
+        let(:faraday_exception) { Faraday::ConnectionFailed.new('fail') }
+        let(:expected_exception) { OAuth2::ConnectionError }
+
+        it_behaves_like 'failed connection handler'
+      end
+
+      context 'with Faraday::TimeoutError' do
+        let(:faraday_exception) { Faraday::TimeoutError.new('timeout') }
+        let(:expected_exception) { OAuth2::TimeoutError }
+
+        it_behaves_like 'failed connection handler'
       end
     end
   end

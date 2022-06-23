@@ -5,6 +5,8 @@ require 'logger'
 
 module OAuth2
   ConnectionError = Class.new(Faraday::ConnectionFailed)
+  TimeoutError = Class.new(Faraday::TimeoutError)
+
   # The OAuth2::Client class
   class Client # rubocop:disable Metrics/ClassLength
     RESERVED_PARAM_KEYS = %w[headers parse].freeze
@@ -115,6 +117,8 @@ module OAuth2
         end
       rescue Faraday::ConnectionFailed => e
         raise ConnectionError, e
+      rescue Faraday::TimeoutError => e
+        raise TimeoutError, e
       end
 
       response = Response.new(response, parse: opts[:parse])
