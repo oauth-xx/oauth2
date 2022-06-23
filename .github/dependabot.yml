@@ -6,3 +6,5 @@ updates:
       interval: daily
       time: "04:28"
     open-pull-requests-limit: 10
+    ignore:
+      - dependency-name: "rubocop-lts"
