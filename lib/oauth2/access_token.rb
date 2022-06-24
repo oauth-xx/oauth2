@@ -88,12 +88,12 @@ module OAuth2
     #
     # @return [AccessToken] a new AccessToken
     # @note options should be carried over to the new AccessToken
-    def refresh(params = {}, access_token_opts = {}, access_token_class: self.class)
+    def refresh(params = {}, access_token_opts = {})
       raise('A refresh_token is not available') unless refresh_token
 
       params[:grant_type] = 'refresh_token'
       params[:refresh_token] = refresh_token
-      new_token = @client.get_token(params, access_token_opts, access_token_class: access_token_class)
+      new_token = @client.get_token(params, access_token_opts)
       new_token.options = options
       new_token.refresh_token = refresh_token unless new_token.refresh_token
       new_token

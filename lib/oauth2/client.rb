@@ -31,6 +31,7 @@ module OAuth2
     # @option options [Boolean] :raise_errors (true) whether or not to raise an OAuth2::Error on responses with 400+ status codes
     # @option options [Logger] :logger (::Logger.new($stdout)) which logger to use when OAUTH_DEBUG is enabled
     # @option options [Proc] :extract_access_token proc that takes the client and the response Hash and extracts the access token from the response (DEPRECATED)
+    # @option options [Class] :access_token_class [Class] class of access token for easier subclassing OAuth2::AccessToken, @version 2.0+
     # @yield [builder] The Faraday connection builder
     def initialize(client_id, client_secret, options = {}, &block)
       opts = options.dup
@@ -49,6 +50,7 @@ module OAuth2
         max_redirects: 5,
         raise_errors: true,
         logger: ::Logger.new($stdout),
+        access_token_class: AccessToken,
       }.merge(opts)
       @options[:connection_opts][:ssl] = ssl if ssl
     end
@@ -156,9 +158,8 @@ module OAuth2
     # @param params [Hash] a Hash of params for the token endpoint
     # @param access_token_opts [Hash] access token options, to pass to the AccessToken object
     # @param extract_access_token [Proc] proc that extracts the access token from the response (DEPRECATED)
-    # @param access_token_class [Class] class of access token for easier subclassing OAuth2::AccessToken, @version 2.0+
     # @return [AccessToken] the initialized AccessToken
-    def get_token(params, access_token_opts = {}, extract_access_token = options[:extract_access_token], access_token_class: AccessToken)
+    def get_token(params, access_token_opts = {}, extract_access_token = options[:extract_access_token])
       params = params.map do |key, value|
         if RESERVED_PARAM_KEYS.include?(key)
           [key.to_sym, value]
@@ -188,7 +189,7 @@ module OAuth2
       if extract_access_token
         parse_response_with_legacy_extract(response, access_token_opts, extract_access_token)
       else
-        parse_response(response, access_token_opts, access_token_class)
+        parse_response(response, access_token_opts)
       end
     end
 
@@ -270,7 +271,8 @@ module OAuth2
       nil
     end
 
-    def parse_response(response, access_token_opts, access_token_class)
+    def parse_response(response, access_token_opts)
+      access_token_class = options[:access_token_class]
       data = response.parsed
 
       unless data.is_a?(Hash) && access_token_class.contains_token?(data)

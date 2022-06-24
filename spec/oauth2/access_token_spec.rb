@@ -3,10 +3,12 @@
 RSpec.describe OAuth2::AccessToken do
   subject { described_class.new(client, token) }
 
+  let(:base_options) { {site: 'https://api.example.com'} }
+  let(:options) { {} }
   let(:token) { 'monkey' }
   let(:refresh_body) { JSON.dump(access_token: 'refreshed_foo', expires_in: 600, refresh_token: 'refresh_bar') }
   let(:client) do
-    OAuth2::Client.new('abc', 'def', site: 'https://api.example.com') do |builder|
+    OAuth2::Client.new('abc', 'def', options.merge(base_options)) do |builder|
       builder.request :url_encoded
       builder.adapter :test do |stub|
         VERBS.each do |verb|
@@ -285,10 +287,13 @@ RSpec.describe OAuth2::AccessToken do
   end
 
   describe '#refresh' do
+    let(:options) { {access_token_class: access_token_class} }
+    let(:access_token_class) { NewAccessToken }
     let(:access) do
       described_class.new(client, token, refresh_token: 'abaca',
                                          expires_in: 600,
-                                         param_name: 'o_param')
+                                         param_name: 'o_param',
+                                         access_token_class: access_token_class)
     end
     let(:new_access) do
       NewAccessToken.new(client, token, refresh_token: 'abaca')
@@ -314,7 +319,8 @@ RSpec.describe OAuth2::AccessToken do
       let(:no_access) do
         described_class.new(client, token, refresh_token: nil,
                                            expires_in: 600,
-                                           param_name: 'o_param')
+                                           param_name: 'o_param',
+                                           access_token_class: access_token_class)
       end
 
       it 'raises when no refresh_token' do
@@ -344,8 +350,10 @@ RSpec.describe OAuth2::AccessToken do
     end
 
     context 'with a custom access_token_class' do
+      let(:access_token_class) { NewAccessToken }
+
       it 'returns a refresh token of NewAccessToken' do
-        refreshed = access.refresh!(access_token_class: new_access.class)
+        refreshed = access.refresh!
 
         expect(new_access.class).to eq(refreshed.class)
       end
