@@ -35,3 +35,7 @@ Gemfile.lock
 /measurement/
 /.byebug_history
 .DS_Store
+
+# Version Managers
+.ruby-version
+.tool-versions
