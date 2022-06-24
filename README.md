@@ -485,7 +485,13 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at [https://github.com/oauth-xx/oauth2](https://github.com/oauth-xx/oauth2). This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+See [CONTRIBUTING.md][contributing]
+
+## Contributors
+
+[![Contributors](https://contrib.rocks/image?repo=pboling/gitmoji-regex)]("https://github.com/pboling/gitmoji-regex/graphs/contributors")
+
+Made with [contributors-img](https://contrib.rocks).
 
 ## Code of Conduct
 
