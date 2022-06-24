@@ -487,9 +487,11 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 See [CONTRIBUTING.md][contributing]
 
+[contributing]: https://github.com/oauth-xx/oauth2/blob/main/CONTRIBUTING.md
+
 ## Contributors
 
-[![Contributors](https://contrib.rocks/image?repo=pboling/gitmoji-regex)]("https://github.com/pboling/gitmoji-regex/graphs/contributors")
+[![Contributors](https://contrib.rocks/image?repo=oauth-xx/oauth2)]("https://github.com/oauth-xx/oauth2/graphs/contributors")
 
 Made with [contributors-img](https://contrib.rocks).
 
