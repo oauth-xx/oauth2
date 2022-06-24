@@ -2,11 +2,11 @@
 
 ## Supported Versions
 
-| Version      | Supported |
-|--------------|-----------|
-| 2.0.<latest> | ✅         |
-| 1.4.<latest> | ✅         |
-| older        | ⛔️        |
+| Version  | Supported                 |
+|----------|---------------------------|
+| 2.latest | ✅                         |
+| 1.latest | ✅ (security updates only) |
+| older    | ⛔️                        |
 
 ## Reporting a Vulnerability
 
