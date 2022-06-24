@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format (since v2) is based on [Keep a Changelog v1](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.2] - 2022-06-24
+### Added
+- [#604](https://github.com/oauth-xx/oauth2/pull/604) - Wrap `Faraday::TimeoutError` in `OAuth2::TimeoutError` (@stanhu)
+- [#606](https://github.com/oauth-xx/oauth2/pull/606) - Ruby 2.7 deprecation warning fix: Move `access_token_class` parameter into `Client` constructor (@stanhu)
+- [#607](https://github.com/oauth-xx/oauth2/pull/607) - CHANGELOG correction, reference to `OAuth2::ConnectionError` (@zavan)
+
 ## [2.0.1] - 2022-06-22
 ### Added
 - Documentation improvements (@pboling)
