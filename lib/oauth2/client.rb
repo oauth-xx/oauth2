@@ -108,20 +108,7 @@ module OAuth2
     # @option opts [Symbol] :parse @see Response::initialize
     # @yield [req] The Faraday request
     def request(verb, url, opts = {})
-      url = connection.build_url(url).to_s
-
-      begin
-        response = connection.run_request(verb, url, opts[:body], opts[:headers]) do |req|
-          req.params.update(opts[:params]) if opts[:params]
-          yield(req) if block_given?
-        end
-      rescue Faraday::ConnectionFailed => e
-        raise ConnectionError, e
-      rescue Faraday::TimeoutError => e
-        raise TimeoutError, e
-      end
-
-      response = Response.new(response, parse: opts[:parse])
+      response = execute_request(verb, url, opts)
 
       case response.status
       when 301, 302, 303, 307
@@ -253,6 +240,23 @@ module OAuth2
     end
 
   private
+
+    def execute_request(verb, url, opts = {})
+      url = connection.build_url(url).to_s
+
+      begin
+        response = connection.run_request(verb, url, opts[:body], opts[:headers]) do |req|
+          req.params.update(opts[:params]) if opts[:params]
+          yield(req) if block_given?
+        end
+      rescue Faraday::ConnectionFailed => e
+        raise ConnectionError, e
+      rescue Faraday::TimeoutError => e
+        raise TimeoutError, e
+      end
+
+      Response.new(response, parse: opts[:parse])
+    end
 
     # Returns the authenticator object
     #
