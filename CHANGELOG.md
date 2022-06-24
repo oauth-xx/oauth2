@@ -29,7 +29,7 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 - [#413](https://github.com/oauth-xx/oauth2/pull/413) - _Documentation_: License scan and report (@meganemura)
 - [#442](https://github.com/oauth-xx/oauth2/pull/442) - Option: `OAuth2::Client#initialize` - `:logger` (`::Logger.new($stdout)`) logger to use when OAUTH_DEBUG is enabled (for parity with `1-4-stable` branch) (@rthbound)
 - [#494](https://github.com/oauth-xx/oauth2/pull/494) - Support [OIDC 1.0 Private Key JWT](https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication); based on the OAuth JWT assertion specification [(RFC 7523)](https://tools.ietf.org/html/rfc7523) (@SteveyblamWork)
-- [#549](https://github.com/oauth-xx/oauth2/pull/549) - Wrap `Faraday::ConnectionFailed` in `OAuth2::ConnectionFailed` (@nikkypx)
+- [#549](https://github.com/oauth-xx/oauth2/pull/549) - Wrap `Faraday::ConnectionFailed` in `OAuth2::ConnectionError` (@nikkypx)
 - [#550](https://github.com/oauth-xx/oauth2/pull/550) - Raise error if location header not present when redirecting (@stanhu)
 - [#552](https://github.com/oauth-xx/oauth2/pull/552) - Add missing `version.rb` require (@ahorek)
 - [#553](https://github.com/oauth-xx/oauth2/pull/553) - Support `application/problem+json` format (@janz93)
