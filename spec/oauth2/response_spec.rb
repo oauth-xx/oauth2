@@ -208,6 +208,19 @@ RSpec.describe OAuth2::Response do
       expect(subject.parsed).to be_nil
     end
 
+    it "doesn't parse bodies which have previously been parsed" do
+      headers = {'Content-Type' => 'application/json'}
+      body = {foo: 'bar', answer: 42, krill: nil, zero: 0, malign: false, shine: true}
+
+      response = double('response', headers: headers, body: body)
+
+      expect(JSON).not_to receive(:parse)
+      expect(Rack::Utils).not_to receive(:parse_query)
+
+      subject = described_class.new(response)
+      expect(subject.parsed.keys.size).to eq(6)
+    end
+
     it 'snakecases json keys when parsing' do
       headers = {'Content-Type' => 'application/json'}
       body = JSON.dump('accessToken' => 'bar', 'MiGever' => 'Ani')
