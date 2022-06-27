@@ -32,6 +32,7 @@ See the sibling `oauth` gem for OAuth 1.0 implementations in Ruby.
 
 | Version | Release Date | Readme                                                   |
 |---------|--------------|----------------------------------------------------------|
+| 2.0.3   | 2022-06-27   | https://github.com/oauth-xx/oauth2/blob/v2.0.3/README.md |
 | 2.0.2   | 2022-06-24   | https://github.com/oauth-xx/oauth2/blob/v2.0.2/README.md |
 | 2.0.1   | 2022-06-22   | https://github.com/oauth-xx/oauth2/blob/v2.0.1/README.md |
 | 2.0.0   | 2022-06-21   | https://github.com/oauth-xx/oauth2/blob/v2.0.0/README.md |
@@ -140,8 +141,8 @@ The link tokens in the following sections should be kept ordered by the row and 
 [🖐prs-o-img]: https://img.shields.io/github/issues-pr/oauth-xx/oauth2
 [🧮prs-c]: https://github.com/oauth-xx/oauth2/pulls?q=is%3Apr+is%3Aclosed
 [🧮prs-c-img]: https://img.shields.io/github/issues-pr-closed/oauth-xx/oauth2
-[📗next♻️]: https://github.com/oauth-xx/oauth2/milestone/14
-[📗next-img♻️]: https://img.shields.io/github/milestones/progress/oauth-xx/oauth2/14?label=Next%20Version
+[📗next♻️]: https://github.com/oauth-xx/oauth2/milestone/15
+[📗next-img♻️]: https://img.shields.io/github/milestones/progress/oauth-xx/oauth2/15?label=Next%20Version
 
 <!-- 3️⃣ maintanence & linting -->
 [⛳cclim-maint]: https://codeclimate.com/github/oauth-xx/oauth2/maintainability
