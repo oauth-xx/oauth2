@@ -39,12 +39,17 @@ module OAuth2
     # Initializes a Response instance
     #
     # @param [Faraday::Response] response The Faraday response instance
-    # @param [Hash] opts options in which to initialize the instance
-    # @option opts [Symbol] :parse (:automatic) how to parse the response body.  one of :query (for x-www-form-urlencoded),
+    # @param [Symbol] parse (:automatic) how to parse the response body.  one of :query (for x-www-form-urlencoded),
     #   :json, or :automatic (determined by Content-Type response header)
-    def initialize(response, opts = {})
+    # @param [true, false] snaky (true) Convert @parsed to a snake-case,
+    #   indifferent-access OAuth2::SnakyHash, which is a subclass of Hashie::Mash::Rash (from rash_alt gem)?
+    # @param [Hash] options all other options for initializing the instance
+    def initialize(response, parse: :automatic, snaky: true, **options)
       @response = response
-      @options = {parse: :automatic}.merge(opts)
+      @options = {
+        parse: parse,
+        snaky: snaky,
+      }.merge(options)
     end
 
     # The HTTP response headers
@@ -81,7 +86,7 @@ module OAuth2
           end
         end
 
-      @parsed = OAuth2::SnakyHash.new(@parsed) if @parsed.is_a?(Hash)
+      @parsed = OAuth2::SnakyHash.new(@parsed) if options[:snaky] && @parsed.is_a?(Hash)
 
       @parsed
     end

@@ -114,7 +114,7 @@ module OAuth2
     # @param [Symbol] verb the HTTP request method
     # @param [String] path the HTTP URL path of the request
     # @param [Hash] opts the options to make the request with
-    # @see Client#request
+    #   @see Client#request
     def request(verb, path, opts = {}, &block)
       configure_authentication!(opts)
       @client.request(verb, path, opts, &block)

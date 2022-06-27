@@ -231,6 +231,20 @@ RSpec.describe OAuth2::Response do
       expect(subject.parsed['mi_gever']).to eq('Ani')
     end
 
+    context 'when not snaky' do
+      it 'snakecases json keys when parsing' do
+        headers = {'Content-Type' => 'application/json'}
+        body = JSON.dump('accessToken' => 'bar', 'MiGever' => 'Ani')
+        response = double('response', headers: headers, body: body)
+        subject = described_class.new(response, snaky: false)
+        expect(subject.parsed.keys.size).to eq(2)
+        expect(subject.parsed['accessToken']).to eq('bar')
+        expect(subject.parsed['MiGever']).to eq('Ani')
+        expect(subject.parsed['access_token']).to be_nil
+        expect(subject.parsed['mi_gever']).to be_nil
+      end
+    end
+
     it 'supports registered parsers with arity == 0; passing nothing' do
       described_class.register_parser(:arity_0, []) do
         'a-ok'
