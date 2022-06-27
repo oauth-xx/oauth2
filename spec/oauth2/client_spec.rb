@@ -652,7 +652,7 @@ RSpec.describe OAuth2::Client do
         end
 
         it 'warns on STDERR' do
-          msg = glo <<-MSG.lstrip
+          msg = <<-MSG.lstrip
             OAuth2::Client#initialize argument `extract_access_token` will be removed in oauth2 v3. Refactor to use `access_token_class`.
           MSG
           expect(printed).to eq(msg)
