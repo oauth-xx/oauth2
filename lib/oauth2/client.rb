@@ -41,7 +41,7 @@ module OAuth2
       @secret = client_secret
       @site = opts.delete(:site)
       ssl = opts.delete(:ssl)
-
+      warn('OAuth2::Client#initialize argument `extract_access_token` will be removed in oauth2 v3. Refactor to use `access_token_class`.') if opts[:extract_access_token]
       @options = {
         authorize_url: 'oauth/authorize',
         token_url: 'oauth/token',
@@ -150,7 +150,9 @@ module OAuth2
     # @param access_token_opts [Hash] access token options, to pass to the AccessToken object
     # @param extract_access_token [Proc] proc that extracts the access token from the response (DEPRECATED)
     # @return [AccessToken] the initialized AccessToken
-    def get_token(params, access_token_opts = {}, extract_access_token = options[:extract_access_token])
+    def get_token(params, access_token_opts = {}, extract_access_token = nil)
+      warn('OAuth2::Client#get_token argument `extract_access_token` will be removed in oauth2 v3. Refactor to use `access_token_class` on #initialize.') if extract_access_token
+      extract_access_token ||= options[:extract_access_token]
       params = params.map do |key, value|
         if RESERVED_PARAM_KEYS.include?(key)
           [key.to_sym, value]

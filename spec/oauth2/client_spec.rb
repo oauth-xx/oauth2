@@ -643,6 +643,44 @@ RSpec.describe OAuth2::Client do
         expect(token).to be_a OAuth2::AccessToken
         expect(token.token).to eq('the-token')
       end
+
+      context 'with deprecation' do
+        subject(:printed) do
+          capture(:stderr) do
+            client.get_token({})
+          end
+        end
+
+        it 'warns on STDERR' do
+          msg = <<-MSG.lstrip
+            OAuth2::Client#initialize argument `extract_access_token` will be removed in oauth2 v3. Refactor to use `access_token_class`.
+          MSG
+          expect(printed).to eq(msg)
+        end
+
+        context 'on request' do
+          subject(:printed) do
+            capture(:stderr) do
+              client.get_token({}, {}, extract_access_token)
+            end
+          end
+
+          let(:client) do
+            stubbed_client do |stub|
+              stub.post('/oauth/token') do
+                [200, {'Content-Type' => 'application/json'}, JSON.dump('data' => {'access_token' => 'the-token'})]
+              end
+            end
+          end
+
+          it 'warns on STDERR' do
+            msg = <<-MSG.lstrip
+              OAuth2::Client#get_token argument `extract_access_token` will be removed in oauth2 v3. Refactor to use `access_token_class` on #initialize.
+            MSG
+            expect(printed).to eq(msg)
+          end
+        end
+      end
     end
 
     it 'forwards given token parameters' do
