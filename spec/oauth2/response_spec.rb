@@ -232,7 +232,7 @@ RSpec.describe OAuth2::Response do
     end
 
     context 'when not snaky' do
-      it 'snakecases json keys when parsing' do
+      it 'does not snakecase json keys when parsing' do
         headers = {'Content-Type' => 'application/json'}
         body = JSON.dump('accessToken' => 'bar', 'MiGever' => 'Ani')
         response = double('response', headers: headers, body: body)
