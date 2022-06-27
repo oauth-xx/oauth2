@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe OAuth2::SnakyHash do
-  subject { described_class.new }
+  subject(:instance) { described_class.new }
 
   describe '.build' do
     context 'when build from hash' do
@@ -55,6 +55,34 @@ RSpec.describe OAuth2::SnakyHash do
 
       expect(subject['AccessToken']).to eq('2')
       expect(subject['access_token']).to eq('2')
+    end
+  end
+
+  describe '#to_h' do
+    context 'when nil' do
+      it 'can be converted to empty hash' do
+        expect(instance.to_h).to eq({})
+      end
+    end
+
+    context 'when empty' do
+      subject(:instance) { described_class.new(original) }
+
+      let(:original) { {} }
+
+      it 'can be converted to empty hash' do
+        expect(instance.to_h).to eq({})
+      end
+    end
+
+    context 'when not empty' do
+      subject(:instance) { described_class.new(original) }
+
+      let(:original) { {'a' => 'b', 'bTo' => 'aDo', 'v_rt' => 1, yy_yy: 'yy_yy', :LuLu => :CRays} }
+
+      it 'converts to snake hash' do
+        expect(instance.to_h).to eq('a' => 'b', 'b_to' => 'aDo', 'lu_lu' => :CRays, 'v_rt' => 1, 'yy_yy' => 'yy_yy')
+      end
     end
   end
 

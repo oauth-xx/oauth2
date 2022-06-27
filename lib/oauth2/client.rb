@@ -108,6 +108,7 @@ module OAuth2
     # @option opts [Boolean] :raise_errors whether or not to raise an OAuth2::Error on 400+ status
     #   code response for this request.  Will default to client option
     # @option opts [Symbol] :parse @see Response::initialize
+    # @option opts [Symbol] :snaky @see Response::initialize
     # @yield [req] The Faraday request
     def request(verb, url, opts = {})
       response = execute_request(verb, url, opts)
@@ -146,7 +147,9 @@ module OAuth2
 
     # Initializes an AccessToken by making a request to the token endpoint
     #
-    # @param params [Hash] a Hash of params for the token endpoint
+    # @param params [Hash] a Hash of params for the token endpoint, except:
+    #   @option params [Symbol] :parse @see Response#initialize
+    #   @option params [true, false] :snaky @see Response#initialize
     # @param access_token_opts [Hash] access token options, to pass to the AccessToken object
     # @param extract_access_token [Proc] proc that extracts the access token from the response (DEPRECATED)
     # @return [AccessToken] the initialized AccessToken
@@ -161,20 +164,25 @@ module OAuth2
         end
       end.to_h
 
+      request_opts = {
+        raise_errors: options[:raise_errors],
+        parse: params.delete(:parse),
+        snaky: params.delete(:snaky),
+      }
+
       params = authenticator.apply(params)
-      opts = {raise_errors: options[:raise_errors], parse: params.delete(:parse)}
       headers = params.delete(:headers) || {}
       if options[:token_method] == :post
-        opts[:body] = params
-        opts[:headers] = {'Content-Type' => 'application/x-www-form-urlencoded'}
+        request_opts[:body] = params
+        request_opts[:headers] = {'Content-Type' => 'application/x-www-form-urlencoded'}
       else
-        opts[:params] = params
-        opts[:headers] = {}
+        request_opts[:params] = params
+        request_opts[:headers] = {}
       end
-      opts[:headers].merge!(headers)
+      request_opts[:headers].merge!(headers)
       http_method = options[:token_method]
       http_method = :post if http_method == :post_with_query_string
-      response = request(http_method, token_url, opts)
+      response = request(http_method, token_url, request_opts)
 
       # In v1.4.x, the deprecated extract_access_token option retrieves the token from the response.
       # We preserve this behavior here, but a custom access_token_class that implements #from_hash
@@ -258,7 +266,7 @@ module OAuth2
         raise TimeoutError, e
       end
 
-      Response.new(response, parse: opts[:parse])
+      Response.new(response, parse: opts[:parse], snaky: opts[:snaky])
     end
 
     # Returns the authenticator object

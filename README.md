@@ -341,6 +341,31 @@ client.class.name
 # => OAuth2::Client
 ```
 
+### snake_case and indifferent access in Response#parsed
+
+```ruby
+response = access.get('/api/resource', params: {'query_foo' => 'bar'})
+# Even if the actual response is CamelCase. it will be made available as snaky:
+JSON.parse(response.body)         # => {"accessToken"=>"aaaaaaaa", "additionalData"=>"additional"}
+response.parsed                   # => {"access_token"=>"aaaaaaaa", "additional_data"=>"additional"}
+response.parsed.access_token      # => "aaaaaaaa"
+response.parsed[:access_token]    # => "aaaaaaaa"
+response.parsed.additional_data   # => "additional"
+response.parsed[:additional_data] # => "additional"
+response.parsed.class.name        # => OAuth2::SnakyHash (subclass of Hashie::Mash::Rash, from `rash_alt` gem)
+```
+
+#### What if I hate snakes and/or indifference?
+
+```ruby
+response = access.get('/api/resource', params: {'query_foo' => 'bar'}, snaky: false)
+JSON.parse(response.body)         # => {"accessToken"=>"aaaaaaaa", "additionalData"=>"additional"}
+response.parsed                   # => {"accessToken"=>"aaaaaaaa", "additionalData"=>"additional"}
+response.parsed['accessToken']    # => "aaaaaaaa"
+response.parsed['additionalData'] # => "additional"
+response.parsed.class.name        # => Hash (just, regular old Hash)
+```
+
 <details>
   <summary>Debugging</summary>
 
@@ -371,7 +396,7 @@ The `AccessToken` methods `#get`, `#post`, `#put` and `#delete` and the generic 
 will return an instance of the #OAuth2::Response class.
 
 This instance contains a `#parsed` method that will parse the response body and
-return a Hash if the `Content-Type` is `application/x-www-form-urlencoded` or if
+return a Hash-like [`OAuth2::SnakyHash`](https://github.com/oauth-xx/oauth2/blob/master/lib/oauth2/snaky_hash.rb) if the `Content-Type` is `application/x-www-form-urlencoded` or if
 the body is a JSON object.  It will return an Array if the body is a JSON
 array.  Otherwise, it will return the original body string.
 
