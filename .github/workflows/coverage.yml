@@ -85,7 +85,7 @@ jobs:
           hide_complexity: true
           indicators: true
           output: both
-          thresholds: '86 88'
+          thresholds: '100 95'
         continue-on-error: ${{ matrix.experimental != 'false' }}
 
       - name: Add Coverage PR Comment
