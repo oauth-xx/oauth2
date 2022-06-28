@@ -19,9 +19,21 @@ Gem::Specification.new do |spec|
   spec.licenses      = %w[MIT]
   spec.name          = 'oauth2'
   spec.required_ruby_version = '>= 1.9.0'
-  spec.required_rubygems_version = '>= 1.3.5'
   spec.summary       = 'A Ruby wrapper for the OAuth 2.0 protocol.'
   spec.version       = OAuth2::Version.to_s
+  spec.post_install_message = %q{
+You have installed oauth2 version 1.4.x, which is EOL.
+No further support is anticipated for the 1.4.x series.
+
+OAuth2 version 2 is released, and there are BREAKING changes!
+
+Please see:
+• https://github.com/oauth-xx/oauth2#what-is-new-for-v20
+• https://github.com/oauth-xx/oauth2/blob/master/CHANGELOG.md
+
+Please upgrade, report issues, and support the project! Thanks, |7eter l-|. l3oling
+
+}
 
   spec.metadata = {
     'bug_tracker_uri' => 'https://github.com/oauth-xx/oauth2/issues',
@@ -29,6 +41,7 @@ Gem::Specification.new do |spec|
     'documentation_uri' => "https://www.rubydoc.info/gems/oauth2/#{spec.version}",
     'source_code_uri' => "https://github.com/oauth-xx/oauth2/tree/v#{spec.version}",
     'wiki_uri' => 'https://github.com/oauth-xx/oauth2/wiki',
+    'funding_uri' => 'https://github.com/sponsors/pboling',
     'rubygems_mfa_required' => 'true',
   }
 
