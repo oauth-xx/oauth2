@@ -3,9 +3,14 @@ All notable changes to this project will be documented in this file.
 
 ## unreleased
 
+
+## [1.4.10] - 2022-06-28
+
+- FIPS Compatibility [#587](https://github.com/oauth-xx/oauth2/pull/587) (@akostadinov)
+
 ## [1.4.9] - 2022-02-20
 
-- Fixes compatibility with Faraday v2 [572](https://github.com/oauth-xx/oauth2/issues/572)
+- Fixes compatibility with Faraday v2 [#572](https://github.com/oauth-xx/oauth2/issues/572)
 - Includes supported versions of Faraday in test matrix:
   - Faraday ~> 2.2.0 with Ruby >= 2.6
   - Faraday ~> 1.10 with Ruby >= 2.4
@@ -194,4 +199,5 @@ All notable changes to this project will be documented in this file.
 [1.4.7]: https://github.com/oauth-xx/oauth2/compare/v1.4.6...v1.4.7
 [1.4.8]: https://github.com/oauth-xx/oauth2/compare/v1.4.7...v1.4.8
 [1.4.9]: https://github.com/oauth-xx/oauth2/compare/v1.4.8...v1.4.9
-[unreleased]: https://github.com/oauth-xx/oauth2/compare/v1.4.1...HEAD
+[1.4.10]: https://github.com/oauth-xx/oauth2/compare/v1.4.9...v1.4.10
+[unreleased]: https://github.com/oauth-xx/oauth2/compare/v1.4.10...HEAD
