@@ -16,7 +16,7 @@ This is a RubyGem for implementing OAuth 2.0 clients and servers in Ruby applica
 See the sibling `oauth` gem for OAuth 1.0 implementations in Ruby.
 
 ⚠️ **_WARNING_**: You are viewing the `README` of the soon-to-be-deprecated `1-4-stable`
-branch which for version 1.4.x releases. Version 2.0 is coming! ⚠️
+branch which for version 1.4.x releases. Please upgrade to version 2! ⚠️
 
 ---
 
@@ -258,11 +258,11 @@ of a major release, support for that Ruby version may be dropped.
 
 |     | Ruby OAuth 2 Version | Maintenance Branch | Supported Officially    | Supported Unofficially | Supported Incidentally |
 |:----|----------------------|--------------------|-------------------------|------------------------|------------------------|
-| 1️⃣ | 2.0.x (unreleased)   | `master`           | 2.7, 3.0, 3.1           | 2.5, 2.6               | 2.2, 2.3, 2.4          |
+| 1️⃣ | 2.0.x                | `master`           | 2.7, 3.0, 3.1           | 2.5, 2.6               | 2.2, 2.3, 2.4          |
 | 2️⃣ | 1.4.x                | `1-4-stable`       | 2.5, 2.6, 2.7, 3.0, 3.1 | 2.1, 2.2, 2.3, 2.4     | 1.9, 2.0               |
 | 3️⃣ | older                | N/A                | Best of luck to you!    | Please upgrade!        |                        |
 
-NOTE: Once 2.0 is released, the 1.4 series will only receive critical bug and security updates.
+NOTE: The 1.4 series will only receive critical bug and security updates.
 See [SECURITY.md][🚎sec-pol]
 
 ## Usage Examples
