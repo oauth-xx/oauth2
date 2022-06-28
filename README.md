@@ -221,6 +221,18 @@ And then execute in a shell:
 bundle
 ```
 
+## OAuth2 for Enterprise
+
+Available as part of the Tidelift Subscription.
+
+The maintainers of OAuth2 and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source packages you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact packages you use. [Learn more.](https://tidelift.com/subscription/pkg/rubygems-oauth2?utm_source=rubygems-oauth2&utm_medium=referral&utm_campaign=enterprise)
+
+## Security contact information
+
+To report a security vulnerability, please use the [Tidelift security contact](https://tidelift.com/security).
+Tidelift will coordinate the fix and disclosure.
+
+For more see [SECURITY.md][🚎sec-pol].
 
 ## Compatibility
 
@@ -256,13 +268,13 @@ fashion. If critical issues for a particular implementation exist at the time
 of a major release, support for that Ruby version may be dropped.
 </details>
 
-|     | Ruby OAuth 2 Version | Maintenance Branch | Supported Officially    | Supported Unofficially | Supported Incidentally |
-|:----|----------------------|--------------------|-------------------------|------------------------|------------------------|
-| 1️⃣ | 2.0.x                | `master`           | 2.7, 3.0, 3.1           | 2.5, 2.6               | 2.2, 2.3, 2.4          |
-| 2️⃣ | 1.4.x                | `1-4-stable`       | 2.5, 2.6, 2.7, 3.0, 3.1 | 2.1, 2.2, 2.3, 2.4     | 1.9, 2.0               |
-| 3️⃣ | older                | N/A                | Best of luck to you!    | Please upgrade!        |                        |
+|     | Ruby OAuth2 Version | Maintenance Branch | Supported Officially    | Supported Unofficially | Supported Incidentally |
+|:----|---------------------|--------------------|-------------------------|------------------------|------------------------|
+| 1️⃣ | 2.0.x               | `master`           | 2.7, 3.0, 3.1           | 2.5, 2.6               | 2.2, 2.3, 2.4          |
+| 2️⃣ | 1.4.x               | `1-4-stable`       | 2.5, 2.6, 2.7, 3.0, 3.1 | 2.1, 2.2, 2.3, 2.4     | 1.9, 2.0               |
+| 3️⃣ | older               | N/A                | Best of luck to you!    | Please upgrade!        |                        |
 
-NOTE: The 1.4 series will only receive critical bug and security updates.
+NOTE: The 1.4 series will only receive critical security updates.
 See [SECURITY.md][🚎sec-pol]
 
 ## Usage Examples
