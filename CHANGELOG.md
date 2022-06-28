@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 - [#612](https://github.com/oauth-xx/oauth2/pull/612) - Add `:snaky` option to skip conversion to `OAuth2::SnakyHash` (default: true) (@pboling)
 ### Fixed
 - [#608](https://github.com/oauth-xx/oauth2/pull/608) - Wrap `Faraday::TimeoutError` in `OAuth2::TimeoutError` (@nbibler)
+- [#615](https://github.com/oauth-xx/oauth2/pull/615) - Fix support for requests with blocks, see `Faraday::Connection#run_request` (@pboling)
 
 ## [2.0.2] - 2022-06-24
 ### Fixed
