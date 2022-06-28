@@ -109,9 +109,9 @@ module OAuth2
     #   code response for this request.  Will default to client option
     # @option opts [Symbol] :parse @see Response::initialize
     # @option opts [Symbol] :snaky @see Response::initialize
-    # @yield [req] The Faraday request
-    def request(verb, url, opts = {})
-      response = execute_request(verb, url, opts)
+    # @yield [req] @see Faraday::Connection#run_request
+    def request(verb, url, opts = {}, &block)
+      response = execute_request(verb, url, opts, &block)
 
       case response.status
       when 301, 302, 303, 307
@@ -152,8 +152,9 @@ module OAuth2
     #   @option params [true, false] :snaky @see Response#initialize
     # @param access_token_opts [Hash] access token options, to pass to the AccessToken object
     # @param extract_access_token [Proc] proc that extracts the access token from the response (DEPRECATED)
+    # @yield [req] @see Faraday::Connection#run_request
     # @return [AccessToken] the initialized AccessToken
-    def get_token(params, access_token_opts = {}, extract_access_token = nil)
+    def get_token(params, access_token_opts = {}, extract_access_token = nil, &block)
       warn('OAuth2::Client#get_token argument `extract_access_token` will be removed in oauth2 v3. Refactor to use `access_token_class` on #initialize.') if extract_access_token
       extract_access_token ||= options[:extract_access_token]
       params = params.map do |key, value|
@@ -182,7 +183,7 @@ module OAuth2
       request_opts[:headers].merge!(headers)
       http_method = options[:token_method]
       http_method = :post if http_method == :post_with_query_string
-      response = request(http_method, token_url, request_opts)
+      response = request(http_method, token_url, request_opts, &block)
 
       # In v1.4.x, the deprecated extract_access_token option retrieves the token from the response.
       # We preserve this behavior here, but a custom access_token_class that implements #from_hash
