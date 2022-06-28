@@ -575,6 +575,8 @@ RSpec.describe OAuth2::Client do
 
       before do
         custom_class = Class.new(OAuth2::AccessToken) do
+          attr_accessor :response
+
           def self.from_hash(client, hash)
             new(client, hash.delete('custom_token'))
           end
@@ -595,8 +597,23 @@ RSpec.describe OAuth2::Client do
         let(:options) { {access_token_class: CustomAccessToken, raise_errors: true} }
         let(:payload) { {} }
 
-        it 'raise an error' do
+        it 'raises an error' do
           expect { client.get_token({}) }.to raise_error(OAuth2::Error)
+        end
+
+        context 'when the legacy extract_access_token' do
+          let(:extract_access_token) do
+            proc do |client, hash|
+              token = hash['data']['access_token']
+              OAuth2::AccessToken.new(client, token, hash)
+            end
+          end
+          let(:options) { {raise_errors: true} }
+          let(:payload) { {} }
+
+          it 'raises an error' do
+            expect { client.get_token({}, {}, extract_access_token) }.to raise_error(OAuth2::Error)
+          end
         end
       end
 
@@ -618,6 +635,92 @@ RSpec.describe OAuth2::Client do
           it 'raises an error' do
             expect { client.get_token({}) }.to raise_error(OAuth2::Error)
           end
+        end
+      end
+
+      context 'when access token instance responds to response=' do
+        let(:options) { {access_token_class: CustomAccessToken, raise_errors: false} }
+
+        it 'sets response' do
+          expect(client.get_token({}).response).to be_a(OAuth2::Response)
+        end
+      end
+
+      context 'when request has a block' do
+        subject(:request) do
+          client.get_token({}) do |req|
+            raise 'Block is executing'
+          end
+        end
+
+        let(:options) { {access_token_class: CustomAccessToken, raise_errors: false} }
+
+        it 'sets response' do
+          block_is_expected.to raise_error('Block is executing')
+        end
+      end
+    end
+
+    describe 'abnormal custom access_token_class option' do
+      let(:payload) { {'custom_token' => 'the-token'} }
+      let(:content_type) { 'application/json' }
+      let(:client) do
+        stubbed_client(options) do |stub|
+          stub.post('/oauth/token') do
+            [200, {'Content-Type' => content_type}, JSON.dump(payload)]
+          end
+        end
+      end
+
+      before do
+        custom_class = Class.new do
+          def initialize(client, hash)
+          end
+
+          def self.from_hash(client, hash)
+            new(client, hash.delete('custom_token'))
+          end
+
+          def self.contains_token?(hash)
+            hash.key?('custom_token')
+          end
+        end
+
+        stub_const('StrangeAccessToken', custom_class)
+      end
+
+      context 'when the :raise_errors flag is set to true' do
+        let(:options) { {access_token_class: StrangeAccessToken, raise_errors: true} }
+        let(:payload) { {} }
+
+        it 'raises an error' do
+          expect { client.get_token({}) }.to raise_error(OAuth2::Error)
+        end
+      end
+
+      context 'when access token instance does not responds to response=' do
+        let(:options) { {access_token_class: StrangeAccessToken} }
+        let(:payload) { {'custom_token' => 'the-token'} }
+
+        it 'sets response' do
+          token_access = client.get_token({})
+          expect(token_access).to be_a(StrangeAccessToken)
+          expect(token_access).not_to respond_to(:response=)
+          expect(token_access).not_to respond_to(:response)
+        end
+      end
+
+      context 'when request has a block' do
+        subject(:request) do
+          client.get_token({}) do |req|
+            raise 'Block is executing'
+          end
+        end
+
+        let(:options) { {access_token_class: StrangeAccessToken} }
+
+        it 'sets response' do
+          block_is_expected.to raise_error('Block is executing')
         end
       end
     end
