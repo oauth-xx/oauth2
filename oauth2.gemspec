@@ -12,7 +12,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'multi_xml', '~> 0.5'
   spec.add_dependency 'rack', ['>= 1.2', '< 3']
 
-  spec.authors       = ['Peter Boling', 'Michael Bleigh', 'Erik Michaels-Ober']
+  spec.authors       = ['Peter Boling', 'Erik Michaels-Ober', 'Michael Bleigh']
   spec.description   = 'A Ruby wrapper for the OAuth 2.0 protocol built with a similar style to the original OAuth spec.'
   spec.email         = ['peter.boling@gmail.com']
   spec.homepage      = 'https://github.com/oauth-xx/oauth2'
