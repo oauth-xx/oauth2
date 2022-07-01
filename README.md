@@ -27,8 +27,6 @@ If you must continue using 1.4.x please consider purchasing an open source secur
 
 * [OAuth 2.0 Spec][oauth2-spec]
 * [OAuth 1.0 sibling gem][sibling-gem]
-* Help us finish release [![2.0.0 release milestone][next-milestone-pct-img]][next-milestone-pct] by submitting or reviewing PRs and issues.
-* Oauth2 gem is _always_ looking for additional maintainers. See [#307][maintainers-discussion].
 
 [oauth2-spec]: https://oauth.net/2/
 [sibling-gem]: https://github.com/oauth-xx/oauth-ruby
