@@ -517,7 +517,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 See [CONTRIBUTING.md][contributing]
 
-[contributing]: https://github.com/oauth-xx/oauth2/blob/main/CONTRIBUTING.md
+[contributing]: https://github.com/oauth-xx/oauth2/blob/master/CONTRIBUTING.md
 
 ## Contributors
 
