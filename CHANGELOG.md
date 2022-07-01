@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 ## unreleased
 
 
-## [1.4.10] - 2022-06-28
+## [1.4.10] - 2022-07-01
 
 - FIPS Compatibility [#587](https://github.com/oauth-xx/oauth2/pull/587) (@akostadinov)
 
@@ -20,7 +20,7 @@ All notable changes to this project will be documented in this file.
 ## [1.4.8] - 2022-02-18
 
 - MFA is now required to push new gem versions (@pboling)
-- README overhaul w/ new Ruby Verion and Engine compatibility policies (@pboling)
+- README overhaul w/ new Ruby Version and Engine compatibility policies (@pboling)
 - [#569](https://github.com/oauth-xx/oauth2/pull/569) Backport fixes ([#561](https://github.com/oauth-xx/oauth2/pull/561) by @ryogift), and add more fixes, to allow faraday 1.x and 2.x (@jrochkind)
 - Improve Code Coverage tracking (Coveralls, CodeCov, CodeClimate), and enable branch coverage (@pboling)
 - Add CodeQL, Security Policy, Funding info (@pboling)
