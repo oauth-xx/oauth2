@@ -133,7 +133,7 @@ The link tokens in the following sections should be kept ordered by the row and 
 [📗next]: https://github.com/oauth-xx/oauth2/milestone/1
 [📗next-img]: https://img.shields.io/github/milestones/progress/oauth-xx/oauth2/1?label=Next%20Version
 
-<!-- 3️⃣ maintanence & linting -->
+<!-- 3️⃣ maintenance & linting -->
 [⛳cclim-maint]: https://codeclimate.com/github/oauth-xx/oauth2/maintainability
 [⛳cclim-maint-img]: https://api.codeclimate.com/v1/badges/688c612528ff90a46955/maintainability
 [🖇triage-help]: https://www.codetriage.com/oauth-xx/oauth2
