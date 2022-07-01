@@ -20,6 +20,18 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 2.2.0'
   spec.summary       = 'A Ruby wrapper for the OAuth 2.0 protocol.'
   spec.version       = OAuth2::Version::VERSION
+  spec.post_install_message = "
+You have installed oauth2 version #{OAuth2::Version}, congratulations!
+
+There are BREAKING changes, but most will not encounter them, and updating your code should be easy!
+
+Please see:
+• https://github.com/oauth-xx/oauth2#what-is-new-for-v20
+• https://github.com/oauth-xx/oauth2/blob/master/CHANGELOG.md
+
+Please report issues, and support the project! Thanks, |7eter l-|. l3oling
+
+"
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = "#{spec.homepage}/tree/v#{spec.version}"
