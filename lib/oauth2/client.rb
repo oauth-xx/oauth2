@@ -9,7 +9,7 @@ module OAuth2
 
   # The OAuth2::Client class
   class Client # rubocop:disable Metrics/ClassLength
-    RESERVED_PARAM_KEYS = %w[headers parse].freeze
+    RESERVED_PARAM_KEYS = %w[body headers params parse snaky].freeze
 
     attr_reader :id, :secret, :site
     attr_accessor :options
@@ -108,7 +108,7 @@ module OAuth2
     # @option opts [Boolean] :raise_errors whether or not to raise an OAuth2::Error on 400+ status
     #   code response for this request.  Will default to client option
     # @option opts [Symbol] :parse @see Response::initialize
-    # @option opts [Symbol] :snaky @see Response::initialize
+    # @option opts [true, false] :snaky (true) @see Response::initialize
     # @yield [req] @see Faraday::Connection#run_request
     def request(verb, url, opts = {}, &block)
       response = execute_request(verb, url, opts, &block)
@@ -149,7 +149,7 @@ module OAuth2
     #
     # @param params [Hash] a Hash of params for the token endpoint, except:
     #   @option params [Symbol] :parse @see Response#initialize
-    #   @option params [true, false] :snaky @see Response#initialize
+    #   @option params [true, false] :snaky (true) @see Response#initialize
     # @param access_token_opts [Hash] access token options, to pass to the AccessToken object
     # @param extract_access_token [Proc] proc that extracts the access token from the response (DEPRECATED)
     # @yield [req] @see Faraday::Connection#run_request
@@ -167,10 +167,9 @@ module OAuth2
 
       request_opts = {
         raise_errors: options[:raise_errors],
-        parse: params.delete(:parse),
-        snaky: params.delete(:snaky),
+        parse: params.fetch(:parse, Response::DEFAULT_OPTIONS[:parse]),
+        snaky: params.fetch(:snaky, Response::DEFAULT_OPTIONS[:snaky]),
       }
-
       params = authenticator.apply(params)
       headers = params.delete(:headers) || {}
       if options[:token_method] == :post
@@ -267,7 +266,10 @@ module OAuth2
         raise TimeoutError, e
       end
 
-      Response.new(response, parse: opts[:parse], snaky: opts[:snaky])
+      parse = opts.fetch(:parse, Response::DEFAULT_OPTIONS[:parse])
+      snaky = opts.fetch(:snaky, Response::DEFAULT_OPTIONS[:snaky])
+
+      Response.new(response, parse: parse, snaky: snaky)
     end
 
     # Returns the authenticator object

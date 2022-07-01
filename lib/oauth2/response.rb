@@ -7,6 +7,10 @@ require 'rack'
 module OAuth2
   # OAuth2::Response class
   class Response
+    DEFAULT_OPTIONS = {
+      parse: :automatic,
+      snaky: true,
+    }.freeze
     attr_reader :response
     attr_accessor :options
 
