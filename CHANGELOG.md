@@ -94,6 +94,9 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 - [#589](https://github.com/oauth-xx/oauth2/pull/589), [#593](https://github.com/oauth-xx/oauth2/pull/593) - Remove support for expired MAC token draft spec (@stanhu)
 - [#590](https://github.com/oauth-xx/oauth2/pull/590) - _Dependency_: Removed `multi_json` (@stanhu)
 
+## [1.4.10] - 2022-07-01
+- FIPS Compatibility [#587](https://github.com/oauth-xx/oauth2/pull/587) (@akostadinov)
+
 ## [1.4.9] - 2022-02-20
 - Fixes compatibility with Faraday v2 [572](https://github.com/oauth-xx/oauth2/issues/572)
 - Includes supported versions of Faraday in test matrix:
@@ -104,7 +107,7 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 
 ## [1.4.8] - 2022-02-18
 - MFA is now required to push new gem versions (@pboling)
-- README overhaul w/ new Ruby Verion and Engine compatibility policies (@pboling)
+- README overhaul w/ new Ruby Version and Engine compatibility policies (@pboling)
 - [#569](https://github.com/oauth-xx/oauth2/pull/569) Backport fixes ([#561](https://github.com/oauth-xx/oauth2/pull/561) by @ryogift), and add more fixes, to allow faraday 1.x and 2.x (@jrochkind)
 - Improve Code Coverage tracking (Coveralls, CodeCov, CodeClimate), and enable branch coverage (@pboling)
 - Add CodeQL, Security Policy, Funding info (@pboling)
@@ -233,7 +236,6 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 
 ## [0.0.4] + [0.0.3] + [0.0.2] + [0.0.1] - 2010-04-22
 
-[Unreleased]: https://github.com/oauth-xx/oauth2/compare/v2.0.3...HEAD
 [0.0.1]: https://github.com/oauth-xx/oauth2/compare/311d9f4...v0.0.1
 [0.0.2]: https://github.com/oauth-xx/oauth2/compare/v0.0.1...v0.0.2
 [0.0.3]: https://github.com/oauth-xx/oauth2/compare/v0.0.2...v0.0.3
@@ -269,8 +271,11 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 [1.4.7]: https://github.com/oauth-xx/oauth2/compare/v1.4.6...v1.4.7
 [1.4.8]: https://github.com/oauth-xx/oauth2/compare/v1.4.7...v1.4.8
 [1.4.9]: https://github.com/oauth-xx/oauth2/compare/v1.4.8...v1.4.9
-[2.0.0]: https://github.com/oauth-xx/oauth2/compare/v1.4.9...v2.0.0
+[1.4.10]: https://github.com/oauth-xx/oauth2/compare/v1.4.9...v1.4.10
+[2.0.0]: https://github.com/oauth-xx/oauth2/compare/v1.4.10...v2.0.0
 [2.0.1]: https://github.com/oauth-xx/oauth2/compare/v2.0.0...v2.0.1
 [2.0.2]: https://github.com/oauth-xx/oauth2/compare/v2.0.1...v2.0.2
 [2.0.3]: https://github.com/oauth-xx/oauth2/compare/v2.0.2...v2.0.3
+[2.0.4]: https://github.com/oauth-xx/oauth2/compare/v2.0.3...v2.0.4
+[Unreleased]: https://github.com/oauth-xx/oauth2/compare/v2.0.4...HEAD
 [gemfiles/readme]: gemfiles/README.md

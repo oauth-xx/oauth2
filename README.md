@@ -32,6 +32,7 @@ See the sibling `oauth` gem for OAuth 1.0 implementations in Ruby.
 
 | Version | Release Date | Readme                                                   |
 |---------|--------------|----------------------------------------------------------|
+| 2.0.4   | 2022-07-01   | https://github.com/oauth-xx/oauth2/blob/v2.0.4/README.md |
 | 2.0.3   | 2022-06-28   | https://github.com/oauth-xx/oauth2/blob/v2.0.3/README.md |
 | 2.0.2   | 2022-06-24   | https://github.com/oauth-xx/oauth2/blob/v2.0.2/README.md |
 | 2.0.1   | 2022-06-22   | https://github.com/oauth-xx/oauth2/blob/v2.0.1/README.md |
@@ -43,18 +44,19 @@ See the sibling `oauth` gem for OAuth 1.0 implementations in Ruby.
 <details>
   <summary>1.4.x Readmes</summary>
 
-| Version | Release Date | Readme                                                   |
-|---------|--------------|----------------------------------------------------------|
-| 1.4.9   | Feb 20, 2022 | https://github.com/oauth-xx/oauth2/blob/v1.4.9/README.md |
-| 1.4.8   | Feb 18, 2022 | https://github.com/oauth-xx/oauth2/blob/v1.4.8/README.md |
-| 1.4.7   | Mar 19, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.7/README.md |
-| 1.4.6   | Mar 19, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.6/README.md |
-| 1.4.5   | Mar 18, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.5/README.md |
-| 1.4.4   | Feb 12, 2020 | https://github.com/oauth-xx/oauth2/blob/v1.4.4/README.md |
-| 1.4.3   | Jan 29, 2020 | https://github.com/oauth-xx/oauth2/blob/v1.4.3/README.md |
-| 1.4.2   | Oct 1, 2019  | https://github.com/oauth-xx/oauth2/blob/v1.4.2/README.md |
-| 1.4.1   | Oct 13, 2018 | https://github.com/oauth-xx/oauth2/blob/v1.4.1/README.md |
-| 1.4.0   | Jun 9, 2017  | https://github.com/oauth-xx/oauth2/blob/v1.4.0/README.md |
+| Version | Release Date | Readme                                                    |
+|---------|--------------|-----------------------------------------------------------|
+| 1.4.10  | Jul 1, 2022  | https://github.com/oauth-xx/oauth2/blob/v1.4.10/README.md |
+| 1.4.9   | Feb 20, 2022 | https://github.com/oauth-xx/oauth2/blob/v1.4.9/README.md  |
+| 1.4.8   | Feb 18, 2022 | https://github.com/oauth-xx/oauth2/blob/v1.4.8/README.md  |
+| 1.4.7   | Mar 19, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.7/README.md  |
+| 1.4.6   | Mar 19, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.6/README.md  |
+| 1.4.5   | Mar 18, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.5/README.md  |
+| 1.4.4   | Feb 12, 2020 | https://github.com/oauth-xx/oauth2/blob/v1.4.4/README.md  |
+| 1.4.3   | Jan 29, 2020 | https://github.com/oauth-xx/oauth2/blob/v1.4.3/README.md  |
+| 1.4.2   | Oct 1, 2019  | https://github.com/oauth-xx/oauth2/blob/v1.4.2/README.md  |
+| 1.4.1   | Oct 13, 2018 | https://github.com/oauth-xx/oauth2/blob/v1.4.1/README.md  |
+| 1.4.0   | Jun 9, 2017  | https://github.com/oauth-xx/oauth2/blob/v1.4.0/README.md  |
 </details>
 
 <details>
@@ -144,7 +146,7 @@ The link tokens in the following sections should be kept ordered by the row and 
 [📗next♻️]: https://github.com/oauth-xx/oauth2/milestone/15
 [📗next-img♻️]: https://img.shields.io/github/milestones/progress/oauth-xx/oauth2/15?label=Next%20Version
 
-<!-- 3️⃣ maintanence & linting -->
+<!-- 3️⃣ maintenance & linting -->
 [⛳cclim-maint]: https://codeclimate.com/github/oauth-xx/oauth2/maintainability
 [⛳cclim-maint-img♻️]: https://api.codeclimate.com/v1/badges/688c612528ff90a46955/maintainability
 [🖇triage-help]: https://www.codetriage.com/oauth-xx/oauth2
@@ -229,7 +231,9 @@ If bundler is not being used to manage dependencies, install the gem by executin
 
 Available as part of the Tidelift Subscription.
 
-The maintainers of OAuth2 and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source packages you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact packages you use. [Learn more.](https://tidelift.com/subscription/pkg/rubygems-oauth2?utm_source=rubygems-oauth2&utm_medium=referral&utm_campaign=enterprise)
+The maintainers of OAuth2 and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source packages you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact packages you use. [Learn more.][tidelift-ref]
+
+[tidelift-ref]: https://tidelift.com/subscription/pkg/rubygems-oauth2?utm_source=rubygems-oauth2&utm_medium=referral&utm_campaign=enterprise
 
 ## Security contact information
 
@@ -289,13 +293,13 @@ fashion. If critical issues for a particular implementation exist at the time
 of a major release, support for that Ruby version may be dropped.
 </details>
 
-|     | Ruby OAuth 2 Version | Maintenance Branch | Supported Officially    | Supported Unofficially | Supported Incidentally |
-|:----|----------------------|--------------------|-------------------------|------------------------|------------------------|
-| 1️⃣ | 2.0.x                | `master`           | 2.7, 3.0, 3.1           | 2.5, 2.6               | 2.2, 2.3, 2.4          |
-| 2️⃣ | 1.4.x                | `1-4-stable`       | 2.5, 2.6, 2.7, 3.0, 3.1 | 2.1, 2.2, 2.3, 2.4     | 1.9, 2.0               |
-| 3️⃣ | older                | N/A                | Best of luck to you!    | Please upgrade!        |                        |
+|     | Ruby OAuth2 Version | Maintenance Branch | Supported Officially    | Supported Unofficially | Supported Incidentally |
+|:----|---------------------|--------------------|-------------------------|------------------------|------------------------|
+| 1️⃣ | 2.0.x               | `master`           | 2.7, 3.0, 3.1           | 2.5, 2.6               | 2.2, 2.3, 2.4          |
+| 2️⃣ | 1.4.x               | `1-4-stable`       | 2.5, 2.6, 2.7, 3.0, 3.1 | 2.1, 2.2, 2.3, 2.4     | 1.9, 2.0               |
+| 3️⃣ | older               | N/A                | Best of luck to you!    | Please upgrade!        |                        |
 
-NOTE: The 1.4 series will only receive critical bug and security updates.
+NOTE: The 1.4 series will only receive critical security updates.
 See [SECURITY.md][🚎sec-pol]
 
 ## Usage Examples
