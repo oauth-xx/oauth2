@@ -71,6 +71,8 @@ If you must continue using 1.4.x please consider purchasing an open source secur
 | < 1.0.0  | Find here    | https://github.com/oauth-xx/oauth2/tags                  |
 </details>
 
+## Status
+
 <!--
 Numbering rows and badges in each row as a visual "database" lookup,
     as the table is extremely dense, and it can be very difficult to find anything
@@ -206,19 +208,13 @@ The link tokens in the following sections should be kept ordered by the row and 
 
 ## Installation
 
-```shell
-gem install oauth2
-```
+Install the gem and add to the application's Gemfile by executing:
 
-Or inside a `Gemfile`
+    $ bundle add oauth2
 
-```ruby
-gem 'oauth2'
-```
-And then execute in a shell:
-```shell
-bundle
-```
+If bundler is not being used to manage dependencies, install the gem by executing:
+
+    $ gem install oauth2
 
 ## OAuth2 for Enterprise
 
@@ -424,7 +420,15 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/oauth-xx/oauth2. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
+See [CONTRIBUTING.md][contributing]
+
+[contributing]: https://github.com/oauth-xx/oauth2/blob/master/CONTRIBUTING.md
+
+## Contributors
+
+[![Contributors](https://contrib.rocks/image?repo=oauth-xx/oauth2)]("https://github.com/oauth-xx/oauth2/graphs/contributors")
+
+Made with [contributors-img](https://contrib.rocks).
 
 ## Code of Conduct
 
