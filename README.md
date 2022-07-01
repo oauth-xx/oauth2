@@ -15,8 +15,13 @@ OAuth 2.0 focuses on client developer simplicity while providing specific author
 This is a RubyGem for implementing OAuth 2.0 clients and servers in Ruby applications.
 See the sibling `oauth` gem for OAuth 1.0 implementations in Ruby.
 
-⚠️ **_WARNING_**: You are viewing the `README` of the soon-to-be-deprecated `1-4-stable`
-branch which for version 1.4.x releases. Please upgrade to version 2! ⚠️
+⚠️⚠️⚠️ **_WARNING_**: You are viewing the `README` of the 
+[supported-only-for-critical-enterprise-security-issues](#oauth2-for-enterprise) `1-4-stable`
+branch. Please do not use this, and instead upgrade to version 2! ⚠️⚠️⚠️
+
+No further releases of 1.x series are planned!  [Version 2](https://github.com/oauth-xx/oauth2#what-is-new-for-v20) has *tons* of improvements!
+
+If you must continue using 1.4.x please consider purchasing an open source security maintenance contract from [Tidelift][tidelift-ref].
 
 ---
 
@@ -36,18 +41,19 @@ branch which for version 1.4.x releases. Please upgrade to version 2! ⚠️
 <details>
   <summary>1.4.x Readmes</summary>
 
-| Version | Release Date | Readme                                                   |
-|---------|--------------|----------------------------------------------------------|
-| 1.4.9   | Feb 20, 2022 | https://github.com/oauth-xx/oauth2/blob/v1.4.9/README.md |
-| 1.4.8   | Feb 18, 2022 | https://github.com/oauth-xx/oauth2/blob/v1.4.8/README.md |
-| 1.4.7   | Mar 19, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.7/README.md |
-| 1.4.6   | Mar 19, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.6/README.md |
-| 1.4.5   | Mar 18, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.5/README.md |
-| 1.4.4   | Feb 12, 2020 | https://github.com/oauth-xx/oauth2/blob/v1.4.4/README.md |
-| 1.4.3   | Jan 29, 2020 | https://github.com/oauth-xx/oauth2/blob/v1.4.3/README.md |
-| 1.4.2   | Oct 1, 2019  | https://github.com/oauth-xx/oauth2/blob/v1.4.2/README.md |
-| 1.4.1   | Oct 13, 2018 | https://github.com/oauth-xx/oauth2/blob/v1.4.1/README.md |
-| 1.4.0   | Jun 9, 2017  | https://github.com/oauth-xx/oauth2/blob/v1.4.0/README.md |
+| Version | Release Date | Readme                                                    |
+|---------|--------------|-----------------------------------------------------------|
+| 1.4.10  | Jul 1, 2022  | https://github.com/oauth-xx/oauth2/blob/v1.4.10/README.md |
+| 1.4.9   | Feb 20, 2022 | https://github.com/oauth-xx/oauth2/blob/v1.4.9/README.md  |
+| 1.4.8   | Feb 18, 2022 | https://github.com/oauth-xx/oauth2/blob/v1.4.8/README.md  |
+| 1.4.7   | Mar 19, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.7/README.md  |
+| 1.4.6   | Mar 19, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.6/README.md  |
+| 1.4.5   | Mar 18, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.5/README.md  |
+| 1.4.4   | Feb 12, 2020 | https://github.com/oauth-xx/oauth2/blob/v1.4.4/README.md  |
+| 1.4.3   | Jan 29, 2020 | https://github.com/oauth-xx/oauth2/blob/v1.4.3/README.md  |
+| 1.4.2   | Oct 1, 2019  | https://github.com/oauth-xx/oauth2/blob/v1.4.2/README.md  |
+| 1.4.1   | Oct 13, 2018 | https://github.com/oauth-xx/oauth2/blob/v1.4.1/README.md  |
+| 1.4.0   | Jun 9, 2017  | https://github.com/oauth-xx/oauth2/blob/v1.4.0/README.md  |
 </details>
 
 <details>
@@ -225,7 +231,9 @@ bundle
 
 Available as part of the Tidelift Subscription.
 
-The maintainers of OAuth2 and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source packages you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact packages you use. [Learn more.](https://tidelift.com/subscription/pkg/rubygems-oauth2?utm_source=rubygems-oauth2&utm_medium=referral&utm_campaign=enterprise)
+The maintainers of OAuth2 and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source packages you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact packages you use. [Learn more.][tidelift-ref]
+
+[tidelift-ref]: https://tidelift.com/subscription/pkg/rubygems-oauth2?utm_source=rubygems-oauth2&utm_medium=referral&utm_campaign=enterprise
 
 ## Security contact information
 
@@ -236,9 +244,10 @@ For more see [SECURITY.md][🚎sec-pol].
 
 ## Compatibility
 
-Targeted ruby compatibility is non-EOL versions of Ruby, currently 2.7, 3.0 and
-3.1. Compatibility is further distinguished by supported and unsupported versions of Ruby.
-Ruby is limited to 1.9+ in the gemspec for the 1.4.x series and will be 2.2+ for 2.x releases (see `master` branch).
+Targeted ruby compatibility is 2.7, 3.0 and 3.1. Compatibility is further distinguished by
+supported and unsupported versions of Ruby.
+This gem will work with Ruby versions back to 1.9, though it remains unsupported.
+Ruby is limited to 1.9+ in the gemspec for the 1.4.x series and is be 2.2+ for next major version releases (see `master` branch).
 
 <details>
   <summary>Ruby Engine Compatibility Policy</summary>
