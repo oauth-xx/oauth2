@@ -1,6 +1,25 @@
 # encoding: UTF-8
 # frozen_string_literal: true
 
+class StirredHash < Hash
+  def to_str
+    '{"hello":"� Cool � StirredHash"}'
+  end
+end
+
+class XmledString < String
+  XML = '
+<things>
+<thing id="101">
+<name>� Cool � XmledString</name>
+</thing>
+</things>
+'.freeze
+  def to_str
+    XML
+  end
+end
+
 RSpec.describe OAuth2::Error do
   subject { described_class.new(response) }
 
@@ -100,6 +119,59 @@ RSpec.describe OAuth2::Error do
         end
       end
 
+      context 'when using :json parser with non-encodable data' do
+        let(:response_headers) { {'Content-Type' => 'application/hal+json'} }
+        let(:response_body) do
+          StirredHash.new(
+            "_links": {
+              "self": {"href": '/orders/523'},
+              "warehouse": {"href": '/warehouse/56'},
+              "invoice": {"href": '/invoices/873'},
+            },
+            "currency": 'USD',
+            "status": 'shipped',
+            "total": 10.20
+          )
+        end
+
+        before do
+          expect(response_body).not_to respond_to(:force_encoding)
+          expect(response_body).to respond_to(:to_str)
+        end
+
+        it 'does not force encode the message' do
+          expect(subject.message).to eq('{"hello":"� Cool � StirredHash"}')
+        end
+      end
+
+      context 'when using :xml parser' do
+        let(:response_headers) { {'Content-Type' => 'text/xml'} }
+        let(:response_body) do
+          XmledString.new(XmledString::XML)
+        end
+
+        before do
+          expect(response_body).to respond_to(:to_str)
+        end
+
+        it 'parses the XML' do
+          expect(subject.message).to eq(XmledString::XML)
+        end
+      end
+
+      context 'when using :xml parser with non-String-like thing' do
+        let(:response_headers) { {'Content-Type' => 'text/xml'} }
+        let(:response_body) { {hello: :world} }
+
+        before do
+          expect(response_body).not_to respond_to(:to_str)
+        end
+
+        it 'just returns the thing if it can' do
+          expect(subject.message).to eq('{:hello=>:world}')
+        end
+      end
+
       it 'sets the code attribute' do
         expect(subject.code).to eq('i_am_a_teapot')
       end
@@ -107,6 +179,14 @@ RSpec.describe OAuth2::Error do
       it 'sets the description attribute' do
         expect(subject.description).to eq('Short and stout')
       end
+    end
+
+    it 'sets the code attribute to nil' do
+      expect(subject.code).to be_nil
+    end
+
+    it 'sets the description attribute' do
+      expect(subject.description).to be_nil
     end
 
     context 'when there is no error description' do
@@ -145,6 +225,143 @@ RSpec.describe OAuth2::Error do
               "error_description": 'Short and stout',
               "error": 'i_am_a_teapot',
               "code": '418',
+            }.to_json,
+          ]
+        )
+      end
+
+      context 'when the response needs to be encoded' do
+        let(:response_body) { JSON.dump(response_hash).force_encoding('ASCII-8BIT') }
+
+        context 'with invalid characters present' do
+          before do
+            response_body.gsub!('stout', "\255 invalid \255")
+          end
+
+          it 'replaces them' do
+            # The skip can be removed once support for < 2.1 is dropped.
+            encoding = {reason: 'encode/scrub only works as of Ruby 2.1'}
+            skip_for(encoding.merge(engine: 'jruby'))
+            # See https://bibwild.wordpress.com/2013/03/12/removing-illegal-bytes-for-encoding-in-ruby-1-9-strings/
+
+            raise 'Invalid characters not replaced' unless subject.message.include?('� invalid �')
+            # This will fail if {:invalid => replace} is not passed into `encode`
+          end
+        end
+
+        context 'with undefined characters present' do
+          before do
+            response_hash['error_description'] += ": 'A magical voyage of tea 🍵'"
+          end
+
+          it 'replaces them' do
+            raise 'Undefined characters not replaced' unless subject.message.include?('tea �')
+            # This will fail if {:undef => replace} is not passed into `encode`
+          end
+        end
+      end
+
+      context 'when the response is not an encodable thing' do
+        let(:response_headers) { {'Content-Type' => 'who knows'} }
+        let(:response_body) { {text: 'Coffee brewing failed'} }
+
+        before do
+          expect(response_body).not_to respond_to(:encode)
+          # i.e. a Ruby hash
+        end
+
+        it 'does not try to encode the message string' do
+          expect(subject.message).to eq(response_body.to_s)
+        end
+      end
+
+      it 'sets the code attribute' do
+        expect(subject.code).to eq('i_am_a_teapot')
+      end
+
+      it 'sets the description attribute' do
+        expect(subject.description).to eq('Short and stout')
+      end
+    end
+
+    context 'when there is code but no error_description' do
+      before do
+        response_hash.delete('error_description')
+        response_hash['error'] = 'i_am_a_teapot'
+        response_hash['code'] = '418'
+      end
+
+      it 'prepends to the error message with a return character' do
+        expect(subject.message.each_line.to_a).to eq(
+          [
+            "i_am_a_teapot: \n",
+            {
+              "text": 'Coffee brewing failed',
+              "error": 'i_am_a_teapot',
+              "code": '418',
+            }.to_json,
+          ]
+        )
+      end
+
+      context 'when the response needs to be encoded' do
+        let(:response_body) { JSON.dump(response_hash).force_encoding('ASCII-8BIT') }
+
+        context 'with invalid characters present' do
+          before do
+            response_body.gsub!('brewing', "\255 invalid \255")
+          end
+
+          it 'replaces them' do
+            # The skip can be removed once support for < 2.1 is dropped.
+            encoding = {reason: 'encode/scrub only works as of Ruby 2.1'}
+            skip_for(encoding.merge(engine: 'jruby'))
+            # See https://bibwild.wordpress.com/2013/03/12/removing-illegal-bytes-for-encoding-in-ruby-1-9-strings/
+
+            raise 'Invalid characters not replaced' unless subject.message.include?('� invalid �')
+            # This will fail if {:invalid => replace} is not passed into `encode`
+          end
+        end
+      end
+
+      context 'when the response is not an encodable thing' do
+        let(:response_headers) { {'Content-Type' => 'who knows'} }
+        let(:response_body) { {text: 'Coffee brewing failed'} }
+
+        before do
+          expect(response_body).not_to respond_to(:encode)
+          # i.e. a Ruby hash
+        end
+
+        it 'does not try to encode the message string' do
+          expect(subject.message).to eq(response_body.to_s)
+        end
+      end
+
+      it 'sets the code attribute' do
+        expect(subject.code).to eq('i_am_a_teapot')
+      end
+
+      it 'does not set the description attribute' do
+        expect(subject.description).to be_nil
+      end
+    end
+
+    context 'when there is error_description but no code' do
+      before do
+        response_hash['error_description'] = 'Short and stout'
+        response_hash['error'] = 'i_am_a_teapot'
+        response_hash.delete('code')
+      end
+
+      it 'prepends to the error message with a return character' do
+        expect(subject.message.each_line.to_a).to eq(
+          [
+            "i_am_a_teapot: Short and stout\n",
+            {
+              "text": 'Coffee brewing failed',
+              "error_description": 'Short and stout',
+              "error": 'i_am_a_teapot',
             }.to_json,
           ]
         )
