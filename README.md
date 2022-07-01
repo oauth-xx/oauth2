@@ -30,9 +30,6 @@ If you must continue using 1.4.x please consider purchasing an open source secur
 
 [oauth2-spec]: https://oauth.net/2/
 [sibling-gem]: https://github.com/oauth-xx/oauth-ruby
-[next-milestone-pct]: https://github.com/oauth-xx/oauth2/milestone/1
-[next-milestone-pct-img]: https://img.shields.io/github/milestones/progress-percent/oauth-xx/oauth2/1
-[maintainers-discussion]: https://github.com/oauth-xx/oauth2/issues/307
 
 ## Release Documentation
 
