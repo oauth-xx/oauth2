@@ -66,6 +66,9 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 - [#489](https://github.com/oauth-xx/oauth2/pull/489) - **BREAKING**: Default value for option `OAuth2::Client` - `:authorize_url` removed leading slash to work with relative paths by default (`'oauth/authorize'`) (@ghost)
 - [#489](https://github.com/oauth-xx/oauth2/pull/489) - **BREAKING**: Default value for option `OAuth2::Client` - `:token_url` removed leading slash to work with relative paths by default (`'oauth/token'`) (@ghost)
 - [#507](https://github.com/oauth-xx/oauth2/pull/507), [#575](https://github.com/oauth-xx/oauth2/pull/575) - **BREAKING**: Transform keys to camel case, always, by default (ultimately via `rash_alt` gem)
+  - Original keys will still work as previously, in most scenarios, thanks to `rash_alt` gem.
+  - However, this is a _breaking_ change if you rely on `response.parsed.to_h`, as the keys in the result will be camel case.
+  - As of version 2.0.4 you can turn key transformation off with the `snaky: false` option.
 - [#576](https://github.com/oauth-xx/oauth2/pull/576) - **BREAKING**: Stop rescuing parsing errors (@pboling)
 - [#591](https://github.com/oauth-xx/oauth2/pull/576) - _DEPRECATION_: `OAuth2::Client` - `:extract_access_token` option is deprecated
 ### Fixed
