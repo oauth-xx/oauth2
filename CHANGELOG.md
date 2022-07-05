@@ -65,6 +65,7 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 - [#414](https://github.com/oauth-xx/oauth2/pull/414) - Use Base64.strict_encode64 instead of custom internal logic (@meganemura)
 - [#489](https://github.com/oauth-xx/oauth2/pull/489) - **BREAKING**: Default value for option `OAuth2::Client` - `:authorize_url` removed leading slash to work with relative paths by default (`'oauth/authorize'`) (@ghost)
 - [#489](https://github.com/oauth-xx/oauth2/pull/489) - **BREAKING**: Default value for option `OAuth2::Client` - `:token_url` removed leading slash to work with relative paths by default (`'oauth/token'`) (@ghost)
+- [#507](https://github.com/oauth-xx/oauth2/pull/507), [#575](https://github.com/oauth-xx/oauth2/pull/575) - **BREAKING**: Transform keys to camel case, always, by default (ultimately via `rash_alt` gem)
 - [#576](https://github.com/oauth-xx/oauth2/pull/576) - **BREAKING**: Stop rescuing parsing errors (@pboling)
 - [#591](https://github.com/oauth-xx/oauth2/pull/576) - _DEPRECATION_: `OAuth2::Client` - `:extract_access_token` option is deprecated
 ### Fixed
