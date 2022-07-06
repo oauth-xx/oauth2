@@ -261,6 +261,8 @@ For more see [SECURITY.md][🚎sec-pol].
   - Original keys will still work as previously, in most scenarios, thanks to `rash_alt` gem.
   - However, this is a _breaking_ change if you rely on `response.parsed.to_h`, as the keys in the result will be camel case.
   - As of version 2.0.4 you can turn key transformation off with the `snaky: false` option.
+- By default, the `:auth_scheme` is now `:basic_auth` (instead of `:request_body`)
+  - Third-party strategies and gems may need to be updated if a provider was requiring client id/secret in the request body
 - [... A lot more](https://github.com/oauth-xx/oauth2/blob/master/CHANGELOG.md#2.0.0)
 
 ## Compatibility
