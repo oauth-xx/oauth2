@@ -6,11 +6,12 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 
 ## [2.0.5] - 2022-07-07
 ### Fixed
+- [#620](https://github.com/oauth-xx/oauth2/pull/620) - Documentation improvements, to help with upgrading (@swanson)
 - [#621](https://github.com/oauth-xx/oauth2/pull/621) - Fixed [#528](https://github.com/oauth-xx/oauth2/issues/528) and [#619](https://github.com/oauth-xx/oauth2/issues/619) (@pboling)
   - All data in responses is now returned, with the access token removed and set as `token`
     - `refresh_token` is no longer dropped
     - **BREAKING**: Microsoft's `id_token` is no longer left as `access_token['id_token']`, but moved to the standard `access_token.token` that all other strategies use
-  - `snaky` and `parse` are no longer passed through to request params
+  - Remove `parse` and `snaky` from options so they don't get included in response
   - There is now 100% test coverage, for lines _and_ branches, and it will stay that way.
 
 ## [2.0.4] - 2022-07-01
