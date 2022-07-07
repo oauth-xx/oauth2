@@ -476,6 +476,93 @@ RSpec.describe OAuth2::Client do
       expect(token.token).to eq('the-token')
     end
 
+    context 'when parse: :automatic' do
+      it 'returns a configured AccessToken' do
+        client = stubbed_client do |stub|
+          stub.post('/oauth/token') do
+            [200, {'Content-Type' => 'application/json'}, JSON.dump('access_token' => 'the-token')]
+          end
+        end
+
+        token = client.get_token(parse: :automatic)
+        expect(token).to be_a OAuth2::AccessToken
+        expect(token.token).to eq('the-token')
+      end
+    end
+
+    context 'when parse: :xml but response is JSON' do
+      it 'returns a configured AccessToken' do
+        client = stubbed_client do |stub|
+          stub.post('/oauth/token') do
+            [200, {'Content-Type' => 'application/json'}, JSON.dump('access_token' => 'the-token')]
+          end
+        end
+
+        expect { client.get_token(parse: :xml) }.to raise_error(
+          MultiXml::ParseError,
+          'The document "{\"access_token\":\"the-token\"}" does not have a valid root'
+        )
+      end
+    end
+
+    context 'when parse is fuzzed' do
+      it 'returns a configured AccessToken' do
+        client = stubbed_client do |stub|
+          stub.post('/oauth/token') do
+            [200, {'Content-Type' => 'application/json'}, JSON.dump('access_token' => 'the-token')]
+          end
+        end
+
+        token = client.get_token(parse: 'random')
+        expect(token).to be_a OAuth2::AccessToken
+        expect(token.token).to eq('the-token')
+      end
+    end
+
+    context 'when parse is correct' do
+      it 'returns a configured AccessToken' do
+        client = stubbed_client do |stub|
+          stub.post('/oauth/token') do
+            [200, {'Content-Type' => 'application/json'}, JSON.dump('access_token' => 'the-token')]
+          end
+        end
+
+        token = client.get_token(parse: :json)
+        expect(token).to be_a OAuth2::AccessToken
+        expect(token.token).to eq('the-token')
+      end
+    end
+
+    context 'when snaky is falsy, but response is snaky' do
+      it 'returns a configured AccessToken' do
+        client = stubbed_client do |stub|
+          stub.post('/oauth/token') do
+            [200, {'Content-Type' => 'application/json'}, JSON.dump('access_token' => 'the-token')]
+          end
+        end
+
+        token = client.get_token(snaky: false)
+        expect(token).to be_a OAuth2::AccessToken
+        expect(token.token).to eq('the-token')
+        expect(token.response.parsed.to_h).to eq('access_token' => 'the-token')
+      end
+    end
+
+    context 'when snaky is falsy, but response is not snaky' do
+      it 'returns a configured AccessToken' do
+        client = stubbed_client do |stub|
+          stub.post('/oauth/token') do
+            [200, {'Content-Type' => 'application/json'}, JSON.dump('accessToken' => 'the-token')]
+          end
+        end
+
+        token = client.get_token({snaky: false}, {param_name: 'accessToken'})
+        expect(token).to be_a OAuth2::AccessToken
+        expect(token.token).to eq('the-token')
+        expect(token.response.parsed.to_h).to eq('accessToken' => 'the-token')
+      end
+    end
+
     it 'authenticates with request parameters' do
       client = stubbed_client(auth_scheme: :request_body) do |stub|
         stub.post('/oauth/token', 'client_id' => 'abc', 'client_secret' => 'def') do |_env|

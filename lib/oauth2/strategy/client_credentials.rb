@@ -19,7 +19,7 @@ module OAuth2
       # @param [Hash] opts options
       def get_token(params = {}, opts = {})
         params = params.merge('grant_type' => 'client_credentials')
-        @client.get_token(params, opts.merge('refresh_token' => nil))
+        @client.get_token(params, opts)
       end
     end
   end

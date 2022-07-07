@@ -8,12 +8,18 @@ module OAuth2
     class << self
       # Initializes an AccessToken from a Hash
       #
-      # @param client [Client] the OAuth2::Client instance
-      # @param hash [Hash] a hash of AccessToken property values
+      # @param [Client] client the OAuth2::Client instance
+      # @param [Hash] hash a hash of AccessToken property values
+      # @option hash [String] 'access_token', 'id_token', 'token', :access_token, :id_token, or :token the access token
       # @return [AccessToken] the initialized AccessToken
       def from_hash(client, hash)
         hash = hash.dup
-        new(client, hash.delete('access_token') || hash.delete(:access_token) || hash.delete('token') || hash.delete(:token), hash)
+        token = hash.delete('access_token') || hash.delete(:access_token) ||
+                hash.delete('id_token') || hash.delete(:id_token) ||
+                hash.delete('token') || hash.delete(:token) ||
+                hash.delete('accessToken') || hash.delete(:accessToken) ||
+                hash.delete('idToken') || hash.delete(:idToken)
+        new(client, token, hash)
       end
 
       # Initializes an AccessToken from a key/value application/x-www-form-urlencoded string
@@ -23,10 +29,6 @@ module OAuth2
       # @return [AccessToken] the initialized AccessToken
       def from_kvform(client, kvform)
         from_hash(client, Rack::Utils.parse_query(kvform))
-      end
-
-      def contains_token?(hash)
-        hash.key?('access_token') || hash.key?('id_token') || hash.key?('token')
       end
     end
 
@@ -47,6 +49,11 @@ module OAuth2
     def initialize(client, token, opts = {})
       @client = client
       @token = token.to_s
+
+      if @client.options[:raise_errors] && (@token.nil? || @token.empty?)
+        error = Error.new(opts)
+        raise(error)
+      end
       opts = opts.dup
       %i[refresh_token expires_in expires_at expires_latency].each do |arg|
         instance_variable_set("@#{arg}", opts.delete(arg) || opts.delete(arg.to_s))
@@ -95,7 +102,11 @@ module OAuth2
       params[:refresh_token] = refresh_token
       new_token = @client.get_token(params, access_token_opts)
       new_token.options = options
-      new_token.refresh_token = refresh_token unless new_token.refresh_token
+      if new_token.refresh_token
+        # Keep it, if there is one
+      else
+        new_token.refresh_token = refresh_token
+      end
       new_token
     end
     # A compatibility alias

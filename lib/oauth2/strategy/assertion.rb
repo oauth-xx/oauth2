@@ -80,7 +80,7 @@ module OAuth2
         assertion = build_assertion(claims, encoding_opts)
         params = build_request(assertion, request_opts)
 
-        @client.get_token(params, response_opts.merge('refresh_token' => nil))
+        @client.get_token(params, response_opts)
       end
 
     private

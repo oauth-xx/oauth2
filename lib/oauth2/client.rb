@@ -299,7 +299,7 @@ module OAuth2
       access_token_class = options[:access_token_class]
       data = response.parsed
 
-      unless data.is_a?(Hash) && access_token_class.contains_token?(data)
+      unless data.is_a?(Hash) && !data.empty?
         return unless options[:raise_errors]
 
         error = Error.new(response)
