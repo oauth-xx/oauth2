@@ -9,7 +9,7 @@ RSpec.describe OAuth2::Strategy::AuthCode do
   let(:facebook_token) { kvform_token.gsub('_in', '') }
   let(:json_token) { JSON.dump(expires_in: 600, access_token: 'salmon', refresh_token: 'trout', extra_param: 'steve') }
   let(:redirect_uri) { 'http://example.com/redirect_uri' }
-  let(:microsoft_token) { 'id_token=jwt' }
+  let(:microsoft_token) { 'id_token=i_am_MSFT' }
 
   let(:client) do
     OAuth2::Client.new('abc', 'def', site: 'http://api.example.com') do |builder|
@@ -111,7 +111,7 @@ RSpec.describe OAuth2::Strategy::AuthCode do
       client.options[:token_method] = :get
       client.options[:auth_scheme] = :request_body
       @access = subject.get_token(code)
-      expect(@access['id_token']).to eq('jwt')
+      expect(@access.token).to eq('i_am_MSFT')
     end
   end
 

@@ -2,21 +2,29 @@
 
 module OAuth2
   class Error < StandardError
-    attr_reader :response, :code, :description
+    attr_reader :response, :body, :code, :description
 
     # standard error codes include:
     # 'invalid_request', 'invalid_client', 'invalid_token', 'invalid_grant', 'unsupported_grant_type', 'invalid_scope'
+    # response might be a Response object, or the response.parsed hash
     def initialize(response)
       @response = response
-      message_opts = {}
-
-      if response.parsed.is_a?(Hash)
-        @code = response.parsed['error']
-        @description = response.parsed['error_description']
-        message_opts = parse_error_description(@code, @description)
+      if response.respond_to?(:parsed)
+        if response.parsed.is_a?(Hash)
+          @code = response.parsed['error']
+          @description = response.parsed['error_description']
+        end
+      elsif response.is_a?(Hash)
+        @code = response['error']
+        @description = response['error_description']
       end
-
-      super(error_message(response.body, message_opts))
+      @body = if response.respond_to?(:body)
+                response.body
+              else
+                @response
+              end
+      message_opts = parse_error_description(@code, @description)
+      super(error_message(@body, message_opts))
     end
 
   private

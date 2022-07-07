@@ -58,7 +58,7 @@ RSpec.describe OAuth2::Strategy::ClientCredentials do
         end
 
         it 'returns AccessToken without #refresh_token' do
-          expect(@access.refresh_token).to be_nil
+          expect(@access.refresh_token).to eq('trout')
         end
 
         it 'returns AccessToken with #expires_in' do
@@ -80,6 +80,18 @@ RSpec.describe OAuth2::Strategy::ClientCredentials do
 
     it 'sends the header correctly.' do
       expect(@last_headers['X-Extra-Header']).to eq('wow')
+    end
+  end
+
+  describe '#get_token (with option overriding response)' do
+    before do
+      @mode = 'json'
+      @access = subject.get_token({}, {'refresh_token' => 'guppy'})
+    end
+
+    it 'override is applied' do
+      expect(@access.token).to eq('salmon')
+      expect(@access.refresh_token).to eq('guppy')
     end
   end
 end

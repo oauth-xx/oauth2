@@ -110,6 +110,77 @@ RSpec.describe OAuth2::AccessToken do
             block_is_expected.to raise_error("invalid :mode option of #{mode}")
           end
         end
+
+        context 'with client.options[:raise_errors] = true' do
+          let(:mode) { :this_is_bad }
+          let(:options) { {mode: mode, raise_errors: true} }
+
+          before do
+            expect(client.options[:raise_errors]).to be(true)
+          end
+
+          context 'when there is a token' do
+            it 'does not raise on initialize' do
+              block_is_expected.not_to raise_error
+            end
+
+            context 'with request' do
+              subject(:request) { target.post('/token/header') }
+
+              it 'raises' do
+                block_is_expected.to raise_error("invalid :mode option of #{mode}")
+              end
+            end
+          end
+
+          context 'when there is empty token' do
+            let(:token) { '' }
+
+            it 'raises on initialize' do
+              block_is_expected.to raise_error(OAuth2::Error, '{:mode=>:this_is_bad, :raise_errors=>true}')
+            end
+          end
+
+          context 'when there is nil token' do
+            let(:token) { nil }
+
+            it 'raises on initialize' do
+              block_is_expected.to raise_error(OAuth2::Error, '{:mode=>:this_is_bad, :raise_errors=>true}')
+            end
+          end
+        end
+      end
+
+      context 'with client.options[:raise_errors] = true' do
+        let(:options) { {raise_errors: true} }
+
+        before do
+          expect(client.options[:raise_errors]).to be(true)
+        end
+
+        context 'when there is a token' do
+          let(:token) { 'hurdygurdy' }
+
+          it 'does not raise on initialize' do
+            block_is_expected.not_to raise_error
+          end
+        end
+
+        context 'when there is empty token' do
+          let(:token) { '' }
+
+          it 'raises on initialize' do
+            block_is_expected.to raise_error(OAuth2::Error, '{:raise_errors=>true}')
+          end
+        end
+
+        context 'when there is nil token' do
+          let(:token) { nil }
+
+          it 'raises on initialize' do
+            block_is_expected.to raise_error(OAuth2::Error, '{:raise_errors=>true}')
+          end
+        end
       end
     end
 
@@ -302,7 +373,7 @@ RSpec.describe OAuth2::AccessToken do
     before do
       custom_class = Class.new(described_class) do
         def self.from_hash(client, hash)
-          new(client, hash.delete('refresh_token'))
+          new(client, hash.delete('access_token'), hash)
         end
 
         def self.contains_token?(hash)
@@ -346,6 +417,28 @@ RSpec.describe OAuth2::AccessToken do
         refreshed = access.refresh
 
         expect(refreshed.refresh_token).to eq(access.refresh_token)
+      end
+    end
+
+    context 'with a not-nil refresh_token in the response' do
+      let(:refresh_body) { JSON.dump(access_token: 'refreshed_foo', expires_in: 600, refresh_token: 'qerwer') }
+
+      it 'copies the refresh_token from the original token' do
+        refreshed = access.refresh
+
+        expect(refreshed.token).to eq('refreshed_foo')
+        expect(refreshed.refresh_token).to eq('qerwer')
+      end
+    end
+
+    context 'with a not-nil, not camel case, refresh_token in the response' do
+      let(:refresh_body) { JSON.dump(accessToken: 'refreshed_foo', expires_in: 600, refreshToken: 'qerwer') }
+
+      it 'copies the refresh_token from the original token' do
+        refreshed = access.refresh
+
+        expect(refreshed.token).to eq('refreshed_foo')
+        expect(refreshed.refresh_token).to eq('qerwer')
       end
     end
 

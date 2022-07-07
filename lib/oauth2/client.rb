@@ -165,10 +165,13 @@ module OAuth2
         end
       end.to_h
 
+      parse = params.key?(:parse) ? params.delete(:parse) : Response::DEFAULT_OPTIONS[:parse]
+      snaky = params.key?(:snaky) ? params.delete(:snaky) : Response::DEFAULT_OPTIONS[:snaky]
+
       request_opts = {
         raise_errors: options[:raise_errors],
-        parse: params.fetch(:parse, Response::DEFAULT_OPTIONS[:parse]),
-        snaky: params.fetch(:snaky, Response::DEFAULT_OPTIONS[:snaky]),
+        parse: parse,
+        snaky: snaky,
       }
       params = authenticator.apply(params)
       headers = params.delete(:headers) || {}
@@ -266,8 +269,8 @@ module OAuth2
         raise TimeoutError, e
       end
 
-      parse = opts.fetch(:parse, Response::DEFAULT_OPTIONS[:parse])
-      snaky = opts.fetch(:snaky, Response::DEFAULT_OPTIONS[:snaky])
+      parse = opts.key?(:parse) ? opts.delete(:parse) : Response::DEFAULT_OPTIONS[:parse]
+      snaky = opts.key?(:snaky) ? opts.delete(:snaky) : Response::DEFAULT_OPTIONS[:snaky]
 
       Response.new(response, parse: parse, snaky: snaky)
     end
@@ -296,7 +299,7 @@ module OAuth2
       access_token_class = options[:access_token_class]
       data = response.parsed
 
-      unless data.is_a?(Hash) && access_token_class.contains_token?(data)
+      unless data.is_a?(Hash) && !data.empty?
         return unless options[:raise_errors]
 
         error = Error.new(response)

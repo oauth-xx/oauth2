@@ -55,7 +55,7 @@ RSpec.describe OAuth2::Error do
     end
   end
 
-  context 'when the response is parseable as a hash' do
+  context 'when the response is parsed' do
     let(:response_body) { response_hash.to_json }
     let(:response_hash) { {text: 'Coffee brewing failed'} }
 
@@ -63,6 +63,14 @@ RSpec.describe OAuth2::Error do
       before do
         response_hash['error_description'] = 'Short and stout'
         response_hash['error'] = 'i_am_a_teapot'
+      end
+
+      it 'sets the code attribute' do
+        expect(subject.code).to eq('i_am_a_teapot')
+      end
+
+      it 'sets the description attribute' do
+        expect(subject.description).to eq('Short and stout')
       end
 
       it 'prepends to the error message with a return character' do
@@ -171,14 +179,6 @@ RSpec.describe OAuth2::Error do
           expect(subject.message).to eq('{:hello=>:world}')
         end
       end
-
-      it 'sets the code attribute' do
-        expect(subject.code).to eq('i_am_a_teapot')
-      end
-
-      it 'sets the description attribute' do
-        expect(subject.description).to eq('Short and stout')
-      end
     end
 
     it 'sets the code attribute to nil' do
@@ -209,11 +209,11 @@ RSpec.describe OAuth2::Error do
       end
     end
 
-    context 'when there is code' do
+    context 'when there is code (error)' do
       before do
         response_hash['error_description'] = 'Short and stout'
         response_hash['error'] = 'i_am_a_teapot'
-        response_hash['code'] = '418'
+        response_hash['status'] = '418'
       end
 
       it 'prepends to the error message with a return character' do
@@ -224,7 +224,7 @@ RSpec.describe OAuth2::Error do
               "text": 'Coffee brewing failed',
               "error_description": 'Short and stout',
               "error": 'i_am_a_teapot',
-              "code": '418',
+              "status": '418',
             }.to_json,
           ]
         )
@@ -284,11 +284,11 @@ RSpec.describe OAuth2::Error do
       end
     end
 
-    context 'when there is code but no error_description' do
+    context 'when there is code (error) but no error_description' do
       before do
         response_hash.delete('error_description')
         response_hash['error'] = 'i_am_a_teapot'
-        response_hash['code'] = '418'
+        response_hash['status'] = '418'
       end
 
       it 'prepends to the error message with a return character' do
@@ -298,7 +298,7 @@ RSpec.describe OAuth2::Error do
             {
               "text": 'Coffee brewing failed',
               "error": 'i_am_a_teapot',
-              "code": '418',
+              "status": '418',
             }.to_json,
           ]
         )
@@ -338,7 +338,7 @@ RSpec.describe OAuth2::Error do
         end
       end
 
-      it 'sets the code attribute' do
+      it 'sets the code attribute from error' do
         expect(subject.code).to eq('i_am_a_teapot')
       end
 
@@ -347,21 +347,19 @@ RSpec.describe OAuth2::Error do
       end
     end
 
-    context 'when there is error_description but no code' do
+    context 'when there is error_description but no code (error)' do
       before do
         response_hash['error_description'] = 'Short and stout'
-        response_hash['error'] = 'i_am_a_teapot'
-        response_hash.delete('code')
+        response_hash.delete('error')
       end
 
       it 'prepends to the error message with a return character' do
         expect(subject.message.each_line.to_a).to eq(
           [
-            "i_am_a_teapot: Short and stout\n",
+            "Short and stout\n",
             {
               "text": 'Coffee brewing failed',
               "error_description": 'Short and stout',
-              "error": 'i_am_a_teapot',
             }.to_json,
           ]
         )
@@ -413,12 +411,206 @@ RSpec.describe OAuth2::Error do
       end
 
       it 'sets the code attribute' do
+        expect(subject.code).to be_nil
+      end
+
+      it 'sets the description attribute' do
+        expect(subject.description).to eq('Short and stout')
+      end
+    end
+  end
+
+  context 'when the response is simple hash, not parsed' do
+    subject { described_class.new(response_hash) }
+
+    let(:response_hash) { {text: 'Coffee brewing failed'} }
+
+    it 'sets the code attribute to nil' do
+      expect(subject.code).to be_nil
+    end
+
+    it 'sets the description attribute' do
+      expect(subject.description).to be_nil
+    end
+
+    context 'when the response has an error and error_description' do
+      before do
+        response_hash['error_description'] = 'Short and stout'
+        response_hash['error'] = 'i_am_a_teapot'
+      end
+
+      it 'sets the code attribute' do
         expect(subject.code).to eq('i_am_a_teapot')
       end
 
       it 'sets the description attribute' do
         expect(subject.description).to eq('Short and stout')
       end
+
+      it 'prepends to the error message with a return character' do
+        expect(subject.message.each_line.to_a).to eq(
+          [
+            "i_am_a_teapot: Short and stout\n",
+            '{:text=>"Coffee brewing failed", "error_description"=>"Short and stout", "error"=>"i_am_a_teapot"}',
+          ]
+        )
+      end
+
+      context 'when using :xml parser with non-String-like thing' do
+        let(:response_headers) { {'Content-Type' => 'text/xml'} }
+        let(:response_hash) { {hello: :world} }
+
+        before do
+          expect(response_hash).not_to respond_to(:to_str)
+        end
+
+        it 'just returns whatever it can' do
+          expect(subject.message).to eq("i_am_a_teapot: Short and stout\n{:hello=>:world, \"error_description\"=>\"Short and stout\", \"error\"=>\"i_am_a_teapot\"}")
+        end
+      end
+    end
+
+    context 'when using :xml parser with non-String-like thing' do
+      let(:response_headers) { {'Content-Type' => 'text/xml'} }
+      let(:response_hash) { {hello: :world} }
+
+      before do
+        expect(response_hash).not_to respond_to(:to_str)
+      end
+
+      it 'just returns the thing if it can' do
+        expect(subject.message).to eq('{:hello=>:world}')
+      end
+    end
+
+    context 'when there is no error description' do
+      before do
+        expect(response_hash).not_to have_key('error')
+        expect(response_hash).not_to have_key('error_description')
+      end
+
+      it 'does not prepend anything to the message' do
+        expect(subject.message.lines.count).to eq(1)
+        expect(subject.message).to eq '{:text=>"Coffee brewing failed"}'
+      end
+
+      it 'does not set code' do
+        expect(subject.code).to be_nil
+      end
+
+      it 'does not set description' do
+        expect(subject.description).to be_nil
+      end
+    end
+
+    context 'when there is code (error)' do
+      before do
+        response_hash['error_description'] = 'Short and stout'
+        response_hash['error'] = 'i_am_a_teapot'
+        response_hash['status'] = '418'
+      end
+
+      it 'prepends to the error message with a return character' do
+        expect(subject.message.each_line.to_a).to eq(
+          [
+            "i_am_a_teapot: Short and stout\n",
+            '{:text=>"Coffee brewing failed", "error_description"=>"Short and stout", "error"=>"i_am_a_teapot", "status"=>"418"}',
+          ]
+        )
+      end
+
+      it 'sets the code attribute' do
+        expect(subject.code).to eq('i_am_a_teapot')
+      end
+
+      it 'sets the description attribute' do
+        expect(subject.description).to eq('Short and stout')
+      end
+    end
+
+    context 'when there is code (error) but no error_description' do
+      before do
+        response_hash.delete('error_description')
+        response_hash['error'] = 'i_am_a_teapot'
+        response_hash['status'] = '418'
+      end
+
+      it 'sets the code attribute from error' do
+        expect(subject.code).to eq('i_am_a_teapot')
+      end
+
+      it 'does not set the description attribute' do
+        expect(subject.description).to be_nil
+      end
+
+      it 'prepends to the error message with a return character' do
+        expect(subject.message.each_line.to_a).to eq(
+          [
+            "i_am_a_teapot: \n",
+            '{:text=>"Coffee brewing failed", "error"=>"i_am_a_teapot", "status"=>"418"}',
+          ]
+        )
+      end
+    end
+
+    context 'when there is error_description but no code (error)' do
+      before do
+        response_hash['error_description'] = 'Short and stout'
+        response_hash.delete('error')
+      end
+
+      it 'prepends to the error message with a return character' do
+        expect(subject.message.each_line.to_a).to eq(
+          [
+            "Short and stout\n",
+            '{:text=>"Coffee brewing failed", "error_description"=>"Short and stout"}',
+          ]
+        )
+      end
+
+      context 'when the response is not an encodable thing' do
+        let(:response_headers) { {'Content-Type' => 'who knows'} }
+        let(:response_hash) { {text: 'Coffee brewing failed'} }
+
+        before do
+          expect(response_hash).not_to respond_to(:encode)
+          # i.e. a Ruby hash
+        end
+
+        it 'does not try to encode the message string' do
+          expect(subject.message).to eq("Short and stout\n{:text=>\"Coffee brewing failed\", \"error_description\"=>\"Short and stout\"}")
+        end
+      end
+
+      it 'sets the code attribute' do
+        expect(subject.code).to be_nil
+      end
+
+      it 'sets the description attribute' do
+        expect(subject.description).to eq('Short and stout')
+      end
+    end
+  end
+
+  context 'when the response is not a hash, not parsed' do
+    subject { described_class.new(response_thing) }
+
+    let(:response_thing) { [200, 'Success'] }
+
+    it 'sets the code attribute to nil' do
+      expect(subject.code).to be_nil
+    end
+
+    it 'sets the description attribute' do
+      expect(subject.description).to be_nil
+    end
+
+    it 'sets the body attribute' do
+      expect(subject.body).to eq(response_thing)
+    end
+
+    it 'sets the response attribute' do
+      expect(subject.response).to eq(response_thing)
     end
   end
 
