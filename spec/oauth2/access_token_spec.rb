@@ -22,6 +22,39 @@ RSpec.describe OAuth2::AccessToken do
     end
   end
 
+  describe '.from_hash' do
+    subject(:target) { described_class.from_hash(client, hash) }
+
+    let(:hash) do
+      {
+        :access_token => token,
+        :id_token => 'confusing bug here',
+        :refresh_token => 'foobar',
+        :expires_at => Time.now.to_i + 200,
+        'foo' => 'bar',
+      }
+    end
+
+    it 'return a hash equals to the hash used to initialize access token' do
+      expect(target.to_hash).to eq(hash)
+    end
+
+    context 'with warning for too many tokens' do
+      subject(:printed) do
+        capture(:stderr) do
+          target
+        end
+      end
+
+      it 'warns on STDERR' do
+        msg = <<-MSG.lstrip
+            OAuth2::AccessToken.from_hash: `hash` contained more than one 'token' key ([:access_token, :id_token]); using :access_token.
+        MSG
+        expect(printed).to eq(msg)
+      end
+    end
+  end
+
   describe '#initialize' do
     it 'assigns client and token' do
       expect(subject.client).to eq(client)
@@ -151,6 +184,144 @@ RSpec.describe OAuth2::AccessToken do
         end
       end
 
+      context 'with client.options[:raise_errors] = false' do
+        let(:options) { {raise_errors: false} }
+
+        before do
+          expect(client.options[:raise_errors]).to be(false)
+        end
+
+        context 'when there is a token' do
+          let(:token) { 'hurdygurdy' }
+
+          it 'does not raise on initialize' do
+            block_is_expected.not_to raise_error
+          end
+
+          it 'has token' do
+            expect(target.token).to eq(token)
+          end
+
+          it 'has no refresh_token' do
+            expect(target.refresh_token).to be_nil
+          end
+
+          context 'when there is refresh_token' do
+            let(:options) { {raise_errors: false, refresh_token: 'zxcv'} }
+
+            it 'does not raise on initialize' do
+              block_is_expected.not_to raise_error
+            end
+
+            it 'has token' do
+              expect(target.token).to eq(token)
+            end
+
+            it 'has refresh_token' do
+              expect(target.refresh_token).to eq('zxcv')
+            end
+          end
+        end
+
+        context 'when there is empty token' do
+          let(:token) { '' }
+
+          context 'when there is no refresh_token' do
+            it 'does not raise on initialize' do
+              block_is_expected.not_to raise_error
+            end
+
+            it 'has no token' do
+              expect(target.token).to eq('')
+            end
+
+            it 'has no refresh_token' do
+              expect(target.refresh_token).to be_nil
+            end
+
+            context 'with warning for no token' do
+              subject(:printed) do
+                capture(:stderr) do
+                  target
+                end
+              end
+
+              it 'warns on STDERR' do
+                msg = <<-MSG.lstrip
+                  OAuth2::AccessToken has no token
+                MSG
+                expect(printed).to eq(msg)
+              end
+            end
+          end
+
+          context 'when there is refresh_token' do
+            let(:options) { {raise_errors: false, refresh_token: 'qwer'} }
+
+            it 'does not raise on initialize' do
+              block_is_expected.not_to raise_error
+            end
+
+            it 'has no token' do
+              expect(target.token).to eq('')
+            end
+
+            it 'has refresh_token' do
+              expect(target.refresh_token).to eq('qwer')
+            end
+          end
+        end
+
+        context 'when there is nil token' do
+          let(:token) { nil }
+
+          context 'when there is no refresh_token' do
+            it 'does not raise on initialize' do
+              block_is_expected.not_to raise_error
+            end
+
+            it 'has no token' do
+              expect(target.token).to eq('')
+            end
+
+            it 'has no refresh_token' do
+              expect(target.refresh_token).to be_nil
+            end
+
+            context 'with warning for no token' do
+              subject(:printed) do
+                capture(:stderr) do
+                  target
+                end
+              end
+
+              it 'warns on STDERR' do
+                msg = <<-MSG.lstrip
+                  OAuth2::AccessToken has no token
+                MSG
+                expect(printed).to eq(msg)
+              end
+            end
+          end
+
+          context 'when there is refresh_token' do
+            let(:options) { {raise_errors: false, refresh_token: 'asdf'} }
+
+            it 'does not raise on initialize' do
+              block_is_expected.not_to raise_error
+            end
+
+            it 'has no token' do
+              expect(target.token).to eq('')
+            end
+
+            it 'has refresh_token' do
+              expect(target.refresh_token).to eq('asdf')
+            end
+          end
+        end
+      end
+
       context 'with client.options[:raise_errors] = true' do
         let(:options) { {raise_errors: true} }
 
@@ -164,21 +335,81 @@ RSpec.describe OAuth2::AccessToken do
           it 'does not raise on initialize' do
             block_is_expected.not_to raise_error
           end
+
+          it 'has token' do
+            expect(target.token).to eq(token)
+          end
+
+          it 'has no refresh_token' do
+            expect(target.refresh_token).to be_nil
+          end
+
+          context 'when there is refresh_token' do
+            let(:options) { {raise_errors: true, refresh_token: 'zxcv'} }
+
+            it 'does not raise on initialize' do
+              block_is_expected.not_to raise_error
+            end
+
+            it 'has token' do
+              expect(target.token).to eq(token)
+            end
+
+            it 'has refresh_token' do
+              expect(target.refresh_token).to eq('zxcv')
+            end
+          end
         end
 
         context 'when there is empty token' do
           let(:token) { '' }
 
-          it 'raises on initialize' do
-            block_is_expected.to raise_error(OAuth2::Error, '{:raise_errors=>true}')
+          context 'when there is no refresh_token' do
+            it 'raises on initialize' do
+              block_is_expected.to raise_error(OAuth2::Error, '{:raise_errors=>true}')
+            end
+          end
+
+          context 'when there is refresh_token' do
+            let(:options) { {raise_errors: true, refresh_token: 'qwer'} }
+
+            it 'does not raise on initialize' do
+              block_is_expected.not_to raise_error
+            end
+
+            it 'has no token' do
+              expect(target.token).to eq('')
+            end
+
+            it 'has refresh_token' do
+              expect(target.refresh_token).to eq('qwer')
+            end
           end
         end
 
         context 'when there is nil token' do
           let(:token) { nil }
 
-          it 'raises on initialize' do
-            block_is_expected.to raise_error(OAuth2::Error, '{:raise_errors=>true}')
+          context 'when there is no refresh_token' do
+            it 'raises on initialize' do
+              block_is_expected.to raise_error(OAuth2::Error, '{:raise_errors=>true}')
+            end
+          end
+
+          context 'when there is refresh_token' do
+            let(:options) { {raise_errors: true, refresh_token: 'asdf'} }
+
+            it 'does not raise on initialize' do
+              block_is_expected.not_to raise_error
+            end
+
+            it 'has no token' do
+              expect(target.token).to eq('')
+            end
+
+            it 'has refresh_token' do
+              expect(target.refresh_token).to eq('asdf')
+            end
           end
         end
       end

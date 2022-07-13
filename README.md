@@ -32,6 +32,8 @@ See the sibling `oauth` gem for OAuth 1.0 implementations in Ruby.
 
 | Version | Release Date | Readme                                                   |
 |---------|--------------|----------------------------------------------------------|
+| 2.0.6   | 2022-07-13   | https://github.com/oauth-xx/oauth2/blob/v2.0.6/README.md |
+| 2.0.5   | 2022-07-07   | https://github.com/oauth-xx/oauth2/blob/v2.0.5/README.md |
 | 2.0.4   | 2022-07-01   | https://github.com/oauth-xx/oauth2/blob/v2.0.4/README.md |
 | 2.0.3   | 2022-06-28   | https://github.com/oauth-xx/oauth2/blob/v2.0.3/README.md |
 | 2.0.2   | 2022-06-24   | https://github.com/oauth-xx/oauth2/blob/v2.0.2/README.md |
@@ -143,8 +145,8 @@ The link tokens in the following sections should be kept ordered by the row and 
 [🖐prs-o-img]: https://img.shields.io/github/issues-pr/oauth-xx/oauth2
 [🧮prs-c]: https://github.com/oauth-xx/oauth2/pulls?q=is%3Apr+is%3Aclosed
 [🧮prs-c-img]: https://img.shields.io/github/issues-pr-closed/oauth-xx/oauth2
-[📗next♻️]: https://github.com/oauth-xx/oauth2/milestone/15
-[📗next-img♻️]: https://img.shields.io/github/milestones/progress/oauth-xx/oauth2/15?label=Next%20Version
+[📗next♻️]: https://github.com/oauth-xx/oauth2/milestone/2
+[📗next-img♻️]: https://img.shields.io/github/milestones/progress/oauth-xx/oauth2/2?label=Next%20Version
 
 <!-- 3️⃣ maintenance & linting -->
 [⛳cclim-maint]: https://codeclimate.com/github/oauth-xx/oauth2/maintainability

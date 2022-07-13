@@ -2,6 +2,10 @@
 
 module OAuth2
   class AccessToken # rubocop:disable Metrics/ClassLength
+    TOKEN_KEYS_STR = %w[access_token id_token token accessToken idToken].freeze
+    TOKEN_KEYS_SYM = %i[access_token id_token token accessToken idToken].freeze
+    TOKEN_KEY_LOOKUP = TOKEN_KEYS_STR + TOKEN_KEYS_SYM
+
     attr_reader :client, :token, :expires_in, :expires_at, :expires_latency, :params
     attr_accessor :options, :refresh_token, :response
 
@@ -13,13 +17,13 @@ module OAuth2
       # @option hash [String] 'access_token', 'id_token', 'token', :access_token, :id_token, or :token the access token
       # @return [AccessToken] the initialized AccessToken
       def from_hash(client, hash)
-        hash = hash.dup
-        token = hash.delete('access_token') || hash.delete(:access_token) ||
-                hash.delete('id_token') || hash.delete(:id_token) ||
-                hash.delete('token') || hash.delete(:token) ||
-                hash.delete('accessToken') || hash.delete(:accessToken) ||
-                hash.delete('idToken') || hash.delete(:idToken)
-        new(client, token, hash)
+        fresh = hash.dup
+        supported_keys = fresh.keys & TOKEN_KEY_LOOKUP
+        key = supported_keys[0]
+        # Having too many is sus, and may lead to bugs. Having none is fine (e.g. refresh flow doesn't need a token).
+        warn("OAuth2::AccessToken.from_hash: `hash` contained more than one 'token' key (#{supported_keys}); using #{key.inspect}.") if supported_keys.length > 1
+        token = fresh.delete(key)
+        new(client, token, fresh)
       end
 
       # Initializes an AccessToken from a key/value application/x-www-form-urlencoded string
@@ -35,7 +39,7 @@ module OAuth2
     # Initialize an AccessToken
     #
     # @param [Client] client the OAuth2::Client instance
-    # @param [String] token the Access Token value
+    # @param [String] token the Access Token value (optional, may not be used in refresh flows)
     # @param [Hash] opts the options to create the Access Token with
     # @option opts [String] :refresh_token (nil) the refresh_token value
     # @option opts [FixNum, String] :expires_in (nil) the number of seconds in which the AccessToken will expire
@@ -50,13 +54,18 @@ module OAuth2
       @client = client
       @token = token.to_s
 
-      if @client.options[:raise_errors] && (@token.nil? || @token.empty?)
-        error = Error.new(opts)
-        raise(error)
-      end
       opts = opts.dup
       %i[refresh_token expires_in expires_at expires_latency].each do |arg|
         instance_variable_set("@#{arg}", opts.delete(arg) || opts.delete(arg.to_s))
+      end
+      no_tokens = (@token.nil? || @token.empty?) && (@refresh_token.nil? || @refresh_token.empty?)
+      if no_tokens
+        if @client.options[:raise_errors]
+          error = Error.new(opts)
+          raise(error)
+        else
+          warn('OAuth2::AccessToken has no token')
+        end
       end
       @expires_in ||= opts.delete('expires')
       @expires_in &&= @expires_in.to_i
