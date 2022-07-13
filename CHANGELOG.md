@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format (since v2) is based on [Keep a Changelog v1](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.6] - 2022-07-13
+### Fixed
+- [#624](https://github.com/oauth-xx/oauth2/pull/624) - Fixes a [regression](https://github.com/oauth-xx/oauth2/pull/623) in v2.0.5, where an error would be raised in refresh_token flows due to (legitimate) lack of access_token (@pboling)
+
 ## [2.0.5] - 2022-07-07
 ### Fixed
 - [#620](https://github.com/oauth-xx/oauth2/pull/620) - Documentation improvements, to help with upgrading (@swanson)
@@ -292,5 +296,6 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 [2.0.3]: https://github.com/oauth-xx/oauth2/compare/v2.0.2...v2.0.3
 [2.0.4]: https://github.com/oauth-xx/oauth2/compare/v2.0.3...v2.0.4
 [2.0.5]: https://github.com/oauth-xx/oauth2/compare/v2.0.4...v2.0.5
-[Unreleased]: https://github.com/oauth-xx/oauth2/compare/v2.0.5...HEAD
+[2.0.6]: https://github.com/oauth-xx/oauth2/compare/v2.0.5...v2.0.6
+[Unreleased]: https://github.com/oauth-xx/oauth2/compare/v2.0.6...HEAD
 [gemfiles/readme]: gemfiles/README.md
