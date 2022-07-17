@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.summary       = 'A Ruby wrapper for the OAuth 2.0 protocol.'
   spec.version       = OAuth2::Version::VERSION
   spec.post_install_message = "
-You have installed oauth2 version #{OAuth2::Version}, congratulations!
+You have installed oauth2 version #{OAuth2::Version::VERSION}, congratulations!
 
 There are BREAKING changes, but most will not encounter them, and updating your code should be easy!
 
