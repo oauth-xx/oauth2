@@ -63,8 +63,8 @@ RSpec.describe OAuth2::AccessToken do
 
       let(:hash) do
         {
-          :id_token => 'confusing bug here',
-          :access_token => token,
+          id_token: 'confusing bug here',
+          access_token: token,
         }
       end
 
