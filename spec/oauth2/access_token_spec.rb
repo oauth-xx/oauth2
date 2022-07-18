@@ -55,17 +55,17 @@ RSpec.describe OAuth2::AccessToken do
     end
 
     context 'with keys in a different order to the lookup' do
+      subject(:printed) do
+        capture(:stderr) do
+          target
+        end
+      end
+
       let(:hash) do
         {
           :id_token => 'confusing bug here',
           :access_token => token,
         }
-      end
-
-      subject(:printed) do
-        capture(:stderr) do
-          target
-        end
       end
 
       it 'warns on STDERR and selects the correct key' do
