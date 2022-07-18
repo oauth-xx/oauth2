@@ -53,6 +53,28 @@ RSpec.describe OAuth2::AccessToken do
         expect(printed).to eq(msg)
       end
     end
+
+    context 'with keys in a different order to the lookup' do
+      let(:hash) do
+        {
+          :id_token => 'confusing bug here',
+          :access_token => token,
+        }
+      end
+
+      subject(:printed) do
+        capture(:stderr) do
+          target
+        end
+      end
+
+      it 'warns on STDERR and selects the correct key' do
+        msg = <<-MSG.lstrip
+            OAuth2::AccessToken.from_hash: `hash` contained more than one 'token' key ([:access_token, :id_token]); using :access_token.
+        MSG
+        expect(printed).to eq(msg)
+      end
+    end
   end
 
   describe '#initialize' do

@@ -18,7 +18,7 @@ module OAuth2
       # @return [AccessToken] the initialized AccessToken
       def from_hash(client, hash)
         fresh = hash.dup
-        supported_keys = fresh.keys & TOKEN_KEY_LOOKUP
+        supported_keys = TOKEN_KEY_LOOKUP & fresh.keys
         key = supported_keys[0]
         # Having too many is sus, and may lead to bugs. Having none is fine (e.g. refresh flow doesn't need a token).
         warn("OAuth2::AccessToken.from_hash: `hash` contained more than one 'token' key (#{supported_keys}); using #{key.inspect}.") if supported_keys.length > 1
