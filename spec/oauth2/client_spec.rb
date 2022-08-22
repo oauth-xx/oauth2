@@ -583,6 +583,15 @@ RSpec.describe OAuth2::Client do
       client.get_token({})
     end
 
+    it 'authenticates with JSON' do
+      client = stubbed_client(auth_scheme: :basic_auth) do |stub|
+        stub.post('/oauth/token') do |env|
+          [200, {'Content-Type' => 'application/json'}, JSON.dump('access_token' => 'the-token')]
+        end
+      end
+      client.get_token(headers: {'Content-Type' => 'application/json'})
+    end
+
     it 'sets the response object on the access token' do
       client = stubbed_client do |stub|
         stub.post('/oauth/token') do
@@ -899,6 +908,10 @@ RSpec.describe OAuth2::Client do
         builder.adapter :test, &stubs
       end
     end
+  end
+
+  it 'instantiates an HTTP Method with this client' do
+    expect(subject.http_method).to be_kind_of(Symbol)
   end
 
   it 'instantiates an AuthCode strategy with this client' do
