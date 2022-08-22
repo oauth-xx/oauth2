@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format (since v2) is based on [Keep a Changelog v1](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+### Added
+### Changed
+### Fixed
+### Removed
+
 ## [2.0.7] - 2022-08-22
 ### Added
 - [#629](https://github.com/oauth-xx/oauth2/pull/629) - Allow POST of JSON to get token (@pboling, @terracatta)
@@ -306,5 +312,6 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 [2.0.4]: https://github.com/oauth-xx/oauth2/compare/v2.0.3...v2.0.4
 [2.0.5]: https://github.com/oauth-xx/oauth2/compare/v2.0.4...v2.0.5
 [2.0.6]: https://github.com/oauth-xx/oauth2/compare/v2.0.5...v2.0.6
-[Unreleased]: https://github.com/oauth-xx/oauth2/compare/v2.0.6...HEAD
+[2.0.7]: https://github.com/oauth-xx/oauth2/compare/v2.0.6...v2.0.7
+[Unreleased]: https://github.com/oauth-xx/oauth2/compare/v2.0.7...HEAD
 [gemfiles/readme]: gemfiles/README.md
