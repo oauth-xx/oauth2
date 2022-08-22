@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 
 ### Fixed
 - [#626](https://github.com/oauth-xx/oauth2/pull/626) - Fixes a regression in 2.0.6. Will now prefer the key order from the lookup, not the hash keys (@rickselby)
+  - Note: This fixes compatibility with `omniauth-oauth2` and AWS
 - [#625](https://github.com/oauth-xx/oauth2/pull/625) - Fixes the printed version in the post install message (@hasghari)
 
 ## [2.0.6] - 2022-07-13
