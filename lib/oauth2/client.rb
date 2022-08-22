@@ -176,7 +176,15 @@ module OAuth2
       params = authenticator.apply(params)
       headers = params.delete(:headers) || {}
       if options[:token_method] == :post
-        request_opts[:body] = params
+
+        # NOTE: If proliferation of request types continues we should implement a parser solution for Request,
+        #       just like we have with Response.
+        request_opts[:body] = if headers['Content-Type'] == 'application/json'
+                                params.to_json
+                              else
+                                params
+                              end
+
         request_opts[:headers] = {'Content-Type' => 'application/x-www-form-urlencoded'}
       else
         request_opts[:params] = params
