@@ -5,6 +5,9 @@ The format (since v2) is based on [Keep a Changelog v1](https://keepachangelog.c
 and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.0.0.html).
 
 ## [2.0.7] - 2022-08-22
+### Added
+- [#629](https://github.com/oauth-xx/oauth2/pull/629) - Allow POST of JSON to get token (@pboling, @terracatta)
+
 ### Fixed
 - [#626](https://github.com/oauth-xx/oauth2/pull/626) - Fixes a regression in 2.0.6. Will now prefer the key order from the lookup, not the hash keys (@rickselby)
 - [#625](https://github.com/oauth-xx/oauth2/pull/625) - Fixes the printed version in the post install message (@hasghari)
