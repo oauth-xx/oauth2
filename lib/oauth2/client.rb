@@ -157,24 +157,13 @@ module OAuth2
     def get_token(params, access_token_opts = {}, extract_access_token = nil, &block)
       warn('OAuth2::Client#get_token argument `extract_access_token` will be removed in oauth2 v3. Refactor to use `access_token_class` on #initialize.') if extract_access_token
       extract_access_token ||= options[:extract_access_token]
-      params = params.map do |key, value|
-        if RESERVED_PARAM_KEYS.include?(key)
-          [key.to_sym, value]
-        else
-          [key, value]
-        end
-      end.to_h
-
-      parse = params.key?(:parse) ? params.delete(:parse) : Response::DEFAULT_OPTIONS[:parse]
-      snaky = params.key?(:snaky) ? params.delete(:snaky) : Response::DEFAULT_OPTIONS[:snaky]
+      parse, snaky, params, headers = parse_snaky_params_headers(params)
 
       request_opts = {
         raise_errors: options[:raise_errors],
         parse: parse,
         snaky: snaky,
       }
-      params = authenticator.apply(params)
-      headers = params.delete(:headers) || {}
       if options[:token_method] == :post
 
         # NOTE: If proliferation of request types continues we should implement a parser solution for Request,
@@ -191,8 +180,6 @@ module OAuth2
         request_opts[:headers] = {}
       end
       request_opts[:headers].merge!(headers)
-      http_method = options[:token_method]
-      http_method = :post if http_method == :post_with_query_string
       response = request(http_method, token_url, request_opts, &block)
 
       # In v1.4.x, the deprecated extract_access_token option retrieves the token from the response.
@@ -203,6 +190,15 @@ module OAuth2
       else
         parse_response(response, access_token_opts)
       end
+    end
+
+    # The HTTP Method of the request
+    # @return [Symbol] HTTP verb, one of :get, :post, :put, :delete
+    def http_method
+      http_meth = options[:token_method].to_sym
+      return :post if http_meth == :post_with_query_string
+
+      http_meth
     end
 
     # The Authorization Code strategy
@@ -262,6 +258,22 @@ module OAuth2
     end
 
   private
+
+    def parse_snaky_params_headers(params)
+      params = params.map do |key, value|
+        if RESERVED_PARAM_KEYS.include?(key)
+          [key.to_sym, value]
+        else
+          [key, value]
+        end
+      end.to_h
+      parse = params.key?(:parse) ? params.delete(:parse) : Response::DEFAULT_OPTIONS[:parse]
+      snaky = params.key?(:snaky) ? params.delete(:snaky) : Response::DEFAULT_OPTIONS[:snaky]
+      params = authenticator.apply(params)
+      # authenticator may add :headers, and we remove them here
+      headers = params.delete(:headers) || {}
+      [parse, snaky, params, headers]
+    end
 
     def execute_request(verb, url, opts = {})
       url = connection.build_url(url).to_s
