@@ -199,7 +199,7 @@ module OAuth2
       # We preserve this behavior here, but a custom access_token_class that implements #from_hash
       # should be used instead.
       if extract_access_token
-        parse_response_with_legacy_extract(response, access_token_opts, extract_access_token)
+        parse_response_legacy(response, access_token_opts, extract_access_token)
       else
         parse_response(response, access_token_opts)
       end
@@ -290,8 +290,8 @@ module OAuth2
       Authenticator.new(id, secret, options[:auth_scheme])
     end
 
-    def parse_response_with_legacy_extract(response, access_token_opts, extract_access_token)
-      access_token = build_access_token_legacy_extract(response, access_token_opts, extract_access_token)
+    def parse_response_legacy(response, access_token_opts, extract_access_token)
+      access_token = build_access_token_legacy(response, access_token_opts, extract_access_token)
 
       return access_token if access_token
 
@@ -329,7 +329,7 @@ module OAuth2
     # Builds the access token from the response of the HTTP call with legacy extract_access_token
     #
     # @return [AccessToken] the initialized AccessToken
-    def build_access_token_legacy_extract(response, access_token_opts, extract_access_token)
+    def build_access_token_legacy(response, access_token_opts, extract_access_token)
       extract_access_token.call(self, response.parsed.merge(access_token_opts))
     rescue StandardError
       nil
