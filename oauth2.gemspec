@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'jwt', ['>= 1.0', '< 3.0']
   spec.add_dependency 'multi_xml', '~> 0.5'
   spec.add_dependency 'rack', ['>= 1.2', '< 3']
-  spec.add_dependency 'rash_alt', ['>= 0.4', '< 1']
+  spec.add_dependency 'snaky_hash', '~> 2.0'
   spec.add_dependency 'version_gem', '~> 1.1'
 
   spec.authors       = ['Peter Boling', 'Erik Michaels-Ober', 'Michael Bleigh']

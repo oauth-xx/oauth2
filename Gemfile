@@ -5,6 +5,7 @@ source 'https://rubygems.org'
 gemspec
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
+git_source(:gitlab) { |repo_name| "https://gitlab.com/#{repo_name}" }
 
 gem 'rake', '~> 13.0'
 
