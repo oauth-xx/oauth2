@@ -11,6 +11,11 @@
 
 Please update references: https://gitlab.com/oauth-xx/oauth2/
 
+If you have the project checked out, simply:
+```bash
+git remote set-url origin git@gitlab.com:oauth-xx/oauth2.git
+```
+
 * Source Code: [![Gitlab](https://img.shields.io/badge/source-gitlab-brightgreen.svg?style=flat)][source]
 * RubyDoc Documentation: [![RubyDoc.info](https://img.shields.io/badge/documentation-rubydoc-brightgreen.svg?style=flat)][documentation]
 * Mailing List/Google Group: [![Mailing List](https://img.shields.io/badge/group-mailinglist-violet.svg?style=social&logo=google)][mailinglist]
