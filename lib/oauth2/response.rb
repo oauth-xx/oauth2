@@ -46,7 +46,7 @@ module OAuth2
     # @param [Symbol] parse (:automatic) how to parse the response body.  one of :query (for x-www-form-urlencoded),
     #   :json, or :automatic (determined by Content-Type response header)
     # @param [true, false] snaky (true) Convert @parsed to a snake-case,
-    #   indifferent-access OAuth2::SnakyHash, which is a subclass of Hashie::Mash::Rash (from rash_alt gem)?
+    #   indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (from hashie gem)?
     # @param [Hash] options all other options for initializing the instance
     def initialize(response, parse: :automatic, snaky: true, **options)
       @response = response
@@ -90,7 +90,7 @@ module OAuth2
           end
         end
 
-      @parsed = OAuth2::SnakyHash.new(@parsed) if options[:snaky] && @parsed.is_a?(Hash)
+      @parsed = SnakyHash::StringKeyed.new(@parsed) if options[:snaky] && @parsed.is_a?(Hash)
 
       @parsed
     end

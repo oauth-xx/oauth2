@@ -10,6 +10,10 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 ### Fixed
 ### Removed
 
+## [2.0.8] - 2022-08-30
+### Changed
+- Extract snaky_hash to external dependency (@pboling)
+
 ## [2.0.7] - 2022-08-22
 ### Added
 - [#629](https://github.com/oauth-xx/oauth2/pull/629) - Allow POST of JSON to get token (@pboling, @terracatta)
