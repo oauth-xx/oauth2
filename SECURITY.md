@@ -8,6 +8,10 @@
 | 1.latest | ✅         | 04/2023 | [Tidelift Subscription][tidelift-ref] |
 | <= 1     | ⛔         | ⛔       | ⛔                                     |
 
+### EOL Policy
+
+Non-commercial support for the oldest version of Ruby (which itself is going EOL) will be dropped each year in April.
+
 ## Reporting a Vulnerability
 
 To report a security vulnerability, please use the [Tidelift security contact](https://tidelift.com/security).
