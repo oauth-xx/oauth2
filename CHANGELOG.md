@@ -10,9 +10,12 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 ### Fixed
 ### Removed
 
-## [2.0.8] - 2022-08-30
+## [2.0.8] - 2022-09-01
 ### Changed
-- Extract snaky_hash to external dependency (@pboling)
+- [!630](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/630) - Extract snaky_hash to external dependency (@pboling)
+
+### Added
+- [!631](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/631) - New global configuration option OAuth2.config.silence_extra_tokens_warning (default: false) fixes [#628](https://gitlab.com/oauth-xx/oauth2/-/issues/628)
 
 ## [2.0.7] - 2022-08-22
 ### Added

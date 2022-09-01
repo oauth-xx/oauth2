@@ -24,6 +24,15 @@ require 'oauth2/response'
 
 # The namespace of this library
 module OAuth2
+  DEFAULT_CONFIG = SnakyHash::SymbolKeyed.new(silence_extra_tokens_warning: false)
+  @config = DEFAULT_CONFIG.dup
+  class << self
+    attr_accessor :config
+  end
+  def configure
+    yield @config
+  end
+  module_function :configure
 end
 
 OAuth2::Version.class_eval do
