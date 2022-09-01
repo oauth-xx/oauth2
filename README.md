@@ -313,6 +313,19 @@ See [SECURITY.md][🚎sec-pol]
 
 ## Usage Examples
 
+### Global Configuration
+
+If you started seeing this warning, but everything it working fine, you can now silence it.
+```log
+OAuth2::AccessToken.from_hash: `hash` contained more than one 'token' key
+```
+
+```ruby
+OAuth2.configure do |config|
+  config.silence_extra_tokens_warning = true # default: false
+end
+```
+
 ### `authorize_url` and `token_url` are on site root (Just Works!)
 
 ```ruby
