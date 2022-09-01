@@ -52,6 +52,30 @@ RSpec.describe OAuth2::AccessToken do
         MSG
         expect(printed).to eq(msg)
       end
+
+      context 'when silenced' do
+        subject(:printed) do
+          capture(:stderr) do
+            target
+          end
+        end
+
+        before do
+          OAuth2.configure do |config|
+            config.silence_extra_tokens_warning = true
+          end
+        end
+
+        after do
+          OAuth2.configure do |config|
+            config.silence_extra_tokens_warning = false
+          end
+        end
+
+        it 'does not warn on STDERR' do
+          expect(printed).to eq('')
+        end
+      end
     end
 
     context 'with keys in a different order to the lookup' do
