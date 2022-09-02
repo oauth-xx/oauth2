@@ -14,7 +14,7 @@ module OAuth2
       #
       # @param [Client] client the OAuth2::Client instance
       # @param [Hash] hash a hash of AccessToken property values
-      # @option hash [String] 'access_token', 'id_token', 'token', :access_token, :id_token, or :token the access token
+      # @option hash [String, Symbol] 'access_token', 'id_token', 'token', :access_token, :id_token, or :token the access token
       # @return [AccessToken] the initialized AccessToken
       def from_hash(client, hash)
         fresh = hash.dup
@@ -76,6 +76,7 @@ module OAuth2
           warn('OAuth2::AccessToken has no token')
         end
       end
+      # @option opts [Fixnum, String] :expires is deprecated
       @expires_in ||= opts.delete('expires')
       @expires_in &&= @expires_in.to_i
       @expires_at &&= convert_expires_at(@expires_at)
