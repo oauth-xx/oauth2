@@ -731,7 +731,7 @@ RSpec.describe OAuth2::AccessToken do
   end
 
   describe '#to_hash' do
-    it 'return a hash equals to the hash used to initialize access token' do
+    it 'return a hash equal to the hash used to initialize access token' do
       hash = {:access_token => token, :refresh_token => 'foobar', :expires_at => Time.now.to_i + 200, 'foo' => 'bar'}
       access_token = described_class.from_hash(client, hash.clone)
       expect(access_token.to_hash).to eq(hash)
