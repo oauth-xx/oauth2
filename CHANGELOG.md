@@ -160,10 +160,10 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 ## [1.4.6] - 2021-03-19
 - [#540](https://github.com/oauth-xx/oauth2/pull/540) - Add VERSION constant (@pboling)
 - [#537](https://github.com/oauth-xx/oauth2/pull/537) - Fix crash in OAuth2::Client#get_token (@anderscarling)
-- [#538](https://github.com/oauth-xx/oauth2/pull/538) - Remove reliance on globally included OAuth2 in tests, analogous to [#539](https://github.com/oauth-xx/oauth2/pull/539) on master branch (@anderscarling)
+- [#538](https://github.com/oauth-xx/oauth2/pull/538) - Remove reliance on globally included OAuth2 in tests, analogous to [#539](https://github.com/oauth-xx/oauth2/pull/539) on main branch (@anderscarling)
 
 ## [1.4.5] - 2021-03-18
-- [#535](https://github.com/oauth-xx/oauth2/pull/535) - Compatibility with range of supported Ruby OpenSSL versions, Rubocop updates, Github Actions, analogous to [#536](https://github.com/oauth-xx/oauth2/pull/536) on master branch (@pboling)
+- [#535](https://github.com/oauth-xx/oauth2/pull/535) - Compatibility with range of supported Ruby OpenSSL versions, Rubocop updates, Github Actions, analogous to [#536](https://github.com/oauth-xx/oauth2/pull/536) on main branch (@pboling)
 - [#518](https://github.com/oauth-xx/oauth2/pull/518) - Add extract_access_token option to OAuth2::Client (@jonspalmer)
 - [#507](https://github.com/oauth-xx/oauth2/pull/507) - Fix camel case content type, response keys (@anvox)
 - [#500](https://github.com/oauth-xx/oauth2/pull/500) - Fix YARD documentation formatting (@olleolleolle)

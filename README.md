@@ -1,9 +1,9 @@
 <p align="center">
     <a href="http://oauth.net/2/" target="_blank" rel="noopener">
-      <img src="https://github.com/oauth-xx/oauth2/raw/master/docs/images/logo/oauth2-logo-124px.png?raw=true" alt="OAuth 2.0 Logo by Chris Messina, CC BY-SA 3.0">
+      <img src="https://github.com/oauth-xx/oauth2/raw/main/docs/images/logo/oauth2-logo-124px.png?raw=true" alt="OAuth 2.0 Logo by Chris Messina, CC BY-SA 3.0">
     </a>
     <a href="https://www.ruby-lang.org/" target="_blank" rel="noopener">
-      <img width="124px" src="https://github.com/oauth-xx/oauth2/raw/master/docs/images/logo/ruby-logo-198px.svg?raw=true" alt="Yukihiro Matsumoto, Ruby Visual Identity Team, CC BY-SA 2.5">
+      <img width="124px" src="https://github.com/oauth-xx/oauth2/raw/main/docs/images/logo/ruby-logo-198px.svg?raw=true" alt="Yukihiro Matsumoto, Ruby Visual Identity Team, CC BY-SA 2.5">
     </a>
 </p>
 
@@ -182,11 +182,11 @@ The link tokens in the following sections should be kept ordered by the row and 
 <!-- 5️⃣ coverage & security -->
 [⛳cclim-cov]: https://codeclimate.com/github/oauth-xx/oauth2/test_coverage
 [⛳cclim-cov-img♻️]: https://api.codeclimate.com/v1/badges/688c612528ff90a46955/test_coverage
-[🖇codecov-img♻️]: https://codecov.io/gh/oauth-xx/oauth2/branch/master/graph/badge.svg?token=bNqSzNiuo2
+[🖇codecov-img♻️]: https://codecov.io/gh/oauth-xx/oauth2/branch/main/graph/badge.svg?token=bNqSzNiuo2
 [🖇codecov]: https://codecov.io/gh/oauth-xx/oauth2
-[🏘coveralls]: https://coveralls.io/github/oauth-xx/oauth2?branch=master
-[🏘coveralls-img]: https://coveralls.io/repos/github/oauth-xx/oauth2/badge.svg?branch=master
-[🚎sec-pol]: https://github.com/oauth-xx/oauth2/blob/master/SECURITY.md
+[🏘coveralls]: https://coveralls.io/github/oauth-xx/oauth2?branch=main
+[🏘coveralls-img]: https://coveralls.io/repos/github/oauth-xx/oauth2/badge.svg?branch=main
+[🚎sec-pol]: https://github.com/oauth-xx/oauth2/blob/main/SECURITY.md
 [🚎sec-pol-img]: https://img.shields.io/badge/security-policy-brightgreen.svg?style=flat
 [🖐codeQL]: https://github.com/oauth-xx/oauth2/security/code-scanning
 [🖐codeQL-img]: https://github.com/oauth-xx/oauth2/actions/workflows/codeql-analysis.yml/badge.svg
@@ -266,7 +266,7 @@ For more see [SECURITY.md][🚎sec-pol].
   - As of version 2.0.4 you can turn key transformation off with the `snaky: false` option.
 - By default, the `:auth_scheme` is now `:basic_auth` (instead of `:request_body`)
   - Third-party strategies and gems may need to be updated if a provider was requiring client id/secret in the request body
-- [... A lot more](https://github.com/oauth-xx/oauth2/blob/master/CHANGELOG.md#2.0.0)
+- [... A lot more](https://github.com/oauth-xx/oauth2/blob/main/CHANGELOG.md#2.0.0)
 
 ## Compatibility
 
@@ -304,7 +304,7 @@ of a major release, support for that Ruby version may be dropped.
 
 |     | Ruby OAuth2 Version | Maintenance Branch | Supported Officially    | Supported Unofficially | Supported Incidentally |
 |:----|---------------------|--------------------|-------------------------|------------------------|------------------------|
-| 1️⃣ | 2.0.x               | `master`           | 2.7, 3.0, 3.1           | 2.5, 2.6               | 2.2, 2.3, 2.4          |
+| 1️⃣ | 2.0.x               | `main`             | 2.7, 3.0, 3.1           | 2.5, 2.6               | 2.2, 2.3, 2.4          |
 | 2️⃣ | 1.4.x               | `1-4-stable`       | 2.5, 2.6, 2.7, 3.0, 3.1 | 2.1, 2.2, 2.3, 2.4     | 1.9, 2.0               |
 | 3️⃣ | older               | N/A                | Best of luck to you!    | Please upgrade!        |                        |
 
@@ -423,7 +423,7 @@ The `AccessToken` methods `#get`, `#post`, `#put` and `#delete` and the generic 
 will return an instance of the #OAuth2::Response class.
 
 This instance contains a `#parsed` method that will parse the response body and
-return a Hash-like [`OAuth2::SnakyHash`](https://github.com/oauth-xx/oauth2/blob/master/lib/oauth2/snaky_hash.rb) if the `Content-Type` is `application/x-www-form-urlencoded` or if
+return a Hash-like [`OAuth2::SnakyHash`](https://github.com/oauth-xx/oauth2/blob/main/lib/oauth2/snaky_hash.rb) if the `Content-Type` is `application/x-www-form-urlencoded` or if
 the body is a JSON object.  It will return an Array if the body is a JSON
 array.  Otherwise, it will return the original body string.
 
@@ -453,7 +453,11 @@ Response instance will contain the `OAuth2::Error` instance.
 
 Currently the Authorization Code, Implicit, Resource Owner Password Credentials, Client Credentials, and Assertion
 authentication grant types have helper strategy classes that simplify client
-use. They are available via the [`#auth_code`](https://github.com/oauth-xx/oauth2/blob/master/lib/oauth2/strategy/auth_code.rb), [`#implicit`](https://github.com/oauth-xx/oauth2/blob/master/lib/oauth2/strategy/implicit.rb), [`#password`](https://github.com/oauth-xx/oauth2/blob/master/lib/oauth2/strategy/password.rb), [`#client_credentials`](https://github.com/oauth-xx/oauth2/blob/master/lib/oauth2/strategy/client_credentials.rb), and [`#assertion`](https://github.com/oauth-xx/oauth2/blob/master/lib/oauth2/strategy/assertion.rb) methods respectively.
+use. They are available via the [`#auth_code`](https://github.com/oauth-xx/oauth2/blob/main/lib/oauth2/strategy/auth_code.rb),
+[`#implicit`](https://github.com/oauth-xx/oauth2/blob/main/lib/oauth2/strategy/implicit.rb),
+[`#password`](https://github.com/oauth-xx/oauth2/blob/main/lib/oauth2/strategy/password.rb),
+[`#client_credentials`](https://github.com/oauth-xx/oauth2/blob/main/lib/oauth2/strategy/client_credentials.rb), and
+[`#assertion`](https://github.com/oauth-xx/oauth2/blob/main/lib/oauth2/strategy/assertion.rb) methods respectively.
 
 These aren't full examples, but demonstrative of the differences between usage for each strategy.
 ```ruby
@@ -525,7 +529,7 @@ spec.add_dependency 'oauth2', '~> 2.0'
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2.svg?type=large)][fossa2]
 
-[license]: https://github.com/oauth-xx/oauth2/blob/master/LICENSE
+[license]: https://github.com/oauth-xx/oauth2/blob/main/LICENSE
 [oauth-xx]: https://github.com/oauth-xx
 [fossa2]: https://app.fossa.io/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2?ref=badge_large
 
@@ -539,7 +543,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 See [CONTRIBUTING.md][contributing]
 
-[contributing]: https://github.com/oauth-xx/oauth2/blob/master/CONTRIBUTING.md
+[contributing]: https://github.com/oauth-xx/oauth2/blob/main/CONTRIBUTING.md
 
 ## Contributors
 
@@ -549,4 +553,4 @@ Made with [contributors-img](https://contrib.rocks).
 
 ## Code of Conduct
 
-Everyone interacting in the OAuth2 project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/oauth-xx/oauth2/blob/master/CODE_OF_CONDUCT.md).
+Everyone interacting in the OAuth2 project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/oauth-xx/oauth2/blob/main/CODE_OF_CONDUCT.md).
