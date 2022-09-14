@@ -1,4 +1,12 @@
-## Submitting a Pull Request
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at [https://github.com/oauth-xx/oauth2][source]
+. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to
+the [code of conduct][conduct].
+
+To submit a patch, please fork the project and create a patch with tests. Once you're happy with it send a pull request!
+
+## Detailed instructions on Submitting a Pull Request
 1. [Fork the repository.][fork]
 2. [Create a topic branch.][branch]
 3. Add specs for your unimplemented feature or bug fix.
@@ -16,3 +24,21 @@
 [fork]: http://help.github.com/fork-a-repo/
 [branch]: http://learn.github.com/p/branching.html
 [pr]: http://help.github.com/send-pull-requests/
+
+## Contributors
+
+[![Contributors](https://contrib.rocks/image?repo=oauth-xx/oauth2)][contributors]
+
+Made with [contributors-img][contrib-rocks].
+
+[comment]: <> (Following links are used by README, CONTRIBUTING)
+
+[conduct]: https://github.com/oauth-xx/oauth2/blob/main/CODE_OF_CONDUCT.md
+
+[contrib-rocks]: https://contrib.rocks
+
+[contributors]: https://github.com/oauth-xx/oauth2/graphs/contributors
+
+[comment]: <> (Following links are used by README, CONTRIBUTING, Homepage)
+
+[source]: https://github.com/oauth-xx/oauth2/

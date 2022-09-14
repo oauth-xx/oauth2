@@ -30,7 +30,7 @@ There are BREAKING changes, but most will not encounter them, and upgrading shou
 
 Please see:
 • https://github.com/oauth-xx/oauth2#what-is-new-for-v20
-• https://github.com/oauth-xx/oauth2/blob/master/CHANGELOG.md
+• https://github.com/oauth-xx/oauth2/blob/main/CHANGELOG.md
 
 Please upgrade, report issues, and support the project! Thanks, |7eter l-|. l3oling
 
