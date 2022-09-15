@@ -80,8 +80,14 @@ RSpec.describe OAuth2::Strategy::AuthCode do
       client.options[:redirect_uri] = redirect_uri
     end
 
-    it 'includes redirect_uri once in the request parameters' do
+    it 'does not raise error' do
       expect { subject.get_token(code, redirect_uri: redirect_uri) }.not_to raise_error
+    end
+
+    it 'gets a token' do
+      access = subject.get_token(code, redirect_uri: redirect_uri)
+
+      expect(access.token).to eq('salmon')
     end
   end
 
@@ -103,9 +109,14 @@ RSpec.describe OAuth2::Strategy::AuthCode do
 
       subject.get_token(code)
     end
+
+    it 'can get a token' do
+      access = subject.get_token(code)
+      expect(access.token).to eq('salmon')
+    end
   end
 
-  describe '#get_token' do
+  describe '#get_token (from microsoft)' do
     it "doesn't treat an OpenID Connect token with only an id_token (like from Microsoft) as invalid" do
       @mode = 'from_microsoft'
       client.options[:token_method] = :get
