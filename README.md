@@ -21,7 +21,7 @@ See the sibling `oauth` gem for OAuth 1.0 implementations in Ruby.
 * [oauth sibling gem][sibling-gem] for OAuth 1.0 implementations in Ruby.
 
 [oauth2-spec]: https://oauth.net/2/
-[sibling-gem]: https://github.com/oauth-xx/oauth-ruby
+[sibling-gem]: https://gitlab.com/oauth-xx/oauth
 
 ## Release Documentation
 
@@ -32,14 +32,16 @@ See the sibling `oauth` gem for OAuth 1.0 implementations in Ruby.
 
 | Version | Release Date | Readme                                                   |
 |---------|--------------|----------------------------------------------------------|
-| 2.0.7   | 2022-08-22   | https://github.com/oauth-xx/oauth2/blob/v2.0.7/README.md |
-| 2.0.6   | 2022-07-13   | https://github.com/oauth-xx/oauth2/blob/v2.0.6/README.md |
-| 2.0.5   | 2022-07-07   | https://github.com/oauth-xx/oauth2/blob/v2.0.5/README.md |
-| 2.0.4   | 2022-07-01   | https://github.com/oauth-xx/oauth2/blob/v2.0.4/README.md |
-| 2.0.3   | 2022-06-28   | https://github.com/oauth-xx/oauth2/blob/v2.0.3/README.md |
-| 2.0.2   | 2022-06-24   | https://github.com/oauth-xx/oauth2/blob/v2.0.2/README.md |
-| 2.0.1   | 2022-06-22   | https://github.com/oauth-xx/oauth2/blob/v2.0.1/README.md |
-| 2.0.0   | 2022-06-21   | https://github.com/oauth-xx/oauth2/blob/v2.0.0/README.md |
+| 2.0.9   | 2022-09-15   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.9/README.md |
+| 2.0.8   | 2022-09-01   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.8/README.md |
+| 2.0.7   | 2022-08-22   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.7/README.md |
+| 2.0.6   | 2022-07-13   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.6/README.md |
+| 2.0.5   | 2022-07-07   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.5/README.md |
+| 2.0.4   | 2022-07-01   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.4/README.md |
+| 2.0.3   | 2022-06-28   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.3/README.md |
+| 2.0.2   | 2022-06-24   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.2/README.md |
+| 2.0.1   | 2022-06-22   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.1/README.md |
+| 2.0.0   | 2022-06-21   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.0/README.md |
 </details>
 
 ### Older Releases
@@ -49,17 +51,17 @@ See the sibling `oauth` gem for OAuth 1.0 implementations in Ruby.
 
 | Version | Release Date | Readme                                                    |
 |---------|--------------|-----------------------------------------------------------|
-| 1.4.10  | Jul 1, 2022  | https://github.com/oauth-xx/oauth2/blob/v1.4.10/README.md |
-| 1.4.9   | Feb 20, 2022 | https://github.com/oauth-xx/oauth2/blob/v1.4.9/README.md  |
-| 1.4.8   | Feb 18, 2022 | https://github.com/oauth-xx/oauth2/blob/v1.4.8/README.md  |
-| 1.4.7   | Mar 19, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.7/README.md  |
-| 1.4.6   | Mar 19, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.6/README.md  |
-| 1.4.5   | Mar 18, 2021 | https://github.com/oauth-xx/oauth2/blob/v1.4.5/README.md  |
-| 1.4.4   | Feb 12, 2020 | https://github.com/oauth-xx/oauth2/blob/v1.4.4/README.md  |
-| 1.4.3   | Jan 29, 2020 | https://github.com/oauth-xx/oauth2/blob/v1.4.3/README.md  |
-| 1.4.2   | Oct 1, 2019  | https://github.com/oauth-xx/oauth2/blob/v1.4.2/README.md  |
-| 1.4.1   | Oct 13, 2018 | https://github.com/oauth-xx/oauth2/blob/v1.4.1/README.md  |
-| 1.4.0   | Jun 9, 2017  | https://github.com/oauth-xx/oauth2/blob/v1.4.0/README.md  |
+| 1.4.10  | Jul 1, 2022  | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.10/README.md |
+| 1.4.9   | Feb 20, 2022 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.9/README.md  |
+| 1.4.8   | Feb 18, 2022 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.8/README.md  |
+| 1.4.7   | Mar 19, 2021 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.7/README.md  |
+| 1.4.6   | Mar 19, 2021 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.6/README.md  |
+| 1.4.5   | Mar 18, 2021 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.5/README.md  |
+| 1.4.4   | Feb 12, 2020 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.4/README.md  |
+| 1.4.3   | Jan 29, 2020 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.3/README.md  |
+| 1.4.2   | Oct 1, 2019  | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.2/README.md  |
+| 1.4.1   | Oct 13, 2018 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.1/README.md  |
+| 1.4.0   | Jun 9, 2017  | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.0/README.md  |
 </details>
 
 <details>
@@ -67,8 +69,8 @@ See the sibling `oauth` gem for OAuth 1.0 implementations in Ruby.
 
 | Version  | Release Date | Readme                                                   |
 |----------|--------------|----------------------------------------------------------|
-| 1.3.1    | Mar 3, 2017  | https://github.com/oauth-xx/oauth2/blob/v1.3.1/README.md |
-| 1.3.0    | Dec 27, 2016 | https://github.com/oauth-xx/oauth2/blob/v1.3.0/README.md |
+| 1.3.1    | Mar 3, 2017  | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.3.1/README.md |
+| 1.3.0    | Dec 27, 2016 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.3.0/README.md |
 </details>
 
 <details>
@@ -76,10 +78,10 @@ See the sibling `oauth` gem for OAuth 1.0 implementations in Ruby.
 
 | Version  | Release Date | Readme                                                   |
 |----------|--------------|----------------------------------------------------------|
-| 1.2.0    | Jun 30, 2016 | https://github.com/oauth-xx/oauth2/blob/v1.2.0/README.md |
-| 1.1.0    | Jan 30, 2016 | https://github.com/oauth-xx/oauth2/blob/v1.1.0/README.md |
-| 1.0.0    | May 23, 2014 | https://github.com/oauth-xx/oauth2/blob/v1.0.0/README.md |
-| < 1.0.0  | Find here    | https://github.com/oauth-xx/oauth2/tags                  |
+| 1.2.0    | Jun 30, 2016 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.2.0/README.md |
+| 1.1.0    | Jan 30, 2016 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.1.0/README.md |
+| 1.0.0    | May 23, 2014 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.0.0/README.md |
+| < 1.0.0  | Find here    | https://gitlab.com/oauth-xx/oauth2/-/tags                  |
 </details>
 
 ## Status
@@ -111,15 +113,15 @@ appended indicators:
 ♻️ - URL needs to be updated from SASS integration. Find / Replace is insufficient.
 -->
 
-|     | Project               | bundle add oauth2                                                                                                                                                                                                                                                                            |
-|:----|-----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1️⃣ | name, license, docs   | [![RubyGems.org][⛳️name-img]][⛳️gem] [![License: MIT][🖇src-license-img]][🖇src-license] [![FOSSA][🏘fossa-img]][🏘fossa] [![RubyDoc.info][🚎yard-img]][🚎yard] [![InchCI][🖐inch-ci-img]][🚎yard]                                                                                           |
-| 2️⃣ | version & activity    | [![Gem Version][⛳️version-img]][⛳️gem] [![Total Downloads][🖇DL-total-img]][⛳️gem] [![Download Rank][🏘DL-rank-img]][⛳️gem] [![Source Code][🚎src-home-img]][🚎src-home] [![Open PRs][🖐prs-o-img]][🖐prs-o] [![Closed PRs][🧮prs-c-img]][🧮prs-c] [![Next Version][📗next-img♻️]][📗next♻️] |
-| 3️⃣ | maintanence & linting | [![Maintainability][⛳cclim-maint-img♻️]][⛳cclim-maint] [![Helpers][🖇triage-help-img]][🖇triage-help] [![Depfu][🏘depfu-img♻️]][🏘depfu♻️] [![Contributors][🚎contributors-img]][🚎contributors] [![Style][🖐style-wf-img]][🖐style-wf] [![Kloc Roll][🧮kloc-img]][🧮kloc]                   |
-| 4️⃣ | testing               | [![Open Issues][⛳iss-o-img]][⛳iss-o] [![Closed Issues][🖇iss-c-img]][🖇iss-c] [![Supported][🏘sup-wf-img]][🏘sup-wf] [![Heads][🚎heads-wf-img]][🚎heads-wf] [![Unofficial Support][🖐uns-wf-img]][🖐uns-wf] [![MacOS][🧮mac-wf-img]][🧮mac-wf] [![Windows][📗win-wf-img]][📗win-wf]          |
-| 5️⃣ | coverage & security   | [![CodeClimate][⛳cclim-cov-img♻️]][⛳cclim-cov] [![CodeCov][🖇codecov-img♻️]][🖇codecov] [![Coveralls][🏘coveralls-img]][🏘coveralls] [![Security Policy][🚎sec-pol-img]][🚎sec-pol] [![CodeQL][🖐codeQL-img]][🖐codeQL] [![Code Coverage][🧮cov-wf-img]][🧮cov-wf]                           |
-| 6️⃣ | resources             | [![Discussion][⛳gh-discussions-img]][⛳gh-discussions] [![Get help on Codementor][🖇codementor-img]][🖇codementor] [![Chat][🏘chat-img]][🏘chat] [![Blog][🚎blog-img]][🚎blog] [![Blog][🖐wiki-img]][🖐wiki]                                                                                  |
-| 7️⃣ | spread 💖             | [![Liberapay Patrons][⛳liberapay-img]][⛳liberapay] [![Sponsor Me][🖇sponsor-img]][🖇sponsor] [![Tweet @ Peter][🏘tweet-img]][🏘tweet] [🌏][aboutme] [👼][angelme] [💻][coderme]                                                                                                              |
+|     | Project               | bundle add oauth2                                                                                                                                                                                                                                                          |
+|:----|-----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 1️⃣ | name, license, docs   | [![RubyGems.org][⛳️name-img]][⛳️gem] [![License: MIT][🖇src-license-img]][🖇src-license] [![FOSSA][🏘fossa-img]][🏘fossa] [![RubyDoc.info][🚎yard-img]][🚎yard] [![InchCI][🖐inch-ci-img]][🚎yard]                                                                         |
+| 2️⃣ | version & activity    | [![Gem Version][⛳️version-img]][⛳️gem] [![Total Downloads][🖇DL-total-img]][⛳️gem] [![Download Rank][🏘DL-rank-img]][⛳️gem] [![Source Code][🚎src-home-img]][🚎src-home]                                                                                                   |
+| 3️⃣ | maintanence & linting | [![Maintainability][⛳cclim-maint-img♻️]][⛳cclim-maint] [![Helpers][🖇triage-help-img]][🖇triage-help] [![Depfu][🏘depfu-img♻️]][🏘depfu♻️] [![Contributors][🚎contributors-img]][🚎contributors] [![Style][🖐style-wf-img]][🖐style-wf] [![Kloc Roll][🧮kloc-img]][🧮kloc] |
+| 4️⃣ | testing               | [![Supported][🏘sup-wf-img]][🏘sup-wf] [![Heads][🚎heads-wf-img]][🚎heads-wf] [![Unofficial Support][🖐uns-wf-img]][🖐uns-wf] [![MacOS][🧮mac-wf-img]][🧮mac-wf] [![Windows][📗win-wf-img]][📗win-wf]                                                                      |
+| 5️⃣ | coverage & security   | [![CodeClimate][⛳cclim-cov-img♻️]][⛳cclim-cov] [![CodeCov][🖇codecov-img♻️]][🖇codecov] [![Coveralls][🏘coveralls-img]][🏘coveralls] [![Security Policy][🚎sec-pol-img]][🚎sec-pol] [![CodeQL][🖐codeQL-img]][🖐codeQL] [![Code Coverage][🧮cov-wf-img]][🧮cov-wf]         |
+| 6️⃣ | resources             | [![Discussion][⛳gg-discussions-img]][⛳gg-discussions] [![Get help on Codementor][🖇codementor-img]][🖇codementor] [![Chat][🏘chat-img]][🏘chat] [![Blog][🚎blog-img]][🚎blog] [![Blog][🖐wiki-img]][🖐wiki]                                                                |
+| 7️⃣ | spread 💖             | [![Liberapay Patrons][⛳liberapay-img]][⛳liberapay] [![Sponsor Me][🖇sponsor-img]][🖇sponsor] [![Tweet @ Peter][🏘tweet-img]][🏘tweet] [🌏][aboutme] [👼][angelme] [💻][coderme]                                                                                            |
 
 <!--
 The link tokens in the following sections should be kept ordered by the row and badge numbering scheme
@@ -140,14 +142,8 @@ The link tokens in the following sections should be kept ordered by the row and 
 [⛳️version-img]: http://img.shields.io/gem/v/oauth2.svg
 [🖇DL-total-img]: https://img.shields.io/gem/dt/oauth2.svg
 [🏘DL-rank-img]: https://img.shields.io/gem/rt/oauth2.svg
-[🚎src-home]: https://github.com/oauth-xx/oauth2
-[🚎src-home-img]: https://img.shields.io/badge/source-github-brightgreen.svg?style=flat
-[🖐prs-o]: https://github.com/oauth-xx/oauth2/pulls
-[🖐prs-o-img]: https://img.shields.io/github/issues-pr/oauth-xx/oauth2
-[🧮prs-c]: https://github.com/oauth-xx/oauth2/pulls?q=is%3Apr+is%3Aclosed
-[🧮prs-c-img]: https://img.shields.io/github/issues-pr-closed/oauth-xx/oauth2
-[📗next♻️]: https://github.com/oauth-xx/oauth2/milestone/2
-[📗next-img♻️]: https://img.shields.io/github/milestones/progress/oauth-xx/oauth2/2?label=Next%20Version
+[🚎src-home]: https://gitlab.com/oauth-xx/oauth2/
+[🚎src-home-img]: https://img.shields.io/badge/source-gitlab-blue.svg?style=flat
 
 <!-- 3️⃣ maintenance & linting -->
 [⛳cclim-maint]: https://codeclimate.com/github/oauth-xx/oauth2/maintainability
@@ -156,7 +152,7 @@ The link tokens in the following sections should be kept ordered by the row and 
 [🖇triage-help-img]: https://www.codetriage.com/oauth-xx/oauth2/badges/users.svg
 [🏘depfu♻️]: https://depfu.com/github/oauth-xx/oauth2?project_id=4445
 [🏘depfu-img♻️]: https://badges.depfu.com/badges/6d34dc1ba682bbdf9ae2a97848241743/count.svg
-[🚎contributors]: https://github.com/oauth-xx/oauth2/graphs/contributors
+[🚎contributors]: https://gitlab.com/oauth-xx/oauth2/-/graphs/main
 [🚎contributors-img]: https://img.shields.io/github/contributors-anon/oauth-xx/oauth2
 [🖐style-wf]: https://github.com/oauth-xx/oauth2/actions/workflows/style.yml
 [🖐style-wf-img]: https://github.com/oauth-xx/oauth2/actions/workflows/style.yml/badge.svg
@@ -164,10 +160,6 @@ The link tokens in the following sections should be kept ordered by the row and 
 [🧮kloc-img]: https://img.shields.io/tokei/lines/github.com/oauth-xx/oauth2
 
 <!-- 4️⃣ testing -->
-[⛳iss-o]: https://github.com/oauth-xx/oauth2/issues
-[⛳iss-o-img]: https://img.shields.io/github/issues-raw/oauth-xx/oauth2
-[🖇iss-c]: https://github.com/oauth-xx/oauth2/issues?q=is%3Aissue+is%3Aclosed
-[🖇iss-c-img]: https://img.shields.io/github/issues-closed-raw/oauth-xx/oauth2
 [🏘sup-wf]: https://github.com/oauth-xx/oauth2/actions/workflows/supported.yml
 [🏘sup-wf-img]: https://github.com/oauth-xx/oauth2/actions/workflows/supported.yml/badge.svg
 [🚎heads-wf]: https://github.com/oauth-xx/oauth2/actions/workflows/heads.yml
@@ -186,7 +178,7 @@ The link tokens in the following sections should be kept ordered by the row and 
 [🖇codecov]: https://codecov.io/gh/oauth-xx/oauth2
 [🏘coveralls]: https://coveralls.io/github/oauth-xx/oauth2?branch=main
 [🏘coveralls-img]: https://coveralls.io/repos/github/oauth-xx/oauth2/badge.svg?branch=main
-[🚎sec-pol]: https://github.com/oauth-xx/oauth2/blob/main/SECURITY.md
+[🚎sec-pol]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/SECURITY.md
 [🚎sec-pol-img]: https://img.shields.io/badge/security-policy-brightgreen.svg?style=flat
 [🖐codeQL]: https://github.com/oauth-xx/oauth2/security/code-scanning
 [🖐codeQL-img]: https://github.com/oauth-xx/oauth2/actions/workflows/codeql-analysis.yml/badge.svg
@@ -194,15 +186,15 @@ The link tokens in the following sections should be kept ordered by the row and 
 [🧮cov-wf-img]: https://github.com/oauth-xx/oauth2/actions/workflows/coverage.yml/badge.svg
 
 <!-- 6️⃣ resources -->
-[⛳gh-discussions]: https://github.com/oauth-xx/oauth2/discussions
-[⛳gh-discussions-img]: https://img.shields.io/github/discussions/oauth-xx/oauth2
+[⛳gg-discussions]: https://groups.google.com/g/oauth-ruby
+[⛳gg-discussions-img]: https://img.shields.io/badge/google-group-purple.svg?style=flat
 [🖇codementor]: https://www.codementor.io/peterboling?utm_source=github&utm_medium=button&utm_term=peterboling&utm_campaign=github
 [🖇codementor-img]: https://cdn.codementor.io/badges/get_help_github.svg
 [🏘chat]: https://gitter.im/oauth-xx/oauth2
 [🏘chat-img]: https://img.shields.io/gitter/room/oauth-xx/oauth2.svg
 [🚎blog]: http://www.railsbling.com/tags/oauth2/
 [🚎blog-img]: https://img.shields.io/badge/blog-railsbling-brightgreen.svg?style=flat
-[🖐wiki]: https://github.com/oauth-xx/oauth2/wiki
+[🖐wiki]: https://gitlab.com/oauth-xx/oauth2/-/wikis/home
 [🖐wiki-img]: https://img.shields.io/badge/wiki-examples-brightgreen.svg?style=flat
 
 <!-- 7️⃣ spread 💖 -->
@@ -266,7 +258,7 @@ For more see [SECURITY.md][🚎sec-pol].
   - As of version 2.0.4 you can turn key transformation off with the `snaky: false` option.
 - By default, the `:auth_scheme` is now `:basic_auth` (instead of `:request_body`)
   - Third-party strategies and gems may need to be updated if a provider was requiring client id/secret in the request body
-- [... A lot more](https://github.com/oauth-xx/oauth2/blob/main/CHANGELOG.md#2.0.0)
+- [... A lot more](https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md#2.0.0)
 
 ## Compatibility
 
@@ -281,8 +273,7 @@ This gem is tested against MRI, JRuby, and Truffleruby.
 Each of those has varying versions that target a specific version of MRI Ruby.
 This gem should work in the just-listed Ruby engines according to the targeted MRI compatibility in the table below.
 If you would like to add support for additional engines,
-  first make sure Github Actions supports the engine,
-  then submit a PR to the correct maintenance branch as according to the table below.
+  see `gemfiles/README.md`, then submit a PR to the correct maintenance branch as according to the table below.
 </details>
 
 <details>
@@ -423,7 +414,7 @@ The `AccessToken` methods `#get`, `#post`, `#put` and `#delete` and the generic 
 will return an instance of the #OAuth2::Response class.
 
 This instance contains a `#parsed` method that will parse the response body and
-return a Hash-like [`OAuth2::SnakyHash`](https://github.com/oauth-xx/oauth2/blob/main/lib/oauth2/snaky_hash.rb) if the `Content-Type` is `application/x-www-form-urlencoded` or if
+return a Hash-like [`OAuth2::SnakyHash`](https://gitlab.com/oauth-xx/oauth2/-/blob/main/lib/oauth2/snaky_hash.rb) if the `Content-Type` is `application/x-www-form-urlencoded` or if
 the body is a JSON object.  It will return an Array if the body is a JSON
 array.  Otherwise, it will return the original body string.
 
@@ -453,11 +444,11 @@ Response instance will contain the `OAuth2::Error` instance.
 
 Currently the Authorization Code, Implicit, Resource Owner Password Credentials, Client Credentials, and Assertion
 authentication grant types have helper strategy classes that simplify client
-use. They are available via the [`#auth_code`](https://github.com/oauth-xx/oauth2/blob/main/lib/oauth2/strategy/auth_code.rb),
-[`#implicit`](https://github.com/oauth-xx/oauth2/blob/main/lib/oauth2/strategy/implicit.rb),
-[`#password`](https://github.com/oauth-xx/oauth2/blob/main/lib/oauth2/strategy/password.rb),
-[`#client_credentials`](https://github.com/oauth-xx/oauth2/blob/main/lib/oauth2/strategy/client_credentials.rb), and
-[`#assertion`](https://github.com/oauth-xx/oauth2/blob/main/lib/oauth2/strategy/assertion.rb) methods respectively.
+use. They are available via the [`#auth_code`](https://gitlab.com/oauth-xx/oauth2/-/blob/main/lib/oauth2/strategy/auth_code.rb),
+[`#implicit`](https://gitlab.com/oauth-xx/oauth2/-/blob/main/lib/oauth2/strategy/implicit.rb),
+[`#password`](https://gitlab.com/oauth-xx/oauth2/-/blob/main/lib/oauth2/strategy/password.rb),
+[`#client_credentials`](https://gitlab.com/oauth-xx/oauth2/-/blob/main/lib/oauth2/strategy/client_credentials.rb), and
+[`#assertion`](https://gitlab.com/oauth-xx/oauth2/-/blob/main/lib/oauth2/strategy/assertion.rb) methods respectively.
 
 These aren't full examples, but demonstrative of the differences between usage for each strategy.
 ```ruby
@@ -529,7 +520,7 @@ spec.add_dependency 'oauth2', '~> 2.0'
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2.svg?type=large)][fossa2]
 
-[license]: https://github.com/oauth-xx/oauth2/blob/main/LICENSE
+[license]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/LICENSE
 [oauth-xx]: https://github.com/oauth-xx
 [fossa2]: https://app.fossa.io/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2?ref=badge_large
 
@@ -543,14 +534,14 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 See [CONTRIBUTING.md][contributing]
 
-[contributing]: https://github.com/oauth-xx/oauth2/blob/main/CONTRIBUTING.md
+[contributing]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CONTRIBUTING.md
 
 ## Contributors
 
-[![Contributors](https://contrib.rocks/image?repo=oauth-xx/oauth2)]("https://github.com/oauth-xx/oauth2/graphs/contributors")
+[![Contributors](https://contrib.rocks/image?repo=oauth-xx/oauth2)]("https://gitlab.com/oauth-xx/oauth2/-/graphs/main")
 
 Made with [contributors-img](https://contrib.rocks).
 
 ## Code of Conduct
 
-Everyone interacting in the OAuth2 project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://github.com/oauth-xx/oauth2/blob/main/CODE_OF_CONDUCT.md).
+Everyone interacting in the OAuth2 project’s codebases, issue trackers, chat rooms and mailing lists is expected to follow the [code of conduct](https://gitlab.com/oauth-xx/oauth2/-/blob/main/CODE_OF_CONDUCT.md).

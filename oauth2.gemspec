@@ -44,7 +44,7 @@ Please report issues, and support the project! Thanks, |7eter l-|. l3oling
   spec.metadata['bug_tracker_uri'] = "#{spec.homepage}/-/issues"
   spec.metadata['documentation_uri'] = "https://www.rubydoc.info/gems/#{spec.name}/#{spec.version}"
   spec.metadata['wiki_uri'] = "#{spec.homepage}/-/wiki"
-  spec.metadata['funding_uri'] = "https://liberapay.com/pboling"
+  spec.metadata['funding_uri'] = 'https://liberapay.com/pboling'
   spec.metadata['rubygems_mfa_required'] = 'true'
 
   spec.require_paths = %w[lib]
