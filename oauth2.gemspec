@@ -14,7 +14,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Peter Boling', 'Erik Michaels-Ober', 'Michael Bleigh']
   spec.description   = 'A Ruby wrapper for the OAuth 2.0 protocol built with a similar style to the original OAuth spec.'
   spec.email         = ['peter.boling@gmail.com']
-  spec.homepage      = 'https://github.com/oauth-xx/oauth2'
+  spec.homepage      = 'https://gitlab.com/oauth-xx/oauth2'
   spec.licenses      = %w[MIT]
   spec.name          = 'oauth2'
   spec.required_ruby_version = '>= 2.2.0'
@@ -23,22 +23,28 @@ Gem::Specification.new do |spec|
   spec.post_install_message = "
 You have installed oauth2 version #{OAuth2::Version::VERSION}, congratulations!
 
-There are BREAKING changes, but most will not encounter them, and updating your code should be easy!
+There are BREAKING changes if you are upgrading from < v2, but most will not encounter them, and updating your code should be easy!
+
+We have made two other major migrations:
+1. master branch renamed to main
+2. Github has been replaced with Gitlab
 
 Please see:
-• https://github.com/oauth-xx/oauth2#what-is-new-for-v20
-• https://github.com/oauth-xx/oauth2/blob/main/CHANGELOG.md
+• https://gitlab.com/oauth-xx/oauth2#what-is-new-for-v20
+• https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md
+• https://groups.google.com/g/oauth-ruby/c/QA_dtrXWXaE
 
 Please report issues, and support the project! Thanks, |7eter l-|. l3oling
 
 "
 
   spec.metadata['homepage_uri'] = spec.homepage
-  spec.metadata['source_code_uri'] = "#{spec.homepage}/tree/v#{spec.version}"
-  spec.metadata['changelog_uri'] = "#{spec.homepage}/blob/v#{spec.version}/CHANGELOG.md"
-  spec.metadata['bug_tracker_uri'] = "#{spec.homepage}/issues"
+  spec.metadata['source_code_uri'] = "#{spec.homepage}/-/tree/v#{spec.version}"
+  spec.metadata['changelog_uri'] = "#{spec.homepage}/-/blob/v#{spec.version}/CHANGELOG.md"
+  spec.metadata['bug_tracker_uri'] = "#{spec.homepage}/-/issues"
   spec.metadata['documentation_uri'] = "https://www.rubydoc.info/gems/#{spec.name}/#{spec.version}"
-  spec.metadata['wiki_uri'] = "#{spec.homepage}/wiki"
+  spec.metadata['wiki_uri'] = "#{spec.homepage}/-/wiki"
+  spec.metadata['funding_uri'] = "https://liberapay.com/pboling"
   spec.metadata['rubygems_mfa_required'] = 'true'
 
   spec.require_paths = %w[lib]
