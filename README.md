@@ -16,6 +16,10 @@ If you have the project checked out, simply:
 git remote set-url origin git@gitlab.com:oauth-xx/oauth2.git
 ```
 
+We also took the opportunity of the migration to switch the default branch from `master` to `main`.
+
+Changes are still being pushed back to the Github branches `1-4-stable` and `main`, but please update dependencies to reference released versions or the new Gitlab source host.
+
 * Source Code: [![Gitlab](https://img.shields.io/badge/source-gitlab-brightgreen.svg?style=flat)][source]
 * RubyDoc Documentation: [![RubyDoc.info](https://img.shields.io/badge/documentation-rubydoc-brightgreen.svg?style=flat)][documentation]
 * Mailing List/Google Group: [![Mailing List](https://img.shields.io/badge/group-mailinglist-violet.svg?style=social&logo=google)][mailinglist]
