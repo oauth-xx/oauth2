@@ -521,7 +521,7 @@ spec.add_dependency 'oauth2', '~> 2.0'
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2.svg?type=large)][fossa2]
 
 [license]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/LICENSE
-[oauth-xx]: https://github.com/oauth-xx
+[oauth-xx]: https://gitlab.com/oauth-xx
 [fossa2]: https://app.fossa.io/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2?ref=badge_large
 
 ## Development
