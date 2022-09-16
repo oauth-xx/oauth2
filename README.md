@@ -36,8 +36,9 @@ If you must continue using 1.4.x please consider purchasing an open source secur
 <details>
   <summary>1.4.x Readmes</summary>
 
-| Version | Release Date | Readme                                                    |
-|---------|--------------|-----------------------------------------------------------|
+| Version | Release Date | Readme                                                      |
+|---------|--------------|-------------------------------------------------------------|
+| 1.4.11  | Sep 16, 2022 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.11/README.md |
 | 1.4.10  | Jul 1, 2022  | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.10/README.md |
 | 1.4.9   | Feb 20, 2022 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.9/README.md  |
 | 1.4.8   | Feb 18, 2022 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.8/README.md  |
