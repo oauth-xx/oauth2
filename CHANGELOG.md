@@ -4,10 +4,10 @@ All notable changes to this project will be documented in this file.
 ## [unreleased]
 
 ## [1.4.10] - 2022-07-01
-- FIPS Compatibility [#587](https://github.com/oauth-xx/oauth2/pull/587) (@akostadinov)
+- FIPS Compatibility [#587](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/587) (@akostadinov)
 
 ## [1.4.9] - 2022-02-20
-- Fixes compatibility with Faraday v2 [572](https://github.com/oauth-xx/oauth2/issues/572)
+- Fixes compatibility with Faraday v2 [572](https://gitlab.com/oauth-xx/oauth2/-/issues/572)
 - Includes supported versions of Faraday in test matrix:
   - Faraday ~> 2.2.0 with Ruby >= 2.6
   - Faraday ~> 1.10 with Ruby >= 2.4
@@ -17,47 +17,47 @@ All notable changes to this project will be documented in this file.
 ## [1.4.8] - 2022-02-18
 - MFA is now required to push new gem versions (@pboling)
 - README overhaul w/ new Ruby Version and Engine compatibility policies (@pboling)
-- [#569](https://github.com/oauth-xx/oauth2/pull/569) Backport fixes ([#561](https://github.com/oauth-xx/oauth2/pull/561) by @ryogift), and add more fixes, to allow faraday 1.x and 2.x (@jrochkind)
+- [#569](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/569) Backport fixes ([#561](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/561) by @ryogift), and add more fixes, to allow faraday 1.x and 2.x (@jrochkind)
 - Improve Code Coverage tracking (Coveralls, CodeCov, CodeClimate), and enable branch coverage (@pboling)
 - Add CodeQL, Security Policy, Funding info (@pboling)
 - Added Ruby 3.1, jruby, jruby-head, truffleruby, truffleruby-head to build matrix (@pboling)
-- [#543](https://github.com/oauth-xx/oauth2/pull/543) - Support for more modern Open SSL libraries (@pboling)
+- [#543](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/543) - Support for more modern Open SSL libraries (@pboling)
 
 ## [1.4.7] - 2021-03-19
-- [#541](https://github.com/oauth-xx/oauth2/pull/541) - Backport fix to expires_at handling [#533](https://github.com/oauth-xx/oauth2/pull/533) to 1-4-stable branch. (@dobon)
+- [#541](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/541) - Backport fix to expires_at handling [#533](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/533) to 1-4-stable branch. (@dobon)
 
 ## [1.4.6] - 2021-03-19
-- [#540](https://github.com/oauth-xx/oauth2/pull/540) - Add VERSION constant (@pboling)
-- [#537](https://github.com/oauth-xx/oauth2/pull/537) - Fix crash in OAuth2::Client#get_token (@anderscarling)
-- [#538](https://github.com/oauth-xx/oauth2/pull/538) - Remove reliance on globally included OAuth2 in tests, analogous to [#539](https://github.com/oauth-xx/oauth2/pull/539) on main branch (@anderscarling)
+- [#540](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/540) - Add VERSION constant (@pboling)
+- [#537](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/537) - Fix crash in OAuth2::Client#get_token (@anderscarling)
+- [#538](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/538) - Remove reliance on globally included OAuth2 in tests, analogous to [#539](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/539) on main branch (@anderscarling)
 
 ## [1.4.5] - 2021-03-18
-- [#535](https://github.com/oauth-xx/oauth2/pull/535) - Compatibility with range of supported Ruby OpenSSL versions, Rubocop updates, Github Actions, analogous to [#536](https://github.com/oauth-xx/oauth2/pull/536) on main branch (@pboling)
-- [#518](https://github.com/oauth-xx/oauth2/pull/518) - Add extract_access_token option to OAuth2::Client (@jonspalmer)
-- [#507](https://github.com/oauth-xx/oauth2/pull/507) - Fix camel case content type, response keys (@anvox)
-- [#500](https://github.com/oauth-xx/oauth2/pull/500) - Fix YARD documentation formatting (@olleolleolle)
+- [#535](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/535) - Compatibility with range of supported Ruby OpenSSL versions, Rubocop updates, Github Actions, analogous to [#536](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/536) on main branch (@pboling)
+- [#518](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/518) - Add extract_access_token option to OAuth2::Client (@jonspalmer)
+- [#507](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/507) - Fix camel case content type, response keys (@anvox)
+- [#500](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/500) - Fix YARD documentation formatting (@olleolleolle)
 
 ## [1.4.4] - 2020-02-12
-- [#408](https://github.com/oauth-xx/oauth2/pull/408) - Fixed expires_at for formatted time (@Lomey)
+- [#408](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/408) - Fixed expires_at for formatted time (@Lomey)
 
 ## [1.4.3] - 2020-01-29
-- [#483](https://github.com/oauth-xx/oauth2/pull/483) - add project metadata to gemspec (@orien)
-- [#495](https://github.com/oauth-xx/oauth2/pull/495) - support additional types of access token requests (@SteveyblamFreeagent, @thomcorley, @dgholz)
+- [#483](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/483) - add project metadata to gemspec (@orien)
+- [#495](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/495) - support additional types of access token requests (@SteveyblamFreeagent, @thomcorley, @dgholz)
   - Adds support for private_key_jwt and tls_client_auth
-- [#433](https://github.com/oauth-xx/oauth2/pull/433) - allow field names with square brackets and numbers in params (@asm256)
+- [#433](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/433) - allow field names with square brackets and numbers in params (@asm256)
 
 ## [1.4.2] - 2019-10-01
-- [#478](https://github.com/oauth-xx/oauth2/pull/478) - support latest version of faraday & fix build (@pboling)
+- [#478](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/478) - support latest version of faraday & fix build (@pboling)
   - Officially support Ruby 2.6 and truffleruby
 
 ## [1.4.1] - 2018-10-13
-- [#417](https://github.com/oauth-xx/oauth2/pull/417) - update jwt dependency (@thewoolleyman)
-- [#419](https://github.com/oauth-xx/oauth2/pull/419) - remove rubocop dependency (temporary, added back in [#423](https://github.com/oauth-xx/oauth2/pull/423)) (@pboling)
-- [#418](https://github.com/oauth-xx/oauth2/pull/418) - update faraday dependency (@pboling)
-- [#420](https://github.com/oauth-xx/oauth2/pull/420) - update [oauth2.gemspec](https://github.com/oauth-xx/oauth2/blob/1-4-stable/oauth2.gemspec) (@pboling)
-- [#421](https://github.com/oauth-xx/oauth2/pull/421) - fix [CHANGELOG.md](https://github.com/oauth-xx/oauth2/blob/1-4-stable/CHANGELOG.md) for previous releases (@pboling)
-- [#422](https://github.com/oauth-xx/oauth2/pull/422) - update [LICENSE](https://github.com/oauth-xx/oauth2/blob/1-4-stable/LICENSE) and [README.md](https://github.com/oauth-xx/oauth2/blob/1-4-stable/README.md) (@pboling)
-- [#423](https://github.com/oauth-xx/oauth2/pull/423) - update [builds](https://travis-ci.org/oauth-xx/oauth2/builds), [Rakefile](https://github.com/oauth-xx/oauth2/blob/1-4-stable/Rakefile) (@pboling)
+- [#417](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/417) - update jwt dependency (@thewoolleyman)
+- [#419](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/419) - remove rubocop dependency (temporary, added back in [#423](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/423)) (@pboling)
+- [#418](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/418) - update faraday dependency (@pboling)
+- [#420](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/420) - update [oauth2.gemspec](https://gitlab.com/oauth-xx/oauth2/-/blob/1-4-stable/oauth2.gemspec) (@pboling)
+- [#421](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/421) - fix [CHANGELOG.md](https://gitlab.com/oauth-xx/oauth2/-/blob/1-4-stable/CHANGELOG.md) for previous releases (@pboling)
+- [#422](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/422) - update [LICENSE](https://gitlab.com/oauth-xx/oauth2/-/blob/1-4-stable/LICENSE) and [README.md](https://gitlab.com/oauth-xx/oauth2/-/blob/1-4-stable/README.md) (@pboling)
+- [#423](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/423) - update [builds](https://travis-ci.org/oauth-xx/oauth2/builds), [Rakefile](https://gitlab.com/oauth-xx/oauth2/-/blob/1-4-stable/Rakefile) (@pboling)
   - officially document supported Rubies
     * Ruby 1.9.3
     * Ruby 2.0.0
@@ -144,40 +144,40 @@ All notable changes to this project will be documented in this file.
 
 ## [0.0.4] + [0.0.3] + [0.0.2] + [0.0.1] - 2010-04-22
 
-[0.0.1]: https://github.com/oauth-xx/oauth2/compare/311d9f4...v0.0.1
-[0.0.2]: https://github.com/oauth-xx/oauth2/compare/v0.0.1...v0.0.2
-[0.0.3]: https://github.com/oauth-xx/oauth2/compare/v0.0.2...v0.0.3
-[0.0.4]: https://github.com/oauth-xx/oauth2/compare/v0.0.3...v0.0.4
-[0.0.5]: https://github.com/oauth-xx/oauth2/compare/v0.0.4...v0.0.5
-[0.0.6]: https://github.com/oauth-xx/oauth2/compare/v0.0.5...v0.0.6
-[0.0.7]: https://github.com/oauth-xx/oauth2/compare/v0.0.6...v0.0.7
-[0.0.8]: https://github.com/oauth-xx/oauth2/compare/v0.0.7...v0.0.8
-[0.0.9]: https://github.com/oauth-xx/oauth2/compare/v0.0.8...v0.0.9
-[0.0.10]: https://github.com/oauth-xx/oauth2/compare/v0.0.9...v0.0.10
-[0.0.11]: https://github.com/oauth-xx/oauth2/compare/v0.0.10...v0.0.11
-[0.0.12]: https://github.com/oauth-xx/oauth2/compare/v0.0.11...v0.0.12
-[0.0.13]: https://github.com/oauth-xx/oauth2/compare/v0.0.12...v0.0.13
-[0.1.0]: https://github.com/oauth-xx/oauth2/compare/v0.0.13...v0.1.0
-[0.1.1]: https://github.com/oauth-xx/oauth2/compare/v0.1.0...v0.1.1
-[0.2.0]: https://github.com/oauth-xx/oauth2/compare/v0.1.1...v0.2.0
-[0.3.0]: https://github.com/oauth-xx/oauth2/compare/v0.2.0...v0.3.0
-[0.4.0]: https://github.com/oauth-xx/oauth2/compare/v0.3.0...v0.4.0
-[0.4.1]: https://github.com/oauth-xx/oauth2/compare/v0.4.0...v0.4.1
-[0.5.0]: https://github.com/oauth-xx/oauth2/compare/v0.4.1...v0.5.0
-[1.0.0]: https://github.com/oauth-xx/oauth2/compare/v0.9.4...v1.0.0
-[1.1.0]: https://github.com/oauth-xx/oauth2/compare/v1.0.0...v1.1.0
-[1.2.0]: https://github.com/oauth-xx/oauth2/compare/v1.1.0...v1.2.0
-[1.3.0]: https://github.com/oauth-xx/oauth2/compare/v1.2.0...v1.3.0
-[1.3.1]: https://github.com/oauth-xx/oauth2/compare/v1.3.0...v1.3.1
-[1.4.0]: https://github.com/oauth-xx/oauth2/compare/v1.3.1...v1.4.0
-[1.4.1]: https://github.com/oauth-xx/oauth2/compare/v1.4.0...v1.4.1
-[1.4.2]: https://github.com/oauth-xx/oauth2/compare/v1.4.1...v1.4.2
-[1.4.3]: https://github.com/oauth-xx/oauth2/compare/v1.4.2...v1.4.3
-[1.4.4]: https://github.com/oauth-xx/oauth2/compare/v1.4.3...v1.4.4
-[1.4.5]: https://github.com/oauth-xx/oauth2/compare/v1.4.4...v1.4.5
-[1.4.6]: https://github.com/oauth-xx/oauth2/compare/v1.4.5...v1.4.6
-[1.4.7]: https://github.com/oauth-xx/oauth2/compare/v1.4.6...v1.4.7
-[1.4.8]: https://github.com/oauth-xx/oauth2/compare/v1.4.7...v1.4.8
-[1.4.9]: https://github.com/oauth-xx/oauth2/compare/v1.4.8...v1.4.9
-[1.4.10]: https://github.com/oauth-xx/oauth2/compare/v1.4.9...v1.4.10
-[unreleased]: https://github.com/oauth-xx/oauth2/compare/v1.4.10...HEAD
+[0.0.1]: https://gitlab.com/oauth-xx/oauth2/-/compare/311d9f4...v0.0.1
+[0.0.2]: https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.1...v0.0.2
+[0.0.3]: https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.2...v0.0.3
+[0.0.4]: https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.3...v0.0.4
+[0.0.5]: https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.4...v0.0.5
+[0.0.6]: https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.5...v0.0.6
+[0.0.7]: https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.6...v0.0.7
+[0.0.8]: https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.7...v0.0.8
+[0.0.9]: https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.8...v0.0.9
+[0.0.10]: https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.9...v0.0.10
+[0.0.11]: https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.10...v0.0.11
+[0.0.12]: https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.11...v0.0.12
+[0.0.13]: https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.12...v0.0.13
+[0.1.0]: https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.13...v0.1.0
+[0.1.1]: https://gitlab.com/oauth-xx/oauth2/-/compare/v0.1.0...v0.1.1
+[0.2.0]: https://gitlab.com/oauth-xx/oauth2/-/compare/v0.1.1...v0.2.0
+[0.3.0]: https://gitlab.com/oauth-xx/oauth2/-/compare/v0.2.0...v0.3.0
+[0.4.0]: https://gitlab.com/oauth-xx/oauth2/-/compare/v0.3.0...v0.4.0
+[0.4.1]: https://gitlab.com/oauth-xx/oauth2/-/compare/v0.4.0...v0.4.1
+[0.5.0]: https://gitlab.com/oauth-xx/oauth2/-/compare/v0.4.1...v0.5.0
+[1.0.0]: https://gitlab.com/oauth-xx/oauth2/-/compare/v0.9.4...v1.0.0
+[1.1.0]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.0.0...v1.1.0
+[1.2.0]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.1.0...v1.2.0
+[1.3.0]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.2.0...v1.3.0
+[1.3.1]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.3.0...v1.3.1
+[1.4.0]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.3.1...v1.4.0
+[1.4.1]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.0...v1.4.1
+[1.4.2]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.1...v1.4.2
+[1.4.3]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.2...v1.4.3
+[1.4.4]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.3...v1.4.4
+[1.4.5]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.4...v1.4.5
+[1.4.6]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.5...v1.4.6
+[1.4.7]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.6...v1.4.7
+[1.4.8]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.7...v1.4.8
+[1.4.9]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.8...v1.4.9
+[1.4.10]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.9...v1.4.10
+[unreleased]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.10...HEAD
