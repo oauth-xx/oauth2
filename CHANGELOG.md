@@ -248,11 +248,11 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 
 ## [0.5.0] - 2011-07-29
 ### Changed
-- [breaking] `oauth_token` renamed to `oauth_bearer`.
-- [breaking] `authorize_path` Client option renamed to `authorize_url`.
-- [breaking] `access_token_path` Client option renamed to `token_url`.
-- [breaking] `access_token_method` Client option renamed to `token_method`.
-- [breaking] `web_server` renamed to `auth_code`.
+- *breaking* `oauth_token` renamed to `oauth_bearer`.
+- *breaking* `authorize_path` Client option renamed to `authorize_url`.
+- *breaking* `access_token_path` Client option renamed to `token_url`.
+- *breaking* `access_token_method` Client option renamed to `token_method`.
+- *breaking* `web_server` renamed to `auth_code`.
 
 ## [0.4.1] - 2011-04-20
 
