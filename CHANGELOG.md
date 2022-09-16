@@ -3,6 +3,10 @@ All notable changes to this project will be documented in this file.
 
 ## [unreleased]
 
+## [1.4.11] - 2022-09-16
+- Complete migration to main branch as default (@pboling)
+- Complete migration to Gitlab, updating all links, and references in VCS-managed files (@pboling) 
+
 ## [1.4.10] - 2022-07-01
 - FIPS Compatibility [#587](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/587) (@akostadinov)
 
@@ -180,4 +184,5 @@ All notable changes to this project will be documented in this file.
 [1.4.8]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.7...v1.4.8
 [1.4.9]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.8...v1.4.9
 [1.4.10]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.9...v1.4.10
-[unreleased]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.10...HEAD
+[1.4.11]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.10...v1.4.11
+[unreleased]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.11...HEAD
