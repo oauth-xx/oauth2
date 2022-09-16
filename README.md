@@ -32,7 +32,7 @@ See the sibling `oauth` gem for OAuth 1.0 implementations in Ruby.
 
 | Version | Release Date | Readme                                                   |
 |---------|--------------|----------------------------------------------------------|
-| 2.0.9   | 2022-09-15   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.9/README.md |
+| 2.0.9   | 2022-09-16   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.9/README.md |
 | 2.0.8   | 2022-09-01   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.8/README.md |
 | 2.0.7   | 2022-08-22   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.7/README.md |
 | 2.0.6   | 2022-07-13   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.6/README.md |
@@ -49,8 +49,9 @@ See the sibling `oauth` gem for OAuth 1.0 implementations in Ruby.
 <details>
   <summary>1.4.x Readmes</summary>
 
-| Version | Release Date | Readme                                                    |
-|---------|--------------|-----------------------------------------------------------|
+| Version | Release Date | Readme                                                      |
+|---------|--------------|-------------------------------------------------------------|
+| 1.4.11  | Sep 16, 2022 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.11/README.md |
 | 1.4.10  | Jul 1, 2022  | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.10/README.md |
 | 1.4.9   | Feb 20, 2022 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.9/README.md  |
 | 1.4.8   | Feb 18, 2022 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.8/README.md  |

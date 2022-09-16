@@ -139,6 +139,10 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 - [#589](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/589), [#593](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/593) - Remove support for expired MAC token draft spec (@stanhu)
 - [#590](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/590) - _Dependency_: Removed `multi_json` (@stanhu)
 
+## [1.4.11] - 2022-09-16
+- Complete migration to main branch as default (@pboling)
+- Complete migration to Gitlab, updating all links, and references in VCS-managed files (@pboling)
+
 ## [1.4.10] - 2022-07-01
 - FIPS Compatibility [#587](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/587) (@akostadinov)
 
@@ -316,7 +320,8 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 [1.4.8]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.7...v1.4.8
 [1.4.9]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.8...v1.4.9
 [1.4.10]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.9...v1.4.10
-[2.0.0]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.10...v2.0.0
+[1.4.11]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.10...v1.4.11
+[2.0.0]: https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.11...v2.0.0
 [2.0.1]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.0...v2.0.1
 [2.0.2]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.1...v2.0.2
 [2.0.3]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.2...v2.0.3
@@ -324,5 +329,7 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 [2.0.5]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.4...v2.0.5
 [2.0.6]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.5...v2.0.6
 [2.0.7]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.6...v2.0.7
-[Unreleased]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.7...HEAD
+[2.0.8]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.7...v2.0.8
+[2.0.9]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.8...v2.0.9
+[Unreleased]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.9...HEAD
 [gemfiles/readme]: gemfiles/README.md
