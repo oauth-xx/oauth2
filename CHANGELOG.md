@@ -10,10 +10,9 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 ### Fixed
 ### Removed
 
-## [2.0.9] - 2022-09-15
+## [2.0.9] - 2022-09-16
 ### Added
 - More specs (@pboling)
-
 ### Changed
 - Complete migration to main branch as default (@pboling)
 - Complete migration to Gitlab, updating all links, and references in VCS-managed files (@pboling)
@@ -21,14 +20,12 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 ## [2.0.8] - 2022-09-01
 ### Changed
 - [!630](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/630) - Extract snaky_hash to external dependency (@pboling)
-
 ### Added
 - [!631](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/631) - New global configuration option OAuth2.config.silence_extra_tokens_warning (default: false) fixes [#628](https://gitlab.com/oauth-xx/oauth2/-/issues/628)
 
 ## [2.0.7] - 2022-08-22
 ### Added
 - [#629](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/629) - Allow POST of JSON to get token (@pboling, @terracatta)
-
 ### Fixed
 - [#626](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/626) - Fixes a regression in 2.0.6. Will now prefer the key order from the lookup, not the hash keys (@rickselby)
   - Note: This fixes compatibility with `omniauth-oauth2` and AWS
@@ -246,11 +243,10 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 ## [1.0.0] - 2014-07-09
 ### Added
 - Add an implementation of the MAC token spec.
-
 ### Fixed
 - Fix Base64.strict_encode64 incompatibility with Ruby 1.8.7.
-## [0.5.0] - 2011-07-29
 
+## [0.5.0] - 2011-07-29
 ### Changed
 - [breaking] `oauth_token` renamed to `oauth_bearer`.
 - [breaking] `authorize_path` Client option renamed to `authorize_url`.
