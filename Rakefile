@@ -36,7 +36,7 @@ end
 #     rdoc.rdoc_dir = 'rdoc'
 #     rdoc.title = "oauth2 #{OAuth2::Version}"
 #     rdoc.main = 'README.md'
-#     rdoc.rdoc_files.include('README.md', 'LICENSE.md', 'lib/**/*.rb')
+#     rdoc.rdoc_files.include('README.md', 'LICENSE.txt', 'lib/**/*.rb')
 #   end
 # end
 
