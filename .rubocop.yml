@@ -6,8 +6,9 @@ inherit_gem:
   rubocop-lts: rubocop-lts.yml
 
 require:
-  - 'rubocop-md'
-  # Can be added once we reach rubocop-ruby2_3
+  # Try adding back once we reach rubocop-ruby2_3+
+  #  - 'rubocop-md'
+  # Can be added once we reach rubocop-ruby2_3+
   #  - 'rubocop-packaging'
   - 'rubocop-performance'
   - 'rubocop-rake'

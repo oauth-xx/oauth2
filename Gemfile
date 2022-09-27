@@ -24,7 +24,8 @@ platforms :mri do
     # Danger is incompatible with Faraday 2 (for now)
     # see: https://github.com/danger/danger/issues/1349
     # gem 'danger', '~> 8.4'
-    gem 'rubocop-md', require: false
+    # Commented out rubocop-md because of the <--rubocop/md--> bug
+    # gem 'rubocop-md', require: false
     # Can be added once we reach rubocop-lts >= v10 (i.e. drop Ruby 2.2)
     # gem 'rubocop-packaging', require: false
     gem 'rubocop-performance', require: false
