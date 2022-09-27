@@ -10,6 +10,18 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 ### Fixed
 ### Removed
 
+## [2.0.10] - 2022-09-27 ([tag][2.0.10t])
+### Added
+- Certificate for signing gem releases (@pboling)
+- Gemspec metadata (@pboling)
+  - funding_uri
+  - mailing_list_uri
+- SHA256 and SHA512 Checksums for release (@pboling)
+### Changed
+- Gem releases are now cryptographically signed (@pboling)
+### Fixed
+- [!633](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/633) Spaces will now be encoded as `%20` instead of `+` (@nov.matake)
+
 ## [2.0.9] - 2022-09-16 ([tag][2.0.9t])
 ### Added
 - More specs (@pboling)
@@ -298,7 +310,9 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 
 [gemfiles/readme]: gemfiles/README.md
 
-[Unreleased]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.9...HEAD
+[Unreleased]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.10...HEAD
+[2.0.10]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.09....v2.0.10
+[2.0.10t]: https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.10
 [2.0.9]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.8...v2.0.9
 [2.0.9t]: https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.9
 [2.0.8]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.7...v2.0.8

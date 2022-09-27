@@ -31,18 +31,19 @@ This is a RubyGem for implementing OAuth 2.0 clients (not servers) in Ruby appli
 <details>
   <summary>2.0.x Readmes</summary>
 
-| Version | Release Date | Readme                                                   |
-|---------|--------------|----------------------------------------------------------|
-| 2.0.9   | 2022-09-16   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.9/README.md |
-| 2.0.8   | 2022-09-01   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.8/README.md |
-| 2.0.7   | 2022-08-22   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.7/README.md |
-| 2.0.6   | 2022-07-13   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.6/README.md |
-| 2.0.5   | 2022-07-07   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.5/README.md |
-| 2.0.4   | 2022-07-01   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.4/README.md |
-| 2.0.3   | 2022-06-28   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.3/README.md |
-| 2.0.2   | 2022-06-24   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.2/README.md |
-| 2.0.1   | 2022-06-22   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.1/README.md |
-| 2.0.0   | 2022-06-21   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.0/README.md |
+| Version | Release Date | Readme                                                      |
+|---------|--------------|-------------------------------------------------------------|
+| 2.0.10  | 2022-09-27   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.10/README.md |
+| 2.0.9   | 2022-09-16   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.9/README.md  |
+| 2.0.8   | 2022-09-01   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.8/README.md  |
+| 2.0.7   | 2022-08-22   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.7/README.md  |
+| 2.0.6   | 2022-07-13   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.6/README.md  |
+| 2.0.5   | 2022-07-07   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.5/README.md  |
+| 2.0.4   | 2022-07-01   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.4/README.md  |
+| 2.0.3   | 2022-06-28   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.3/README.md  |
+| 2.0.2   | 2022-06-24   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.2/README.md  |
+| 2.0.1   | 2022-06-22   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.1/README.md  |
+| 2.0.0   | 2022-06-21   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.0/README.md  |
 </details>
 
 ### Older Releases
@@ -136,7 +137,7 @@ The link tokens in the following sections should be kept ordered by the row and 
 [🖇src-license-img]: https://img.shields.io/badge/License-MIT-green.svg
 [🏘fossa]: https://app.fossa.io/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2?ref=badge_shield
 [🏘fossa-img]: https://app.fossa.io/api/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2.svg?type=shield
-[🚎yard]: https://www.rubydoc.info/github/oauth-xx/oauth2
+[🚎yard]: https://www.rubydoc.info/gems/oauth2
 [🚎yard-img]: https://img.shields.io/badge/documentation-rubydoc-brightgreen.svg?style=flat
 [🖐inch-ci-img]: http://inch-ci.org/github/oauth-xx/oauth2.png
 
