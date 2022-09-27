@@ -3,6 +3,8 @@
 require 'faraday'
 require 'logger'
 
+Faraday::Utils.default_space_encoding = '%20'
+
 module OAuth2
   ConnectionError = Class.new(Faraday::ConnectionFailed)
   TimeoutError = Class.new(Faraday::TimeoutError)

@@ -318,6 +318,20 @@ RSpec.describe OAuth2::Client do
     end
   end
 
+  describe '#authorize_url' do
+    subject { instance.authorize_url(params) }
+
+    context 'when space included' do
+      let(:params) do
+        {scope: 'email profile'}
+      end
+
+      it 'encoded as %20' do
+        expect(subject).to include 'email%20profile'
+      end
+    end
+  end
+
   describe '#request' do
     it 'works with a null response body' do
       expect(subject.request(:get, 'empty_get').body).to eq('')
