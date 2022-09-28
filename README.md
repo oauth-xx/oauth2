@@ -255,13 +255,13 @@ For more see [SECURITY.md][🚎sec-pol].
     - `:access_token_class` (`AccessToken`); user specified class to use for all calls to `get_token`
 - Adds new option to `OAuth2::AccessToken#initialize`:
     - `:expires_latency` (`nil`); number of seconds by which AccessToken validity will be reduced to offset latency
-- By default, keys are transformed to camel case.
+- By default, keys are transformed to snake case.
   - Original keys will still work as previously, in most scenarios, thanks to `rash_alt` gem.
-  - However, this is a _breaking_ change if you rely on `response.parsed.to_h`, as the keys in the result will be camel case.
+  - However, this is a _breaking_ change if you rely on `response.parsed.to_h` to retain the original case, and the original wasn't snake case, as the keys in the result will be snake case.
   - As of version 2.0.4 you can turn key transformation off with the `snaky: false` option.
 - By default, the `:auth_scheme` is now `:basic_auth` (instead of `:request_body`)
   - Third-party strategies and gems may need to be updated if a provider was requiring client id/secret in the request body
-- [... A lot more](https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md#2.0.0)
+- [... A lot more](https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md#200-2022-06-21-tag)
 
 ## Compatibility
 

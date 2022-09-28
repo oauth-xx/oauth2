@@ -29,8 +29,8 @@ You have installed oauth2 version #{OAuth2::Version::VERSION}, congratulations!
 There are BREAKING changes if you are upgrading from < v2, but most will not encounter them, and updating your code should be easy!
 Please see:
 • #{spec.homepage}/-/blob/main/SECURITY.md
-• #{spec.homepage}/-/blob/v#{spec.version}/CHANGELOG.md#2010-2022-09-19
-• Summary: #{spec.homepage}#what-is-new-for-v20
+• #{spec.homepage}/-/blob/v#{spec.version}/CHANGELOG.md#200-2022-06-21-tag
+• Summary of most important breaking changes: #{spec.homepage}#what-is-new-for-v20
 
 Major updates:
 1. master branch renamed to main
