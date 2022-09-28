@@ -3,7 +3,10 @@
 require 'faraday'
 require 'logger'
 
-Faraday::Utils.default_space_encoding = '%20'
+if Faraday::Utils.respond_to?(:default_space_encoding)
+  # This setting doesn't exist in faraday 0.x
+  Faraday::Utils.default_space_encoding = '%20'
+end
 
 module OAuth2
   ConnectionError = Class.new(Faraday::ConnectionFailed)
