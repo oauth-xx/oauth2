@@ -118,8 +118,8 @@ appended indicators:
 
 |     | Project               | bundle add oauth2                                                                                                                                                                                                                                                          |
 |:----|-----------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1️⃣ | name, license, docs   | [![RubyGems.org][⛳️name-img]][⛳️gem] [![License: MIT][🖇src-license-img]][🖇src-license] [![FOSSA][🏘fossa-img]][🏘fossa] [![RubyDoc.info][🚎yard-img]][🚎yard] [![InchCI][🖐inch-ci-img]][🚎yard]                                                                         |
-| 2️⃣ | version & activity    | [![Gem Version][⛳️version-img]][⛳️gem] [![Total Downloads][🖇DL-total-img]][⛳️gem] [![Download Rank][🏘DL-rank-img]][⛳️gem] [![Source Code][🚎src-home-img]][🚎src-main]                                                                                                   |
+| 1️⃣ | name, license, docs   | [![RubyGems.org][⛳️name-img]][⛳️gem] [![License: MIT][🖇src-license-img]][🖇src-license] [![FOSSA][🏘fossa-img]][🏘fossa] [![RubyDoc.info][🚎yard-img]][🚎yard] [![SemVer 2.0.0][🧮semver-img]][🧮semver] [![Keep-A-Changelog 1.0.0][📗keep-changelog-img]][📗keep-changelog]                                                                       |
+| 2️⃣ | version & activity    | [![Gem Version][⛳️version-img]][⛳️gem] [![Total Downloads][🖇DL-total-img]][⛳️gem] [![Download Rank][🏘DL-rank-img]][⛳️gem] [![Source Code][🚎src-main-img]][🚎src-main]                                                                                                   |
 | 3️⃣ | maintanence & linting | [![Maintainability][⛳cclim-maint-img♻️]][⛳cclim-maint] [![Helpers][🖇triage-help-img]][🖇triage-help] [![Depfu][🏘depfu-img♻️]][🏘depfu♻️] [![Contributors][🚎contributors-img]][🚎contributors] [![Style][🖐style-wf-img]][🖐style-wf] [![Kloc Roll][🧮kloc-img]][🧮kloc] |
 | 4️⃣ | testing               | [![Supported][🏘sup-wf-img]][🏘sup-wf] [![Heads][🚎heads-wf-img]][🚎heads-wf] [![Unofficial Support][🖐uns-wf-img]][🖐uns-wf] [![MacOS][🧮mac-wf-img]][🧮mac-wf] [![Windows][📗win-wf-img]][📗win-wf]                                                                      |
 | 5️⃣ | coverage & security   | [![CodeClimate][⛳cclim-cov-img♻️]][⛳cclim-cov] [![CodeCov][🖇codecov-img♻️]][🖇codecov] [![Coveralls][🏘coveralls-img]][🏘coveralls] [![Security Policy][🚎sec-pol-img]][🚎sec-pol] [![CodeQL][🖐codeQL-img]][🖐codeQL] [![Code Coverage][🧮cov-wf-img]][🧮cov-wf]         |
@@ -139,14 +139,17 @@ The link tokens in the following sections should be kept ordered by the row and 
 [🏘fossa-img]: https://app.fossa.io/api/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2.svg?type=shield
 [🚎yard]: https://www.rubydoc.info/gems/oauth2
 [🚎yard-img]: https://img.shields.io/badge/documentation-rubydoc-brightgreen.svg?style=flat
-[🖐inch-ci-img]: http://inch-ci.org/github/oauth-xx/oauth2.png
+[🧮semver]: http://semver.org/
+[🧮semver-img]: https://img.shields.io/badge/semver-2.0.0-FFDD67.svg?style=flat
+[📗keep-changelog]: https://keepachangelog.com/en/1.0.0/
+[📗keep-changelog-img]: https://img.shields.io/badge/keep--a--changelog-1.0.0-FFDD67.svg?style=flat
 
 <!-- 2️⃣ version & activity -->
 [⛳️version-img]: http://img.shields.io/gem/v/oauth2.svg
 [🖇DL-total-img]: https://img.shields.io/gem/dt/oauth2.svg
 [🏘DL-rank-img]: https://img.shields.io/gem/rt/oauth2.svg
 [🚎src-main]: https://gitlab.com/oauth-xx/oauth2/-/tree/main
-[🚎src-home-img]: https://img.shields.io/badge/source-gitlab-blue.svg?style=flat
+[🚎src-main-img]: https://img.shields.io/badge/source-gitlab-blue.svg?style=flat
 
 <!-- 3️⃣ maintenance & linting -->
 [⛳cclim-maint]: https://codeclimate.com/github/oauth-xx/oauth2/maintainability
