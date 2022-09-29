@@ -1,6 +1,6 @@
 ## Contributing
 
-Bug reports and pull requests are welcome on GitLab at [https://gitlab.com/oauth-xx/oauth2][source]
+Bug reports and pull requests are welcome on GitLab at [https://gitlab.com/oauth-xx/oauth2][🚎src-main]
 . This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to
 the [code of conduct][conduct].
 
@@ -41,4 +41,4 @@ Made with [contributors-img][contrib-rocks].
 
 [comment]: <> (Following links are used by README, CONTRIBUTING, Homepage)
 
-[source]: https://gitlab.com/oauth-xx/oauth2/
+[🚎src-main]: https://gitlab.com/oauth-xx/oauth2/-/tree/main
