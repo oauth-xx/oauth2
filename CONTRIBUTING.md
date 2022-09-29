@@ -31,8 +31,6 @@ tests. Once you're happy with it send a pull request and post a message to the
 
 See: [https://gitlab.com/oauth-xx/oauth2/-/graphs/main][🚎contributors]
 
-Made with [contributors-img][contrib-rocks].
-
 [comment]: <> (Following links are used by README, CONTRIBUTING, Homepage)
 [conduct]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CODE_OF_CONDUCT.md
 [🚎contributors]: https://gitlab.com/oauth-xx/oauth2/-/graphs/main
