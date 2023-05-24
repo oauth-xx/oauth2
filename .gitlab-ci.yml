@@ -1,0 +1,36 @@
+default:
+  image: ruby:3.1
+
+workflow:
+  rules:
+    # For merge requests, create a pipeline.
+    - if: '$CI_MERGE_REQUEST_IID'
+    # For `master` branch, create a pipeline (this includes on schedules, pushes, merges, etc.).
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+    # For tags, create a pipeline.
+    - if: '$CI_COMMIT_TAG'
+
+
+.test_template: &test_definition
+  image: ruby:${RUBY_VERSION}
+  stage: test
+  script:
+    - gem install bundler --no-document
+    - bundle config --local path vendor
+    - bundle install
+    - bundle exec rake verify build install
+  cache:
+    key: ${CI_JOB_IMAGE}
+    paths:
+      - vendor/ruby
+ruby:
+  <<: *test_definition
+  parallel:
+    matrix:
+      - RUBY_VERSION: ["2.7", "3.0", "3.1", "3.2"]
+
+static-analysis:
+  before_script:
+    - bundle install
+  script:
+    - rake verify
