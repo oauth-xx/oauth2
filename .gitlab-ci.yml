@@ -18,7 +18,7 @@ workflow:
     - gem install bundler --no-document
     - bundle config --local path vendor
     - bundle install
-    - bundle exec rake verify build install
+    - bundle exec rake test
   cache:
     key: ${CI_JOB_IMAGE}
     paths:
