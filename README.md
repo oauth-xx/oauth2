@@ -11,8 +11,8 @@
 
 OAuth 2.0 is the industry-standard protocol for authorization.
 OAuth 2.0 focuses on client developer simplicity while providing specific authorization flows for web applications,
-    desktop applications, mobile phones, and living room devices.
-This is a RubyGem for implementing OAuth 2.0 clients and servers in Ruby applications.
+desktop applications, mobile phones, and living room devices.
+This is a RubyGem for implementing OAuth 2.0 clients (not servers) in Ruby applications.
 See the sibling `oauth` gem for OAuth 1.0 implementations in Ruby.
 
 ⚠️⚠️⚠️ **_WARNING_**: You are viewing the `README` of the 
