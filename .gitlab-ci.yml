@@ -1,5 +1,5 @@
 default:
-  image: ruby:3.1
+  image: ruby:3.2
 
 workflow:
   rules:
@@ -10,14 +10,13 @@ workflow:
     # For tags, create a pipeline.
     - if: '$CI_COMMIT_TAG'
 
-
 .test_template: &test_definition
   image: ruby:${RUBY_VERSION}
   stage: test
   script:
-    - gem install bundler --no-document
+    - gem update --system
     - bundle config --local path vendor
-    - bundle install
+    - bundle install --jobs 4 --retry 3
     - bundle exec rake test
   cache:
     key: ${CI_JOB_IMAGE}
