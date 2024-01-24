@@ -16,6 +16,7 @@ RSpec.describe OAuth2::Client do
         stub.get('/redirect_no_loc')     { |_env| [302, {'Content-Type' => 'text/plain'}, ''] }
         stub.post('/redirect')           { |_env| [303, {'Content-Type' => 'text/plain', 'location' => '/reflect'}, ''] }
         stub.get('/error')               { |_env| [500, {'Content-Type' => 'text/plain'}, 'unknown error'] }
+        stub.get('/unparsable_error')    { |_env| [500, {'Content-Type' => 'application/json'}, 'unknown error'] }
         stub.get('/empty_get')           { |_env| [204, {}, nil] }
         stub.get('/different_encoding')  { |_env| [500, {'Content-Type' => 'application/json'}, NKF.nkf('-We', JSON.dump(error: error_value, error_description: '∞'))] }
         stub.get('/ascii_8bit_encoding') { |_env| [500, {'Content-Type' => 'application/json'}, JSON.dump(error: 'invalid_request', error_description: 'é').force_encoding('ASCII-8BIT')] }
@@ -94,6 +95,13 @@ RSpec.describe OAuth2::Client do
       opts2 = opts.dup
       described_class.new 'abc', 'def', opts
       expect(opts).to eq(opts2)
+    end
+
+    it 'raises exception if JSON is expected, but server returns invalid JSON' do
+      client = instance
+      expect { client.request(:get, '/unparsable_error') }.to raise_error(JSON::ParserError)
+      response = client.request(:get, '/unparsable_error', raise_errors: false)
+      expect(response.status).to eq(500)
     end
   end
 

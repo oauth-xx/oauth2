@@ -140,8 +140,10 @@ module OAuth2
         # on non-redirecting 3xx statuses, just return the response
         response
       when 400..599
-        error = Error.new(response)
-        raise(error) if opts.fetch(:raise_errors, options[:raise_errors])
+        if opts.fetch(:raise_errors, options[:raise_errors])
+          error = Error.new(response)
+          raise(error)
+        end
 
         response
       else
