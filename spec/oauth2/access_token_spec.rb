@@ -615,6 +615,10 @@ RSpec.describe OAuth2::AccessToken do
       expect(described_class.new(client, token)).not_to be_expired
     end
 
+    it 'is false if expires_in is 0 (token is permanent)' do
+      expect(described_class.new(client, token, refresh_token: 'abaca', expires_in: 0)).not_to be_expired
+    end
+
     it 'is false if expires_in is in the future' do
       expect(described_class.new(client, token, refresh_token: 'abaca', expires_in: 10_800)).not_to be_expired
     end
