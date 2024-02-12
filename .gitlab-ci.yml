@@ -10,20 +10,43 @@ workflow:
     # For tags, create a pipeline.
     - if: '$CI_COMMIT_TAG'
 
-.test_template: &test_definition
+.test_template-current: &test_definition-current
   image: ruby:${RUBY_VERSION}
   stage: test
   script:
-    - gem update --system
+    - gem update --system > /dev/null 2>&1
     - bundle config --local path vendor
-    - bundle install --jobs 4 --retry 3
+    - bundle install --quiet --jobs 4 --retry 3
     - bundle exec rake test
   cache:
     key: ${CI_JOB_IMAGE}
     paths:
       - vendor/ruby
-ruby:
-  <<: *test_definition
+
+.test_template-legacy: &test_definition-legacy
+  image: ruby:${RUBY_VERSION}
+  stage: test
+  script:
+    # Because we support EOL Ruby still...
+    - gem install rubygems-update -v 3.4.22 > /dev/null 2>&1
+    # Actually updates both RubyGems and Bundler!
+    - update_rubygems > /dev/null 2>&1
+    - bundle config --local path vendor
+    - bundle install --quiet --jobs 4 --retry 3
+    - bundle exec rake test
+  cache:
+    key: ${CI_JOB_IMAGE}
+    paths:
+      - vendor/ruby
+
+ruby-current:
+  <<: *test_definition-current
   parallel:
     matrix:
-      - RUBY_VERSION: ["2.7", "3.0", "3.1", "3.2"]
+      - RUBY_VERSION: ["3.0", "3.1", "3.2"]
+
+ruby-legacy:
+  <<: *test_definition-legacy
+  parallel:
+    matrix:
+      - RUBY_VERSION: ["2.7"]
