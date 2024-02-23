@@ -310,7 +310,7 @@ See [SECURITY.md][🚎sec-pol]
 
 ### Global Configuration
 
-If you started seeing this warning, but everything it working fine, you can now silence it.
+If you started seeing this warning, but everything is working fine, you can now silence it.
 ```log
 OAuth2::AccessToken.from_hash: `hash` contained more than one 'token' key
 ```
