@@ -24,6 +24,27 @@ This is a RubyGem for implementing OAuth 2.0 clients (not servers) in Ruby appli
 [sibling-gem]: https://gitlab.com/oauth-xx/oauth
 [doorkeeper-gem]: https://github.com/doorkeeper-gem/doorkeeper
 
+If this library has helped you, or your organization,
+please support my efforts by making a donation, becoming a sponsor, or giving me a shout on Mastodon.
+
+[![Liberapay Patrons][⛳liberapay-img]][⛳liberapay]
+[![Sponsor Me on Github][🖇sponsor-img]][🖇sponsor]
+
+<span class="badge-buymeacoffee">
+<a href="https://ko-fi.com/O5O86SNP4" target='_blank' title="Donate to my FLOSS or refugee efforts at ko-fi.com"><img src="https://img.shields.io/badge/buy%20me%20coffee-donate-yellow.svg" alt="Buy me coffee donation button" /></a>
+</span>
+<span class="badge-patreon">
+<a href="https://patreon.com/galtzo" title="Donate to my FLOSS or refugee efforts using Patreon"><img src="https://img.shields.io/badge/patreon-donate-yellow.svg" alt="Patreon donate button" /></a>
+</span>
+
+<a rel="me" alt="Follow me on Ruby.social" href="https://ruby.social/@galtzo"><img src="https://img.shields.io/mastodon/follow/109447111526622197?domain=https%3A%2F%2Fruby.social&style=social&label=Follow%20%40galtzo%20on%20Ruby.social"></a>
+<a rel="me" alt="Follow me on FLOSS.social" href="https://floss.social/@galtzo"><img src="https://img.shields.io/mastodon/follow/110304921404405715?domain=https%3A%2F%2Ffloss.social&style=social&label=Follow%20%40galtzo%20on%20Floss.social"></a>
+
+[⛳liberapay-img]: https://img.shields.io/liberapay/patrons/pboling.svg?logo=liberapay
+[⛳liberapay]: https://liberapay.com/pboling/donate
+[🖇sponsor-img]: https://img.shields.io/badge/Sponsor_Me!-pboling.svg?style=social&logo=github
+[🖇sponsor]: https://github.com/sponsors/pboling
+
 ## Release Documentation
 
 ### Version 2.0.x
