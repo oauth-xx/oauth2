@@ -16,9 +16,12 @@ module OAuth2
   class Client # rubocop:disable Metrics/ClassLength
     RESERVED_PARAM_KEYS = %w[body headers params parse snaky].freeze
 
+    include FilteredAttributes
+
     attr_reader :id, :secret, :site
     attr_accessor :options
     attr_writer :connection
+    filtered_attributes :secret
 
     # Instantiate a new OAuth 2.0 client using the
     # Client ID and Client Secret registered to your
