@@ -10,6 +10,7 @@ require 'version_gem'
 
 # includes gem files
 require 'oauth2/version'
+require 'oauth2/filtered_attributes'
 require 'oauth2/error'
 require 'oauth2/authenticator'
 require 'oauth2/client'

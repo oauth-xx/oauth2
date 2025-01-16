@@ -123,4 +123,10 @@ RSpec.describe OAuth2::Authenticator do
       end
     end
   end
+
+  describe '#inspect' do
+    it 'filters out the @secret value' do
+      expect(subject.inspect).to include('@secret=[FILTERED]')
+    end
+  end
 end

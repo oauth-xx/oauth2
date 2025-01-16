@@ -741,4 +741,16 @@ RSpec.describe OAuth2::AccessToken do
       expect(access_token.to_hash).to eq(hash)
     end
   end
+
+  describe '#inspect' do
+    let(:inspect_result) { described_class.new(nil, 'secret-token', { refresh_token: 'secret-refresh-token' }).inspect }
+
+    it 'filters out the @token value' do
+      expect(inspect_result).to include('@token=[FILTERED]')
+    end
+
+    it 'filters out the @refresh_token value' do
+      expect(inspect_result).to include('@refresh_token=[FILTERED]')
+    end
+  end
 end
