@@ -6,8 +6,11 @@ module OAuth2
     TOKEN_KEYS_SYM = %i[access_token id_token token accessToken idToken].freeze
     TOKEN_KEY_LOOKUP = TOKEN_KEYS_STR + TOKEN_KEYS_SYM
 
+    include FilteredAttributes
+
     attr_reader :client, :token, :expires_in, :expires_at, :expires_latency, :params
     attr_accessor :options, :refresh_token, :response
+    filtered_attributes :token, :refresh_token
 
     class << self
       # Initializes an AccessToken from a Hash

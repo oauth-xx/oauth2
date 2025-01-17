@@ -4,7 +4,10 @@ require 'base64'
 
 module OAuth2
   class Authenticator
+    include FilteredAttributes
+
     attr_reader :mode, :id, :secret
+    filtered_attributes :secret
 
     def initialize(id, secret, mode)
       @id = id

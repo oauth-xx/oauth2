@@ -967,4 +967,10 @@ RSpec.describe OAuth2::Client do
       expect(subject.connection.builder.handlers).to include(Faraday::Request::UrlEncoded)
     end
   end
+
+  describe '#inspect' do
+    it 'filters out the @secret value' do
+      expect(subject.inspect).to include('@secret=[FILTERED]')
+    end
+  end
 end
