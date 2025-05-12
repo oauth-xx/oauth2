@@ -10,17 +10,24 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 ### Fixed
 ### Removed
 
-## [2.0.10] - 2022-09-27 ([tag][2.0.10t])
+## [2.0.10] - 2025-05-12 ([tag][2.0.10t])
 ### Added
-- Certificate for signing gem releases (@pboling)
+- [#635](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/635) - `.gitlab-ci.yml` file (@jessieay)
+- 20 year certificate for signing gem releases, expires 2045-04-29 (@pboling)
 - Gemspec metadata (@pboling)
   - funding_uri
+  - news_uri
   - mailing_list_uri
 - SHA256 and SHA512 Checksums for release (@pboling)
 ### Changed
-- Gem releases are now cryptographically signed (@pboling)
+- Gem releases are now cryptographically signed, with a 20-year cert (@pboling)
 ### Fixed
-- [!633](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/633) Spaces will now be encoded as `%20` instead of `+` (@nov.matake)
+- [#633](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/633) - Spaces will now be encoded as `%20` instead of `+` (@nov.matake)
+- [#634](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/634) - `CHANGELOG.md` documentation fix (@skuwa229)
+- [#638](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/638) - fix `expired?` when `expires_in` is `0` (@disep)
+- [#639](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/639) - Only instantiate `OAuth2::Error` if `raise_errors` option is `true` (@glytch2)
+- [#640](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/640) - `README.md` documentation fix (@martinezcoder)
+- [#641](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/641) - Do not include sensitive information in the `inspect` (@manuelvanrijn)
 
 ## [2.0.9] - 2022-09-16 ([tag][2.0.9t])
 ### Added
