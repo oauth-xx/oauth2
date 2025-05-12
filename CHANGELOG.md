@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 - SHA256 and SHA512 Checksums for release (@pboling)
 ### Changed
 - Gem releases are now cryptographically signed, with a 20-year cert (@pboling)
+  - Allow linux distros to build release without signing, as their package managers sign independently
 ### Fixed
 - [#633](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/633) - Spaces will now be encoded as `%20` instead of `+` (@nov.matake)
 - [#634](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/634) - `CHANGELOG.md` documentation fix (@skuwa229)
