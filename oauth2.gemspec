@@ -50,7 +50,7 @@ Support will be dropped for Ruby 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 3.0, 3.1 and any 
 3. Gem releases are now cryptographically signed with a 20-year cert, with checksums by stone_checksums.
 4. I need your support.
 
-If you are a sentient, please consider a donation as I move toward supporting myself with Open Source work:
+If you are sentient, please consider a donation as I move toward supporting myself with Open Source work:
 • https://liberapay.com/pboling
 • https://ko-fi.com/pboling
 • https://www.buymeacoffee.com/pboling
