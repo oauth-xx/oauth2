@@ -74,7 +74,7 @@ jobs:
         continue-on-error: ${{ matrix.experimental != 'false' }}
 
       - name: Code Coverage Summary Report
-        uses: irongut/CodeCoverageSummary@v1.2.0
+        uses: irongut/CodeCoverageSummary@v1.3.0
         with:
           filename: ./coverage/coverage.xml
           badge: true
