@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'jwt'
+require "jwt"
 
 module OAuth2
   module Strategy
@@ -34,7 +34,7 @@ module OAuth2
       #
       # @raise [NotImplementedError]
       def authorize_url
-        raise(NotImplementedError, 'The authorization endpoint is not used in this strategy')
+        raise(NotImplementedError, "The authorization endpoint is not used in this strategy")
       end
 
       # Retrieve an access token given the specified client.
@@ -87,13 +87,13 @@ module OAuth2
 
       def build_request(assertion, request_opts = {})
         {
-          grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer',
+          grant_type: "urn:ietf:params:oauth:grant-type:jwt-bearer",
           assertion: assertion,
         }.merge(request_opts)
       end
 
       def build_assertion(claims, encoding_opts)
-        raise ArgumentError.new(message: 'Please provide an encoding_opts hash with :algorithm and :key') if !encoding_opts.is_a?(Hash) || (%i[algorithm key] - encoding_opts.keys).any?
+        raise ArgumentError.new(message: "Please provide an encoding_opts hash with :algorithm and :key") if !encoding_opts.is_a?(Hash) || (%i[algorithm key] - encoding_opts.keys).any?
 
         JWT.encode(claims, encoding_opts[:key], encoding_opts[:algorithm])
       end

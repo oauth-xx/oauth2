@@ -10,7 +10,7 @@ module OAuth2
       #
       # @param [Hash] params additional query parameters
       def authorize_params(params = {})
-        params.merge('response_type' => 'token', 'client_id' => @client.id)
+        params.merge("response_type" => "token", "client_id" => @client.id)
       end
 
       # The authorization URL endpoint of the provider
@@ -25,13 +25,13 @@ module OAuth2
       #
       # @raise [NotImplementedError]
       def get_token(*)
-        raise(NotImplementedError, 'The token is accessed differently in this strategy')
+        raise(NotImplementedError, "The token is accessed differently in this strategy")
       end
 
     private
 
       def assert_valid_params(params)
-        raise(ArgumentError, 'client_secret is not allowed in authorize URL query params') if params.key?(:client_secret) || params.key?('client_secret')
+        raise(ArgumentError, "client_secret is not allowed in authorize URL query params") if params.key?(:client_secret) || params.key?("client_secret")
       end
     end
   end

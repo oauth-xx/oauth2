@@ -10,7 +10,7 @@ module OAuth2
       #
       # @raise [NotImplementedError]
       def authorize_url
-        raise(NotImplementedError, 'The authorization endpoint is not used in this strategy')
+        raise(NotImplementedError, "The authorization endpoint is not used in this strategy")
       end
 
       # Retrieve an access token given the specified client.
@@ -18,7 +18,7 @@ module OAuth2
       # @param [Hash] params additional params
       # @param [Hash] opts options
       def get_token(params = {}, opts = {})
-        params = params.merge('grant_type' => 'client_credentials')
+        params = params.merge("grant_type" => "client_credentials")
         @client.get_token(params, opts)
       end
     end

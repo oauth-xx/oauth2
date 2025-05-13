@@ -11,18 +11,18 @@ module OAuth2
       @response = response
       if response.respond_to?(:parsed)
         if response.parsed.is_a?(Hash)
-          @code = response.parsed['error']
-          @description = response.parsed['error_description']
+          @code = response.parsed["error"]
+          @description = response.parsed["error_description"]
         end
       elsif response.is_a?(Hash)
-        @code = response['error']
-        @description = response['error_description']
+        @code = response["error"]
+        @description = response["error_description"]
       end
       @body = if response.respond_to?(:body)
-                response.body
-              else
-                @response
-              end
+        response.body
+      else
+        @response
+      end
       message_opts = parse_error_description(@code, @description)
       super(error_message(@body, message_opts))
     end
@@ -35,11 +35,11 @@ module OAuth2
       lines << opts[:error_description] if opts[:error_description]
 
       error_string = if response_body.respond_to?(:encode) && opts[:error_description].respond_to?(:encoding)
-                       script_encoding = opts[:error_description].encoding
-                       response_body.encode(script_encoding, invalid: :replace, undef: :replace)
-                     else
-                       response_body
-                     end
+        script_encoding = opts[:error_description].encoding
+        response_body.encode(script_encoding, invalid: :replace, undef: :replace)
+      else
+        response_body
+      end
 
       lines << error_string
 
@@ -49,7 +49,7 @@ module OAuth2
     def parse_error_description(code, description)
       return {} unless code || description
 
-      error_description = ''
+      error_description = ""
       error_description += "#{code}: " if code
       error_description += description if description
 

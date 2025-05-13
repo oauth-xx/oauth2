@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'base64'
+require "base64"
 
 module OAuth2
   class Authenticator
@@ -49,8 +49,8 @@ module OAuth2
     # already set.
     def apply_params_auth(params)
       result = {}
-      result['client_id'] = id unless id.nil?
-      result['client_secret'] = secret unless secret.nil?
+      result["client_id"] = id unless id.nil?
+      result["client_secret"] = secret unless secret.nil?
       result.merge(params)
     end
 
@@ -58,7 +58,7 @@ module OAuth2
     # we don't want to send the secret
     def apply_client_id(params)
       result = {}
-      result['client_id'] = id unless id.nil?
+      result["client_id"] = id unless id.nil?
       result.merge(params)
     end
 
@@ -72,7 +72,7 @@ module OAuth2
 
     # @see https://datatracker.ietf.org/doc/html/rfc2617#section-2
     def basic_auth_header
-      {'Authorization' => self.class.encode_basic_auth(id, secret)}
+      {"Authorization" => self.class.encode_basic_auth(id, secret)}
     end
   end
 end

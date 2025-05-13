@@ -309,7 +309,7 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 ## [0.0.5] - 2010-04-23 ([tag][0.0.5t])
 
 ## [0.0.4] - 2010-04-22 ([tag][0.0.4t])
- 
+
 ## [0.0.3] - 2010-04-22 ([tag][0.0.3t])
 
 ## [0.0.2] - 2010-04-22 ([tag][0.0.2t])
