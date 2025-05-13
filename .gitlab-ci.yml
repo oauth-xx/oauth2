@@ -8,8 +8,8 @@ variables:
   K_SOUP_COV_DEBUG: true
   K_SOUP_COV_DO: true
   K_SOUP_COV_HARD: true
-  K_SOUP_COV_MIN_BRANCH: 46
-  K_SOUP_COV_MIN_LINE: 93
+  K_SOUP_COV_MIN_BRANCH: 98
+  K_SOUP_COV_MIN_LINE: 100
   K_SOUP_COV_VERBOSE: true
   K_SOUP_COV_FORMATTERS: "html,xml,rcov,lcov,json,tty"
   K_SOUP_COV_MULTI_FORMATTERS: true
@@ -41,7 +41,10 @@ workflow:
   image: ruby:${RUBY_VERSION}
   stage: test
   script:
-    - gem update --system > /dev/null 2>&1
+    # Because we support EOL Ruby still...
+    - gem install rubygems-update -v 3.5.23
+    # Actually updates both RubyGems and Bundler!
+    - update_rubygems
     - bundle config --local path vendor
     - bundle install
     - bundle exec rake test
@@ -55,9 +58,9 @@ workflow:
   stage: test
   script:
     # Because we support EOL Ruby still...
-    - gem install rubygems-update -v 3.4.22 > /dev/null 2>&1
+    - gem install rubygems-update -v 3.4.22
     # Actually updates both RubyGems and Bundler!
-    - update_rubygems > /dev/null 2>&1
+    - update_rubygems
     - bundle config --local path vendor
     - bundle install
     - bundle exec rake test
