@@ -1,0 +1,11 @@
+# This gemfile is used for GitLab CI, current ruby pipeline.
+# This gemfile includes all dependencies necessary to run the naked `rake default` set of tasks
+
+source "https://rubygems.org"
+
+# Root Gemfile is only for local development.
+# On CI, we only need the gemspec dependencies (including development dependencies).
+# Exceptions, if any, will be found in gemfiles/*.gemfile
+
+# The vanilla gemfile is intended to what we can with *only* gemspec dependencies.
+gemspec path: "../"
