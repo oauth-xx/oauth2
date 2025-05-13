@@ -1,6 +1,20 @@
 default:
   image: ruby:3.2
 
+variables:
+  BUNDLE_INSTALL_FLAGS: "--quiet --jobs=$(nproc) --retry=3"
+  BUNDLE_FROZEN: "false" # No lockfile!
+  BUNDLE_GEMFILE: gemfiles/omnibus.gemfile
+  K_SOUP_COV_DEBUG: true
+  K_SOUP_COV_DO: true
+  K_SOUP_COV_HARD: true
+  K_SOUP_COV_MIN_BRANCH: 46
+  K_SOUP_COV_MIN_LINE: 93
+  K_SOUP_COV_VERBOSE: true
+  K_SOUP_COV_FORMATTERS: "html,xml,rcov,lcov,json,tty"
+  K_SOUP_COV_MULTI_FORMATTERS: true
+  K_SOUP_COV_COMMAND_NAME: "RSpec Coverage"
+
 workflow:
   rules:
     # For merge requests, create a pipeline.
@@ -16,7 +30,20 @@ workflow:
   script:
     - gem update --system > /dev/null 2>&1
     - bundle config --local path vendor
-    - bundle install --quiet --jobs 4 --retry 3
+    - bundle install
+    - bundle exec rake test
+  cache:
+    key: ${CI_JOB_IMAGE}
+    paths:
+      - vendor/ruby
+
+.test_template-eol: &test_definition-eol
+  image: ruby:${RUBY_VERSION}
+  stage: test
+  script:
+    - gem update --system > /dev/null 2>&1
+    - bundle config --local path vendor
+    - bundle install
     - bundle exec rake test
   cache:
     key: ${CI_JOB_IMAGE}
@@ -32,7 +59,7 @@ workflow:
     # Actually updates both RubyGems and Bundler!
     - update_rubygems > /dev/null 2>&1
     - bundle config --local path vendor
-    - bundle install --quiet --jobs 4 --retry 3
+    - bundle install
     - bundle exec rake test
   cache:
     key: ${CI_JOB_IMAGE}
@@ -43,7 +70,13 @@ ruby-current:
   <<: *test_definition-current
   parallel:
     matrix:
-      - RUBY_VERSION: ["3.0", "3.1", "3.2"]
+      - RUBY_VERSION: ["3.1", "3.2", "3.3", "3.4"]
+
+ruby-eol:
+  <<: *test_definition-eol
+  parallel:
+    matrix:
+      - RUBY_VERSION: ["3.0"]
 
 ruby-legacy:
   <<: *test_definition-legacy
