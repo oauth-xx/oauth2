@@ -1,0 +1,8 @@
+# frozen_string_literal: true
+
+# Documentation
+gem "yard", "~> 0.9", ">= 0.9.37", require: false
+gem "yard-junk", "~> 0.0", ">= 0.0.10", github: "pboling/yard-junk", branch: "next"
+
+# Std Lib extractions
+gem "rdoc", "~> 6.11"

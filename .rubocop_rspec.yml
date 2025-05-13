@@ -1,6 +1,3 @@
-RSpec/FilePath:
-  Enabled: false
-
 RSpec/MultipleExpectations:
   Enabled: false
 
@@ -24,3 +21,8 @@ RSpec/NestedGroups:
   
 RSpec/ExpectInHook:
   Enabled: false
+
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/examples/*'
+

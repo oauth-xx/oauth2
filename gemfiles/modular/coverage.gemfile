@@ -1,0 +1,6 @@
+# frozen_string_literal: true
+
+# We run code coverage on the latest version of Ruby only.
+
+# Coverage
+gem "kettle-soup-cover", "~> 1.0", ">= 1.0.6", require: false

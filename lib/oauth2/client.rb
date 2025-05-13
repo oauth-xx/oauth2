@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-require 'faraday'
-require 'logger'
+require "faraday"
+require "logger"
 
 if Faraday::Utils.respond_to?(:default_space_encoding)
   # This setting doesn't exist in faraday 0.x
-  Faraday::Utils.default_space_encoding = '%20'
+  Faraday::Utils.default_space_encoding = "%20"
 end
 
 module OAuth2
@@ -49,10 +49,10 @@ module OAuth2
       @secret = client_secret
       @site = opts.delete(:site)
       ssl = opts.delete(:ssl)
-      warn('OAuth2::Client#initialize argument `extract_access_token` will be removed in oauth2 v3. Refactor to use `access_token_class`.') if opts[:extract_access_token]
+      warn("OAuth2::Client#initialize argument `extract_access_token` will be removed in oauth2 v3. Refactor to use `access_token_class`.") if opts[:extract_access_token]
       @options = {
-        authorize_url: 'oauth/authorize',
-        token_url: 'oauth/token',
+        authorize_url: "oauth/authorize",
+        token_url: "oauth/token",
         token_method: :post,
         auth_scheme: :basic_auth,
         connection_opts: {},
@@ -81,8 +81,8 @@ module OAuth2
           if options[:connection_build]
             options[:connection_build].call(builder)
           else
-            builder.request :url_encoded             # form-encode POST params
-            builder.adapter Faraday.default_adapter  # make requests with Net::HTTP
+            builder.request(:url_encoded)             # form-encode POST params
+            builder.adapter(Faraday.default_adapter)  # make requests with Net::HTTP
           end
         end
     end
@@ -131,7 +131,7 @@ module OAuth2
           verb = :get
           opts.delete(:body)
         end
-        location = response.headers['location']
+        location = response.headers["location"]
         if location
           full_location = response.response.env.url.merge(location)
           request(verb, full_location, opts)
@@ -165,7 +165,7 @@ module OAuth2
     # @yield [req] @see Faraday::Connection#run_request
     # @return [AccessToken] the initialized AccessToken
     def get_token(params, access_token_opts = {}, extract_access_token = nil, &block)
-      warn('OAuth2::Client#get_token argument `extract_access_token` will be removed in oauth2 v3. Refactor to use `access_token_class` on #initialize.') if extract_access_token
+      warn("OAuth2::Client#get_token argument `extract_access_token` will be removed in oauth2 v3. Refactor to use `access_token_class` on #initialize.") if extract_access_token
       extract_access_token ||= options[:extract_access_token]
       parse, snaky, params, headers = parse_snaky_params_headers(params)
 
@@ -178,13 +178,13 @@ module OAuth2
 
         # NOTE: If proliferation of request types continues we should implement a parser solution for Request,
         #       just like we have with Response.
-        request_opts[:body] = if headers['Content-Type'] == 'application/json'
-                                params.to_json
-                              else
-                                params
-                              end
+        request_opts[:body] = if headers["Content-Type"] == "application/json"
+          params.to_json
+        else
+          params
+        end
 
-        request_opts[:headers] = {'Content-Type' => 'application/x-www-form-urlencoded'}
+        request_opts[:headers] = {"Content-Type" => "application/x-www-form-urlencoded"}
       else
         request_opts[:params] = params
         request_opts[:headers] = {}
@@ -261,7 +261,7 @@ module OAuth2
     # @return [Hash] the params to add to a request or URL
     def redirection_params
       if options[:redirect_uri]
-        {'redirect_uri' => options[:redirect_uri]}
+        {"redirect_uri" => options[:redirect_uri]}
       else
         {}
       end
@@ -358,7 +358,7 @@ module OAuth2
     end
 
     def oauth_debug_logging(builder)
-      builder.response :logger, options[:logger], bodies: true if ENV['OAUTH_DEBUG'] == 'true'
+      builder.response(:logger, options[:logger], bodies: true) if ENV["OAUTH_DEBUG"] == "true"
     end
   end
 end

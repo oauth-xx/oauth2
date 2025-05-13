@@ -76,19 +76,21 @@ module OAuth2
           error = Error.new(opts)
           raise(error)
         else
-          warn('OAuth2::AccessToken has no token')
+          warn("OAuth2::AccessToken has no token")
         end
       end
       # @option opts [Fixnum, String] :expires is deprecated
-      @expires_in ||= opts.delete('expires')
+      @expires_in ||= opts.delete("expires")
       @expires_in &&= @expires_in.to_i
       @expires_at &&= convert_expires_at(@expires_at)
       @expires_latency &&= @expires_latency.to_i
       @expires_at ||= Time.now.to_i + @expires_in if @expires_in && !@expires_in.zero?
       @expires_at -= @expires_latency if @expires_latency
-      @options = {mode: opts.delete(:mode) || :header,
-                  header_format: opts.delete(:header_format) || 'Bearer %s',
-                  param_name: opts.delete(:param_name) || 'access_token'}
+      @options = {
+        mode: opts.delete(:mode) || :header,
+        header_format: opts.delete(:header_format) || "Bearer %s",
+        param_name: opts.delete(:param_name) || "access_token",
+      }
       @params = opts
     end
 
@@ -118,9 +120,9 @@ module OAuth2
     # @return [AccessToken] a new AccessToken
     # @note options should be carried over to the new AccessToken
     def refresh(params = {}, access_token_opts = {})
-      raise('A refresh_token is not available') unless refresh_token
+      raise("A refresh_token is not available") unless refresh_token
 
-      params[:grant_type] = 'refresh_token'
+      params[:grant_type] = "refresh_token"
       params[:refresh_token] = refresh_token
       new_token = @client.get_token(params, access_token_opts)
       new_token.options = options
@@ -133,7 +135,7 @@ module OAuth2
     end
     # A compatibility alias
     # @note does not modify the receiver, so bang is not the default method
-    alias refresh! refresh
+    alias_method :refresh!, :refresh
 
     # Convert AccessToken to a hash which can be used to rebuild itself with AccessToken.from_hash
     #
@@ -190,7 +192,7 @@ module OAuth2
 
     # Get the headers hash (includes Authorization token)
     def headers
-      {'Authorization' => options[:header_format] % token}
+      {"Authorization" => options[:header_format] % token}
     end
 
   private

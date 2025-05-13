@@ -9,5 +9,5 @@ liberapay: pboling # Replace with a single Liberapay username
 open_collective: # Replace with a single Open Collective username
 patreon: galtzo # Replace with a single Patreon username
 polar: pboling
-thanks_dev: gh/pboling
+thanks_dev: u/gh/pboling
 tidelift: rubygems/oauth2 # Replace with a single Tidelift platform-name/package-name e.g., npm/babel

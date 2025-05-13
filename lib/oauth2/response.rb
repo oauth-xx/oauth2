@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require 'json'
-require 'multi_xml'
-require 'rack'
+require "json"
+require "multi_xml"
+require "rack"
 
 module OAuth2
   # OAuth2::Response class
@@ -23,8 +23,8 @@ module OAuth2
 
     # Content type assignments for various potential HTTP content types.
     @@content_types = {
-      'application/x-www-form-urlencoded' => :query,
-      'text/plain' => :text,
+      "application/x-www-form-urlencoded" => :query,
+      "text/plain" => :text,
     }
 
     # Adds a new content type parser.
@@ -68,7 +68,7 @@ module OAuth2
 
     # The HTTP response body
     def body
-      response.body || ''
+      response.body || ""
     end
 
     # The {#response} {#body} as parsed by {#parser}.
@@ -97,9 +97,9 @@ module OAuth2
 
     # Attempts to determine the content type of the response.
     def content_type
-      return nil unless response.headers
+      return unless response.headers
 
-      ((response.headers.values_at('content-type', 'Content-Type').compact.first || '').split(';').first || '').strip.downcase
+      ((response.headers.values_at("content-type", "Content-Type").compact.first || "").split(";").first || "").strip.downcase
     end
 
     # Determines the parser (a Proc or other Object which responds to #call)
@@ -133,16 +133,16 @@ module OAuth2
   end
 end
 
-OAuth2::Response.register_parser(:xml, ['text/xml', 'application/rss+xml', 'application/rdf+xml', 'application/atom+xml', 'application/xml']) do |body|
+OAuth2::Response.register_parser(:xml, ["text/xml", "application/rss+xml", "application/rdf+xml", "application/atom+xml", "application/xml"]) do |body|
   next body unless body.respond_to?(:to_str)
 
   MultiXml.parse(body)
 end
 
-OAuth2::Response.register_parser(:json, ['application/json', 'text/javascript', 'application/hal+json', 'application/vnd.collection+json', 'application/vnd.api+json', 'application/problem+json']) do |body|
+OAuth2::Response.register_parser(:json, ["application/json", "text/javascript", "application/hal+json", "application/vnd.collection+json", "application/vnd.api+json", "application/problem+json"]) do |body|
   next body unless body.respond_to?(:to_str)
 
-  body = body.dup.force_encoding(::Encoding::ASCII_8BIT) if body.respond_to?(:force_encoding)
+  body = body.dup.force_encoding(Encoding::ASCII_8BIT) if body.respond_to?(:force_encoding)
 
-  ::JSON.parse(body)
+  JSON.parse(body)
 end

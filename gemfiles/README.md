@@ -4,7 +4,7 @@
    and thus is the oldest version oauth2 is compatible with.
 
 ```ruby
-gem 'faraday', ['>= 0.17.3', '< 3.0']
+gem "faraday", [">= 0.17.3", "< 3.0"]
 ```
 
 # Ruby

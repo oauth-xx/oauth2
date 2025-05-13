@@ -36,9 +36,9 @@ jobs:
           - f1
           - f2
         rubygems:
-          - latest
+          - default
         bundler:
-          - latest
+          - default
         ruby:
           - truffleruby+graalvm-head
           - truffleruby-head

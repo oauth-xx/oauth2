@@ -37,3 +37,6 @@
 # Version Managers
 .ruby-version
 .tool-versions
+
+# Local config
+.env.local

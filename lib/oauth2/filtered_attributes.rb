@@ -25,7 +25,7 @@ module OAuth2
           "#{var}=#{instance_variable_get(var).inspect}"
         end
       end
-      "#<#{self.class}:#{object_id} #{inspected_vars.join(', ')}>"
+      "#<#{self.class}:#{object_id} #{inspected_vars.join(", ")}>"
     end
   end
 end
