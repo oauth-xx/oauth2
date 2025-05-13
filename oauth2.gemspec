@@ -1,7 +1,18 @@
 # encoding: utf-8
 # frozen_string_literal: true
 
-require_relative 'lib/oauth2/version'
+gem_version =
+  if RUBY_VERSION >= "3.1"
+    # Loading version into an anonymous module allows version.rb to get code coverage from SimpleCov!
+    # See: https://github.com/simplecov-ruby/simplecov/issues/557#issuecomment-2630782358
+    Module.new.tap { |mod| Kernel.load("lib/oauth2/version.rb", mod) }::OAuth2::Version::VERSION
+  else
+    lib = File.expand_path("lib", __dir__)
+    $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+    require "oauth2/version"
+    OAuth2::Version::VERSION
+  end
+
 
 Gem::Specification.new do |spec|
   # Linux distros may package ruby gems differently,
@@ -28,9 +39,9 @@ Gem::Specification.new do |spec|
   spec.licenses = 'MIT'
   spec.name = 'oauth2'
   spec.required_ruby_version = '>= 2.2.0'
-  spec.version = OAuth2::Version::VERSION
-  spec.post_install_message = <<~POST
-You have installed oauth2 version #{OAuth2::Version::VERSION}, congratulations!
+  spec.version = gem_version
+  spec.post_install_message = %{
+You have installed oauth2 version #{gem_version}, congratulations!
 
 There are BREAKING changes if you are upgrading from < v2, but most will not encounter them, and updating your code should be easy!
 Please see:
@@ -63,7 +74,7 @@ If you are a corporation, please consider supporting this project, and open sour
 Please report issues, and star the project!
 
 Thanks, |7eter l-|. l3oling
-POST
+}
 
   spec.metadata['homepage_uri'] = spec.homepage
   spec.metadata['source_code_uri'] = "#{spec.homepage}/-/tree/v#{spec.version}"
@@ -114,7 +125,6 @@ POST
   spec.add_development_dependency 'addressable', '>= 2'
   spec.add_development_dependency 'backports', '>= 3'
   spec.add_development_dependency 'nkf', '~> 0.2'
-  spec.add_development_dependency 'byebug', '~> 11'
   spec.add_development_dependency 'rake', '>= 12'
   spec.add_development_dependency 'rexml', '>= 3'
   spec.add_development_dependency 'rspec', '>= 3'

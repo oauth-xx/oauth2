@@ -1,0 +1,5 @@
+# frozen_string_literal: true
+
+# Many gems are dropping support for Ruby < 3,
+#   so we only want to run our security audit in CI on Ruby 3+
+gem "bundler-audit", "~> 0.9.2"

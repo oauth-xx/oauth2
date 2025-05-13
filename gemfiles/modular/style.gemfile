@@ -1,0 +1,19 @@
+# frozen_string_literal: true
+
+# We run rubocop on the latest version of Ruby,
+#   but in support of the oldest supported version of Ruby
+
+gem "reek", "~> 6.4"
+gem "rubocop", "~> 1.73", ">= 1.73.2"
+# gem "rubocop-lts", "~> 0.1", ">= 0.1.1" # Linting for Ruby >= 1.8
+gem "rubocop-packaging", "~> 0.5", ">= 0.5.2"
+gem "rubocop-rspec", "~> 3.2"
+gem "standard", "~> 1.47"
+
+# Std Lib extractions
+gem "benchmark", "~> 0.4" # Removed from Std Lib in Ruby 3.5
+
+# gem "rubocop-lts", :path => "/home/pboling/src/rubocop-lts/rubocop-lts"
+# gem "rubocop-lts-rspec", :path => "/home/pboling/src/rubocop-lts/rubocop-lts-rspec"
+# gem "rubocop-ruby1_8", :path => "/home/pboling/src/rubocop-lts/rubocop-ruby1_8"
+# gem "standard-rubocop-lts", :path => "/home/pboling/src/rubocop-lts/standard-rubocop-lts"

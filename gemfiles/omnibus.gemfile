@@ -1,0 +1,18 @@
+# This gemfile is used for GitLab CI, current ruby pipeline.
+# This gemfile includes all dependencies necessary to run the naked `rake default` set of tasks
+
+source "https://rubygems.org"
+
+git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
+git_source(:gitlab) { |repo_name| "https://gitlab.com/#{repo_name}" }
+
+eval_gemfile "modular/audit.gemfile"
+eval_gemfile "modular/coverage.gemfile"
+eval_gemfile "modular/documentation.gemfile"
+eval_gemfile "modular/style.gemfile"
+
+# Root Gemfile is only for local development.
+# On CI, we only need the gemspec dependencies (including development dependencies).
+# Exceptions, if any, will be found in gemfiles/*.gemfile
+
+gemspec path: "../"

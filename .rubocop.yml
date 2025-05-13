@@ -1,18 +1,8 @@
 inherit_from:
-  - .rubocop_todo.yml
   - .rubocop_rspec.yml
 
 inherit_gem:
   rubocop-lts: rubocop-lts.yml
-
-require:
-  # Try adding back once we reach rubocop-ruby2_3+
-  #  - 'rubocop-md'
-  # Can be added once we reach rubocop-ruby2_3+
-  #  - 'rubocop-packaging'
-  - 'rubocop-performance'
-  - 'rubocop-rake'
-  - 'rubocop-rspec'
 
 AllCops:
   DisplayCopNames: true # Display the name of the failing cops
@@ -38,7 +28,7 @@ Gemspec/RequiredRubyVersion:
 Metrics/BlockNesting:
   Max: 2
 
-Metrics/LineLength:
+Layout/LineLength:
   Enabled: false
 
 Metrics/ParameterLists:
@@ -60,12 +50,6 @@ Lint/UnusedBlockArgument:
     - 'vendor/**/*'
     - '**/.irbrc'
 
-RSpec/DescribeClass:
-  Exclude:
-    - 'spec/examples/*'
-
-RSpec/NestedGroups:
-  Enabled: false
 
 Style/ClassVars:
   Enabled: false
