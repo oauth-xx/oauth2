@@ -4,7 +4,6 @@ default:
 variables:
   BUNDLE_INSTALL_FLAGS: "--quiet --jobs=$(nproc) --retry=3"
   BUNDLE_FROZEN: "false" # No lockfile!
-  BUNDLE_GEMFILE: gemfiles/omnibus.gemfile
   K_SOUP_COV_DEBUG: true
   K_SOUP_COV_DO: true
   K_SOUP_COV_HARD: true
@@ -31,7 +30,7 @@ workflow:
     - gem update --system > /dev/null 2>&1
     - bundle config --local path vendor
     - bundle install
-    - bundle exec rake test
+    - bundle exec rake
   cache:
     key: ${CI_JOB_IMAGE}
     paths:
@@ -54,6 +53,9 @@ workflow:
       - vendor/ruby
 
 ruby-current:
+  variables:
+    BUNDLE_GEMFILE: gemfiles/omnibus.gemfile
+    K_SOUP_COV_DO: true
   <<: *test_definition-current
   parallel:
     matrix:
@@ -62,6 +64,8 @@ ruby-current:
 ruby-ruby3_1:
   variables:
     RUBYGEMS_VERSION: "3.6.9"
+    BUNDLE_GEMFILE: gemfiles/vanilla.gemfile
+    K_SOUP_COV_DO: false
   <<: *test_definition-legacy
   parallel:
     matrix:
@@ -70,6 +74,8 @@ ruby-ruby3_1:
 ruby-ruby3_0:
   variables:
     RUBYGEMS_VERSION: "3.5.23"
+    BUNDLE_GEMFILE: gemfiles/vanilla.gemfile
+    K_SOUP_COV_DO: false
   <<: *test_definition-legacy
   parallel:
     matrix:
@@ -78,6 +84,8 @@ ruby-ruby3_0:
 ruby-ruby2_7:
   variables:
     RUBYGEMS_VERSION: "3.4.22"
+    BUNDLE_GEMFILE: gemfiles/vanilla.gemfile
+    K_SOUP_COV_DO: false
   <<: *test_definition-legacy
   parallel:
     matrix:
