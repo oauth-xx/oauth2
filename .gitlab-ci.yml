@@ -62,20 +62,23 @@ ruby-current:
 ruby-eol3:
   <<: *test_definition-legacy
   parallel:
+    variables:
+      RUBYGEMS_VERSION: ["3.6.9"]
     matrix:
       - RUBY_VERSION: ["3.1"]
-      - RUBYGEMS_VERSION: ["3.6.9"]
 
 ruby-eol2:
   <<: *test_definition-legacy
   parallel:
+    variables:
+      RUBYGEMS_VERSION: ["3.5.23"]
     matrix:
       - RUBY_VERSION: ["3.0"]
-      - RUBYGEMS_VERSION: ["3.5.23"]
 
 ruby-eol1:
   <<: *test_definition-legacy
   parallel:
+    variables:
+      RUBYGEMS_VERSION: ["3.4.22"]
     matrix:
       - RUBY_VERSION: ["2.7"]
-      - RUBYGEMS_VERSION: ["3.4.22"]
