@@ -1,8 +1,8 @@
-inherit_from:
-  - .rubocop_rspec.yml
-
 inherit_gem:
   rubocop-lts: rubocop-lts.yml
+
+inherit_from:
+  - .rubocop_rspec.yml
 
 AllCops:
   DisplayCopNames: true # Display the name of the failing cops
@@ -12,15 +12,7 @@ AllCops:
     - '**/.irbrc'
 
 Metrics/BlockLength:
-  ExcludedMethods:
-    - context
-    - describe
-    - it
-    - shared_context
-    - shared_examples
-    - shared_examples_for
-    - namespace
-    - draw
+  Enabled: false
 
 Gemspec/RequiredRubyVersion:
   Enabled: false

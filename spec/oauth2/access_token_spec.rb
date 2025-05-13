@@ -216,7 +216,7 @@ RSpec.describe OAuth2::AccessToken do
             let(:token) { "" }
 
             it "raises on initialize" do
-              block_is_expected.to raise_error(OAuth2::Error, {:mode=>:this_is_bad, :raise_errors=>true}.to_s)
+              block_is_expected.to raise_error(OAuth2::Error, {mode: :this_is_bad, raise_errors: true}.to_s)
             end
           end
 
@@ -224,7 +224,7 @@ RSpec.describe OAuth2::AccessToken do
             let(:token) { nil }
 
             it "raises on initialize" do
-              block_is_expected.to raise_error(OAuth2::Error, {:mode=>:this_is_bad, :raise_errors=>true}.to_s)
+              block_is_expected.to raise_error(OAuth2::Error, {mode: :this_is_bad, raise_errors: true}.to_s)
             end
           end
         end
@@ -412,7 +412,7 @@ RSpec.describe OAuth2::AccessToken do
 
           context "when there is no refresh_token" do
             it "raises on initialize" do
-              block_is_expected.to raise_error(OAuth2::Error, {:raise_errors=>true}.to_s)
+              block_is_expected.to raise_error(OAuth2::Error, {raise_errors: true}.to_s)
             end
           end
 
@@ -438,7 +438,7 @@ RSpec.describe OAuth2::AccessToken do
 
           context "when there is no refresh_token" do
             it "raises on initialize" do
-              block_is_expected.to raise_error(OAuth2::Error, {:raise_errors=>true}.to_s)
+              block_is_expected.to raise_error(OAuth2::Error, {raise_errors: true}.to_s)
             end
           end
 

@@ -128,6 +128,7 @@ RSpec.describe OAuth2::Authenticator do
     it "filters secret by default" do
       expect(described_class.filtered_attribute_names).to include(:secret)
     end
+
     it "filters out the @secret value" do
       expect(subject.inspect).to include("@secret=[FILTERED]")
     end
@@ -137,14 +138,17 @@ RSpec.describe OAuth2::Authenticator do
         @original_filter = described_class.filtered_attribute_names
         described_class.filtered_attributes :vanilla
       end
+
+      after do
+        described_class.filtered_attributes(*@original_filter)
+      end
+
       it "changes the filter" do
         expect(described_class.filtered_attribute_names).to eq([:vanilla])
       end
+
       it "does not filter out the @secret value" do
         expect(subject.inspect).to include("@secret=\"bar\"")
-      end
-      after do
-        described_class.filtered_attributes(*@original_filter)
       end
     end
 
@@ -153,14 +157,17 @@ RSpec.describe OAuth2::Authenticator do
         @original_filter = described_class.filtered_attribute_names
         described_class.filtered_attributes
       end
+
+      after do
+        described_class.filtered_attributes(*@original_filter)
+      end
+
       it "changes the filter" do
         expect(described_class.filtered_attribute_names).to eq([])
       end
+
       it "does not filter out the @secret value" do
         expect(subject.inspect).to include("@secret=\"bar\"")
-      end
-      after do
-        described_class.filtered_attributes(*@original_filter)
       end
     end
   end

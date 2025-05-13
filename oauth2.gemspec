@@ -13,7 +13,6 @@ gem_version =
     OAuth2::Version::VERSION
   end
 
-
 Gem::Specification.new do |spec|
   # Linux distros may package ruby gems differently,
   #   and securely certify them independently via alternate package management systems.
@@ -31,14 +30,14 @@ Gem::Specification.new do |spec|
     end
   end
 
-  spec.authors = ['Peter Boling', 'Erik Michaels-Ober', 'Michael Bleigh']
-  spec.summary = 'OAuth 2.0 Core Ruby implementation'
-  spec.description = 'A Ruby wrapper for the OAuth 2.0 protocol built with a similar style to the original OAuth spec.'
-  spec.email = ['peter.boling@gmail.com', 'oauth-ruby@googlegroups.com']
-  spec.homepage = 'https://gitlab.com/oauth-xx/oauth2'
-  spec.licenses = 'MIT'
-  spec.name = 'oauth2'
-  spec.required_ruby_version = '>= 2.2.0'
+  spec.authors = ["Peter Boling", "Erik Michaels-Ober", "Michael Bleigh"]
+  spec.summary = "OAuth 2.0 Core Ruby implementation"
+  spec.description = "A Ruby wrapper for the OAuth 2.0 protocol built with a similar style to the original OAuth spec."
+  spec.email = ["peter.boling@gmail.com", "oauth-ruby@googlegroups.com"]
+  spec.homepage = "https://gitlab.com/oauth-xx/oauth2"
+  spec.licenses = "MIT"
+  spec.name = "oauth2"
+  spec.required_ruby_version = ">= 2.2.0"
   spec.version = gem_version
   spec.post_install_message = %{
 You have installed oauth2 version #{gem_version}, congratulations!
@@ -76,16 +75,16 @@ Please report issues, and star the project!
 Thanks, |7eter l-|. l3oling
 }
 
-  spec.metadata['homepage_uri'] = spec.homepage
-  spec.metadata['source_code_uri'] = "#{spec.homepage}/-/tree/v#{spec.version}"
-  spec.metadata['changelog_uri'] = "#{spec.homepage}/-/blob/v#{spec.version}/CHANGELOG.md"
-  spec.metadata['bug_tracker_uri'] = "#{spec.homepage}/-/issues"
-  spec.metadata['documentation_uri'] = "https://www.rubydoc.info/gems/#{spec.name}/#{spec.version}"
-  spec.metadata['wiki_uri'] = "#{spec.homepage}/-/wiki"
-  spec.metadata['mailing_list_uri'] = 'https://groups.google.com/g/oauth-ruby'
+  spec.metadata["homepage_uri"] = spec.homepage
+  spec.metadata["source_code_uri"] = "#{spec.homepage}/-/tree/v#{spec.version}"
+  spec.metadata["changelog_uri"] = "#{spec.homepage}/-/blob/v#{spec.version}/CHANGELOG.md"
+  spec.metadata["bug_tracker_uri"] = "#{spec.homepage}/-/issues"
+  spec.metadata["documentation_uri"] = "https://www.rubydoc.info/gems/#{spec.name}/#{spec.version}"
+  spec.metadata["wiki_uri"] = "#{spec.homepage}/-/wiki"
+  spec.metadata["mailing_list_uri"] = "https://groups.google.com/g/oauth-ruby"
   spec.metadata["news_uri"] = "https://www.railsbling.com/tags/#{spec.name}"
-  spec.metadata['funding_uri'] = 'https://liberapay.com/pboling'
-  spec.metadata['rubygems_mfa_required'] = 'true'
+  spec.metadata["funding_uri"] = "https://liberapay.com/pboling"
+  spec.metadata["rubygems_mfa_required"] = "true"
 
   # Specify which files should be added to the gem when it is released.
   spec.files = Dir[
@@ -115,22 +114,22 @@ Thanks, |7eter l-|. l3oling
   spec.bindir = "exe"
   spec.executables = []
 
-  spec.add_dependency 'faraday', ['>= 0.17.3', '< 3.0']
-  spec.add_dependency 'jwt', ['>= 1.0', '< 3.0']
-  spec.add_dependency 'multi_xml', '~> 0.5'
-  spec.add_dependency 'rack', ['>= 1.2', '< 4']
-  spec.add_dependency 'snaky_hash', '~> 2.0'
+  spec.add_dependency("faraday", [">= 0.17.3", "< 3.0"])
+  spec.add_dependency("jwt", [">= 1.0", "< 3.0"])
+  spec.add_dependency("multi_xml", "~> 0.5")
+  spec.add_dependency("rack", [">= 1.2", "< 4"])
+  spec.add_dependency("snaky_hash", "~> 2.0")
   spec.add_dependency("version_gem", ">= 1.1.8", "< 3") # Ruby >= 2.2.0
 
-  spec.add_development_dependency 'addressable', '>= 2'
-  spec.add_development_dependency 'backports', '>= 3'
-  spec.add_development_dependency 'nkf', '~> 0.2'
-  spec.add_development_dependency 'rake', '>= 12'
-  spec.add_development_dependency 'rexml', '>= 3'
-  spec.add_development_dependency 'rspec', '>= 3'
-  spec.add_development_dependency 'rspec-block_is_expected'
-  spec.add_development_dependency 'rspec-pending_for'
-  spec.add_development_dependency 'rspec-stubbed_env'
-  spec.add_development_dependency 'rubocop-lts', '~> 8.0'
-  spec.add_development_dependency 'silent_stream'
+  spec.add_development_dependency("addressable", ">= 2")
+  spec.add_development_dependency("backports", ">= 3")
+  spec.add_development_dependency("nkf", "~> 0.2")
+  spec.add_development_dependency("rake", ">= 12")
+  spec.add_development_dependency("rexml", ">= 3")
+  spec.add_development_dependency("rspec", ">= 3")
+  spec.add_development_dependency("rspec-block_is_expected")
+  spec.add_development_dependency("rspec-pending_for")
+  spec.add_development_dependency("rspec-stubbed_env")
+  spec.add_development_dependency("rubocop-lts", "~> 8.0")
+  spec.add_development_dependency("silent_stream")
 end

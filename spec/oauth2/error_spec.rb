@@ -176,7 +176,7 @@ RSpec.describe OAuth2::Error do
         end
 
         it "just returns the thing if it can" do
-          expect(subject.message).to eq({:hello=>:world}.to_s)
+          expect(subject.message).to eq({hello: :world}.to_s)
         end
       end
     end
@@ -451,7 +451,7 @@ RSpec.describe OAuth2::Error do
         expect(subject.message.each_line.to_a).to eq(
           [
             "i_am_a_teapot: Short and stout\n",
-            {:text=>"Coffee brewing failed", "error_description"=>"Short and stout", "error"=>"i_am_a_teapot"}.to_s,
+            {:text => "Coffee brewing failed", "error_description" => "Short and stout", "error" => "i_am_a_teapot"}.to_s,
           ],
         )
       end
@@ -466,11 +466,11 @@ RSpec.describe OAuth2::Error do
 
         it "just returns whatever it can" do
           expect(subject.message.each_line.to_a).to eq(
-                                                      [
-                                                        "i_am_a_teapot: Short and stout\n",
-                                                        {:hello=>:world, "error_description"=>"Short and stout", "error"=>"i_am_a_teapot"}.to_s
-                                                      ]
-                                                    )
+            [
+              "i_am_a_teapot: Short and stout\n",
+              {:hello => :world, "error_description" => "Short and stout", "error" => "i_am_a_teapot"}.to_s,
+            ],
+          )
         end
       end
     end
@@ -484,7 +484,7 @@ RSpec.describe OAuth2::Error do
       end
 
       it "just returns the thing if it can" do
-        expect(subject.message).to eq({:hello=>:world}.to_s)
+        expect(subject.message).to eq({hello: :world}.to_s)
       end
     end
 
@@ -496,7 +496,7 @@ RSpec.describe OAuth2::Error do
 
       it "does not prepend anything to the message" do
         expect(subject.message.lines.count).to eq(1)
-        expect(subject.message).to eq({:text=>"Coffee brewing failed"}.to_s)
+        expect(subject.message).to eq({text: "Coffee brewing failed"}.to_s)
       end
 
       it "does not set code" do
@@ -519,7 +519,7 @@ RSpec.describe OAuth2::Error do
         expect(subject.message.each_line.to_a).to eq(
           [
             "i_am_a_teapot: Short and stout\n",
-            {:text=>"Coffee brewing failed", "error_description"=>"Short and stout", "error"=>"i_am_a_teapot", "status"=>"418"}.to_s,
+            {:text => "Coffee brewing failed", "error_description" => "Short and stout", "error" => "i_am_a_teapot", "status" => "418"}.to_s,
           ],
         )
       end
@@ -552,7 +552,7 @@ RSpec.describe OAuth2::Error do
         expect(subject.message.each_line.to_a).to eq(
           [
             "i_am_a_teapot: \n",
-            {:text=>"Coffee brewing failed", "error"=>"i_am_a_teapot", "status"=>"418"}.to_s,
+            {:text => "Coffee brewing failed", "error" => "i_am_a_teapot", "status" => "418"}.to_s,
           ],
         )
       end
@@ -568,7 +568,7 @@ RSpec.describe OAuth2::Error do
         expect(subject.message.each_line.to_a).to eq(
           [
             "Short and stout\n",
-            {:text=>"Coffee brewing failed", "error_description"=>"Short and stout"}.to_s,
+            {:text => "Coffee brewing failed", "error_description" => "Short and stout"}.to_s,
           ],
         )
       end
@@ -584,11 +584,11 @@ RSpec.describe OAuth2::Error do
 
         it "does not try to encode the message string" do
           expect(subject.message.each_line.to_a).to eq(
-                                                      [
-                                                         "Short and stout\n",
-                                                         {:text=>"Coffee brewing failed", "error_description"=>"Short and stout"}.to_s
-                                                       ]
-                                                    )
+            [
+              "Short and stout\n",
+              {:text => "Coffee brewing failed", "error_description" => "Short and stout"}.to_s,
+            ],
+          )
         end
       end
 
