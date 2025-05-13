@@ -43,7 +43,7 @@ jobs:
     runs-on: ubuntu-latest
     continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
     steps:
-      - uses: amancevice/setup-code-climate@v0
+      - uses: amancevice/setup-code-climate@v2
         name: CodeClimate Install
         if: matrix.ruby == '2.7' && github.event_name != 'pull_request' && always()
         with:
