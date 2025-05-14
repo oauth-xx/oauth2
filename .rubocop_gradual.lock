@@ -21,15 +21,15 @@
   "lib/oauth2/response.rb:877496664": [
     [35, 5, 204, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 996912427]
   ],
-  "oauth2.gemspec:4045332820": [
-    [5, 6, 12, "Gemspec/RubyVersionGlobalsUsage: Do not use `RUBY_VERSION` in gemspec file.", 31296028],
-    [117, 3, 54, "Gemspec/DependencyVersion: Dependency version specification is required.", 3677216839],
-    [118, 3, 47, "Gemspec/DependencyVersion: Dependency version specification is required.", 2440116108],
-    [120, 3, 46, "Gemspec/DependencyVersion: Dependency version specification is required.", 1075698341],
-    [130, 3, 58, "Gemspec/DependencyVersion: Dependency version specification is required.", 2795510341],
-    [131, 3, 52, "Gemspec/DependencyVersion: Dependency version specification is required.", 804182931],
-    [132, 3, 52, "Gemspec/DependencyVersion: Dependency version specification is required.", 3163430777],
-    [133, 3, 48, "Gemspec/DependencyVersion: Dependency version specification is required.", 425065368]
+  "oauth2.gemspec:290828046": [
+    [5, 23, 12, "Gemspec/RubyVersionGlobalsUsage: Do not use `RUBY_VERSION` in gemspec file.", 31296028],
+    [115, 3, 54, "Gemspec/DependencyVersion: Dependency version specification is required.", 3677216839],
+    [116, 3, 47, "Gemspec/DependencyVersion: Dependency version specification is required.", 2440116108],
+    [118, 3, 46, "Gemspec/DependencyVersion: Dependency version specification is required.", 1075698341],
+    [128, 3, 58, "Gemspec/DependencyVersion: Dependency version specification is required.", 2795510341],
+    [129, 3, 52, "Gemspec/DependencyVersion: Dependency version specification is required.", 804182931],
+    [130, 3, 52, "Gemspec/DependencyVersion: Dependency version specification is required.", 3163430777],
+    [131, 3, 48, "Gemspec/DependencyVersion: Dependency version specification is required.", 425065368]
   ],
   "spec/oauth2/access_token_spec.rb:1576666213": [
     [3, 1, 34, "RSpec/SpecFilePathFormat: Spec path should end with `o_auth2/access_token*_spec.rb`.", 1972107547],
