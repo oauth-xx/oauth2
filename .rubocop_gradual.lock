@@ -21,7 +21,7 @@
   "lib/oauth2/response.rb:877496664": [
     [35, 5, 204, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 996912427]
   ],
-  "oauth2.gemspec:1672982387": [
+  "oauth2.gemspec:4045332820": [
     [5, 6, 12, "Gemspec/RubyVersionGlobalsUsage: Do not use `RUBY_VERSION` in gemspec file.", 31296028],
     [117, 3, 54, "Gemspec/DependencyVersion: Dependency version specification is required.", 3677216839],
     [118, 3, 47, "Gemspec/DependencyVersion: Dependency version specification is required.", 2440116108],
@@ -29,7 +29,7 @@
     [130, 3, 58, "Gemspec/DependencyVersion: Dependency version specification is required.", 2795510341],
     [131, 3, 52, "Gemspec/DependencyVersion: Dependency version specification is required.", 804182931],
     [132, 3, 52, "Gemspec/DependencyVersion: Dependency version specification is required.", 3163430777],
-    [134, 3, 48, "Gemspec/DependencyVersion: Dependency version specification is required.", 425065368]
+    [133, 3, 48, "Gemspec/DependencyVersion: Dependency version specification is required.", 425065368]
   ],
   "spec/examples/google_spec.rb:1491180421": [
     [9, 3, 5115, "RSpec/MultipleMemoizedHelpers: Example group has too many memoized helpers [6/5]", 1014001606],

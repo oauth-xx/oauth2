@@ -1,5 +1,5 @@
 # Targets the evergreen latest release of ruby, truffleruby, and jruby
-name: Current
+name: Windows
 
 env:
   K_SOUP_COV_DO: false
@@ -44,16 +44,6 @@ jobs:
             gemfile: "Appraisal.root"
             rubygems: latest
             bundler: latest
-
-          # truffleruby-24.1
-          #   (according to documentation: targets Ruby 3.3 compatibility)
-          #   (according to runtime: targets Ruby 3.2 compatibility)
-          - ruby: "truffleruby"
-            appraisal: "current"
-            exec_cmd: "rake test"
-            gemfile: "Appraisal.root"
-            rubygems: default
-            bundler: default
 
           # jruby-10.0 (targets Ruby 3.4 compatibility)
           - ruby: "jruby"
