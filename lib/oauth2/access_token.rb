@@ -188,7 +188,6 @@ You may need to set `snaky: false`. See inline documentation for more info.
     # @return [Hash] a hash of AccessToken property values
     def to_hash
       hsh = {
-        **params,
         access_token: token,
         refresh_token: refresh_token,
         expires_at: expires_at,
@@ -197,7 +196,13 @@ You may need to set `snaky: false`. See inline documentation for more info.
         param_name: options[:param_name],
       }
       hsh[:token_name] = options[:token_name] if options.key?(:token_name)
-      hsh
+      # TODO: Switch when dropping Ruby < 2.5 support
+      # params.transform_keys(&:to_sym) # Ruby 2.5 only
+      # Old Ruby transform_keys alternative:
+      sheesh = @params.each_with_object({}) { |(k, v), memo|
+        memo[k.to_sym] = v
+      }
+      sheesh.merge(hsh)
     end
 
     # Make a request with the Access Token

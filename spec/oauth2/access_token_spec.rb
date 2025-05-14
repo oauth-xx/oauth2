@@ -28,14 +28,14 @@ RSpec.describe OAuth2::AccessToken do
 
     let(:hash) do
       {
-        :access_token => token,
-        :id_token => "confusing bug here",
-        :refresh_token => "foobar",
-        :expires_at => Time.now.to_i + 200,
-        "foo" => "bar",
-        :header_format => "Bearer %",
-        :mode => :header,
-        :param_name => "access_token",
+        access_token: token,
+        id_token: "confusing bug here",
+        refresh_token: "foobar",
+        expires_at: Time.now.to_i + 200,
+        foo: "bar",
+        header_format: "Bearer %",
+        mode: :header,
+        param_name: "access_token",
       }
     end
 
@@ -749,13 +749,13 @@ RSpec.describe OAuth2::AccessToken do
   describe "#to_hash" do
     it "return a hash equal to the hash used to initialize access token" do
       hash = {
-        :access_token => token,
-        :refresh_token => "foobar",
-        :expires_at => Time.now.to_i + 200,
-        :header_format => "Bearer %",
-        :mode => :header,
-        :param_name => "access_token",
-        "foo" => "bar",
+        access_token: token,
+        refresh_token: "foobar",
+        expires_at: Time.now.to_i + 200,
+        header_format: "Bearer %",
+        mode: :header,
+        param_name: "access_token",
+        foo: "bar",
       }
       access_token = described_class.from_hash(client, hash.clone)
       expect(access_token.to_hash).to eq(hash)
@@ -764,14 +764,14 @@ RSpec.describe OAuth2::AccessToken do
     context "with token_name" do
       it "return a hash equal to the hash used to initialize access token" do
         hash = {
-          :access_token => "",
-          :refresh_token => "foobar",
-          :expires_at => Time.now.to_i + 200,
-          :header_format => "Bearer %",
-          :mode => :header,
-          :param_name => "access_token",
-          :token_name => "banana_face",
-          "foo" => "bar",
+          access_token: "",
+          refresh_token: "foobar",
+          expires_at: Time.now.to_i + 200,
+          header_format: "Bearer %",
+          mode: :header,
+          param_name: "access_token",
+          token_name: "banana_face",
+          foo: "bar",
         }
         access_token = described_class.from_hash(client, hash.clone)
         expect(access_token.to_hash).to eq(hash)
