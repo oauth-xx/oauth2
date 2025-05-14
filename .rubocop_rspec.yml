@@ -26,3 +26,5 @@ RSpec/DescribeClass:
   Exclude:
     - 'spec/examples/*'
 
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false

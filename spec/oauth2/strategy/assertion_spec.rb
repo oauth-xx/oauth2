@@ -127,7 +127,13 @@ RSpec.describe OAuth2::Strategy::Assertion do
 
           it "raises JWT::EncodeError" do
             # this behavior is handled by the JWT gem, but this should make sure it is consistent
-            expect { client_assertion.get_token(claims, encoding_opts) }.to raise_error(JWT::EncodeError, "Unsupported signing method")
+            # On old Ruby (versions 2.4 and below) the error raised was different because
+            #   a very old version of the jwt gem gets installed.
+            if VersionGem::Ruby.gte_minimum_version?("2.5")
+              expect { client_assertion.get_token(claims, encoding_opts) }.to raise_error(JWT::EncodeError, "Unsupported signing method")
+            else
+              expect { client_assertion.get_token(claims, encoding_opts) }.to raise_error(NotImplementedError)
+            end
           end
         end
 

@@ -334,8 +334,13 @@ RSpec.describe OAuth2::Client do
         {scope: "email profile"}
       end
 
+      # This doesn't happen on Faraday v0, since it isn't an option until Faraday v1.0.0
       it "encoded as %20" do
-        expect(subject).to include "email%20profile"
+        if Faraday::VERSION >= "1.0.0"
+          expect(subject).to include "email%20profile"
+        else
+          expect(subject).to include "email+profile"
+        end
       end
     end
   end

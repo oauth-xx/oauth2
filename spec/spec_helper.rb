@@ -9,6 +9,8 @@ require "silent_stream"
 require "addressable/uri"
 require "rspec/pending_for"
 require "rspec/block_is_expected"
+require "version_gem/ruby"
+require "version_gem/rspec"
 
 # Extensions
 require_relative "ext/backports"
