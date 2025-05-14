@@ -51,12 +51,6 @@ jobs:
             bundler: latest
 
     steps:
-      - uses: amancevice/setup-code-climate@v2
-        name: CodeClimate Install
-        if: ${{ github.event_name != 'pull_request' }}
-        with:
-          cc_test_reporter_id: ${{ secrets.CC_TEST_REPORTER_ID }}
-
       - name: Checkout
         uses: actions/checkout@v4
 
