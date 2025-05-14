@@ -15,10 +15,27 @@ module OAuth2
     class << self
       # Initializes an AccessToken from a Hash
       #
-      # @param [Client] client the OAuth2::Client instance
-      # @param [Hash] hash a hash of AccessToken property values
-      # @option hash [String, Symbol] 'access_token', 'id_token', 'token', :access_token, :id_token, or :token the access token
-      # @return [AccessToken] the initialized AccessToken
+      # @param [OAuth2::Client] client the OAuth2::Client instance
+      # @param [Hash] hash a hash containing the token and other properties
+      # @option hash [String] 'access_token' the access token value
+      # @option hash [String] 'id_token' alternative key for the access token value
+      # @option hash [String] 'token' alternative key for the access token value
+      # @option hash [String] 'refresh_token' (optional) the refresh token value
+      # @option hash [Integer, String] 'expires_in' (optional) number of seconds until token expires
+      # @option hash [Integer, String] 'expires_at' (optional) epoch time in seconds when token expires
+      # @option hash [Integer, String] 'expires_latency' (optional) seconds to reduce token validity by
+      #
+      # @return [OAuth2::AccessToken] the initialized AccessToken
+      #
+      # @note The method will use the first found token key in the following order:
+      #   'access_token', 'id_token', 'token' (or their symbolic versions)
+      # @note If multiple token keys are present, a warning will be issued unless
+      #   OAuth2.config.silence_extra_tokens_warning is true
+      # @note For "soon-to-expire"/"clock-skew" functionality see the `:expires_latency` option.
+      #
+      # @example
+      #   hash = { 'access_token' => 'token_value', 'refresh_token' => 'refresh_value' }
+      #   access_token = OAuth2::AccessToken.from_hash(client, hash)
       def from_hash(client, hash)
         fresh = hash.dup
         supported_keys = TOKEN_KEY_LOOKUP & fresh.keys
@@ -49,6 +66,16 @@ module OAuth2
     end
 
     # Initialize an AccessToken
+    #
+    # @note For "soon-to-expire"/"clock-skew" functionality see the `:expires_latency` option.
+    # @note If no token is provided, the AccessToken will be considered invalid.
+    #   This is to prevent the possibility of a token being accidentally
+    #   created with no token value.
+    #   If you want to create an AccessToken with no token value,
+    #   you can pass in an empty string or nil for the token value.
+    #   If you want to create an AccessToken with no token value and
+    #   no refresh token, you can pass in an empty string or nil for the
+    #   token value and nil for the refresh token, and `raise_errors: false`.
     #
     # @param [Client] client the OAuth2::Client instance
     # @param [String] token the Access Token value (optional, may not be used in refresh flows)
