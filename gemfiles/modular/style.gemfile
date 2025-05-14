@@ -5,7 +5,7 @@
 
 gem "reek", "~> 6.4"
 gem "rubocop", "~> 1.73", ">= 1.73.2"
-# gem "rubocop-lts", "~> 0.1", ">= 0.1.1" # Linting for Ruby >= 1.8
+gem "rubocop-lts", "~> 8.1", ">= 8.1.1" # Linting for Ruby >= 2.2
 gem "rubocop-packaging", "~> 0.5", ">= 0.5.2"
 gem "rubocop-rspec", "~> 3.2"
 gem "standard", "~> 1.47"
