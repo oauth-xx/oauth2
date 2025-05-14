@@ -36,7 +36,7 @@ module OAuth2
     # @option options [String] :authorize_url ('/oauth/authorize') absolute or relative URL path to the Authorization endpoint
     # @option options [String] :token_url ('/oauth/token') absolute or relative URL path to the Token endpoint
     # @option options [Symbol] :token_method (:post) HTTP method to use to request token (:get, :post, :post_with_query_string)
-    # @option options [Symbol] :auth_scheme (:basic_auth) the authentication scheme (:basic_auth or :request_body)
+    # @option options [Symbol] :auth_scheme (:basic_auth) the authentication scheme (:basic_auth, :request_body, :tls_client_auth, :private_key_jwt)
     # @option options [Hash] :connection_opts ({}) Hash of connection options to pass to initialize Faraday
     # @option options [Boolean] :raise_errors (true) whether to raise an OAuth2::Error on responses with 400+ status codes
     # @option options [Integer] :max_redirects (5) maximum number of redirects to follow

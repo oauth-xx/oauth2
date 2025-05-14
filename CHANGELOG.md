@@ -12,13 +12,16 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 
 ## [2.0.10] - 2025-05-12 ([tag][2.0.10t])
 ### Added
-[!635](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/635) - `.gitlab-ci.yml` file (@jessieay)
-- 20 year certificate for signing gem releases, expires 2045-04-29 (@pboling)
-- Gemspec metadata (@pboling)
-  - funding_uri
-  - news_uri
-  - mailing_list_uri
-- SHA256 and SHA512 Checksums for release (@pboling)
+- [!635](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/635) - `.gitlab-ci.yml` file (@jessieay)
+- [!643](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/643) - Add token_name option (@pboling)
+    - Specify the parameter name that identifies the access token
+- [!642](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/642) - 20 year certificate for signing gem releases, expires 2045-04-29 (@pboling)
+  - Gemspec metadata (@pboling)
+    - funding_uri
+    - news_uri
+    - mailing_list_uri
+  - SHA256 and SHA512 Checksums for release (@pboling)
+- [#638](https://gitlab.com/oauth-xx/oauth2/-/issues/638) - Documentation of support for ILO Fundamental Principles of Rights at Work
 ### Changed
 - Gem releases are now cryptographically signed, with a 20-year cert (@pboling)
   - Allow linux distros to build release without signing, as their package managers sign independently
@@ -29,6 +32,10 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 [!639](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/639) - Only instantiate `OAuth2::Error` if `raise_errors` option is `true` (@glytch2)
 [!640](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/640) - `README.md` documentation fix (@martinezcoder)
 [!641](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/641) - Do not include sensitive information in the `inspect` (@manuelvanrijn)
+[#645](https://gitlab.com/oauth-xx/oauth2/-/issues/645) - Response no longer becomes a snaky hash (@pboling)
+[#639](https://gitlab.com/oauth-xx/oauth2/-/issues/639) - AccessToken#to_hash is now serializable, just a regular Hash (@pboling)
+[#95](https://gitlab.com/oauth-xx/oauth2/-/issues/95) - restoring an access token via `AccessToken#from_hash` (@pboling)
+  - This was a 13 year old bug report. 😘
 
 ## [2.0.9] - 2022-09-16 ([tag][2.0.9t])
 ### Added
