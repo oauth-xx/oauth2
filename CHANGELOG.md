@@ -34,6 +34,8 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 [!641](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/641) - Do not include sensitive information in the `inspect` (@manuelvanrijn)
 [#645](https://gitlab.com/oauth-xx/oauth2/-/issues/645) - Response no longer becomes a snaky hash (@pboling)
 [#639](https://gitlab.com/oauth-xx/oauth2/-/issues/639) - AccessToken#to_hash is now serializable, just a regular Hash (@pboling)
+[#95](https://gitlab.com/oauth-xx/oauth2/-/issues/95) - restoring an access token via `AccessToken#from_hash` (@pboling)
+  - This was a 13 year old bug report. 😘
 
 ## [2.0.9] - 2022-09-16 ([tag][2.0.9t])
 ### Added
