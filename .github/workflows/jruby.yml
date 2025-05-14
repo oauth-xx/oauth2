@@ -36,15 +36,6 @@ jobs:
     strategy:
       matrix:
         include:
-          # TODO: truffleruby does not support upgrading rubygems; VALIDATE ASSUMPTION that same applies to JRuby
-          # jruby-9.1 (targets Ruby 2.3 compatibility)
-          - ruby: "jruby-9.1"
-            appraisal: "ruby-2-3"
-            exec_cmd: "rake test"
-            gemfile: "Appraisal.root"
-            rubygems: default
-            bundler: default
-
           # jruby-9.2 (targets Ruby 2.5 compatibility)
           - ruby: "jruby-9.2"
             appraisal: "ruby-2-5"
