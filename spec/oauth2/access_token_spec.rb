@@ -144,7 +144,7 @@ RSpec.describe OAuth2::AccessToken do
     end
 
     context "with options" do
-      subject(:target) { described_class.new(client, token, **options) }
+      subject(:target) { described_class.new(client, token, options) }
 
       context "with body mode" do
         let(:mode) { :body }
