@@ -23,25 +23,22 @@ module OAuth2
     attr_writer :connection
     filtered_attributes :secret
 
-    # Instantiate a new OAuth 2.0 client using the
-    # Client ID and Client Secret registered to your
-    # application.
+    # Initializes a new OAuth2::Client instance using the Client ID and Client Secret registered to your application.
     #
     # @param [String] client_id the client_id value
     # @param [String] client_secret the client_secret value
-    # @param [Hash] options the options to create the client with
+    # @param [Hash] options the options to configure the client
     # @option options [String] :site the OAuth2 provider site host
-    # @option options [String] :redirect_uri the absolute URI to the Redirection Endpoint for use in authorization grants and token exchange
     # @option options [String] :authorize_url ('/oauth/authorize') absolute or relative URL path to the Authorization endpoint
     # @option options [String] :token_url ('/oauth/token') absolute or relative URL path to the Token endpoint
     # @option options [Symbol] :token_method (:post) HTTP method to use to request token (:get, :post, :post_with_query_string)
-    # @option options [Symbol] :auth_scheme (:basic_auth) HTTP method to use to authorize request (:basic_auth or :request_body)
-    # @option options [Hash] :connection_opts ({}) Hash of connection options to pass to initialize Faraday with
-    # @option options [FixNum] :max_redirects (5) maximum number of redirects to follow
-    # @option options [Boolean] :raise_errors (true) whether or not to raise an OAuth2::Error on responses with 400+ status codes
-    # @option options [Logger] :logger (::Logger.new($stdout)) which logger to use when OAUTH_DEBUG is enabled
-    # @option options [Proc] :extract_access_token proc that takes the client and the response Hash and extracts the access token from the response (DEPRECATED)
-    # @option options [Class] :access_token_class [Class] class of access token for easier subclassing OAuth2::AccessToken, @version 2.0+
+    # @option options [Symbol] :auth_scheme (:basic_auth) the authentication scheme (:basic_auth or :request_body)
+    # @option options [Hash] :connection_opts ({}) Hash of connection options to pass to initialize Faraday
+    # @option options [Boolean] :raise_errors (true) whether to raise an OAuth2::Error on responses with 400+ status codes
+    # @option options [Integer] :max_redirects (5) maximum number of redirects to follow
+    # @option options [Logger] :logger (::Logger.new($stdout)) Logger instance for HTTP request/response output; requires OAUTH_DEBUG to be true
+    # @option options [Class] :access_token_class (AccessToken) class to use for access tokens; you can subclass OAuth2::AccessToken, @version 2.0+
+    # @option options [Hash] :ssl SSL options for Faraday
     # @yield [builder] The Faraday connection builder
     def initialize(client_id, client_secret, options = {}, &block)
       opts = options.dup
@@ -113,8 +110,8 @@ module OAuth2
     # @option opts [Hash] :params additional query parameters for the URL of the request
     # @option opts [Hash, String] :body the body of the request
     # @option opts [Hash] :headers http request headers
-    # @option opts [Boolean] :raise_errors whether or not to raise an OAuth2::Error on 400+ status
-    #   code response for this request.  Will default to client option
+    # @option opts [Boolean] :raise_errors whether to raise an OAuth2::Error on 400+ status
+    #   code response for this request.  Overrides the client instance setting.
     # @option opts [Symbol] :parse @see Response::initialize
     # @option opts [true, false] :snaky (true) @see Response::initialize
     # @yield [req] @see Faraday::Connection#run_request
@@ -155,15 +152,29 @@ module OAuth2
       end
     end
 
-    # Initializes an AccessToken by making a request to the token endpoint
+    # Retrieves an access token from the token endpoint using the specified parameters
     #
-    # @param params [Hash] a Hash of params for the token endpoint, except:
-    #   @option params [Symbol] :parse @see Response#initialize
-    #   @option params [true, false] :snaky (true) @see Response#initialize
-    # @param access_token_opts [Hash] access token options, to pass to the AccessToken object
-    # @param extract_access_token [Proc] proc that extracts the access token from the response (DEPRECATED)
-    # @yield [req] @see Faraday::Connection#run_request
-    # @return [AccessToken] the initialized AccessToken
+    # @param [Hash] params a Hash of params for the token endpoint
+    #   * params can include a 'headers' key with a Hash of request headers
+    #   * params can include a 'parse' key with the Symbol name of response parsing strategy (default: :automatic)
+    #   * params can include a 'snaky' key to control snake_case conversion (default: false)
+    # @param [Hash] access_token_opts options that will be passed to the AccessToken initialization
+    # @param [Proc] extract_access_token (deprecated) a proc that can extract the access token from the response
+    # @yield [opts] The block is passed the options being used to make the request
+    # @yieldparam [Hash] opts options being passed to the http library
+    #
+    # @return [AccessToken, nil] the initialized AccessToken instance, or nil if token extraction fails
+    #   and raise_errors is false
+    #
+    # @note The extract_access_token parameter is deprecated and will be removed in oauth2 v3.
+    #   Use access_token_class on initialization instead.
+    #
+    # @example
+    #   client.get_token(
+    #     'grant_type' => 'authorization_code',
+    #     'code' => 'auth_code_value',
+    #     'headers' => {'Authorization' => 'Basic ...'}
+    #   )
     def get_token(params, access_token_opts = {}, extract_access_token = nil, &block)
       warn("OAuth2::Client#get_token argument `extract_access_token` will be removed in oauth2 v3. Refactor to use `access_token_class` on #initialize.") if extract_access_token
       extract_access_token ||= options[:extract_access_token]
@@ -176,7 +187,7 @@ module OAuth2
       }
       if options[:token_method] == :post
 
-        # NOTE: If proliferation of request types continues we should implement a parser solution for Request,
+        # NOTE: If proliferation of request types continues, we should implement a parser solution for Request,
         #       just like we have with Response.
         request_opts[:body] = if headers["Content-Type"] == "application/json"
           params.to_json
@@ -269,6 +280,20 @@ module OAuth2
 
   private
 
+    # Processes and transforms the input parameters for OAuth requests
+    #
+    # @param [Hash] params the input parameters to process
+    # @option params [Symbol, nil] :parse (:automatic) parsing strategy for the response
+    # @option params [Boolean] :snaky (true) whether to convert response keys to snake_case
+    # @option params [Hash] :headers HTTP headers for the request
+    #
+    # @return [Array<(Symbol, Boolean, Hash, Hash)>] Returns an array containing:
+    #   - [Symbol, nil] parse strategy
+    #   - [Boolean] snaky flag for response key transformation
+    #   - [Hash] processed parameters
+    #   - [Hash] HTTP headers
+    #
+    # @api private
     def parse_snaky_params_headers(params)
       params = params.map do |key, value|
         if RESERVED_PARAM_KEYS.include?(key)
@@ -285,6 +310,26 @@ module OAuth2
       [parse, snaky, params, headers]
     end
 
+    # Executes an HTTP request with error handling and response processing
+    #
+    # @param [Symbol] verb the HTTP method to use (:get, :post, :put, :delete)
+    # @param [String] url the URL for the request
+    # @param [Hash] opts the request options
+    # @option opts [Hash] :body the request body
+    # @option opts [Hash] :headers the request headers
+    # @option opts [Hash] :params the query parameters to append to the URL
+    # @option opts [Symbol, nil] :parse (:automatic) parsing strategy for the response
+    # @option opts [Boolean] :snaky (true) whether to convert response keys to snake_case
+    #
+    # @yield [req] gives access to the request object before sending
+    # @yieldparam [Faraday::Request] req the request object that can be modified
+    #
+    # @return [OAuth2::Response] the response wrapped in an OAuth2::Response object
+    #
+    # @raise [OAuth2::ConnectionError] when there's a network error
+    # @raise [OAuth2::TimeoutError] when the request times out
+    #
+    # @api private
     def execute_request(verb, url, opts = {})
       url = connection.build_url(url).to_s
 
@@ -312,6 +357,20 @@ module OAuth2
       Authenticator.new(id, secret, options[:auth_scheme])
     end
 
+    # Parses the OAuth response and builds an access token using legacy extraction method
+    #
+    # @deprecated Use {#parse_response} instead
+    #
+    # @param [OAuth2::Response] response the OAuth2::Response from the token endpoint
+    # @param [Hash] access_token_opts options to pass to the AccessToken initialization
+    # @param [Proc] extract_access_token proc to extract the access token from response
+    #
+    # @return [AccessToken, nil] the initialized AccessToken if successful, nil if extraction fails
+    #   and raise_errors option is false
+    #
+    # @raise [OAuth2::Error] if response indicates an error and raise_errors option is true
+    #
+    # @api private
     def parse_response_legacy(response, access_token_opts, extract_access_token)
       access_token = build_access_token_legacy(response, access_token_opts, extract_access_token)
 
@@ -325,6 +384,16 @@ module OAuth2
       nil
     end
 
+    # Parses the OAuth response and builds an access token using the configured access token class
+    #
+    # @param [OAuth2::Response] response the OAuth2::Response from the token endpoint
+    # @param [Hash] access_token_opts options to pass to the AccessToken initialization
+    #
+    # @return [AccessToken] the initialized AccessToken instance
+    #
+    # @raise [OAuth2::Error] if the response is empty/invalid and the raise_errors option is true
+    #
+    # @api private
     def parse_response(response, access_token_opts)
       access_token_class = options[:access_token_class]
       data = response.parsed
@@ -339,18 +408,36 @@ module OAuth2
       build_access_token(response, access_token_opts, access_token_class)
     end
 
-    # Builds the access token from the response of the HTTP call
+    # Creates an access token instance from response data using the specified token class
     #
-    # @return [AccessToken] the initialized AccessToken
+    # @param [OAuth2::Response] response the OAuth2::Response from the token endpoint
+    # @param [Hash] access_token_opts additional options to pass to the AccessToken initialization
+    # @param [Class] access_token_class the class that should be used to create access token instances
+    #
+    # @return [AccessToken] an initialized AccessToken instance with response data
+    #
+    # @note If the access token class responds to response=, the full response object will be set
+    #
+    # @api private
     def build_access_token(response, access_token_opts, access_token_class)
       access_token_class.from_hash(self, response.parsed.merge(access_token_opts)).tap do |access_token|
         access_token.response = response if access_token.respond_to?(:response=)
       end
     end
 
-    # Builds the access token from the response of the HTTP call with legacy extract_access_token
+    # Builds an access token using a legacy extraction proc
     #
-    # @return [AccessToken] the initialized AccessToken
+    # @deprecated Use {#build_access_token} instead
+    #
+    # @param [OAuth2::Response] response the OAuth2::Response from the token endpoint
+    # @param [Hash] access_token_opts additional options to pass to the access token extraction
+    # @param [Proc] extract_access_token a proc that takes client and token hash as arguments
+    #   and returns an access token instance
+    #
+    # @return [AccessToken, nil] the access token instance if extraction succeeds,
+    #   nil if any error occurs during extraction
+    #
+    # @api private
     def build_access_token_legacy(response, access_token_opts, extract_access_token)
       extract_access_token.call(self, response.parsed.merge(access_token_opts))
     rescue StandardError
