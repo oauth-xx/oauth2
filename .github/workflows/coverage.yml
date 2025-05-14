@@ -12,7 +12,8 @@ env:
 on:
   push:
     branches:
-      - 'master'
+      - 'main'
+      - '*-stable'
     tags:
       - '!*' # Do not execute on tags
   pull_request:
