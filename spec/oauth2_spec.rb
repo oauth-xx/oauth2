@@ -2,7 +2,7 @@
 
 RSpec.describe OAuth2 do
   it "has a default config for silence_extra_tokens_warning" do
-    expect(described_class.config.silence_extra_tokens_warning).to eq(false)
+    expect(described_class.config.silence_extra_tokens_warning).to eq(true)
   end
 
   describe ".configure" do

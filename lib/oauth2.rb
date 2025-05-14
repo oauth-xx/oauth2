@@ -25,7 +25,10 @@ require "oauth2/response"
 
 # The namespace of this library
 module OAuth2
-  DEFAULT_CONFIG = SnakyHash::SymbolKeyed.new(silence_extra_tokens_warning: false)
+  OAUTH_DEBUG = ENV.fetch("OAUTH_DEBUG", "false").casecmp("true").zero?
+  DEFAULT_CONFIG = SnakyHash::SymbolKeyed.new(
+    silence_extra_tokens_warning: !OAUTH_DEBUG,
+  )
   @config = DEFAULT_CONFIG.dup
   class << self
     attr_accessor :config
