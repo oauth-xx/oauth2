@@ -1,9 +1,10 @@
 # frozen_string_literal: true
 
 RSpec.describe OAuth2::AccessToken do
-  subject { described_class.new(client, token) }
+  subject { described_class.new(client, token, token_options) }
 
   let(:base_options) { {site: "https://api.example.com"} }
+  let(:token_options) { {} }
   let(:options) { {} }
   let(:token) { "monkey" }
   let(:refresh_body) { JSON.dump(access_token: "refreshed_foo", expires_in: 600, refresh_token: "refresh_bar") }
@@ -32,6 +33,9 @@ RSpec.describe OAuth2::AccessToken do
         :refresh_token => "foobar",
         :expires_at => Time.now.to_i + 200,
         "foo" => "bar",
+        :header_format => "Bearer %",
+        :mode => :header,
+        :param_name => "access_token",
       }
     end
 
@@ -744,9 +748,34 @@ RSpec.describe OAuth2::AccessToken do
 
   describe "#to_hash" do
     it "return a hash equal to the hash used to initialize access token" do
-      hash = {:access_token => token, :refresh_token => "foobar", :expires_at => Time.now.to_i + 200, "foo" => "bar"}
+      hash = {
+        :access_token => token,
+        :refresh_token => "foobar",
+        :expires_at => Time.now.to_i + 200,
+        :header_format => "Bearer %",
+        :mode => :header,
+        :param_name => "access_token",
+        "foo" => "bar",
+      }
       access_token = described_class.from_hash(client, hash.clone)
       expect(access_token.to_hash).to eq(hash)
+    end
+
+    context "with token_name" do
+      it "return a hash equal to the hash used to initialize access token" do
+        hash = {
+          :access_token => "",
+          :refresh_token => "foobar",
+          :expires_at => Time.now.to_i + 200,
+          :header_format => "Bearer %",
+          :mode => :header,
+          :param_name => "access_token",
+          :token_name => "banana_face",
+          "foo" => "bar",
+        }
+        access_token = described_class.from_hash(client, hash.clone)
+        expect(access_token.to_hash).to eq(hash)
+      end
     end
   end
 

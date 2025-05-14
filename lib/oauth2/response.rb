@@ -90,7 +90,10 @@ module OAuth2
           end
         end
 
-      @parsed = SnakyHash::StringKeyed.new(@parsed) if options[:snaky] && @parsed.is_a?(Hash)
+      if options[:snaky] && @parsed.is_a?(Hash)
+        parsed = SnakyHash::StringKeyed.new(@parsed)
+        @parsed = parsed.to_h
+      end
 
       @parsed
     end
