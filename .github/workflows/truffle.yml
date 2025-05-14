@@ -37,14 +37,6 @@ jobs:
       matrix:
         include:
           # NOTE: truffleruby does not support upgrading rubygems.
-          # truffleruby-23.0 (targets Ruby 3.1 compatibility)
-          - ruby: "truffleruby-23.0"
-            appraisal: "ruby-3-1"
-            exec_cmd: "rake test"
-            gemfile: "Appraisal.root"
-            rubygems: default
-            bundler: default
-
           # truffleruby-23.1 (targets Ruby 3.2 compatibility)
           - ruby: "truffleruby-23.1"
             appraisal: "ruby-3-2"
