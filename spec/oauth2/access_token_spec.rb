@@ -50,6 +50,10 @@ RSpec.describe OAuth2::AccessToken do
         end
       end
 
+      before do
+        stub_const("OAuth2::OAUTH_DEBUG", true)
+      end
+
       it "warns on STDERR" do
         msg = <<-MSG.lstrip
             OAuth2::AccessToken.from_hash: `hash` contained more than one 'token' key ([:access_token, :id_token]); using :access_token.
@@ -87,6 +91,10 @@ RSpec.describe OAuth2::AccessToken do
         capture(:stderr) do
           target
         end
+      end
+
+      before do
+        stub_const("OAuth2::OAUTH_DEBUG", true)
       end
 
       let(:hash) do
