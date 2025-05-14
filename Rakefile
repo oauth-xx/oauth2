@@ -42,7 +42,8 @@ begin
   require "rubocop/lts"
 
   Rubocop::Lts.install_tasks
-  defaults << "rubocop_gradual"
+  # Make autocorrect the default rubocop task
+  defaults << "rubocop_gradual:autocorrect"
 rescue LoadError
   desc("(stub) rubocop_gradual is unavailable")
   task(:rubocop_gradual) do

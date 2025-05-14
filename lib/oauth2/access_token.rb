@@ -15,16 +15,47 @@ module OAuth2
     class << self
       # Initializes an AccessToken from a Hash
       #
-      # @param [Client] client the OAuth2::Client instance
-      # @param [Hash] hash a hash of AccessToken property values
-      # @option hash [String, Symbol] 'access_token', 'id_token', 'token', :access_token, :id_token, or :token the access token
-      # @return [AccessToken] the initialized AccessToken
+      # @param [OAuth2::Client] client the OAuth2::Client instance
+      # @param [Hash] hash a hash containing the token and other properties
+      # @option hash [String] 'access_token' the access token value
+      # @option hash [String] 'id_token' alternative key for the access token value
+      # @option hash [String] 'token' alternative key for the access token value
+      # @option hash [String] 'refresh_token' (optional) the refresh token value
+      # @option hash [Integer, String] 'expires_in' (optional) number of seconds until token expires
+      # @option hash [Integer, String] 'expires_at' (optional) epoch time in seconds when token expires
+      # @option hash [Integer, String] 'expires_latency' (optional) seconds to reduce token validity by
+      #
+      # @return [OAuth2::AccessToken] the initialized AccessToken
+      #
+      # @note The method will use the first found token key in the following order:
+      #   'access_token', 'id_token', 'token' (or their symbolic versions)
+      # @note If multiple token keys are present, a warning will be issued unless
+      #   OAuth2.config.silence_extra_tokens_warning is true
+      # @note For "soon-to-expire"/"clock-skew" functionality see the `:expires_latency` option.
+      # @mote If snaky key conversion is being used, token_name needs to match the converted key.
+      #
+      # @example
+      #   hash = { 'access_token' => 'token_value', 'refresh_token' => 'refresh_value' }
+      #   access_token = OAuth2::AccessToken.from_hash(client, hash)
       def from_hash(client, hash)
         fresh = hash.dup
-        supported_keys = TOKEN_KEY_LOOKUP & fresh.keys
-        key = supported_keys[0]
-        extra_tokens_warning(supported_keys, key)
-        token = fresh.delete(key)
+        # If token_name is present, then use that key name
+        if fresh.key?(:token_name)
+          key = fresh[:token_name]
+          if key.nil? || !fresh.key?(key)
+            warn(%[
+OAuth2::AccessToken#from_hash key mismatch.
+Custom token_name (#{key}) does match any keys (#{fresh.keys})
+You may need to set `snaky: false`. See inline documentation for more info.
+            ])
+          end
+        else
+          # Otherwise, if one of the supported default keys is present, use whichever has precedence
+          supported_keys = TOKEN_KEY_LOOKUP & fresh.keys
+          key = supported_keys[0]
+          extra_tokens_warning(supported_keys, key)
+        end
+        token = fresh.delete(key) || ""
         new(client, token, fresh)
       end
 
@@ -50,6 +81,16 @@ module OAuth2
 
     # Initialize an AccessToken
     #
+    # @note For "soon-to-expire"/"clock-skew" functionality see the `:expires_latency` option.
+    # @note If no token is provided, the AccessToken will be considered invalid.
+    #   This is to prevent the possibility of a token being accidentally
+    #   created with no token value.
+    #   If you want to create an AccessToken with no token value,
+    #   you can pass in an empty string or nil for the token value.
+    #   If you want to create an AccessToken with no token value and
+    #   no refresh token, you can pass in an empty string or nil for the
+    #   token value and nil for the refresh token, and `raise_errors: false`.
+    #
     # @param [Client] client the OAuth2::Client instance
     # @param [String] token the Access Token value (optional, may not be used in refresh flows)
     # @param [Hash] opts the options to create the Access Token with
@@ -62,10 +103,11 @@ module OAuth2
     # @option opts [String] :header_format ('Bearer %s') the string format to use for the Authorization header
     # @option opts [String] :param_name ('access_token') the parameter name to use for transmission of the
     #    Access Token value in :body or :query transmission mode
+    # @option opts [String] :token_name (nil) the name of the response parameter that identifies the access token
+    #    When nil one of TOKEN_KEY_LOOKUP will be used
     def initialize(client, token, opts = {})
       @client = client
       @token = token.to_s
-
       opts = opts.dup
       %i[refresh_token expires_in expires_at expires_latency].each do |arg|
         instance_variable_set("@#{arg}", opts.delete(arg) || opts.delete(arg.to_s))
@@ -91,6 +133,8 @@ module OAuth2
         header_format: opts.delete(:header_format) || "Bearer %s",
         param_name: opts.delete(:param_name) || "access_token",
       }
+      @options[:token_name] = opts.delete(:token_name) if opts.key?(:token_name)
+
       @params = opts
     end
 
@@ -139,9 +183,26 @@ module OAuth2
 
     # Convert AccessToken to a hash which can be used to rebuild itself with AccessToken.from_hash
     #
+    # @note Don't return expires_latency because it has already been deducted from expires_at
+    #
     # @return [Hash] a hash of AccessToken property values
     def to_hash
-      params.merge(access_token: token, refresh_token: refresh_token, expires_at: expires_at)
+      hsh = {
+        access_token: token,
+        refresh_token: refresh_token,
+        expires_at: expires_at,
+        mode: options[:mode],
+        header_format: options[:header_format],
+        param_name: options[:param_name],
+      }
+      hsh[:token_name] = options[:token_name] if options.key?(:token_name)
+      # TODO: Switch when dropping Ruby < 2.5 support
+      # params.transform_keys(&:to_sym) # Ruby 2.5 only
+      # Old Ruby transform_keys alternative:
+      sheesh = @params.each_with_object({}) { |(k, v), memo|
+        memo[k.to_sym] = v
+      }
+      sheesh.merge(hsh)
     end
 
     # Make a request with the Access Token

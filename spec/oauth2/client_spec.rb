@@ -488,6 +488,33 @@ RSpec.describe OAuth2::Client do
         it_behaves_like "failed connection handler"
       end
     end
+
+    context "when snaky: true" do
+      subject(:response_body) do
+        response = instance.request(:post, "/reflect", **req_options)
+        response.body
+      end
+
+      let(:req_options) {
+        {
+          headers: {"Content-Type" => "application/json"},
+          body: {foo: "bar"},
+          snaky: true,
+        }
+      }
+
+      it "body a body" do
+        expect(response_body).to eq({foo: "bar"})
+      end
+
+      it "body is a standard hash" do
+        expect(response_body).to be_a(Hash)
+      end
+
+      it "body is not a SnakyHash" do
+        expect(response_body).not_to be_a(SnakyHash)
+      end
+    end
   end
 
   describe "#get_token" do
@@ -557,33 +584,285 @@ RSpec.describe OAuth2::Client do
       end
     end
 
-    context "when snaky is falsy, but response is snaky" do
-      it "returns a configured AccessToken" do
+    context "when snaky" do
+      subject(:token) do
         client = stubbed_client do |stub|
           stub.post("/oauth/token") do
-            [200, {"Content-Type" => "application/json"}, JSON.dump("access_token" => "the-token")]
+            [200, {"Content-Type" => "application/json"}, response_body]
           end
         end
 
-        token = client.get_token(snaky: false)
-        expect(token).to be_a OAuth2::AccessToken
-        expect(token.token).to eq("the-token")
-        expect(token.response.parsed.to_h).to eq("access_token" => "the-token")
+        client.get_token(params, access_token_opts)
       end
-    end
 
-    context "when snaky is falsy, but response is not snaky" do
-      it "returns a configured AccessToken" do
-        client = stubbed_client do |stub|
-          stub.post("/oauth/token") do
-            [200, {"Content-Type" => "application/json"}, JSON.dump("accessToken" => "the-token")]
+      let(:access_token_opts) { {} }
+      let(:response_body) { JSON.dump("access_token" => "the-token") }
+
+      context "when falsy" do
+        let(:params) { {snaky: false} }
+
+        context "when response is underscored" do
+          context "without token_name" do
+            it "returns a configured AccessToken" do
+              expect(token).to be_a OAuth2::AccessToken
+              expect(token.token).to eq("the-token")
+              expect(token.response.parsed.to_h).to eq("access_token" => "the-token")
+            end
+
+            it "parsed is a Hash" do
+              expect(token).to be_a OAuth2::AccessToken
+              expect(token.token).to eq("the-token")
+              expect(token.response.parsed).to be_a(Hash)
+            end
+
+            it "parsed is not a SnakyHash" do
+              expect(token).to be_a OAuth2::AccessToken
+              expect(token.token).to eq("the-token")
+              expect(token.response.parsed).not_to be_a(SnakyHash)
+            end
+          end
+
+          context "with token_name" do
+            let(:access_token_opts) { {token_name: "access_token"} }
+
+            it "returns a configured AccessToken" do
+              expect(token).to be_a OAuth2::AccessToken
+              expect(token.token).to eq("the-token")
+              expect(token.response.parsed.to_h).to eq("access_token" => "the-token")
+            end
+
+            it "parsed is a Hash" do
+              expect(token).to be_a OAuth2::AccessToken
+              expect(token.token).to eq("the-token")
+              expect(token.response.parsed).to be_a(Hash)
+            end
+
+            it "parsed is not a SnakyHash" do
+              expect(token).to be_a OAuth2::AccessToken
+              expect(token.token).to eq("the-token")
+              expect(token.response.parsed).not_to be_a(SnakyHash)
+            end
+
+            context "with alternate token named" do
+              let(:access_token_opts) { {token_name: "banana_face"} }
+              let(:response_body) { JSON.dump("banana_face" => "the-token") }
+
+              it "parsed is a Hash" do
+                expect(token).to be_a OAuth2::AccessToken
+                expect(token.token).to eq("the-token")
+                expect(token.response.parsed).to be_a(Hash)
+              end
+
+              it "parsed is not a SnakyHash" do
+                expect(token).to be_a OAuth2::AccessToken
+                expect(token.token).to eq("the-token")
+                expect(token.response.parsed).not_to be_a(SnakyHash)
+              end
+
+              it "returns a snake-cased key" do
+                expect(token).to be_a OAuth2::AccessToken
+                expect(token.token).to eq("the-token")
+                expect(token.response.parsed.to_h).to eq("banana_face" => "the-token")
+              end
+            end
           end
         end
 
-        token = client.get_token({snaky: false}, {param_name: "accessToken"})
-        expect(token).to be_a OAuth2::AccessToken
-        expect(token.token).to eq("the-token")
-        expect(token.response.parsed.to_h).to eq("accessToken" => "the-token")
+        context "when response is camelcased" do
+          let(:access_token_opts) { {token_name: "accessToken"} }
+          let(:response_body) { JSON.dump("accessToken" => "the-token") }
+
+          context "without token_name" do
+            it "parsed is a Hash" do
+              expect(token).to be_a OAuth2::AccessToken
+              expect(token.token).to eq("the-token")
+              expect(token.response.parsed).to be_a(Hash)
+            end
+
+            it "parsed is not a SnakyHash" do
+              expect(token).to be_a OAuth2::AccessToken
+              expect(token.token).to eq("the-token")
+              expect(token.response.parsed).not_to be_a(SnakyHash)
+            end
+
+            it "returns a configured AccessToken" do
+              expect(token).to be_a OAuth2::AccessToken
+              expect(token.token).to eq("the-token")
+              expect(token.response.parsed.to_h).to eq("accessToken" => "the-token")
+            end
+          end
+
+          context "with token_name" do
+            let(:access_token_opts) { {token_name: "accessToken"} }
+
+            it "returns a configured AccessToken" do
+              expect(token).to be_a OAuth2::AccessToken
+              expect(token.token).to eq("the-token")
+              expect(token.response.parsed.to_h).to eq("accessToken" => "the-token")
+            end
+
+            it "parsed is a Hash" do
+              expect(token).to be_a OAuth2::AccessToken
+              expect(token.token).to eq("the-token")
+              expect(token.response.parsed).to be_a(Hash)
+            end
+
+            it "parsed is not a SnakyHash" do
+              expect(token).to be_a OAuth2::AccessToken
+              expect(token.token).to eq("the-token")
+              expect(token.response.parsed).not_to be_a(SnakyHash)
+            end
+
+            context "with alternate token named" do
+              let(:access_token_opts) { {token_name: "bananaFace"} }
+              let(:response_body) { JSON.dump("bananaFace" => "the-token") }
+
+              it "parsed is a Hash" do
+                expect(token).to be_a OAuth2::AccessToken
+                expect(token.token).to eq("the-token")
+                expect(token.response.parsed).to be_a(Hash)
+              end
+
+              it "parsed is not a SnakyHash" do
+                expect(token).to be_a OAuth2::AccessToken
+                expect(token.token).to eq("the-token")
+                expect(token.response.parsed).not_to be_a(SnakyHash)
+              end
+
+              it "returns a snake-cased key" do
+                expect(token).to be_a OAuth2::AccessToken
+                expect(token.token).to eq("the-token")
+                expect(token.response.parsed.to_h).to eq("bananaFace" => "the-token")
+              end
+            end
+          end
+        end
+      end
+
+      context "when truthy" do
+        let(:params) { {snaky: true} }
+
+        context "when response is snake-cased" do
+          context "with token_name" do
+            let(:access_token_opts) { {token_name: "access_token"} }
+
+            it "parsed is a Hash" do
+              expect(token).to be_a OAuth2::AccessToken
+              expect(token.token).to eq("the-token")
+              expect(token.response.parsed).to be_a(Hash)
+            end
+
+            it "parsed is not a SnakyHash" do
+              expect(token).to be_a OAuth2::AccessToken
+              expect(token.token).to eq("the-token")
+              expect(token.response.parsed).not_to be_a(SnakyHash)
+            end
+
+            it "returns a snake-cased key" do
+              expect(token).to be_a OAuth2::AccessToken
+              expect(token.token).to eq("the-token")
+              expect(token.response.parsed.to_h).to eq("access_token" => "the-token")
+            end
+
+            context "with alternate token named" do
+              let(:access_token_opts) { {token_name: "banana_face"} }
+              let(:response_body) { JSON.dump("banana_face" => "the-token") }
+
+              it "parsed is a Hash" do
+                expect(token).to be_a OAuth2::AccessToken
+                expect(token.token).to eq("the-token")
+                expect(token.response.parsed).to be_a(Hash)
+              end
+
+              it "parsed is not a SnakyHash" do
+                expect(token).to be_a OAuth2::AccessToken
+                expect(token.token).to eq("the-token")
+                expect(token.response.parsed).not_to be_a(SnakyHash)
+              end
+
+              it "returns a snake-cased key" do
+                expect(token).to be_a OAuth2::AccessToken
+                expect(token.token).to eq("the-token")
+                expect(token.response.parsed.to_h).to eq("banana_face" => "the-token")
+              end
+            end
+          end
+
+          context "without token_name" do
+            it "returns a configured AccessToken" do
+              expect(token).to be_a OAuth2::AccessToken
+              expect(token.token).to eq("the-token")
+              expect(token.response.parsed.to_h).to eq("access_token" => "the-token")
+            end
+
+            it "parsed is a Hash" do
+              expect(token).to be_a OAuth2::AccessToken
+              expect(token.token).to eq("the-token")
+              expect(token.response.parsed).to be_a(Hash)
+            end
+
+            it "parsed is not a SnakyHash" do
+              expect(token).to be_a OAuth2::AccessToken
+              expect(token.token).to eq("the-token")
+              expect(token.response.parsed).not_to be_a(SnakyHash)
+            end
+          end
+        end
+
+        context "when response is camel-cased" do
+          let(:response_body) { JSON.dump("accessToken" => "the-token") }
+
+          context "with token_name" do
+            let(:access_token_opts) { {token_name: "accessToken"} }
+
+            it "raises an Error because snaky has renamed the key" do
+              block_is_expected.to raise_error(OAuth2::Error)
+            end
+
+            context "with alternate snaky token named" do
+              let(:access_token_opts) { {token_name: "banana_butter_cake"} }
+              let(:response_body) { JSON.dump("banana-butterCake" => "the-token") }
+
+              it "parsed is a Hash" do
+                expect(token).to be_a OAuth2::AccessToken
+                expect(token.token).to eq("the-token")
+                expect(token.response.parsed).to be_a(Hash)
+              end
+
+              it "parsed is not a SnakyHash" do
+                expect(token).to be_a OAuth2::AccessToken
+                expect(token.token).to eq("the-token")
+                expect(token.response.parsed).not_to be_a(SnakyHash)
+              end
+
+              it "returns a snake-cased key" do
+                expect(token).to be_a OAuth2::AccessToken
+                expect(token.token).to eq("the-token")
+                expect(token.response.parsed.to_h).to eq("banana_butter_cake" => "the-token")
+              end
+            end
+          end
+
+          context "without token_name" do
+            it "parsed is a Hash" do
+              expect(token).to be_a OAuth2::AccessToken
+              expect(token.token).to eq("the-token")
+              expect(token.response.parsed).to be_a(Hash)
+            end
+
+            it "parsed is not a SnakyHash" do
+              expect(token).to be_a OAuth2::AccessToken
+              expect(token.token).to eq("the-token")
+              expect(token.response.parsed).not_to be_a(SnakyHash)
+            end
+
+            it "returns a snake-cased key" do
+              expect(token).to be_a OAuth2::AccessToken
+              expect(token.token).to eq("the-token")
+              expect(token.response.parsed.to_h).to eq("access_token" => "the-token")
+            end
+          end
+        end
       end
     end
 
