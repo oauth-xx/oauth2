@@ -62,10 +62,11 @@ OAuth2::Client.new(
   "REDMOND_CLIENT_ID", # client_id
   "REDMOND_CLIENT_SECRET", # client_secret
   auth_scheme: :request_body, # Other modes are supported: :basic_auth, :tls_client_auth, :private_key_jwt
-  token_url: "oauth2/token", # relative path, except with leading `/`, then absolute path 
-  site: "https://login.microsoftonline.com/REDMOND_REDACTED") # The base path for token_url when it is relative
-.client_credentials # There are many other types to choose from!
-.get_token(resource: "REDMOND_RESOURCE_UUID")
+  token_url: "oauth2/token", # relative path, except with leading `/`, then absolute path
+  site: "https://login.microsoftonline.com/REDMOND_REDACTED",
+). # The base path for token_url when it is relative
+  client_credentials. # There are many other types to choose from!
+  get_token(resource: "REDMOND_RESOURCE_UUID")
 ```
 
 NOTE: `header` - The content type specified in the `curl` is already the default!
@@ -342,7 +343,7 @@ client = OAuth2::Client.new(
   site: "https://example.org/nested/directory/on/your/server",
   authorize_url: "/jaunty/authorize/",
   token_url: "/stirrups/access_token",
-  )
+)
 # => #<OAuth2::Client:0x00000001204c8288 @id="client_id", @secret="client_sec...
 client.auth_code.authorize_url(redirect_uri: "http://localhost:8080/oauth2/callback")
 # => "https://example.org/jaunty/authorize/?client_id=client_id&redirect_uri=http%3A%2F%2Flocalhost%3A8080%2Foauth2%2Fcallback&response_type=code"

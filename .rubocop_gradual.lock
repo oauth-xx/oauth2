@@ -1,7 +1,4 @@
 {
-  "README.md:620392337": [
-    [305, 3, 1, "Layout/ClosingParenthesisIndentation: Indent `)` to column 0 (not 2)", 177548]
-  ],
   "bin/bundle:3976421676": [
     [66, 5, 20, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 2485198147],
     [78, 5, 74, "Style/InvertibleUnlessCondition: Prefer `if Gem.rubygems_version >= Gem::Version.new(\"2.7.0\")` over `unless Gem.rubygems_version < Gem::Version.new(\"2.7.0\")`.", 2453573257]
