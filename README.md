@@ -43,6 +43,32 @@ OAuth 2.0 focuses on client developer simplicity while providing specific author
     desktop applications, mobile phones, and living room devices.
 This is a RubyGem for implementing OAuth 2.0 clients (not servers) in Ruby applications.
 
+Quick example: Convert the following `curl` command into a token request using this gem...
+
+```shell
+curl --request POST \
+  --url 'https://login.microsoftonline.com/REDMOND_REDACTED/oauth2/token' \
+  --header 'content-type: application/x-www-form-urlencoded' \
+  --data grant_type=client_credentials \
+  --data client_id=REDMOND_CLIENT_ID \
+  --data client_secret=REDMOND_CLIENT_SECRET \
+  --data resource=REDMOND_RESOURCE_UUID
+```
+
+NOTE: In the ruby version, certain params go in the get_token call, rather than in the client creation.
+
+```ruby
+OAuth2::Client.new(
+  "REDMOND_CLIENT_ID", # client_id
+  "REDMOND_CLIENT_SECRET", # client_secret
+  token_url: "oauth2/token", # relative path, except with leading `/`, then absolute path 
+  site: "https://login.microsoftonline.com/REDMOND_REDACTED") # The base path for token_url when it is relative
+.client_credentials # There are many other types to choose from!
+.get_token(resource: "REDMOND_RESOURCE_UUID")
+```
+
+NOTE: `header` - The content type specified in the `curl` is already the default!
+
 ## 💡 Info you can shake a stick at
 
 * [OAuth 2.0 Spec][oauth2-spec]
@@ -264,6 +290,19 @@ OAuth2.configure do |config|
   config.silence_extra_tokens_warning = true # default: false
 end
 ```
+
+This comes from ambiguity in the spec about which token is the right token.
+Some OAuth 2.0 standards legitimately have multiple tokens.
+You may need to subclass `OAuth2::AccessToken`, or write your own custom alternative to it, and pass it in.
+Specify your custom class with the `access_token_class` option.
+
+If you only need one token you can, as of v2.0.10,
+specify the exact token name you want to extract via the `OAuth2::AccessToken` using
+the `token_name` option.
+
+You'll likely need to do some source diving.
+This gem has 100% test coverage for lines and branches, so the specs are a great place to look for ideas.
+If you have time and energy please contribute to the documentation!
 
 ### `authorize_url` and `token_url` are on site root (Just Works!)
 
