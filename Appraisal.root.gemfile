@@ -1,0 +1,14 @@
+# frozen_string_literal: true
+
+git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
+
+source "https://rubygems.org"
+
+# Appraisal Root Gemfile is for running appraisal to generate the Appraisal Gemfiles
+#   in gemfiles/*gemfile.
+# On CI, we use it for the Appraisal-based builds.
+# We do not load the standard Gemfile, as it is tailored for local development.
+
+gemspec
+
+gem "appraisal", github: "pboling/appraisal", branch: "galtzo"

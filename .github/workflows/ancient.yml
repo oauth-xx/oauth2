@@ -1,7 +1,4 @@
-name: Old MacOS
-
-env:
-  K_SOUP_COV_DO: false
+name: MRI 2.3, 2.4, 2.5 (EOL)
 
 on:
   push:
@@ -15,9 +12,6 @@ on:
       - '*'
   # Allow manually triggering the workflow.
   workflow_dispatch:
-
-permissions:
-  contents: read
 
 # Cancels all previous workflow runs for the same branch that have not yet completed.
 concurrency:
@@ -37,17 +31,30 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # Ruby 2.2
-          - ruby: "ruby-2.2"
-            appraisal: "ruby-2-2"
-            experimental: true
+          # Ruby 2.3
+          - ruby: "ruby-2.3"
+            appraisal: "ruby-2-3"
             exec_cmd: "rake test"
             gemfile: "Appraisal.root"
-            rubygems: '2.7.11'
-            bundler: '1.17.3'
+            rubygems: "3.3.27"
+            bundler: "2.3.27"
 
-    runs-on: macos-10.15
-    continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
+          # Ruby 2.4
+          - ruby: "ruby-2.4"
+            appraisal: "ruby-2-4"
+            exec_cmd: "rake test"
+            gemfile: "Appraisal.root"
+            rubygems: "3.3.27"
+            bundler: "2.3.27"
+
+          # Ruby 2.5
+          - ruby: "ruby-2.5"
+            appraisal: "ruby-2-5"
+            exec_cmd: "rake test"
+            gemfile: "Appraisal.root"
+            rubygems: "3.3.27"
+            bundler: "2.3.27"
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4

@@ -1,4 +1,4 @@
-name: Old MacOS
+name: JRuby
 
 env:
   K_SOUP_COV_DO: false
@@ -34,20 +34,41 @@ jobs:
     env: # $BUNDLE_GEMFILE must be set at job level, so it is set for all steps
       BUNDLE_GEMFILE: ${{ github.workspace }}/${{ matrix.gemfile }}.gemfile
     strategy:
-      fail-fast: false
       matrix:
         include:
-          # Ruby 2.2
-          - ruby: "ruby-2.2"
-            appraisal: "ruby-2-2"
-            experimental: true
+          # TODO: truffleruby does not support upgrading rubygems; VALIDATE ASSUMPTION that same applies to JRuby
+          # jruby-9.1 (targets Ruby 2.3 compatibility)
+          - ruby: "jruby-9.1"
+            appraisal: "ruby-2-3"
             exec_cmd: "rake test"
             gemfile: "Appraisal.root"
-            rubygems: '2.7.11'
-            bundler: '1.17.3'
+            rubygems: default
+            bundler: default
 
-    runs-on: macos-10.15
-    continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
+          # jruby-9.2 (targets Ruby 2.5 compatibility)
+          - ruby: "jruby-9.2"
+            appraisal: "ruby-2-5"
+            exec_cmd: "rake test"
+            gemfile: "Appraisal.root"
+            rubygems: default
+            bundler: default
+
+          # jruby-9.3 (targets Ruby 2.6 compatibility)
+          - ruby: "jruby-9.3"
+            appraisal: "ruby-2-6"
+            exec_cmd: "rake test"
+            gemfile: "Appraisal.root"
+            rubygems: default
+            bundler: default
+
+          # jruby-9.4 (targets Ruby 3.1 compatibility)
+          - ruby: "jruby-9.4"
+            appraisal: "ruby-3-1"
+            exec_cmd: "rake test"
+            gemfile: "Appraisal.root"
+            rubygems: default
+            bundler: default
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4

@@ -1,0 +1,4 @@
+# frozen_string_literal: true
+
+# Last version compatible with Ruby 2.4, and 2.5
+gem "faraday", "~> 1.10", ">= 1.10.4"

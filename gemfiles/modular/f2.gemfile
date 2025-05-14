@@ -1,0 +1,4 @@
+# frozen_string_literal: true
+
+# last version that will install on Ruby 2.6 & 2.7
+gem "faraday", "~> 2.8", ">=2.8.1"

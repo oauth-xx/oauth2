@@ -64,8 +64,9 @@ since that's what all Rubygems use for minimum version compatibility.
 We will run tests on as many of these as possible, in a matrix with each supported major version of `faraday`,
 which means 0.17.3+ (as `f0`), 1.10.x (as `f1`), 2.2.x (as `f2`).
 
-Discrete versions of `faraday` to test against, as of 2022.02.19, with minimum version of Ruby for each:
+Discrete versions of `faraday` to test against, as of 2025.05.14, with minimum version of Ruby for each:
 
+* 2.9.0, Ruby >= 3.0
 * 2.2.0, Ruby >= 2.6
 * 1.10.0, Ruby >= 2.4
 * 0.17.4, Ruby >= 1.9

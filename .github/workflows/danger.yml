@@ -17,13 +17,13 @@ jobs:
       fail-fast: false
       matrix:
         gemfile:
-          - f2
+          - vanilla
         rubygems:
           - latest
         bundler:
           - latest
         ruby:
-          - "2.7"
+          - "ruby"
     steps:
       - name: Checkout
         uses: actions/checkout@v3

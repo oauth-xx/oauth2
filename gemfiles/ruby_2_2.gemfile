@@ -3,3 +3,5 @@
 source "https://rubygems.org"
 
 gemspec path: "../"
+
+eval_gemfile("modular/f0.gemfile")

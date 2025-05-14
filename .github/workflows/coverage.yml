@@ -1,16 +1,18 @@
-name: Code Coverage
+name: Test Coverage
 
 env:
-  CI_CODECOV: true
-  COVER_ALL: true
+  K_SOUP_COV_MIN_BRANCH: 98
+  K_SOUP_COV_MIN_LINE: 98
+  K_SOUP_COV_MIN_HARD: true
+  K_SOUP_COV_FORMATTERS: "html,rcov,lcov,json,tty"
+  K_SOUP_COV_DO: true
+  K_SOUP_COV_MULTI_FORMATTERS: true
+  K_SOUP_COV_COMMAND_NAME: "RSpec Coverage"
 
 on:
   push:
     branches:
-      - 'main'
-      - '*-maintenance'
-      - '*-dev'
-      - '*-stable'
+      - 'master'
     tags:
       - '!*' # Do not execute on tags
   pull_request:
@@ -19,96 +21,102 @@ on:
   # Allow manually triggering the workflow.
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 # Cancels all previous workflow runs for the same branch that have not yet completed.
 concurrency:
   # The concurrency group contains the workflow name and the branch name.
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: "${{ github.workflow }}-${{ github.ref }}"
   cancel-in-progress: true
 
 jobs:
-  test:
-    name: Specs with Coverage - Ruby ${{ matrix.ruby }} ${{ matrix.name_extra || '' }}
+  coverage:
+    name: Code Coverage on ${{ matrix.ruby }}@current
     if: "!contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]')"
+    runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
+    env: # $BUNDLE_GEMFILE must be set at job level, so it is set for all steps
+      BUNDLE_GEMFILE: ${{ github.workspace }}/${{ matrix.gemfile }}.gemfile
     strategy:
       fail-fast: false
       matrix:
-        experimental: [false]
-        rubygems:
-          - latest
-        bundler:
-          - latest
-        ruby:
-          - "2.7"
+        include:
+          # Coverage
+          - ruby: "ruby"
+            appraisal: "coverage"
+            exec_cmd: "rake test"
+            gemfile: "Appraisal.root"
+            rubygems: latest
+            bundler: latest
 
-    runs-on: ubuntu-latest
-    continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
     steps:
-      - uses: amancevice/setup-code-climate@v0
+      - uses: amancevice/setup-code-climate@v2
         name: CodeClimate Install
-        if: matrix.ruby == '2.7' && github.event_name != 'pull_request' && always()
+        if: ${{ github.event_name != 'pull_request' }}
         with:
           cc_test_reporter_id: ${{ secrets.CC_TEST_REPORTER_ID }}
 
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Setup Ruby & Bundle
+      - name: Setup Ruby & RubyGems
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: ${{ matrix.ruby }}
-          rubygems: ${{ matrix.rubygems }}
-          bundler: ${{ matrix.bundler }}
-          bundler-cache: true
+          ruby-version: "${{ matrix.ruby }}"
+          rubygems: "${{ matrix.rubygems }}"
+          bundler: "${{ matrix.bundler }}"
+          bundler-cache: false
 
-      - name: CodeClimate Pre-build Notification
-        run: cc-test-reporter before-build
-        if: matrix.ruby == '2.7' && github.event_name != 'pull_request' && always()
-        continue-on-error: ${{ matrix.experimental != 'false' }}
-
-      - name: Run tests
-        run: bundle exec rake test
-
-      - name: CodeClimate Post-build Notification
-        run: cc-test-reporter after-build
-        if: matrix.ruby == '2.7' && github.event_name != 'pull_request' && always()
-        continue-on-error: ${{ matrix.experimental != 'false' }}
+      # Raw `bundle` will use the BUNDLE_GEMFILE set to matrix.gemfile (i.e. Appraisal.root)
+      # We need to do this first to get appraisal installed.
+      # NOTE: This does not use the primary Gemfile at all.
+      - name: Install Root Appraisal
+        run: bundle
+      - name: Appraisal for ${{ matrix.appraisal }}
+        run: bundle exec appraisal ${{ matrix.appraisal }} bundle
+      - name: Tests for ${{ matrix.ruby }}@current via ${{ matrix.exec_cmd }}
+        run: bundle exec appraisal ${{ matrix.appraisal }} bundle exec ${{ matrix.exec_cmd }}
 
       - name: Code Coverage Summary Report
-        uses: irongut/CodeCoverageSummary@v1.2.0
+        uses: irongut/CodeCoverageSummary@v1.3.0
+        if: ${{ github.event_name == 'pull_request' }}
         with:
           filename: ./coverage/coverage.xml
           badge: true
           fail_below_min: true
           format: markdown
-          hide_branch_rate: true
+          hide_branch_rate: false
           hide_complexity: true
           indicators: true
           output: both
-          thresholds: '100 95'
+          thresholds: '100 100'
         continue-on-error: ${{ matrix.experimental != 'false' }}
 
       - name: Add Coverage PR Comment
         uses: marocchino/sticky-pull-request-comment@v2
-        if: matrix.ruby == '2.7' && always()
+        if: ${{ github.event_name == 'pull_request' }}
         with:
           recreate: true
           path: code-coverage-results.md
         continue-on-error: ${{ matrix.experimental != 'false' }}
 
-      - name: Coveralls
+      - name: Upload coverage to Coveralls
         uses: coverallsapp/github-action@master
-        if: matrix.ruby == '2.7' && github.event_name != 'pull_request' && always()
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
         continue-on-error: ${{ matrix.experimental != 'false' }}
 
-#      Using the codecov gem instead.
-#      - name: CodeCov
-#        uses: codecov/codecov-action@v2
-#        if: matrix.ruby == '2.7' && github.event_name != 'pull_request' && always()
-#        with:
-#          files: ./coverage/coverage.xml
-#          flags: unittests
-#          name: codecov-upload
-#          fail_ci_if_error: true
-#        continue-on-error: ${{ matrix.experimental != 'false' }}
+      - name: Upload coverage to QLTY
+        uses: qltysh/qlty-action/coverage@main
+        with:
+          coverage-token: ${{secrets.QLTY_COVERAGE_TOKEN}}
+          files: coverage/.resultset.json
+        continue-on-error: ${{ matrix.experimental != 'false' }}
+
+      - name: Upload coverage to CodeCov
+        uses: codecov/codecov-action@v5
+        with:
+          fail_ci_if_error: true # optional (default = false)
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true # optional (default = false)

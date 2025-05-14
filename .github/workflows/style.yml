@@ -1,42 +1,65 @@
-name: Code Style Checks
+name: Style
 
 on:
   push:
     branches:
       - 'main'
-      - '*-maintenance'
-      - '*-dev'
       - '*-stable'
     tags:
       - '!*' # Do not execute on tags
   pull_request:
     branches:
       - '*'
+  # Allow manually triggering the workflow.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Cancels all previous workflow runs for the same branch that have not yet completed.
+concurrency:
+  # The concurrency group contains the workflow name and the branch name.
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
 
 jobs:
   rubocop:
-    name: Rubocop
+    name: Style on ${{ matrix.ruby }}@current
     if: "!contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]')"
+    runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
+    env: # $BUNDLE_GEMFILE must be set at job level, so it is set for all steps
+      BUNDLE_GEMFILE: ${{ github.workspace }}/${{ matrix.gemfile }}.gemfile
     strategy:
       fail-fast: false
       matrix:
-        experimental: [false]
-        rubygems:
-          - latest
-        bundler:
-          - latest
-        ruby:
-          - ruby
-    runs-on: ubuntu-latest
+        include:
+          # Style
+          - ruby: "ruby"
+            appraisal: "style"
+            exec_cmd: "rake rubocop_gradual:check"
+            gemfile: "Appraisal.root"
+            rubygems: latest
+            bundler: latest
+
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - name: Setup Ruby & Bundle
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby & RubyGems
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby }}
           rubygems: ${{ matrix.rubygems }}
           bundler: ${{ matrix.bundler }}
-          bundler-cache: true
-      - name: Run Rubocop
-        run: bundle exec rubocop -DESP
+          bundler-cache: false
+
+      # Raw `bundle` will use the BUNDLE_GEMFILE set to matrix.gemfile (i.e. Appraisal.root)
+      # We need to do this first to get appraisal installed.
+      # NOTE: This does not use the primary Gemfile at all.
+      - name: Install Root Appraisal
+        run: bundle
+      - name: Appraisal for ${{ matrix.appraisal }}
+        run: bundle exec appraisal ${{ matrix.appraisal }} bundle
+      - name: Run ${{ matrix.appraisal }} checks via ${{ matrix.exec_cmd }}
+        run: bundle exec appraisal ${{ matrix.appraisal }} bundle exec ${{ matrix.exec_cmd }}

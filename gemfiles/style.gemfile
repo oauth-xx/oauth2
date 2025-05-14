@@ -2,13 +2,10 @@
 
 source "https://rubygems.org"
 
+gem "mutex_m", "~> 0.2"
+gem "stringio", "~> 3.0"
+
 gemspec path: "../"
-
-eval_gemfile("modular/audit.gemfile")
-
-eval_gemfile("modular/coverage.gemfile")
-
-eval_gemfile("modular/documentation.gemfile")
 
 eval_gemfile("modular/f2.gemfile")
 
