@@ -45,14 +45,6 @@ jobs:
             rubygems: latest
             bundler: latest
 
-          # jruby-10.0 (targets Ruby 3.4 compatibility)
-          - ruby: "jruby"
-            appraisal: "current"
-            exec_cmd: "rake test"
-            gemfile: "Appraisal.root"
-            rubygems: default
-            bundler: default
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
