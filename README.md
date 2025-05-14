@@ -61,6 +61,7 @@ NOTE: In the ruby version, certain params go in the get_token call, rather than 
 OAuth2::Client.new(
   "REDMOND_CLIENT_ID", # client_id
   "REDMOND_CLIENT_SECRET", # client_secret
+  auth_scheme: :request_body, # Other modes are supported: :basic_auth, :tls_client_auth, :private_key_jwt
   token_url: "oauth2/token", # relative path, except with leading `/`, then absolute path 
   site: "https://login.microsoftonline.com/REDMOND_REDACTED") # The base path for token_url when it is relative
 .client_credentials # There are many other types to choose from!
