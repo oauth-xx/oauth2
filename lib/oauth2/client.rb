@@ -291,6 +291,15 @@ module OAuth2
       @client_credentials ||= OAuth2::Strategy::ClientCredentials.new(self)
     end
 
+    # The Assertion strategy
+    #
+    # This allows for assertion-based authentication where an identity provider
+    # asserts the identity of the user or client application seeking access.
+    #
+    # @see http://datatracker.ietf.org/doc/html/rfc7521
+    # @see http://datatracker.ietf.org/doc/html/draft-ietf-oauth-assertions-01#section-4.1
+    #
+    # @return [OAuth2::Strategy::Assertion] the initialized Assertion strategy
     def assertion
       @assertion ||= OAuth2::Strategy::Assertion.new(self)
     end
