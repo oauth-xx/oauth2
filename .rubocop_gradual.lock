@@ -3,7 +3,7 @@
     [66, 5, 20, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 2485198147],
     [78, 5, 74, "Style/InvertibleUnlessCondition: Prefer `if Gem.rubygems_version >= Gem::Version.new(\"2.7.0\")` over `unless Gem.rubygems_version < Gem::Version.new(\"2.7.0\")`.", 2453573257]
   ],
-  "lib/oauth2.rb:649414550": [
+  "lib/oauth2.rb:3563577000": [
     [34, 5, 21, "ThreadSafety/ClassAndModuleAttributes: Avoid mutating class and module attributes.", 622027168],
     [37, 11, 7, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 651502127]
   ],
@@ -97,7 +97,7 @@
   "spec/oauth2/version_spec.rb:1001406821": [
     [3, 1, 30, "RSpec/SpecFilePathFormat: Spec path should end with `o_auth2/version*_spec.rb`.", 1099517182]
   ],
-  "spec/oauth2_spec.rb:1758355750": [
+  "spec/oauth2_spec.rb:2292862590": [
     [3, 1, 21, "RSpec/SpecFilePathFormat: Spec path should end with `o_auth2*_spec.rb`.", 3359091140]
   ]
 }

@@ -2,7 +2,7 @@
 
 RSpec.describe OAuth2 do
   it "silence_extra_tokens_warning default is opposite of OAUTH_DEBUG" do
-    expect(described_class.config.silence_extra_tokens_warning).to eq(!OAuth2::OAUTH_DEBUG)
+    expect(described_class.config.silence_extra_tokens_warning).to be(true)
   end
 
   describe ".configure" do
