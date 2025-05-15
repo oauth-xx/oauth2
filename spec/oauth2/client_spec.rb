@@ -357,22 +357,22 @@ RSpec.describe OAuth2::Client do
     end
 
     context "when silence_extra_tokens_warning=false" do
-        before do
-          stub_const("OAuth2::OAUTH_DEBUG", true)
-        end
-
-        it "outputs to $stdout when OAUTH_DEBUG=true" do
-          output = capture(:stdout) do
-            subject.request(:get, "/success")
-          end
-          logs = [
-            "request: GET https://api.example.com/success",
-            "response: Status 200",
-            'response: Content-Type: "text/awesome"',
-          ]
-          expect(output).to include(*logs)
-        end
+      before do
+        stub_const("OAuth2::OAUTH_DEBUG", true)
       end
+
+      it "outputs to $stdout when OAUTH_DEBUG=true" do
+        output = capture(:stdout) do
+          subject.request(:get, "/success")
+        end
+        logs = [
+          "request: GET https://api.example.com/success",
+          "response: Status 200",
+          'response: Content-Type: "text/awesome"',
+        ]
+        expect(output).to include(*logs)
+      end
+    end
 
     it "posts a body" do
       response = subject.request(:post, "/reflect", body: "foo=bar")
