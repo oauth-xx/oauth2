@@ -185,18 +185,18 @@ RSpec.describe OAuth2::AccessToken do
           expect(printed).to eq(msg)
         end
 
-        context "when custom token_name" do
+        context "when custom token_name valid" do
           let(:options) { {raise_errors: false} }
 
           let(:hash) do
             {
               "lollipop" => token,
-              expires_at: Time.now.to_i + 200,
-              foo: "bar",
-              header_format: "Bearer %",
-              mode: :header,
-              param_name: "lollipop",
-              token_name: "lollipop",
+              :expires_at => Time.now.to_i + 200,
+              :foo => "bar",
+              :header_format => "Bearer %",
+              :mode => :header,
+              :param_name => "lollipop",
+              :token_name => "lollipop",
             }
           end
 
@@ -206,6 +206,67 @@ RSpec.describe OAuth2::AccessToken do
 
           it "does not warn when token is found" do
             expect(printed).to eq("")
+          end
+        end
+
+        context "when custom token_name invalid" do
+          let(:options) { {raise_errors: false} }
+
+          let(:hash) do
+            {
+              "babyshark" => token,
+              :expires_at => Time.now.to_i + 200,
+              :foo => "bar",
+              :header_format => "Bearer %",
+              :mode => :header,
+              :param_name => "lollipop",
+              :token_name => "lollipop",
+            }
+          end
+
+          context "when silence_no_tokens_warning is false" do
+            before do
+              @original_sntw = OAuth2.config.silence_no_tokens_warning
+              OAuth2.config.silence_no_tokens_warning = false
+            end
+
+            after do
+              OAuth2.config.silence_no_tokens_warning = @original_sntw
+            end
+
+            it "finds no token" do
+              expect(target.token).to eq("")
+            end
+
+            it "warns when no token is found" do
+              expect(printed.each_line.to_a).to eq([
+                "\n",
+                "OAuth2::AccessToken#from_hash key mismatch.\n",
+                %{Custom token_name (lollipop) is not found in (["babyshark", :expires_at, :foo, :header_format, :mode, :param_name, :token_name])\n},
+                "You may need to set `snaky: false`. See inline documentation for more info.\n",
+                "        \n",
+                "OAuth2::AccessToken has no token\n",
+              ])
+            end
+          end
+
+          context "when silence_no_tokens_warning is true" do
+            before do
+              @original_sntw = OAuth2.config.silence_no_tokens_warning
+              OAuth2.config.silence_no_tokens_warning = true
+            end
+
+            after do
+              OAuth2.config.silence_no_tokens_warning = @original_sntw
+            end
+
+            it "finds no token" do
+              expect(target.token).to eq("")
+            end
+
+            it "does not warn when no token is found" do
+              expect(printed.each_line.to_a).to eq([])
+            end
           end
         end
       end
