@@ -356,8 +356,7 @@ RSpec.describe OAuth2::Client do
       expect(response.headers).to eq("Content-Type" => "text/awesome")
     end
 
-    context "with ENV" do
-      context "when OAUTH_DEBUG=true" do
+    context "when silence_extra_tokens_warning=false" do
         before do
           stub_const("OAuth2::OAUTH_DEBUG", true)
         end
@@ -374,7 +373,6 @@ RSpec.describe OAuth2::Client do
           expect(output).to include(*logs)
         end
       end
-    end
 
     it "posts a body" do
       response = subject.request(:post, "/reflect", body: "foo=bar")

@@ -51,7 +51,12 @@ RSpec.describe OAuth2::AccessToken do
       end
 
       before do
-        stub_const("OAuth2::OAUTH_DEBUG", true)
+        @original_setw = OAuth2.config.silence_extra_tokens_warning
+        OAuth2.config.silence_extra_tokens_warning = false
+      end
+
+      after do
+        OAuth2.config.silence_extra_tokens_warning = @original_setw
       end
 
       it "warns on STDERR" do
@@ -94,7 +99,12 @@ RSpec.describe OAuth2::AccessToken do
       end
 
       before do
-        stub_const("OAuth2::OAUTH_DEBUG", true)
+        @original_setw = OAuth2.config.silence_extra_tokens_warning
+        OAuth2.config.silence_extra_tokens_warning = false
+      end
+
+      after do
+        OAuth2.config.silence_extra_tokens_warning = @original_setw
       end
 
       let(:hash) do

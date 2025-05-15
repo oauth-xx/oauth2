@@ -97,8 +97,7 @@
   "spec/oauth2/version_spec.rb:1001406821": [
     [3, 1, 30, "RSpec/SpecFilePathFormat: Spec path should end with `o_auth2/version*_spec.rb`.", 1099517182]
   ],
-  "spec/oauth2_spec.rb:438638294": [
-    [3, 1, 21, "RSpec/SpecFilePathFormat: Spec path should end with `o_auth2*_spec.rb`.", 3359091140],
-    [5, 68, 2, "RSpec/BeEq: Prefer `be` over `eq`.", 5860785]
+  "spec/oauth2_spec.rb:245212644": [
+    [3, 1, 21, "RSpec/SpecFilePathFormat: Spec path should end with `o_auth2*_spec.rb`.", 3359091140]
   ]
 }
