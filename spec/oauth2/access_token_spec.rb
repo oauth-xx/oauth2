@@ -66,6 +66,33 @@ RSpec.describe OAuth2::AccessToken do
         expect(printed).to eq(msg)
       end
 
+      context "when one token" do
+        subject(:printed) do
+          capture(:stderr) do
+            target
+          end
+        end
+
+        let(:hash) do
+          {
+            access_token: token,
+          }
+        end
+
+        before do
+          @original_setw = OAuth2.config.silence_extra_tokens_warning
+          OAuth2.config.silence_extra_tokens_warning = false
+        end
+
+        after do
+          OAuth2.config.silence_extra_tokens_warning = @original_setw
+        end
+
+        it "does not warn on STDERR" do
+          expect(printed).to eq("")
+        end
+      end
+
       context "when silenced" do
         subject(:printed) do
           capture(:stderr) do
@@ -74,15 +101,12 @@ RSpec.describe OAuth2::AccessToken do
         end
 
         before do
-          OAuth2.configure do |config|
-            config.silence_extra_tokens_warning = true
-          end
+          @original_setw = OAuth2.config.silence_extra_tokens_warning
+          OAuth2.config.silence_extra_tokens_warning = true
         end
 
         after do
-          OAuth2.configure do |config|
-            config.silence_extra_tokens_warning = false
-          end
+          OAuth2.config.silence_extra_tokens_warning = @original_setw
         end
 
         it "does not warn on STDERR" do
@@ -122,7 +146,7 @@ RSpec.describe OAuth2::AccessToken do
       end
     end
 
-    context "with no token keys" do
+    context "with warning for no token keys" do
       subject(:printed) do
         capture(:stderr) do
           target
@@ -138,6 +162,8 @@ RSpec.describe OAuth2::AccessToken do
         OAuth2.config.silence_no_tokens_warning = @original_sntw
       end
 
+      let(:options) { {raise_errors: true} }
+
       let(:hash) do
         {
           blather: "confusing bug here",
@@ -145,11 +171,19 @@ RSpec.describe OAuth2::AccessToken do
         }
       end
 
-      it "warns on STDERR and selects the correct key" do
-        msg = <<-MSG.lstrip
-            OAuth2::AccessToken.from_hash: `hash` contained more than one 'token' key ([:access_token, :id_token]); using :access_token.
-        MSG
+      it "raises an error" do
         block_is_expected.to raise_error(OAuth2::Error)
+      end
+
+      context "when not raising errors" do
+        let(:options) { {raise_errors: false} }
+
+        it "warns on STDERR and selects the correct key" do
+          msg = <<-MSG.lstrip
+            OAuth2::AccessToken has no token
+          MSG
+          expect(printed).to eq(msg)
+        end
       end
     end
   end

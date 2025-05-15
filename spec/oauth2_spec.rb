@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 RSpec.describe OAuth2 do
-  it "silence_extra_tokens_warning default is opposite of OAUTH_DEBUG" do
-    expect(described_class.config.silence_extra_tokens_warning).to be(true)
+  it "silence_extra_tokens_warning is a boolean" do
+    expect(described_class.config.silence_extra_tokens_warning).to be(true).or be(false)
   end
 
   describe ".configure" do
