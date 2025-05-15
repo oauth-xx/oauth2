@@ -17,7 +17,7 @@ module OAuth2
 
     # Apply the request credentials used to authenticate to the Authorization Server
     #
-    # Depending on configuration, this might be as request params or as an
+    # Depending on the configuration, this might be as request params or as an
     # Authorization header.
     #
     # User-provided params and header take precedence.

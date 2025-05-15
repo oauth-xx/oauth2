@@ -43,6 +43,7 @@ module OAuth2
     # @option options [Logger] :logger (::Logger.new($stdout)) Logger instance for HTTP request/response output; requires OAUTH_DEBUG to be true
     # @option options [Class] :access_token_class (AccessToken) class to use for access tokens; you can subclass OAuth2::AccessToken, @version 2.0+
     # @option options [Hash] :ssl SSL options for Faraday
+    #
     # @yield [builder] The Faraday connection builder
     def initialize(client_id, client_secret, options = {}, &block)
       opts = options.dup
@@ -106,6 +107,7 @@ module OAuth2
     # Makes a request relative to the specified site root.
     # Updated HTTP 1.1 specification (IETF RFC 7231) relaxed the original constraint (IETF RFC 2616),
     #   allowing the use of relative URLs in Location headers.
+    #
     # @see https://datatracker.ietf.org/doc/html/rfc7231#section-7.1.2
     #
     # @param [Symbol] verb one of :get, :post, :put, :delete
@@ -141,7 +143,7 @@ module OAuth2
           raise(error, "Got #{response.status} status code, but no Location header was present")
         end
       when 200..299, 300..399
-        # on non-redirecting 3xx statuses, just return the response
+        # on non-redirecting 3xx statuses, return the response
         response
       when 400..599
         if opts.fetch(:raise_errors, options[:raise_errors])
@@ -164,6 +166,7 @@ module OAuth2
     #   * params can include a 'snaky' key to control snake_case conversion (default: false)
     # @param [Hash] access_token_opts options that will be passed to the AccessToken initialization
     # @param [Proc] extract_access_token (deprecated) a proc that can extract the access token from the response
+    #
     # @yield [opts] The block is passed the options being used to make the request
     # @yieldparam [Hash] opts options being passed to the http library
     #
@@ -218,7 +221,8 @@ module OAuth2
     end
 
     # The HTTP Method of the request
-    # @return [Symbol] HTTP verb, one of :get, :post, :put, :delete
+    #
+    # @return [Symbol] HTTP verb, one of [:get, :post, :put, :delete]
     def http_method
       http_meth = options[:token_method].to_sym
       return :post if http_meth == :post_with_query_string
@@ -264,7 +268,7 @@ module OAuth2
     # requesting authorization. If it is provided at authorization time it MUST
     # also be provided with the token exchange request.
     #
-    # Providing the :redirect_uri to the OAuth2::Client instantiation will take
+    # Providing :redirect_uri to the OAuth2::Client instantiation will take
     # care of managing this.
     #
     # @api semipublic
@@ -273,6 +277,7 @@ module OAuth2
     # @see https://datatracker.ietf.org/doc/html/rfc6749#section-4.1.3
     # @see https://datatracker.ietf.org/doc/html/rfc6749#section-4.2.1
     # @see https://datatracker.ietf.org/doc/html/rfc6749#section-10.6
+    #
     # @return [Hash] the params to add to a request or URL
     def redirection_params
       if options[:redirect_uri]
@@ -309,7 +314,7 @@ module OAuth2
       parse = params.key?(:parse) ? params.delete(:parse) : Response::DEFAULT_OPTIONS[:parse]
       snaky = params.key?(:snaky) ? params.delete(:snaky) : Response::DEFAULT_OPTIONS[:snaky]
       params = authenticator.apply(params)
-      # authenticator may add :headers, and we remove them here
+      # authenticator may add :headers, and we separate them from params here
       headers = params.delete(:headers) || {}
       [parse, snaky, params, headers]
     end
