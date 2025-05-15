@@ -19,6 +19,7 @@ RSpec.describe OAuth2::AccessToken do
           stub.send(verb, "/token/body") { |env| [200, {}, env[:body]] }
         end
         stub.post("/oauth/token") { |_env| [200, {"Content-Type" => "application/json"}, refresh_body] }
+        stub.post("/oauth/revoke") { |env| [200, {"Content-type" => "application/json"}, env[:body]] }
       end
     end
   end
@@ -388,7 +389,7 @@ RSpec.describe OAuth2::AccessToken do
             let(:token) { "" }
 
             it "raises on initialize" do
-              block_is_expected.to raise_error(OAuth2::Error, {mode: :this_is_bad, raise_errors: true}.to_s)
+              block_is_expected.to raise_error(OAuth2::Error, {error: "OAuth2::AccessToken has no token", error_description: "Options are: {mode: :this_is_bad, raise_errors: true}"}.to_s)
             end
           end
 
@@ -396,7 +397,7 @@ RSpec.describe OAuth2::AccessToken do
             let(:token) { nil }
 
             it "raises on initialize" do
-              block_is_expected.to raise_error(OAuth2::Error, {mode: :this_is_bad, raise_errors: true}.to_s)
+              block_is_expected.to raise_error(OAuth2::Error, {error: "OAuth2::AccessToken has no token", error_description: "Options are: {mode: :this_is_bad, raise_errors: true}"}.to_s)
             end
           end
         end
@@ -602,7 +603,7 @@ RSpec.describe OAuth2::AccessToken do
 
           context "when there is no refresh_token" do
             it "raises on initialize" do
-              block_is_expected.to raise_error(OAuth2::Error, {raise_errors: true}.to_s)
+              block_is_expected.to raise_error(OAuth2::Error, {error: "OAuth2::AccessToken has no token", error_description: "Options are: {raise_errors: true}"}.to_s)
             end
           end
 
@@ -628,7 +629,7 @@ RSpec.describe OAuth2::AccessToken do
 
           context "when there is no refresh_token" do
             it "raises on initialize" do
-              block_is_expected.to raise_error(OAuth2::Error, {raise_errors: true}.to_s)
+              block_is_expected.to raise_error(OAuth2::Error, {error: "OAuth2::AccessToken has no token", error_description: "Options are: {raise_errors: true}"}.to_s)
             end
           end
 
@@ -874,7 +875,7 @@ RSpec.describe OAuth2::AccessToken do
       end
 
       it "raises when no refresh_token" do
-        block_is_expected.to raise_error("A refresh_token is not available")
+        block_is_expected.to raise_error(OAuth2::Error, {error: "A refresh_token is not available"}.to_s)
       end
     end
 
@@ -928,6 +929,133 @@ RSpec.describe OAuth2::AccessToken do
         refreshed = access.refresh!
 
         expect(new_access.class).to eq(refreshed.class)
+      end
+    end
+  end
+
+  describe "#revoke" do
+    let(:token) { "monkey123" }
+    let(:refresh_token) { "refreshmonkey123" }
+    let(:access_token) { described_class.new(client, token, refresh_token: refresh_token) }
+
+    context "with no token_type_hint specified" do
+      it "revokes the access token by default" do
+        expect(access_token.revoke.status).to eq(200)
+      end
+    end
+
+    context "with access_token token_type_hint" do
+      it "revokes the access token" do
+        expect {
+          access_token.revoke(token_type_hint: "access_token")
+        }.not_to raise_error
+      end
+    end
+
+    context "with refresh_token token_type_hint" do
+      it "revokes the refresh token" do
+        expect {
+          access_token.revoke(token_type_hint: "refresh_token")
+        }.not_to raise_error
+      end
+    end
+
+    context "with invalid token_type_hint" do
+      it "raises an OAuth2::Error" do
+        expect {
+          access_token.revoke(token_type_hint: "invalid_type")
+        }.to raise_error(OAuth2::Error, /token_type_hint must be one of/)
+      end
+    end
+
+    context "when refresh_token is specified but not available" do
+      let(:access_token) { described_class.new(client, "abc", refresh_token: nil) }
+
+      it "raises an OAuth2::Error" do
+        expect {
+          access_token.revoke(token_type_hint: "refresh_token")
+        }.to raise_error(OAuth2::Error, /refresh_token is not available for revoking/)
+      end
+    end
+
+    context "when refresh_token is, but access_token is not, available" do
+      let(:access_token) { described_class.new(client, "abc", refresh_token: refresh_token) }
+
+      before do
+        allow(client).to receive(:revoke_token).
+          with(refresh_token, "refresh_token", {}).
+          and_return(OAuth2::Response.new(double(status: 200)))
+        # The code path being tested shouldn't be reachable... so this is hacky.
+        # Testing it for anal level compliance. Revoking a refresh token without an access token is valid.
+        # In other words, the implementation of AccessToken doesn't allow instantiation without an access token.
+        # But in a revocation scenario it should theoretically work.
+        # It is intended that AccessToken be subclassed, so this is worth testing, as subclasses may change behavior.
+        allow(access_token).to receive(:token).and_return(nil)
+      end
+
+      it "revokes refresh_token" do
+        expect {
+          access_token.revoke
+        }.not_to raise_error
+      end
+    end
+
+    context "when no tokens are available" do
+      let(:access_token) { described_class.new(client, "abc", refresh_token: nil) }
+
+      before do
+        # The code path being tested shouldn't be reachable... so this is hacky.
+        # Testing it for anal level compliance. Revoking a refresh token without an access token is valid.
+        # In other words, the implementation of AccessToken doesn't allow instantiation without an access token.
+        # But in a revocation scenario it should theoretically work.
+        # It is intended that AccessToken be subclassed, so this is worth testing, as subclasses may change behavior.
+        allow(access_token).to receive(:token).and_return(nil)
+      end
+
+      it "raises an OAuth2::Error" do
+        expect {
+          access_token.revoke
+        }.to raise_error(OAuth2::Error, /unknown token type is not available for revoking/)
+      end
+    end
+
+    context "with additional params" do
+      before do
+        allow(client).to receive(:revoke_token).
+          with(token, "access_token", {extra: "param"}).
+          and_return(OAuth2::Response.new(double(status: 200)))
+      end
+
+      it "passes them to the client" do
+        expect {
+          access_token.revoke({extra: "param"})
+        }.not_to raise_error
+      end
+    end
+
+    context "with a block" do
+      it "passes the block to the client" do
+        expect {
+          access_token.revoke do |_req|
+            puts "Hello from the other side"
+          end
+        }.not_to raise_error
+      end
+
+      it "has status 200" do
+        expect(
+          access_token.revoke do |_req|
+            puts "Hello again"
+          end.status,
+        ).to eq(200)
+      end
+
+      it "executes the block" do
+        @apple = 0
+        access_token.revoke do |_req|
+          @apple += 1
+        end
+        expect(@apple).to eq(1)
       end
     end
   end

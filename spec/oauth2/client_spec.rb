@@ -21,6 +21,7 @@ RSpec.describe OAuth2::Client do
         stub.get("/different_encoding") { |_env| [500, {"Content-Type" => "application/json"}, NKF.nkf("-We", JSON.dump(error: error_value, error_description: "∞"))] }
         stub.get("/ascii_8bit_encoding") { |_env| [500, {"Content-Type" => "application/json"}, JSON.dump(error: "invalid_request", error_description: "é").force_encoding("ASCII-8BIT")] }
         stub.get("/unhandled_status") { |_env| [600, {}, nil] }
+        stub.post("/oauth/revoke") { |env| [200, {"Content-type" => "application/json"}, env[:body]] }
       end
     end
   end
@@ -1151,7 +1152,9 @@ RSpec.describe OAuth2::Client do
           [200, {"Content-Type" => "application/json"}, JSON.dump("access_token" => "the-token")]
         end
       end
-      client.get_token({"arbitrary" => "parameter"}) # rubocop:disable Style/BracesAroundHashParameters
+      expect {
+        client.get_token({"arbitrary" => "parameter"}) # rubocop:disable Style/BracesAroundHashParameters
+      }.not_to raise_error
     end
 
     context "when token_method is set to post_with_query_string" do
@@ -1161,7 +1164,9 @@ RSpec.describe OAuth2::Client do
             [200, {"Content-Type" => "application/json"}, JSON.dump("access_token" => "the-token")]
           end
         end
-        client.get_token({"state" => "abc123"}) # rubocop:disable Style/BracesAroundHashParameters
+        expect {
+          client.get_token({"state" => "abc123"}) # rubocop:disable Style/BracesAroundHashParameters
+        }.not_to raise_error
       end
     end
 
@@ -1169,6 +1174,72 @@ RSpec.describe OAuth2::Client do
       params = {site: "https://api.example.com"}.merge(params)
       OAuth2::Client.new("abc", "def", params) do |builder|
         builder.adapter :test, &stubs
+      end
+    end
+  end
+
+  describe "#revoke_token" do
+    let(:token) { "banana-foster" }
+
+    context "with token string" do
+      it "makes request with token param" do
+        expect {
+          instance.revoke_token(token)
+        }.not_to raise_error
+      end
+
+      it "has status 200" do
+        expect(instance.revoke_token(token).status).to eq(200)
+      end
+    end
+
+    context "with token_type_hint" do
+      it "makes request with token_type_hint param" do
+        expect {
+          instance.revoke_token(token, "access_token")
+        }.not_to raise_error
+      end
+
+      it "has status 200" do
+        expect(instance.revoke_token(token, "access_token").status).to eq(200)
+      end
+    end
+
+    context "with additional params" do
+      it "merges additional params" do
+        expect {
+          instance.revoke_token(token, nil, extra: "param")
+        }.not_to raise_error
+      end
+
+      it "has status 200" do
+        expect(instance.revoke_token(token, nil, extra: "param").status).to eq(200)
+      end
+    end
+
+    context "with block" do
+      it "passes block to request" do
+        expect {
+          instance.revoke_token(token) do |_req|
+            puts "Hello from the other side"
+          end
+        }.not_to raise_error
+      end
+
+      it "has status 200" do
+        expect(
+          instance.revoke_token(token) do |_req|
+            puts "Hello there"
+          end.status,
+        ).to eq(200)
+      end
+
+      it "executes block" do
+        @apple = 0
+        instance.revoke_token(token) do |_req|
+          @apple += 1
+        end
+        expect(@apple).to eq(1)
       end
     end
   end

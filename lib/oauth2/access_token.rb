@@ -193,6 +193,66 @@ You may need to set `snaky: false`. See inline documentation for more info.
     # @note does not modify the receiver, so bang is not the default method
     alias_method :refresh!, :refresh
 
+    # Revokes the token at the authorization server
+    #
+    # @param [Hash] params additional parameters to be sent during revocation
+    # @option params [String, Symbol, nil] :token_type_hint ('access_token' or 'refresh_token') hint about which token to revoke
+    # @option params [Symbol] :token_method (:post_with_query_string) overrides OAuth2::Client#options[:token_method]
+    #
+    # @yield [req] The block is passed the request being made, allowing customization
+    # @yieldparam [Faraday::Request] req The request object that can be modified
+    #
+    # @return [OAuth2::Response] OAuth2::Response instance
+    #
+    # @api public
+    #
+    # @raise [OAuth2::Error] if token_type_hint is invalid or the specified token is not available
+    #
+    # @note If the token passed to the request
+    #    is an access token, the server MAY revoke the respective refresh
+    #    token as well.
+    # @note If the token passed to the request
+    #    is a refresh token and the authorization server supports the
+    #    revocation of access tokens, then the authorization server SHOULD
+    #    also invalidate all access tokens based on the same authorization
+    #    grant
+    # @note If the server responds with HTTP status code 503, your code must
+    #    assume the token still exists and may retry after a reasonable delay.
+    #    The server may include a "Retry-After" header in the response to
+    #    indicate how long the service is expected to be unavailable to the
+    #    requesting client.
+    #
+    # @see https://datatracker.ietf.org/doc/html/rfc7009
+    # @see https://datatracker.ietf.org/doc/html/rfc7009#section-2.1
+    def revoke(params = {}, &block)
+      token_type_hint_orig = params.delete(:token_type_hint)
+      token_type_hint = nil
+      revoke_token = case token_type_hint_orig
+      when "access_token", :access_token
+        token_type_hint = "access_token"
+        token
+      when "refresh_token", :refresh_token
+        token_type_hint = "refresh_token"
+        refresh_token
+      when nil
+        if token
+          token_type_hint = "access_token"
+          token
+        elsif refresh_token
+          token_type_hint = "refresh_token"
+          refresh_token
+        end
+      else
+        raise OAuth2::Error.new({error: "token_type_hint must be one of [nil, :refresh_token, :access_token], so if you need something else consider using a subclass or entirely custom AccessToken class."})
+      end
+      raise OAuth2::Error.new({error: "#{token_type_hint || "unknown token type"} is not available for revoking"}) unless revoke_token && !revoke_token.empty?
+
+      @client.revoke_token(revoke_token, token_type_hint, params, &block)
+    end
+    # A compatibility alias
+    # @note does not modify the receiver, so bang is not the default method
+    alias_method :revoke!, :revoke
+
     # Convert AccessToken to a hash which can be used to rebuild itself with AccessToken.from_hash
     #
     # @note Don't return expires_latency because it has already been deducted from expires_at

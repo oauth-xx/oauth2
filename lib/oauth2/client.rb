@@ -18,7 +18,8 @@ module OAuth2
 
   # The OAuth2::Client class
   class Client # rubocop:disable Metrics/ClassLength
-    RESERVED_PARAM_KEYS = %w[body headers params parse snaky].freeze
+    RESERVED_REQ_KEYS = %w[body headers params redirect_count].freeze
+    RESERVED_PARAM_KEYS = (RESERVED_REQ_KEYS + %w[parse snaky token_method]).freeze
 
     include FilteredAttributes
 
@@ -34,6 +35,7 @@ module OAuth2
     # @param [Hash] options the options to configure the client
     # @option options [String] :site the OAuth2 provider site host
     # @option options [String] :authorize_url ('/oauth/authorize') absolute or relative URL path to the Authorization endpoint
+    # @option options [String] :revoke_url ('/oauth/revoke') absolute or relative URL path to the Revoke endpoint
     # @option options [String] :token_url ('/oauth/token') absolute or relative URL path to the Token endpoint
     # @option options [Symbol] :token_method (:post) HTTP method to use to request token (:get, :post, :post_with_query_string)
     # @option options [Symbol] :auth_scheme (:basic_auth) the authentication scheme (:basic_auth, :request_body, :tls_client_auth, :private_key_jwt)
@@ -54,6 +56,7 @@ module OAuth2
       warn("OAuth2::Client#initialize argument `extract_access_token` will be removed in oauth2 v3. Refactor to use `access_token_class`.") if opts[:extract_access_token]
       @options = {
         authorize_url: "oauth/authorize",
+        revoke_url: "oauth/revoke",
         token_url: "oauth/token",
         token_method: :post,
         auth_scheme: :basic_auth,
@@ -104,6 +107,13 @@ module OAuth2
       connection.build_url(options[:token_url], params).to_s
     end
 
+    # The revoke endpoint URL of the OAuth2 provider
+    #
+    # @param [Hash] params additional query parameters
+    def revoke_url(params = nil)
+      connection.build_url(options[:revoke_url], params).to_s
+    end
+
     # Makes a request relative to the specified site root.
     # Updated HTTP 1.1 specification (IETF RFC 7231) relaxed the original constraint (IETF RFC 2616),
     #   allowing the use of relative URLs in Location headers.
@@ -113,40 +123,42 @@ module OAuth2
     # @param [Symbol] verb one of :get, :post, :put, :delete
     # @param [String] url URL path of request
     # @param [Hash] opts the options to make the request with
-    # @option opts [Hash] :params additional query parameters for the URL of the request
-    # @option opts [Hash, String] :body the body of the request
-    # @option opts [Hash] :headers http request headers
-    # @option opts [Boolean] :raise_errors whether to raise an OAuth2::Error on 400+ status
+    # @option req_opts [Hash] :params additional query parameters for the URL of the request
+    # @option req_opts [Hash, String] :body the body of the request
+    # @option req_opts [Hash] :headers http request headers
+    # @option req_opts [Boolean] :raise_errors whether to raise an OAuth2::Error on 400+ status
     #   code response for this request.  Overrides the client instance setting.
-    # @option opts [Symbol] :parse @see Response::initialize
-    # @option opts [true, false] :snaky (true) @see Response::initialize
+    # @option req_opts [Symbol] :parse @see Response::initialize
+    # @option req_opts [true, false] :snaky (true) @see Response::initialize
+    #
     # @yield [req] @see Faraday::Connection#run_request
-    def request(verb, url, opts = {}, &block)
-      response = execute_request(verb, url, opts, &block)
+    def request(verb, url, req_opts = {}, &block)
+      response = execute_request(verb, url, req_opts, &block)
+      status = response.status
 
-      case response.status
+      case status
       when 301, 302, 303, 307
-        opts[:redirect_count] ||= 0
-        opts[:redirect_count] += 1
-        return response if opts[:redirect_count] > options[:max_redirects]
+        req_opts[:redirect_count] ||= 0
+        req_opts[:redirect_count] += 1
+        return response if req_opts[:redirect_count] > options[:max_redirects]
 
-        if response.status == 303
+        if status == 303
           verb = :get
-          opts.delete(:body)
+          req_opts.delete(:body)
         end
         location = response.headers["location"]
         if location
           full_location = response.response.env.url.merge(location)
-          request(verb, full_location, opts)
+          request(verb, full_location, req_opts)
         else
           error = Error.new(response)
-          raise(error, "Got #{response.status} status code, but no Location header was present")
+          raise(error, "Got #{status} status code, but no Location header was present")
         end
       when 200..299, 300..399
         # on non-redirecting 3xx statuses, return the response
         response
       when 400..599
-        if opts.fetch(:raise_errors, options[:raise_errors])
+        if req_opts.fetch(:raise_errors, options[:raise_errors])
           error = Error.new(response)
           raise(error)
         end
@@ -154,7 +166,7 @@ module OAuth2
         response
       else
         error = Error.new(response)
-        raise(error, "Unhandled status code value of #{response.status}")
+        raise(error, "Unhandled status code value of #{status}")
       end
     end
 
@@ -185,30 +197,8 @@ module OAuth2
     def get_token(params, access_token_opts = {}, extract_access_token = nil, &block)
       warn("OAuth2::Client#get_token argument `extract_access_token` will be removed in oauth2 v3. Refactor to use `access_token_class` on #initialize.") if extract_access_token
       extract_access_token ||= options[:extract_access_token]
-      parse, snaky, params, headers = parse_snaky_params_headers(params)
-
-      request_opts = {
-        raise_errors: options[:raise_errors],
-        parse: parse,
-        snaky: snaky,
-      }
-      if options[:token_method] == :post
-
-        # NOTE: If proliferation of request types continues, we should implement a parser solution for Request,
-        #       just like we have with Response.
-        request_opts[:body] = if headers["Content-Type"] == "application/json"
-          params.to_json
-        else
-          params
-        end
-
-        request_opts[:headers] = {"Content-Type" => "application/x-www-form-urlencoded"}
-      else
-        request_opts[:params] = params
-        request_opts[:headers] = {}
-      end
-      request_opts[:headers].merge!(headers)
-      response = request(http_method, token_url, request_opts, &block)
+      req_opts = params_to_req_opts(params)
+      response = request(http_method, token_url, req_opts, &block)
 
       # In v1.4.x, the deprecated extract_access_token option retrieves the token from the response.
       # We preserve this behavior here, but a custom access_token_class that implements #from_hash
@@ -218,6 +208,49 @@ module OAuth2
       else
         parse_response(response, access_token_opts)
       end
+    end
+
+    # Makes a request to revoke a token at the authorization server
+    #
+    # @param [String] token The token to be revoked
+    # @param [String, nil] token_type_hint A hint about the type of the token being revoked (e.g., 'access_token' or 'refresh_token')
+    # @param [Hash] params additional parameters for the token revocation
+    # @option params [Symbol] :parse (:automatic) parsing strategy for the response
+    # @option params [Boolean] :snaky (true) whether to convert response keys to snake_case
+    # @option params [Symbol] :token_method (:post_with_query_string) overrides OAuth2::Client#options[:token_method]
+    # @option params [Hash] :headers Additional request headers
+    #
+    # @yield [req] The block is passed the request being made, allowing customization
+    # @yieldparam [Faraday::Request] req The request object that can be modified
+    #
+    # @return [OAuth2::Response] OAuth2::Response instance
+    #
+    # @api public
+    #
+    # @note If the token passed to the request
+    #    is an access token, the server MAY revoke the respective refresh
+    #    token as well.
+    # @note If the token passed to the request
+    #    is a refresh token and the authorization server supports the
+    #    revocation of access tokens, then the authorization server SHOULD
+    #    also invalidate all access tokens based on the same authorization
+    #    grant
+    # @note If the server responds with HTTP status code 503, your code must
+    #    assume the token still exists and may retry after a reasonable delay.
+    #    The server may include a "Retry-After" header in the response to
+    #    indicate how long the service is expected to be unavailable to the
+    #    requesting client.
+    #
+    # @see https://datatracker.ietf.org/doc/html/rfc7009
+    # @see https://datatracker.ietf.org/doc/html/rfc7009#section-2.1
+    def revoke_token(token, token_type_hint = nil, params = {}, &block)
+      params[:token_method] ||= :post_with_query_string
+      req_opts = params_to_req_opts(params)
+      req_opts[:params] ||= {}
+      req_opts[:params][:token] = token
+      req_opts[:params][:token_type_hint] = token_type_hint if token_type_hint
+
+      request(http_method, revoke_url, req_opts, &block)
     end
 
     # The HTTP Method of the request
@@ -289,6 +322,33 @@ module OAuth2
 
   private
 
+    # A generic token request options parser
+    def params_to_req_opts(params)
+      parse, snaky, token_method, params, headers = parse_snaky_params_headers(params)
+      req_opts = {
+        raise_errors: options[:raise_errors],
+        token_method: token_method || options[:token_method],
+        parse: parse,
+        snaky: snaky,
+      }
+      if req_opts[:token_method] == :post
+        # NOTE: If proliferation of request types continues, we should implement a parser solution for Request,
+        #       just like we have with Response.
+        req_opts[:body] = if headers["Content-Type"] == "application/json"
+          params.to_json
+        else
+          params
+        end
+
+        req_opts[:headers] = {"Content-Type" => "application/x-www-form-urlencoded"}
+      else
+        req_opts[:params] = params
+        req_opts[:headers] = {}
+      end
+      req_opts[:headers].merge!(headers)
+      req_opts
+    end
+
     # Processes and transforms the input parameters for OAuth requests
     #
     # @param [Hash] params the input parameters to process
@@ -299,6 +359,7 @@ module OAuth2
     # @return [Array<(Symbol, Boolean, Hash, Hash)>] Returns an array containing:
     #   - [Symbol, nil] parse strategy
     #   - [Boolean] snaky flag for response key transformation
+    #   - [Symbol, nil] token_method overrides options[:token_method] for a request
     #   - [Hash] processed parameters
     #   - [Hash] HTTP headers
     #
@@ -313,10 +374,11 @@ module OAuth2
       end.to_h
       parse = params.key?(:parse) ? params.delete(:parse) : Response::DEFAULT_OPTIONS[:parse]
       snaky = params.key?(:snaky) ? params.delete(:snaky) : Response::DEFAULT_OPTIONS[:snaky]
+      token_method = params.delete(:token_method) if params.key?(:token_method)
       params = authenticator.apply(params)
       # authenticator may add :headers, and we separate them from params here
       headers = params.delete(:headers) || {}
-      [parse, snaky, params, headers]
+      [parse, snaky, token_method, params, headers]
     end
 
     # Executes an HTTP request with error handling and response processing
@@ -341,10 +403,14 @@ module OAuth2
     # @api private
     def execute_request(verb, url, opts = {})
       url = connection.build_url(url).to_s
+      # See: Hash#partition https://bugs.ruby-lang.org/issues/16252
+      req_opts, oauth_opts = opts.
+        partition { |k, _v| RESERVED_REQ_KEYS.include?(k.to_s) }.
+        map { |p| Hash[p] }
 
       begin
-        response = connection.run_request(verb, url, opts[:body], opts[:headers]) do |req|
-          req.params.update(opts[:params]) if opts[:params]
+        response = connection.run_request(verb, url, req_opts[:body], req_opts[:headers]) do |req|
+          req.params.update(req_opts[:params]) if req_opts[:params]
           yield(req) if block_given?
         end
       rescue Faraday::ConnectionFailed => e
@@ -353,8 +419,8 @@ module OAuth2
         raise TimeoutError, e
       end
 
-      parse = opts.key?(:parse) ? opts.delete(:parse) : Response::DEFAULT_OPTIONS[:parse]
-      snaky = opts.key?(:snaky) ? opts.delete(:snaky) : Response::DEFAULT_OPTIONS[:snaky]
+      parse = oauth_opts.key?(:parse) ? oauth_opts.delete(:parse) : Response::DEFAULT_OPTIONS[:parse]
+      snaky = oauth_opts.key?(:snaky) ? oauth_opts.delete(:snaky) : Response::DEFAULT_OPTIONS[:snaky]
 
       Response.new(response, parse: parse, snaky: snaky)
     end

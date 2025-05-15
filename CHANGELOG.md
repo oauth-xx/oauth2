@@ -24,6 +24,8 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
     - Specify the parameter name that identifies the access token
 - [!645](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/645) - Add `OAuth2::OAUTH_DEBUG` constant, based on `ENV["OAUTH_DEBUG"] (@pboling)
 - [!646](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/646) - Add `OAuth2.config.silence_extra_tokens_warning`, default: false (@pboling)
+- Added IETF RFC 7009 Token Revocation compliant `OAuth2::Client#revoke_token` and `OAuth2::AccessToken#revoke`
+  - See: https://datatracker.ietf.org/doc/html/rfc7009
 ### Changed
 - Default value of `OAuth2.config.silence_extra_tokens_warning` was `false`, now `true`
 - Gem releases are now cryptographically signed, with a 20-year cert (@pboling)
