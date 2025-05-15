@@ -50,6 +50,15 @@ RSpec.describe OAuth2::AccessToken do
         end
       end
 
+      before do
+        @original_setw = OAuth2.config.silence_extra_tokens_warning
+        OAuth2.config.silence_extra_tokens_warning = false
+      end
+
+      after do
+        OAuth2.config.silence_extra_tokens_warning = @original_setw
+      end
+
       it "warns on STDERR" do
         msg = <<-MSG.lstrip
             OAuth2::AccessToken.from_hash: `hash` contained more than one 'token' key ([:access_token, :id_token]); using :access_token.
@@ -87,6 +96,15 @@ RSpec.describe OAuth2::AccessToken do
         capture(:stderr) do
           target
         end
+      end
+
+      before do
+        @original_setw = OAuth2.config.silence_extra_tokens_warning
+        OAuth2.config.silence_extra_tokens_warning = false
+      end
+
+      after do
+        OAuth2.config.silence_extra_tokens_warning = @original_setw
       end
 
       let(:hash) do

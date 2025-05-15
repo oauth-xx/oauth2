@@ -449,7 +449,7 @@ module OAuth2
     end
 
     def oauth_debug_logging(builder)
-      builder.response(:logger, options[:logger], bodies: true) if ENV["OAUTH_DEBUG"] == "true"
+      builder.response(:logger, options[:logger], bodies: true) if OAuth2::OAUTH_DEBUG
     end
   end
 end

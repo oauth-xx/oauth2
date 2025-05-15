@@ -267,13 +267,12 @@ RSpec.describe OAuth2::Client do
 
   describe "#connection" do
     context "when debugging" do
-      include_context "with stubbed env"
       before do
-        stub_env("OAUTH_DEBUG" => debug_value)
+        stub_const("OAuth2::OAUTH_DEBUG", debug_value)
       end
 
       context "when OAUTH_DEBUG=true" do
-        let(:debug_value) { "true" }
+        let(:debug_value) { true }
 
         it "smoothly handles successive requests" do
           silence_all do
@@ -301,7 +300,7 @@ RSpec.describe OAuth2::Client do
       end
 
       context "when OAUTH_DEBUG=false" do
-        let(:debug_value) { "false" }
+        let(:debug_value) { false }
 
         it "smoothly handles successive requests" do
           silence_all do
@@ -357,24 +356,21 @@ RSpec.describe OAuth2::Client do
       expect(response.headers).to eq("Content-Type" => "text/awesome")
     end
 
-    context "with ENV" do
-      include_context "with stubbed env"
-      context "when OAUTH_DEBUG=true" do
-        before do
-          stub_env("OAUTH_DEBUG" => "true")
-        end
+    context "when silence_extra_tokens_warning=false" do
+      before do
+        stub_const("OAuth2::OAUTH_DEBUG", true)
+      end
 
-        it "outputs to $stdout when OAUTH_DEBUG=true" do
-          output = capture(:stdout) do
-            subject.request(:get, "/success")
-          end
-          logs = [
-            "request: GET https://api.example.com/success",
-            "response: Status 200",
-            'response: Content-Type: "text/awesome"',
-          ]
-          expect(output).to include(*logs)
+      it "outputs to $stdout when OAUTH_DEBUG=true" do
+        output = capture(:stdout) do
+          subject.request(:get, "/success")
         end
+        logs = [
+          "request: GET https://api.example.com/success",
+          "response: Status 200",
+          'response: Content-Type: "text/awesome"',
+        ]
+        expect(output).to include(*logs)
       end
     end
 
