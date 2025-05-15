@@ -32,7 +32,7 @@ module OAuth2
   )
   @config = DEFAULT_CONFIG.dup
   class << self
-    attr_accessor :config
+    attr_reader :config
   end
   def configure
     yield @config
