@@ -44,8 +44,9 @@ module OAuth2
         # If token_name is present, then use that key name
         key =
           if fresh.key?(:token_name)
-            no_tokens_warning(fresh, key)
-            fresh[:token_name]
+            t_key = fresh[:token_name]
+            no_tokens_warning(fresh, t_key)
+            t_key
           else
             # Otherwise, if one of the supported default keys is present, use whichever has precedence
             supported_keys = TOKEN_KEY_LOOKUP & fresh.keys

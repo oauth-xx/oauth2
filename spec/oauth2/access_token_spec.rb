@@ -178,11 +178,35 @@ RSpec.describe OAuth2::AccessToken do
       context "when not raising errors" do
         let(:options) { {raise_errors: false} }
 
-        it "warns on STDERR and selects the correct key" do
+        it "warns on STDERR" do
           msg = <<-MSG.lstrip
             OAuth2::AccessToken has no token
           MSG
           expect(printed).to eq(msg)
+        end
+
+        context "when custom token_name" do
+          let(:options) { {raise_errors: false} }
+
+          let(:hash) do
+            {
+              "lollipop" => token,
+              expires_at: Time.now.to_i + 200,
+              foo: "bar",
+              header_format: "Bearer %",
+              mode: :header,
+              param_name: "lollipop",
+              token_name: "lollipop",
+            }
+          end
+
+          it "finds token" do
+            expect(target.token).to eq("monkey")
+          end
+
+          it "does not warn when token is found" do
+            expect(printed).to eq("")
+          end
         end
       end
     end
