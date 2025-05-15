@@ -34,7 +34,7 @@ module OAuth2
       # @note If no token keys are present, a warning will be issued unless
       #   OAuth2.config.silence_no_tokens_warning is true
       # @note For "soon-to-expire"/"clock-skew" functionality see the `:expires_latency` option.
-      # @mote If snaky key conversion is being used, token_name needs to match the converted key.
+      # @note If snaky key conversion is being used, token_name needs to match the converted key.
       #
       # @example
       #   hash = { 'access_token' => 'token_value', 'refresh_token' => 'refresh_value' }
@@ -125,8 +125,10 @@ You may need to set `snaky: false`. See inline documentation for more info.
       no_tokens = (@token.nil? || @token.empty?) && (@refresh_token.nil? || @refresh_token.empty?)
       if no_tokens
         if @client.options[:raise_errors]
-          error = Error.new(opts)
-          raise(error)
+          raise Error.new({
+            error: "OAuth2::AccessToken has no token",
+            error_description: "Options are: #{opts.inspect}",
+          })
         elsif !OAuth2.config.silence_no_tokens_warning
           warn("OAuth2::AccessToken has no token")
         end
@@ -155,14 +157,14 @@ You may need to set `snaky: false`. See inline documentation for more info.
       @params[key]
     end
 
-    # Whether or not the token expires
+    # Whether the token expires
     #
     # @return [Boolean]
     def expires?
       !!@expires_at
     end
 
-    # Whether or not the token is expired
+    # Whether the token is expired
     #
     # @return [Boolean]
     def expired?
@@ -181,7 +183,7 @@ You may need to set `snaky: false`. See inline documentation for more info.
       new_token = @client.get_token(params, access_token_opts)
       new_token.options = options
       if new_token.refresh_token
-        # Keep it, if there is one
+        # Keep it if there is one
       else
         new_token.refresh_token = refresh_token
       end
