@@ -10,19 +10,22 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 ### Fixed
 ### Removed
 
-## [2.0.10] - 2025-05-12 ([tag][2.0.10t])
+## [2.0.10] - 2025-05-XX ([tag][2.0.10t])
 ### Added
 - [!635](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/635) - `.gitlab-ci.yml` file (@jessieay)
-- [!643](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/643) - Add token_name option (@pboling)
-    - Specify the parameter name that identifies the access token
-- [!642](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/642) - 20 year certificate for signing gem releases, expires 2045-04-29 (@pboling)
-  - Gemspec metadata (@pboling)
-    - funding_uri
-    - news_uri
-    - mailing_list_uri
-  - SHA256 and SHA512 Checksums for release (@pboling)
 - [#638](https://gitlab.com/oauth-xx/oauth2/-/issues/638) - Documentation of support for ILO Fundamental Principles of Rights at Work
+- [!642](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/642) - 20 year certificate for signing gem releases, expires 2045-04-29 (@pboling)
+    - Gemspec metadata (@pboling)
+      - funding_uri
+      - news_uri
+      - mailing_list_uri
+    - SHA256 and SHA512 Checksums for release (@pboling)
+- [!643](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/643) - Add `token_name` option (@pboling)
+    - Specify the parameter name that identifies the access token
+- [!645](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/645) - Add `OAuth2::OAUTH_DEBUG` constant, based on `ENV["OAUTH_DEBUG"] (@pboling)
+- [!646](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/646) - Add `OAuth2.config.silence_extra_tokens_warning`, default: false (@pboling)
 ### Changed
+- Default value of `OAuth2.config.silence_extra_tokens_warning` was `false`, now `true`
 - Gem releases are now cryptographically signed, with a 20-year cert (@pboling)
   - Allow linux distros to build release without signing, as their package managers sign independently
 ### Fixed
