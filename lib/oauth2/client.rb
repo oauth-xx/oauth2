@@ -72,13 +72,16 @@ module OAuth2
 
     # Set the site host
     #
-    # @param value [String] the OAuth2 provider site host
+    # @param [String] value the OAuth2 provider site host
+    # @return [String] the site host value
     def site=(value)
       @connection = nil
       @site = value
     end
 
     # The Faraday connection object
+    #
+    # @return [Faraday::Connection] the initialized Faraday connection
     def connection
       @connection ||=
         Faraday.new(site, options[:connection_opts]) do |builder|
@@ -95,6 +98,7 @@ module OAuth2
     # The authorize endpoint URL of the OAuth2 provider
     #
     # @param [Hash] params additional query parameters
+    # @return [String] the constructed authorize URL
     def authorize_url(params = {})
       params = (params || {}).merge(redirection_params)
       connection.build_url(options[:authorize_url], params).to_s
@@ -102,25 +106,28 @@ module OAuth2
 
     # The token endpoint URL of the OAuth2 provider
     #
-    # @param [Hash] params additional query parameters
+    # @param [Hash, nil] params additional query parameters
+    # @return [String] the constructed token URL
     def token_url(params = nil)
       connection.build_url(options[:token_url], params).to_s
     end
 
     # The revoke endpoint URL of the OAuth2 provider
     #
-    # @param [Hash] params additional query parameters
+    # @param [Hash, nil] params additional query parameters
+    # @return [String] the constructed revoke URL
     def revoke_url(params = nil)
       connection.build_url(options[:revoke_url], params).to_s
     end
 
     # Makes a request relative to the specified site root.
+    #
     # Updated HTTP 1.1 specification (IETF RFC 7231) relaxed the original constraint (IETF RFC 2616),
     #   allowing the use of relative URLs in Location headers.
     #
     # @see https://datatracker.ietf.org/doc/html/rfc7231#section-7.1.2
     #
-    # @param [Symbol] verb one of :get, :post, :put, :delete
+    # @param [Symbol] verb one of [:get, :post, :put, :delete]
     # @param [String] url URL path of request
     # @param [Hash] opts the options to make the request with
     # @option req_opts [Hash] :params additional query parameters for the URL of the request
@@ -129,9 +136,13 @@ module OAuth2
     # @option req_opts [Boolean] :raise_errors whether to raise an OAuth2::Error on 400+ status
     #   code response for this request.  Overrides the client instance setting.
     # @option req_opts [Symbol] :parse @see Response::initialize
-    # @option req_opts [true, false] :snaky (true) @see Response::initialize
+    # @option req_opts [Boolean] :snaky (true) @see Response::initialize
     #
-    # @yield [req] @see Faraday::Connection#run_request
+    # @yield [req] The block is passed the request being made, allowing customization
+    # @yieldparam [Faraday::Request] req The request object that can be modified
+    # @see Faraday::Connection#run_request
+    #
+    # @return [OAuth2::Response] the response from the request
     def request(verb, url, req_opts = {}, &block)
       response = execute_request(verb, url, req_opts, &block)
       status = response.status

@@ -6,7 +6,7 @@
   "lib/oauth2.rb:4176768025": [
     [38, 11, 7, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 651502127]
   ],
-  "lib/oauth2/access_token.rb:569882683": [
+  "lib/oauth2/access_token.rb:3471244990": [
     [49, 13, 5, "Style/IdenticalConditionalBranches: Move `t_key` out of the conditional.", 183811513],
     [55, 13, 5, "Style/IdenticalConditionalBranches: Move `t_key` out of the conditional.", 183811513]
   ],

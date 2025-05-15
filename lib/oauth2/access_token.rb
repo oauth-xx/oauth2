@@ -164,17 +164,24 @@ You may need to set `snaky: false`. See inline documentation for more info.
       !!@expires_at
     end
 
-    # Whether the token is expired
+    # Check if token is expired
     #
-    # @return [Boolean]
+    # @return [Boolean] true if the token is expired, false otherwise
     def expired?
       expires? && (expires_at <= Time.now.to_i)
     end
 
     # Refreshes the current Access Token
     #
-    # @return [AccessToken] a new AccessToken
-    # @note options should be carried over to the new AccessToken
+    # @param [Hash] params additional params to pass to the refresh token request
+    # @param [Hash] access_token_opts options that will be passed to the AccessToken initialization
+    #
+    # @yield [opts] The block to modify the refresh token request options
+    # @yieldparam [Hash] opts The options hash that can be modified
+    #
+    # @return [OAuth2::AccessToken] a new AccessToken instance
+    #
+    # @note current token's options are carried over to the new AccessToken
     def refresh(params = {}, access_token_opts = {}, &block)
       raise OAuth2::Error.new({error: "A refresh_token is not available"}) unless refresh_token
 
@@ -282,7 +289,16 @@ You may need to set `snaky: false`. See inline documentation for more info.
     # @param [Symbol] verb the HTTP request method
     # @param [String] path the HTTP URL path of the request
     # @param [Hash] opts the options to make the request with
-    #   @see Client#request
+    # @option opts [Hash] :params additional URL parameters
+    # @option opts [Hash, String] :body the request body
+    # @option opts [Hash] :headers request headers
+    #
+    # @yield [req] The block to modify the request
+    # @yieldparam [Faraday::Request] req The request object that can be modified
+    #
+    # @return [OAuth2::Response] the response from the request
+    #
+    # @see OAuth2::Client#request
     def request(verb, path, opts = {}, &block)
       configure_authentication!(opts)
       @client.request(verb, path, opts, &block)
