@@ -28,6 +28,7 @@ module OAuth2
   OAUTH_DEBUG = ENV.fetch("OAUTH_DEBUG", "false").casecmp("true").zero?
   DEFAULT_CONFIG = SnakyHash::SymbolKeyed.new(
     silence_extra_tokens_warning: true,
+    silence_no_tokens_warning: true,
   )
   @config = DEFAULT_CONFIG.dup
   class << self

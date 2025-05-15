@@ -121,6 +121,37 @@ RSpec.describe OAuth2::AccessToken do
         expect(printed).to eq(msg)
       end
     end
+
+    context "with no token keys" do
+      subject(:printed) do
+        capture(:stderr) do
+          target
+        end
+      end
+
+      before do
+        @original_sntw = OAuth2.config.silence_no_tokens_warning
+        OAuth2.config.silence_no_tokens_warning = false
+      end
+
+      after do
+        OAuth2.config.silence_no_tokens_warning = @original_sntw
+      end
+
+      let(:hash) do
+        {
+          blather: "confusing bug here",
+          rather: token,
+        }
+      end
+
+      it "warns on STDERR and selects the correct key" do
+        msg = <<-MSG.lstrip
+            OAuth2::AccessToken.from_hash: `hash` contained more than one 'token' key ([:access_token, :id_token]); using :access_token.
+        MSG
+        block_is_expected.to raise_error(OAuth2::Error)
+      end
+    end
   end
 
   describe "#initialize" do
@@ -314,6 +345,15 @@ RSpec.describe OAuth2::AccessToken do
                 end
               end
 
+              before do
+                @original_sntw = OAuth2.config.silence_no_tokens_warning
+                OAuth2.config.silence_no_tokens_warning = false
+              end
+
+              after do
+                OAuth2.config.silence_no_tokens_warning = @original_sntw
+              end
+
               it "warns on STDERR" do
                 msg = <<-MSG.lstrip
                   OAuth2::AccessToken has no token
@@ -342,6 +382,15 @@ RSpec.describe OAuth2::AccessToken do
 
         context "when there is nil token" do
           let(:token) { nil }
+
+          before do
+            @original_sntw = OAuth2.config.silence_no_tokens_warning
+            OAuth2.config.silence_no_tokens_warning = false
+          end
+
+          after do
+            OAuth2.config.silence_no_tokens_warning = @original_sntw
+          end
 
           context "when there is no refresh_token" do
             it "does not raise on initialize" do

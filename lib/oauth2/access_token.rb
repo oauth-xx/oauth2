@@ -31,6 +31,8 @@ module OAuth2
       #   'access_token', 'id_token', 'token' (or their symbolic versions)
       # @note If multiple token keys are present, a warning will be issued unless
       #   OAuth2.config.silence_extra_tokens_warning is true
+      # @note If no token keys are present, a warning will be issued unless
+      #   OAuth2.config.silence_no_tokens_warning is true
       # @note For "soon-to-expire"/"clock-skew" functionality see the `:expires_latency` option.
       # @mote If snaky key conversion is being used, token_name needs to match the converted key.
       #
@@ -40,21 +42,17 @@ module OAuth2
       def from_hash(client, hash)
         fresh = hash.dup
         # If token_name is present, then use that key name
-        if fresh.key?(:token_name)
-          key = fresh[:token_name]
-          if key.nil? || !fresh.key?(key)
-            warn(%[
-OAuth2::AccessToken#from_hash key mismatch.
-Custom token_name (#{key}) does match any keys (#{fresh.keys})
-You may need to set `snaky: false`. See inline documentation for more info.
-            ])
+        key =
+          if fresh.key?(:token_name)
+            no_tokens_warning(fresh, key)
+            fresh[:token_name]
+          else
+            # Otherwise, if one of the supported default keys is present, use whichever has precedence
+            supported_keys = TOKEN_KEY_LOOKUP & fresh.keys
+            t_key = supported_keys[0]
+            extra_tokens_warning(supported_keys, t_key)
+            t_key
           end
-        else
-          # Otherwise, if one of the supported default keys is present, use whichever has precedence
-          supported_keys = TOKEN_KEY_LOOKUP & fresh.keys
-          key = supported_keys[0]
-          extra_tokens_warning(supported_keys, key)
-        end
         token = fresh.delete(key) || ""
         new(client, token, fresh)
       end
@@ -76,6 +74,17 @@ You may need to set `snaky: false`. See inline documentation for more info.
         return if supported_keys.length <= 1
 
         warn("OAuth2::AccessToken.from_hash: `hash` contained more than one 'token' key (#{supported_keys}); using #{key.inspect}.")
+      end
+
+      def no_tokens_warning(hash, key)
+        return if OAuth2.config.silence_no_tokens_warning
+        return if key && hash.key?(key)
+
+        warn(%[
+OAuth2::AccessToken#from_hash key mismatch.
+Custom token_name (#{key}) is not found in (#{hash.keys})
+You may need to set `snaky: false`. See inline documentation for more info.
+        ])
       end
     end
 
@@ -117,7 +126,7 @@ You may need to set `snaky: false`. See inline documentation for more info.
         if @client.options[:raise_errors]
           error = Error.new(opts)
           raise(error)
-        else
+        elsif !OAuth2.config.silence_no_tokens_warning
           warn("OAuth2::AccessToken has no token")
         end
       end
