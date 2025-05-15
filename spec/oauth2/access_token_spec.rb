@@ -66,6 +66,33 @@ RSpec.describe OAuth2::AccessToken do
         expect(printed).to eq(msg)
       end
 
+      context "when one token" do
+        subject(:printed) do
+          capture(:stderr) do
+            target
+          end
+        end
+
+        let(:hash) do
+          {
+            access_token: token,
+          }
+        end
+
+        before do
+          @original_setw = OAuth2.config.silence_extra_tokens_warning
+          OAuth2.config.silence_extra_tokens_warning = false
+        end
+
+        after do
+          OAuth2.config.silence_extra_tokens_warning = @original_setw
+        end
+
+        it "does not warn on STDERR" do
+          expect(printed).to eq("")
+        end
+      end
+
       context "when silenced" do
         subject(:printed) do
           capture(:stderr) do
@@ -74,15 +101,12 @@ RSpec.describe OAuth2::AccessToken do
         end
 
         before do
-          OAuth2.configure do |config|
-            config.silence_extra_tokens_warning = true
-          end
+          @original_setw = OAuth2.config.silence_extra_tokens_warning
+          OAuth2.config.silence_extra_tokens_warning = true
         end
 
         after do
-          OAuth2.configure do |config|
-            config.silence_extra_tokens_warning = false
-          end
+          OAuth2.config.silence_extra_tokens_warning = @original_setw
         end
 
         it "does not warn on STDERR" do
@@ -119,6 +143,132 @@ RSpec.describe OAuth2::AccessToken do
             OAuth2::AccessToken.from_hash: `hash` contained more than one 'token' key ([:access_token, :id_token]); using :access_token.
         MSG
         expect(printed).to eq(msg)
+      end
+    end
+
+    context "with warning for no token keys" do
+      subject(:printed) do
+        capture(:stderr) do
+          target
+        end
+      end
+
+      before do
+        @original_sntw = OAuth2.config.silence_no_tokens_warning
+        OAuth2.config.silence_no_tokens_warning = false
+      end
+
+      after do
+        OAuth2.config.silence_no_tokens_warning = @original_sntw
+      end
+
+      let(:options) { {raise_errors: true} }
+
+      let(:hash) do
+        {
+          blather: "confusing bug here",
+          rather: token,
+        }
+      end
+
+      it "raises an error" do
+        block_is_expected.to raise_error(OAuth2::Error)
+      end
+
+      context "when not raising errors" do
+        let(:options) { {raise_errors: false} }
+
+        it "warns on STDERR" do
+          msg = <<-MSG.lstrip
+            OAuth2::AccessToken has no token
+          MSG
+          expect(printed).to eq(msg)
+        end
+
+        context "when custom token_name valid" do
+          let(:options) { {raise_errors: false} }
+
+          let(:hash) do
+            {
+              "lollipop" => token,
+              :expires_at => Time.now.to_i + 200,
+              :foo => "bar",
+              :header_format => "Bearer %",
+              :mode => :header,
+              :param_name => "lollipop",
+              :token_name => "lollipop",
+            }
+          end
+
+          it "finds token" do
+            expect(target.token).to eq("monkey")
+          end
+
+          it "does not warn when token is found" do
+            expect(printed).to eq("")
+          end
+        end
+
+        context "when custom token_name invalid" do
+          let(:options) { {raise_errors: false} }
+
+          let(:hash) do
+            {
+              "babyshark" => token,
+              :expires_at => Time.now.to_i + 200,
+              :foo => "bar",
+              :header_format => "Bearer %",
+              :mode => :header,
+              :param_name => "lollipop",
+              :token_name => "lollipop",
+            }
+          end
+
+          context "when silence_no_tokens_warning is false" do
+            before do
+              @original_sntw = OAuth2.config.silence_no_tokens_warning
+              OAuth2.config.silence_no_tokens_warning = false
+            end
+
+            after do
+              OAuth2.config.silence_no_tokens_warning = @original_sntw
+            end
+
+            it "finds no token" do
+              expect(target.token).to eq("")
+            end
+
+            it "warns when no token is found" do
+              expect(printed.each_line.to_a).to eq([
+                "\n",
+                "OAuth2::AccessToken#from_hash key mismatch.\n",
+                %{Custom token_name (lollipop) is not found in (["babyshark", :expires_at, :foo, :header_format, :mode, :param_name, :token_name])\n},
+                "You may need to set `snaky: false`. See inline documentation for more info.\n",
+                "        \n",
+                "OAuth2::AccessToken has no token\n",
+              ])
+            end
+          end
+
+          context "when silence_no_tokens_warning is true" do
+            before do
+              @original_sntw = OAuth2.config.silence_no_tokens_warning
+              OAuth2.config.silence_no_tokens_warning = true
+            end
+
+            after do
+              OAuth2.config.silence_no_tokens_warning = @original_sntw
+            end
+
+            it "finds no token" do
+              expect(target.token).to eq("")
+            end
+
+            it "does not warn when no token is found" do
+              expect(printed.each_line.to_a).to eq([])
+            end
+          end
+        end
       end
     end
   end
@@ -314,6 +464,15 @@ RSpec.describe OAuth2::AccessToken do
                 end
               end
 
+              before do
+                @original_sntw = OAuth2.config.silence_no_tokens_warning
+                OAuth2.config.silence_no_tokens_warning = false
+              end
+
+              after do
+                OAuth2.config.silence_no_tokens_warning = @original_sntw
+              end
+
               it "warns on STDERR" do
                 msg = <<-MSG.lstrip
                   OAuth2::AccessToken has no token
@@ -342,6 +501,15 @@ RSpec.describe OAuth2::AccessToken do
 
         context "when there is nil token" do
           let(:token) { nil }
+
+          before do
+            @original_sntw = OAuth2.config.silence_no_tokens_warning
+            OAuth2.config.silence_no_tokens_warning = false
+          end
+
+          after do
+            OAuth2.config.silence_no_tokens_warning = @original_sntw
+          end
 
           context "when there is no refresh_token" do
             it "does not raise on initialize" do
