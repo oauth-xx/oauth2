@@ -3,7 +3,7 @@
     [66, 5, 20, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 2485198147],
     [78, 5, 74, "Style/InvertibleUnlessCondition: Prefer `if Gem.rubygems_version >= Gem::Version.new(\"2.7.0\")` over `unless Gem.rubygems_version < Gem::Version.new(\"2.7.0\")`.", 2453573257]
   ],
-  "lib/oauth2.rb:4176768025": [
+  "lib/oauth2.rb:65351186": [
     [38, 11, 7, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 651502127]
   ],
   "lib/oauth2/access_token.rb:3471244990": [
