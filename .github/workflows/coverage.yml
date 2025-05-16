@@ -4,9 +4,7 @@ env:
   K_SOUP_COV_MIN_BRANCH: 100
   K_SOUP_COV_MIN_LINE: 100
   K_SOUP_COV_MIN_HARD: true
-  K_SOUP_COV_FORMATTERS: "html,rcov,lcov,json,tty"
-  K_SOUP_COV_DO: true
-  K_SOUP_COV_MULTI_FORMATTERS: true
+  K_SOUP_COV_FORMATTERS: "html,xml,rcov,lcov,json,tty"
   K_SOUP_COV_COMMAND_NAME: "RSpec Coverage"
 
 on:
@@ -73,6 +71,30 @@ jobs:
       - name: Tests for ${{ matrix.ruby }}@current via ${{ matrix.exec_cmd }}
         run: bundle exec appraisal ${{ matrix.appraisal }} bundle exec ${{ matrix.exec_cmd }}
 
+      # Do SaaS coverage uploads first
+      - name: Upload coverage to Coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+        continue-on-error: ${{ matrix.experimental != 'false' }}
+
+      - name: Upload coverage to QLTY
+        uses: qltysh/qlty-action/coverage@main
+        with:
+          coverage-token: ${{secrets.QLTY_COVERAGE_TOKEN}}
+          files: coverage/.resultset.json
+        continue-on-error: ${{ matrix.experimental != 'false' }}
+
+      # Build will fail here if coverage upload fails
+      #   which will hopefully be noticed for the lack of code coverage comments
+      - name: Upload coverage to CodeCov
+        uses: codecov/codecov-action@v5
+        with:
+          fail_ci_if_error: true # optional (default = false)
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true # optional (default = false)
+
+      # Then PR comments
       - name: Code Coverage Summary Report
         uses: irongut/CodeCoverageSummary@v1.3.0
         if: ${{ github.event_name == 'pull_request' }}
@@ -95,23 +117,3 @@ jobs:
           recreate: true
           path: code-coverage-results.md
         continue-on-error: ${{ matrix.experimental != 'false' }}
-
-      - name: Upload coverage to Coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-        continue-on-error: ${{ matrix.experimental != 'false' }}
-
-      - name: Upload coverage to QLTY
-        uses: qltysh/qlty-action/coverage@main
-        with:
-          coverage-token: ${{secrets.QLTY_COVERAGE_TOKEN}}
-          files: coverage/.resultset.json
-        continue-on-error: ${{ matrix.experimental != 'false' }}
-
-      - name: Upload coverage to CodeCov
-        uses: codecov/codecov-action@v5
-        with:
-          fail_ci_if_error: true # optional (default = false)
-          token: ${{ secrets.CODECOV_TOKEN }}
-          verbose: true # optional (default = false)

@@ -668,7 +668,7 @@ or one of the others at the head of this README.
 [🔑cc-cov]: https://qlty.sh/gh/oauth-xx/projects/oauth2
 [🔑cc-covi♻️]: https://qlty.sh/badges/d3370c2c-8791-4202-9759-76f527f76005/test_coverage.svg
 [🔑codecov]: https://codecov.io/gh/oauth-xx/oauth2
-[🔑codecovi♻️]: https://codecov.io/gh/oauth-xx/oauth2/branch/main/graph/badge.svg?token=bNqSzNiuo2
+[🔑codecovi♻️]: https://codecov.io/gh/oauth-xx/oauth2/graph/badge.svg?token=bNqSzNiuo2
 [🔑coveralls]: https://coveralls.io/github/oauth-xx/oauth2?branch=main
 [🔑coveralls-img]: https://coveralls.io/repos/github/oauth-xx/oauth2/badge.svg?branch=main
 [🔑depfu]: https://depfu.com/github/oauth-xx/oauth2?project_id=5884
