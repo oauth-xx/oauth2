@@ -11,6 +11,9 @@ gem_version =
     OAuth2::Version::VERSION
   end
 
+gl_homepage = "https://gitlab.com/oauth-xx/oauth2"
+gh_mirror = "https://github.com/oauth-xx/oauth2"
+
 Gem::Specification.new do |spec|
   # Linux distros may package ruby gems differently,
   #   and securely certify them independently via alternate package management systems.
@@ -32,7 +35,7 @@ Gem::Specification.new do |spec|
   spec.summary = "OAuth 2.0 Core Ruby implementation"
   spec.description = "Ruby wrapper for the OAuth 2.0 protocol"
   spec.email = ["peter.boling@gmail.com", "oauth-ruby@googlegroups.com"]
-  spec.homepage = "https://gitlab.com/oauth-xx/oauth2"
+  spec.homepage = gh_mirror # Yeah, it's gross, but stars have value :(
   spec.licenses = "MIT"
   spec.name = "oauth2"
   spec.required_ruby_version = ">= 2.2.0"
@@ -42,9 +45,9 @@ You have installed oauth2 version #{gem_version}, congratulations!
 
 There are BREAKING changes if you are upgrading from < v2, but most will not encounter them, and updating your code should be easy!
 Please see:
-• #{spec.homepage}/-/blob/main/SECURITY.md
-• #{spec.homepage}/-/blob/v#{spec.version}/CHANGELOG.md#200-2022-06-21-tag
-• Summary of most important breaking changes: #{spec.homepage}#what-is-new-for-v20
+• #{gl_homepage}/-/blob/main/SECURITY.md
+• #{gl_homepage}/-/blob/v#{spec.version}/CHANGELOG.md#200-2022-06-21-tag
+• Summary of most important breaking changes: #{gl_homepage}#what-is-new-for-v20
 
 There are BUGFIXES in v#{gem_version}, which depending on how you relied on them instead of reporting and fixing them, may be BREAKING for you.
 For more information please see:
@@ -73,12 +76,12 @@ Please report issues, and star the project!
 Thanks, |7eter l-|. l3oling
 }
 
-  spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "#{spec.homepage}/-/tree/v#{spec.version}"
-  spec.metadata["changelog_uri"] = "#{spec.homepage}/-/blob/v#{spec.version}/CHANGELOG.md"
-  spec.metadata["bug_tracker_uri"] = "#{spec.homepage}/-/issues"
+  spec.metadata["homepage_uri"] = gl_homepage
+  spec.metadata["source_code_uri"] = "#{gl_homepage}/-/tree/v#{spec.version}"
+  spec.metadata["changelog_uri"] = "#{gl_homepage}/-/blob/v#{spec.version}/CHANGELOG.md"
+  spec.metadata["bug_tracker_uri"] = "#{gl_homepage}/-/issues"
   spec.metadata["documentation_uri"] = "https://www.rubydoc.info/gems/#{spec.name}/#{spec.version}"
-  spec.metadata["wiki_uri"] = "#{spec.homepage}/-/wiki"
+  spec.metadata["wiki_uri"] = "#{gl_homepage}/-/wiki"
   spec.metadata["mailing_list_uri"] = "https://groups.google.com/g/oauth-ruby"
   spec.metadata["news_uri"] = "https://www.railsbling.com/tags/#{spec.name}"
   spec.metadata["funding_uri"] = "https://liberapay.com/pboling"

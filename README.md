@@ -43,6 +43,12 @@ OAuth 2.0 focuses on client developer simplicity while providing specific author
     desktop applications, mobile phones, and living room devices.
 This is a RubyGem for implementing OAuth 2.0 clients (not servers) in Ruby applications.
 
+| Federated [DVCS][💎d-in-dvcs] Repository      | Status         | Issues | PRs | Wiki | CI             | Discussions |
+|-----------------------------------------------|----------------|--------|-----|------|----------------|-------------|
+| 🧪 [oauth-xx/oauth2 on GitLab][📜src-gl]      | The Truth      | 💚     | 💚  | 💚   | 🏀 Tiny Matrix | ➖          |
+| 🐙 [oauth-xx/oauth2 on GitHub][📜src-gh]      | A Dirty Mirror | 💚     | 💚  | ➖   | 💯 Full Matrix | ➖          |
+| 🤼 [OAuth Ruby Google Group][⛳gg-discussions] | "Active"        | ➖       | ➖    | ➖     | ➖               | 💚            |
+
 ### Upgrading Runtime Gem Dependencies
 
 This project sits underneath a large portion of the authentication systems on the internet.
@@ -893,6 +899,7 @@ or one of the others at the head of this README.
 [💎rlts-img]: https://img.shields.io/badge/code_style-rubocop--lts-brightgreen.svg?plastic&logo=ruby&logoColor=white
 [🏘fossa]: https://app.fossa.io/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2?ref=badge_shield
 [🏘fossa-img]: https://app.fossa.io/api/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2.svg?type=shield
+[💎d-in-dvcs]: https://railsbling.com/posts/dvcs/put_the_d_in_dvcs/
 
 <details>
   <summary>
