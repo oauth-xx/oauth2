@@ -24,23 +24,30 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
     - Specify the parameter name that identifies the access token
 - [!645](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/645) - Add `OAuth2::OAUTH_DEBUG` constant, based on `ENV["OAUTH_DEBUG"] (@pboling)
 - [!646](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/646) - Add `OAuth2.config.silence_extra_tokens_warning`, default: false (@pboling)
-- Added IETF RFC 7009 Token Revocation compliant `OAuth2::Client#revoke_token` and `OAuth2::AccessToken#revoke`
+- [!647](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/647) - Add IETF RFC 7009 Token Revocation compliant (@pboling)
+  - `OAuth2::Client#revoke_token`
+  - `OAuth2::AccessToken#revoke`
   - See: https://datatracker.ietf.org/doc/html/rfc7009
 ### Changed
 - Default value of `OAuth2.config.silence_extra_tokens_warning` was `false`, now `true`
 - Gem releases are now cryptographically signed, with a 20-year cert (@pboling)
-  - Allow linux distros to build release without signing, as their package managers sign independently
+    - Allow linux distros to build release without signing, as their package managers sign independently
+- [!647](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/647) - `OAuth2::AccessToken#refresh` now supports block param pass through (@pboling)
+- [!647](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/647) - `OAuth2.config` is no longer writable (@pboling)
+- [!647](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/647) - Errors raised by OAuth2::AccessToken are now always OAuth2::Error and have better metadata (@pboling)
 ### Fixed
-[!633](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/633) - Spaces will now be encoded as `%20` instead of `+` (@nov.matake)
-[!634](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/634) - `CHANGELOG.md` documentation fix (@skuwa229)
-[!638](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/638) - fix `expired?` when `expires_in` is `0` (@disep)
-[!639](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/639) - Only instantiate `OAuth2::Error` if `raise_errors` option is `true` (@glytch2)
-[!640](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/640) - `README.md` documentation fix (@martinezcoder)
-[!641](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/641) - Do not include sensitive information in the `inspect` (@manuelvanrijn)
-[#645](https://gitlab.com/oauth-xx/oauth2/-/issues/645) - Response no longer becomes a snaky hash (@pboling)
-[#639](https://gitlab.com/oauth-xx/oauth2/-/issues/639) - AccessToken#to_hash is now serializable, just a regular Hash (@pboling)
-[#95](https://gitlab.com/oauth-xx/oauth2/-/issues/95) - restoring an access token via `AccessToken#from_hash` (@pboling)
-  - This was a 13 year old bug report. 😘
+- [#95](https://gitlab.com/oauth-xx/oauth2/-/issues/95) - restoring an access token via `AccessToken#from_hash` (@pboling)
+    - This was a 13 year old bug report. 😘
+- [#619](https://gitlab.com/oauth-xx/oauth2/-/issues/619) - Internal options (like snaky, raise_errors, and parse) are no longer included in request (@pboling)
+- [!633](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/633) - Spaces will now be encoded as `%20` instead of `+` (@nov.matake)
+- [!634](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/634) - `CHANGELOG.md` documentation fix (@skuwa229)
+- [!638](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/638) - fix `expired?` when `expires_in` is `0` (@disep)
+- [!639](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/639) - Only instantiate `OAuth2::Error` if `raise_errors` option is `true` (@glytch2)
+- [#639](https://gitlab.com/oauth-xx/oauth2/-/issues/639) - `AccessToken#to_hash` is now serializable, just a regular Hash (@pboling)
+- [!640](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/640) - `README.md` documentation fix (@martinezcoder)
+- [!641](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/641) - Do not include sensitive information in the `inspect` (@manuelvanrijn)
+- [#641](https://gitlab.com/oauth-xx/oauth2/-/issues/641) - Made default JSON response parser more resilient (@pboling)
+- [#645](https://gitlab.com/oauth-xx/oauth2/-/issues/645) - Response no longer becomes a snaky hash (@pboling)
 
 ## [2.0.9] - 2022-09-16 ([tag][2.0.9t])
 ### Added
