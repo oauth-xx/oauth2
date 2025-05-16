@@ -8,7 +8,7 @@ env:
   K_SOUP_COV_MIN_BRANCH: 100
   K_SOUP_COV_MIN_LINE: 100
   K_SOUP_COV_MIN_HARD: true
-  K_SOUP_COV_FORMATTERS: "html,rcov,lcov,json,tty"
+  K_SOUP_COV_FORMATTERS: "html,xml,rcov,lcov,json,tty"
   K_SOUP_COV_DO: true
   K_SOUP_COV_MULTI_FORMATTERS: true
   K_SOUP_COV_COMMAND_NAME: "RSpec Coverage"
@@ -102,7 +102,7 @@ jobs:
         uses: irongut/CodeCoverageSummary@v1.3.0
         if: ${{ github.event_name == 'pull_request' }}
         with:
-          filename: coverage/coverage.xml
+          filename: ./coverage/coverage.xml
           badge: true
           fail_below_min: true
           format: markdown
