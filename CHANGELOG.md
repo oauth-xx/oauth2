@@ -285,7 +285,7 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 [jruby-9.1]: https://www.jruby.org/2017/05/16/jruby-9-1-9-0.html
 [jruby-9.2]: https://www.jruby.org/2018/05/24/jruby-9-2-0-0.html
 
-## [1.4.0] - 2017-06-09 ([tag][1.4.0t])
+## [1.4.0] - 2017-06-09
 - TAG: [v1.4.0][1.4.0t]
 - Drop Ruby 1.8.7 support (@sferik)
 - Fix some RuboCop offenses (@sferik)
