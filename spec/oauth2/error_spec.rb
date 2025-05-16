@@ -91,7 +91,10 @@ RSpec.describe OAuth2::Error do
           end
 
           it "replaces them" do
+            encoding = {reason: "encoding isn't working right on JRuby"}
+            skip_for(encoding.merge(engine: "jruby"))
             # See https://bibwild.wordpress.com/2013/03/12/removing-illegal-bytes-for-encoding-in-ruby-1-9-strings/
+
             raise "Invalid characters not replaced" unless subject.message.include?("� invalid �")
             # This will fail if {:invalid => replace} is not passed into `encode`
           end
