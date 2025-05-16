@@ -1,12 +1,4 @@
 GIT
-  remote: https://github.com/jwt/ruby-jwt
-  revision: 6aac2d682b04ac62962989be18479040f806f34e
-  branch: main
-  specs:
-    jwt (3.0.0.beta1)
-      base64
-
-GIT
   remote: https://github.com/pboling/appraisal
   revision: a3a3e4b7db67d9b085f96b2ffddd2b51bd8a1196
   branch: galtzo
@@ -32,7 +24,7 @@ PATH
   remote: .
   specs:
     oauth2 (2.0.10)
-      faraday (>= 0.17.3, < 3.0)
+      faraday (>= 0.17.3, < 4.0)
       jwt (>= 1.0, < 4.0)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 4)
@@ -106,6 +98,8 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     json (2.12.0)
+    jwt (3.0.0.beta1)
+      base64
     kettle-soup-cover (1.0.6)
       simplecov (~> 0.22)
       simplecov-cobertura (~> 2.1)
@@ -292,16 +286,15 @@ DEPENDENCIES
   bundler-audit (~> 0.9.2)
   debug (>= 1.0.0)
   gem_bench (~> 2.0, >= 2.0.5)
-  jwt!
   kettle-soup-cover (~> 1.0, >= 1.0.6)
   nkf (~> 0.2)
   oauth2!
-  rake (~> 13.0)
+  rake (>= 12)
   rdoc (~> 6.11)
   reek (~> 6.4)
   rexml (>= 3)
-  rspec (~> 3.13)
-  rspec-block_is_expected (~> 1.0)
+  rspec (>= 3)
+  rspec-block_is_expected
   rspec-pending_for
   rspec-stubbed_env
   rubocop (~> 1.73, >= 1.73.2)
