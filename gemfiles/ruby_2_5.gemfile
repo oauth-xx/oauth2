@@ -2,6 +2,8 @@
 
 source "https://rubygems.org"
 
-gemspec path: "../"
+gemspec :path => "../"
 
-eval_gemfile("modular/f1.gemfile")
+eval_gemfile("modular/faraday_v1.gemfile")
+
+eval_gemfile("modular/jwt_v2.gemfile")

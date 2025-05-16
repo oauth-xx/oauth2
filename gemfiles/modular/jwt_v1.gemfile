@@ -1,0 +1,5 @@
+# frozen_string_literal: true
+
+# Ruby >= 0
+# This version of jwt is the last compatible with Ruby 1.9, 2.0, 2.1, 2.2, 2.3, 2.4:
+gem "jwt", "~> 1.5", ">= 1.5.6"

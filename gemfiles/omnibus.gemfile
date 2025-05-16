@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-gemspec path: "../"
+gemspec :path => "../"
 
 eval_gemfile("modular/audit.gemfile")
 
@@ -10,6 +10,8 @@ eval_gemfile("modular/coverage.gemfile")
 
 eval_gemfile("modular/documentation.gemfile")
 
-eval_gemfile("modular/f2.gemfile")
+eval_gemfile("modular/faraday_v2.gemfile")
+
+eval_gemfile("modular/jwt_v2.gemfile")
 
 eval_gemfile("modular/style.gemfile")

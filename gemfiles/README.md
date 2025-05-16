@@ -1,5 +1,8 @@
 # History
 
+This document will become out-of-date quickly, but remains historically relevant until
+such time as this gem is released with support for non-EOL Ruby only.
+
 `faraday` v0.17.3 is the first version that stops using `&Proc.new` for block forwarding,
    and thus is the oldest version oauth2 is compatible with.
 

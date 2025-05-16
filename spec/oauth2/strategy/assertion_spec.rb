@@ -100,7 +100,7 @@ RSpec.describe OAuth2::Strategy::Assertion do
 
       context "when encoding as RS256" do
         let(:algorithm) { "RS256" }
-        let(:key) { OpenSSL::PKey::RSA.new(1024) }
+        let(:key) { OpenSSL::PKey::RSA.new(2048) }
 
         before do
           client_assertion.get_token(claims, algorithm: algorithm, key: key)

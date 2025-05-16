@@ -1,0 +1,9 @@
+# frozen_string_literal: true
+
+# Test against HEAD of runtime dependencies so we can proactively file bugs
+
+# Ruby >= 2.5
+gem "jwt", github: "jwt/ruby-jwt", branch: "main"
+
+# Ruby >= 3.0
+gem "faraday", github: "lostisland/faraday", branch: "main"

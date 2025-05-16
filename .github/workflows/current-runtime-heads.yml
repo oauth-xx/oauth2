@@ -1,0 +1,87 @@
+# Targets the evergreen latest release of ruby, truffleruby, and jruby
+#   and tests against the HEAD of runtime dependencies
+name: Runtime Deps @ HEAD
+
+env:
+  K_SOUP_COV_DO: false
+
+on:
+  push:
+    branches:
+      - 'main'
+      - '*-stable'
+    tags:
+      - '!*' # Do not execute on tags
+  pull_request:
+    branches:
+      - '*'
+  # Allow manually triggering the workflow.
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Cancels all previous workflow runs for the same branch that have not yet completed.
+concurrency:
+  # The concurrency group contains the workflow name and the branch name.
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Specs ${{ matrix.ruby }}@${{ matrix.appraisal }}
+    if: "!contains(github.event.commits[0].message, '[ci skip]') && !contains(github.event.commits[0].message, '[skip ci]')"
+    runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental || endsWith(matrix.ruby, 'head') }}
+    env: # $BUNDLE_GEMFILE must be set at job level, so it is set for all steps
+      BUNDLE_GEMFILE: ${{ github.workspace }}/${{ matrix.gemfile }}.gemfile
+    strategy:
+      matrix:
+        include:
+          # Ruby 3.4
+          - ruby: "ruby"
+            appraisal: "current-runtime-heads"
+            exec_cmd: "rake test"
+            gemfile: "Appraisal.root"
+            rubygems: latest
+            bundler: latest
+
+          # truffleruby-24.1
+          #   (according to documentation: targets Ruby 3.3 compatibility)
+          #   (according to runtime: targets Ruby 3.2 compatibility)
+          - ruby: "truffleruby"
+            appraisal: "current-runtime-heads"
+            exec_cmd: "rake test"
+            gemfile: "Appraisal.root"
+            rubygems: default
+            bundler: default
+
+          # jruby-10.0 (targets Ruby 3.4 compatibility)
+          - ruby: "jruby"
+            appraisal: "current-runtime-heads"
+            exec_cmd: "rake test"
+            gemfile: "Appraisal.root"
+            rubygems: default
+            bundler: default
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby & RubyGems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          rubygems: ${{ matrix.rubygems }}
+          bundler: ${{ matrix.bundler }}
+          bundler-cache: false
+
+      # Raw `bundle` will use the BUNDLE_GEMFILE set to matrix.gemfile (i.e. Appraisal.root)
+      # We need to do this first to get appraisal installed.
+      # NOTE: This does not use the primary Gemfile at all.
+      - name: Install Root Appraisal
+        run: bundle
+      - name: Appraisal for ${{ matrix.ruby }}@${{ matrix.appraisal }}
+        run: bundle exec appraisal ${{ matrix.appraisal }} bundle
+      - name: Tests for ${{ matrix.ruby }}@${{ matrix.appraisal }} via ${{ matrix.exec_cmd }}
+        run: bundle exec appraisal ${{ matrix.appraisal }} bundle exec ${{ matrix.exec_cmd }}

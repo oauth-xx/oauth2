@@ -1,0 +1,7 @@
+# frozen_string_literal: true
+
+# Ruby >= 1.9
+# 0.17.3 is the first version to not use &Proc.new when forwarding blocks.
+# Thus, it is the oldest version oauth2 is compatible with.
+# This version of faraday is the last compatible with Ruby 1.9, 2.0, 2.1, 2.2, and 2.3:
+gem "faraday", "~> 0.17.6"
