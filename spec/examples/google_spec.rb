@@ -59,7 +59,7 @@ RSpec.describe "using OAuth2 with Google" do
       rescue OpenSSL::PKCS12::PKCS12Error
         # JRuby CI builds are blowing up trying to extract a sample key for some reason.  This simulates the end result
         # of actually figuring out the problem.
-        OpenSSL::PKey::RSA.new(1024)
+        OpenSSL::PKey::RSA.new(2048)
       end
     end
     # Per Google:
