@@ -77,17 +77,17 @@ jobs:
       # Raw `bundle` will use the BUNDLE_GEMFILE set to matrix.gemfile (i.e. Appraisal.root)
       # We need to do this first to get appraisal installed.
       # NOTE: This does not use the primary Gemfile at all.
-      - name: Install Root Appraisal
+      - name: "Install Root Appraisal"
         run: bundle
 
-      - name: [Attempt 1] Appraisal for ${{ matrix.ruby }}@${{ matrix.appraisal }}
+      - name: "[Attempt 1] Appraisal for ${{ matrix.ruby }}@${{ matrix.appraisal }}"
         id: bundleAttempt1
         run: bundle exec appraisal ${{ matrix.appraisal }} bundle
         # Continue to the next step on failure
         continue-on-error: true
 
       # Effectively an automatic retry of the previous step.
-      - name: [Attempt 2] Appraisal for ${{ matrix.ruby }}@${{ matrix.appraisal }}
+      - name: "[Attempt 2] Appraisal for ${{ matrix.ruby }}@${{ matrix.appraisal }}"
         id: bundleAttempt2
         # If bundleAttempt1 failed, try again here; Otherwise skip.
         if: steps.bundleAttempt1.outcome == 'failure'
