@@ -34,7 +34,7 @@ module OAuth2
       # @note If no token keys are present, a warning will be issued unless
       #   OAuth2.config.silence_no_tokens_warning is true
       # @note For "soon-to-expire"/"clock-skew" functionality see the `:expires_latency` option.
-      # @mote If snaky key conversion is being used, token_name needs to match the converted key.
+      # @note If snaky key conversion is being used, token_name needs to match the converted key.
       #
       # @example
       #   hash = { 'access_token' => 'token_value', 'refresh_token' => 'refresh_value' }
@@ -125,8 +125,10 @@ You may need to set `snaky: false`. See inline documentation for more info.
       no_tokens = (@token.nil? || @token.empty?) && (@refresh_token.nil? || @refresh_token.empty?)
       if no_tokens
         if @client.options[:raise_errors]
-          error = Error.new(opts)
-          raise(error)
+          raise Error.new({
+            error: "OAuth2::AccessToken has no token",
+            error_description: "Options are: #{opts.inspect}",
+          })
         elsif !OAuth2.config.silence_no_tokens_warning
           warn("OAuth2::AccessToken has no token")
         end
@@ -155,33 +157,40 @@ You may need to set `snaky: false`. See inline documentation for more info.
       @params[key]
     end
 
-    # Whether or not the token expires
+    # Whether the token expires
     #
     # @return [Boolean]
     def expires?
       !!@expires_at
     end
 
-    # Whether or not the token is expired
+    # Check if token is expired
     #
-    # @return [Boolean]
+    # @return [Boolean] true if the token is expired, false otherwise
     def expired?
       expires? && (expires_at <= Time.now.to_i)
     end
 
     # Refreshes the current Access Token
     #
-    # @return [AccessToken] a new AccessToken
-    # @note options should be carried over to the new AccessToken
-    def refresh(params = {}, access_token_opts = {})
-      raise("A refresh_token is not available") unless refresh_token
+    # @param [Hash] params additional params to pass to the refresh token request
+    # @param [Hash] access_token_opts options that will be passed to the AccessToken initialization
+    #
+    # @yield [opts] The block to modify the refresh token request options
+    # @yieldparam [Hash] opts The options hash that can be modified
+    #
+    # @return [OAuth2::AccessToken] a new AccessToken instance
+    #
+    # @note current token's options are carried over to the new AccessToken
+    def refresh(params = {}, access_token_opts = {}, &block)
+      raise OAuth2::Error.new({error: "A refresh_token is not available"}) unless refresh_token
 
       params[:grant_type] = "refresh_token"
       params[:refresh_token] = refresh_token
-      new_token = @client.get_token(params, access_token_opts)
+      new_token = @client.get_token(params, access_token_opts, &block)
       new_token.options = options
       if new_token.refresh_token
-        # Keep it, if there is one
+        # Keep it if there is one
       else
         new_token.refresh_token = refresh_token
       end
@@ -190,6 +199,66 @@ You may need to set `snaky: false`. See inline documentation for more info.
     # A compatibility alias
     # @note does not modify the receiver, so bang is not the default method
     alias_method :refresh!, :refresh
+
+    # Revokes the token at the authorization server
+    #
+    # @param [Hash] params additional parameters to be sent during revocation
+    # @option params [String, Symbol, nil] :token_type_hint ('access_token' or 'refresh_token') hint about which token to revoke
+    # @option params [Symbol] :token_method (:post_with_query_string) overrides OAuth2::Client#options[:token_method]
+    #
+    # @yield [req] The block is passed the request being made, allowing customization
+    # @yieldparam [Faraday::Request] req The request object that can be modified
+    #
+    # @return [OAuth2::Response] OAuth2::Response instance
+    #
+    # @api public
+    #
+    # @raise [OAuth2::Error] if token_type_hint is invalid or the specified token is not available
+    #
+    # @note If the token passed to the request
+    #    is an access token, the server MAY revoke the respective refresh
+    #    token as well.
+    # @note If the token passed to the request
+    #    is a refresh token and the authorization server supports the
+    #    revocation of access tokens, then the authorization server SHOULD
+    #    also invalidate all access tokens based on the same authorization
+    #    grant
+    # @note If the server responds with HTTP status code 503, your code must
+    #    assume the token still exists and may retry after a reasonable delay.
+    #    The server may include a "Retry-After" header in the response to
+    #    indicate how long the service is expected to be unavailable to the
+    #    requesting client.
+    #
+    # @see https://datatracker.ietf.org/doc/html/rfc7009
+    # @see https://datatracker.ietf.org/doc/html/rfc7009#section-2.1
+    def revoke(params = {}, &block)
+      token_type_hint_orig = params.delete(:token_type_hint)
+      token_type_hint = nil
+      revoke_token = case token_type_hint_orig
+      when "access_token", :access_token
+        token_type_hint = "access_token"
+        token
+      when "refresh_token", :refresh_token
+        token_type_hint = "refresh_token"
+        refresh_token
+      when nil
+        if token
+          token_type_hint = "access_token"
+          token
+        elsif refresh_token
+          token_type_hint = "refresh_token"
+          refresh_token
+        end
+      else
+        raise OAuth2::Error.new({error: "token_type_hint must be one of [nil, :refresh_token, :access_token], so if you need something else consider using a subclass or entirely custom AccessToken class."})
+      end
+      raise OAuth2::Error.new({error: "#{token_type_hint || "unknown token type"} is not available for revoking"}) unless revoke_token && !revoke_token.empty?
+
+      @client.revoke_token(revoke_token, token_type_hint, params, &block)
+    end
+    # A compatibility alias
+    # @note does not modify the receiver, so bang is not the default method
+    alias_method :revoke!, :revoke
 
     # Convert AccessToken to a hash which can be used to rebuild itself with AccessToken.from_hash
     #
@@ -220,7 +289,16 @@ You may need to set `snaky: false`. See inline documentation for more info.
     # @param [Symbol] verb the HTTP request method
     # @param [String] path the HTTP URL path of the request
     # @param [Hash] opts the options to make the request with
-    #   @see Client#request
+    # @option opts [Hash] :params additional URL parameters
+    # @option opts [Hash, String] :body the request body
+    # @option opts [Hash] :headers request headers
+    #
+    # @yield [req] The block to modify the request
+    # @yieldparam [Faraday::Request] req The request object that can be modified
+    #
+    # @return [OAuth2::Response] the response from the request
+    #
+    # @see OAuth2::Client#request
     def request(verb, path, opts = {}, &block)
       configure_authentication!(opts)
       @client.request(verb, path, opts, &block)
