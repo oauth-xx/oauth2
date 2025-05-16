@@ -66,15 +66,15 @@
     [1082, 11, 82, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 1524553529],
     [1162, 17, 12, "RSpec/ContextWording: Context description should match /^when\\b/, /^with\\b/, or /^without\\b/.", 664794325]
   ],
-  "spec/oauth2/error_spec.rb:1648148825": [
+  "spec/oauth2/error_spec.rb:1692696277": [
     [23, 1, 28, "RSpec/SpecFilePathFormat: Spec path should end with `o_auth2/error*_spec.rb`.", 3385870076],
-    [93, 11, 332, "RSpec/NoExpectationExample: No expectation found in this example.", 970111147],
-    [105, 11, 210, "RSpec/NoExpectationExample: No expectation found in this example.", 3948582233],
-    [237, 11, 534, "RSpec/NoExpectationExample: No expectation found in this example.", 3347340910],
-    [253, 11, 210, "RSpec/NoExpectationExample: No expectation found in this example.", 3948582233],
-    [311, 11, 534, "RSpec/NoExpectationExample: No expectation found in this example.", 3347340910],
-    [372, 11, 534, "RSpec/NoExpectationExample: No expectation found in this example.", 3347340910],
-    [388, 11, 210, "RSpec/NoExpectationExample: No expectation found in this example.", 3948582233]
+    [93, 11, 460, "RSpec/NoExpectationExample: No expectation found in this example.", 3630511675],
+    [108, 11, 210, "RSpec/NoExpectationExample: No expectation found in this example.", 3948582233],
+    [240, 11, 534, "RSpec/NoExpectationExample: No expectation found in this example.", 3347340910],
+    [256, 11, 210, "RSpec/NoExpectationExample: No expectation found in this example.", 3948582233],
+    [314, 11, 534, "RSpec/NoExpectationExample: No expectation found in this example.", 3347340910],
+    [375, 11, 534, "RSpec/NoExpectationExample: No expectation found in this example.", 3347340910],
+    [391, 11, 210, "RSpec/NoExpectationExample: No expectation found in this example.", 3948582233]
   ],
   "spec/oauth2/response_spec.rb:3742350944": [
     [3, 1, 31, "RSpec/SpecFilePathFormat: Spec path should end with `o_auth2/response*_spec.rb`.", 3190869319],

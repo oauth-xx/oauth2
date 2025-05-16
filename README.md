@@ -83,8 +83,8 @@ NOTE: `header` - The content type specified in the `curl` is already the default
 
 | Tokens to Remember      | [![Gem name][⛳️name-img]][⛳️gem-name] [![Gem namespace][⛳️namespace-img]][⛳️gem-namespace]                                                                                                                                                                                                                                                                                                                                                                                            |
 |-------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Works with JRuby        | [![JRuby 9.1 Compat][💎jruby-9.1i]][🚎10-j-wf] [![JRuby 9.2 Compat][💎jruby-9.2i]][🚎10-j-wf] [![JRuby 9.3 Compat][💎jruby-9.3i]][🚎10-j-wf] [![JRuby 9.4 Compat][💎jruby-9.4i]][🚎10-j-wf] [![JRuby 10.0 Compat][💎jruby-c-i]][🚎11-c-wf] [![JRuby HEAD Compat][💎jruby-headi]][🚎3-hd-wf]                                                                                                                                                                                           |
-| Works with Truffle Ruby | [![Truffle Ruby 22.3 Compat][💎truby-22.3i]][🚎9-t-wf] [![Truffle Ruby 23.0 Compat][💎truby-23.0i]][🚎9-t-wf] [![Truffle Ruby 23.1 Compat][💎truby-23.1i]][🚎9-t-wf] [![Truffle Ruby 24.1 Compat][💎truby-c-i]][🚎11-c-wf] [![Truffle Ruby HEAD Compat][💎truby-headi]][🚎3-hd-wf]                                                                                                                                                                                                    |
+| Works with JRuby        | [![JRuby 9.2 Compat][💎jruby-9.2i]][🚎10-j-wf] [![JRuby 9.3 Compat][💎jruby-9.3i]][🚎10-j-wf] [![JRuby 9.4 Compat][💎jruby-9.4i]][🚎10-j-wf] [![JRuby 10.0 Compat][💎jruby-c-i]][🚎11-c-wf] [![JRuby HEAD Compat][💎jruby-headi]][🚎3-hd-wf]                                                                                                                                                                                           |
+| Works with Truffle Ruby | [![Truffle Ruby 23.1 Compat][💎truby-23.1i]][🚎9-t-wf] [![Truffle Ruby 24.1 Compat][💎truby-c-i]][🚎11-c-wf] [![Truffle Ruby HEAD Compat][💎truby-headi]][🚎3-hd-wf]                                                                                                                                                                                                    |
 | Works with MRI Ruby 3   | [![Ruby 3.0 Compat][💎ruby-3.0i]][🚎4-lg-wf] [![Ruby 3.1 Compat][💎ruby-3.1i]][🚎6-s-wf] [![Ruby 3.2 Compat][💎ruby-3.2i]][🚎6-s-wf] [![Ruby 3.3 Compat][💎ruby-3.3i]][🚎6-s-wf] [![Ruby 3.4 Compat][💎ruby-c-i]][🚎11-c-wf] [![Ruby HEAD Compat][💎ruby-headi]][🚎3-hd-wf]                                                                                                                                                                                                           |
 | Works with MRI Ruby 2   | [![Ruby 2.3 Compat][💎ruby-2.3i]][🚎1-an-wf] [![Ruby 2.4 Compat][💎ruby-2.4i]][🚎1-an-wf] [![Ruby 2.5 Compat][💎ruby-2.5i]][🚎1-an-wf] [![Ruby 2.6 Compat][💎ruby-2.6i]][🚎7-us-wf] [![Ruby 2.7 Compat][💎ruby-2.7i]][🚎7-us-wf]                                                                                                                                                                                                                                                      |
 | Source                  | [![Source on GitLab.com][📜src-gl-img]][📜src-gl] [![Source on CodeBerg.org][📜src-cb-img]][📜src-cb] [![Source on Github.com][📜src-gh-img]][📜src-gh] [![The best SHA: dQw4w9WgXcQ!][🧮kloc-img]][🧮kloc]                                                                                                                                                                                                                                                                           |
@@ -104,7 +104,7 @@ NOTE: `header` - The content type specified in the `curl` is already the default
 
 | Version | Release Date | Readme                                                      |
 |---------|--------------|-------------------------------------------------------------|
-| 2.0.10  | 2022-09-27   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.10/README.md |
+| 2.0.10  | 2025-05-16   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.10/README.md |
 | 2.0.9   | 2022-09-16   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.9/README.md  |
 | 2.0.8   | 2022-09-01   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.8/README.md  |
 | 2.0.7   | 2022-08-22   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.7/README.md  |
@@ -238,9 +238,10 @@ For more see [SECURITY.md][🔐security].
 
 ## Compatibility
 
-Targeted ruby compatibility is non-EOL versions of Ruby, currently 2.7, 3.0 and
-3.1. Compatibility is further distinguished by supported and unsupported versions of Ruby.
-Ruby is limited to 2.2+ for 2.x releases. See `1-4-stable` branch for older rubies.
+Targeted ruby compatibility is non-EOL versions of Ruby, currently 3.2, 3.3, and 3.4.
+Compatibility is further distinguished as "Best Effort Support" or "Incidental Support" for older versions of Ruby.
+This gem will install on Ruby versions >= v2.2 for 2.x releases.
+See `1-4-stable` branch for older rubies.
 
 <details>
   <summary>Ruby Engine Compatibility Policy</summary>
@@ -269,11 +270,11 @@ fashion. If critical issues for a particular implementation exist at the time
 of a major release, support for that Ruby version may be dropped.
 </details>
 
-|     | Ruby OAuth2 Version | Maintenance Branch | Supported Officially    | Supported Unofficially | Supported Incidentally |
-|:----|---------------------|--------------------|-------------------------|------------------------|------------------------|
-| 1️⃣ | 2.0.x               | `main`             | 2.7, 3.0, 3.1           | 2.5, 2.6               | 2.2, 2.3, 2.4          |
-| 2️⃣ | 1.4.x               | `1-4-stable`       | 2.5, 2.6, 2.7, 3.0, 3.1 | 2.1, 2.2, 2.3, 2.4     | 1.9, 2.0               |
-| 3️⃣ | older               | N/A                | Best of luck to you!    | Please upgrade!        |                        |
+|     | Ruby OAuth2 Version | Maintenance Branch | Targeted Support     | Best Effort Support     | Incidental Support           |
+|:----|---------------------|--------------------|----------------------|-------------------------|------------------------------|
+| 1️⃣ | 2.0.x               | `main`             | 3.2, 3.3, 3.4        | 2.5, 2.6, 2.7, 3.0, 3.1 | 2.2, 2.3, 2.4                |
+| 2️⃣ | 1.4.x               | `1-4-stable`       | 3.2, 3.3, 3.4        | 2.5, 2.6, 2.7, 3.0, 3.1 | 1.9, 2.0, 2.1, 2.2, 2.3, 2.4 |
+| 3️⃣ | older               | N/A                | Best of luck to you! | Please upgrade!         |                              |
 
 NOTE: The 1.4 series will only receive critical security updates.
 See [SECURITY.md][🚎sec-pol]
@@ -290,6 +291,7 @@ OAuth2::AccessToken.from_hash: `hash` contained more than one 'token' key
 ```ruby
 OAuth2.configure do |config|
   config.silence_extra_tokens_warning = true # default: false
+  config.silence_no_tokens_warning = true # default: false, if you want to also silence warnings about no tokens
 end
 ```
 
