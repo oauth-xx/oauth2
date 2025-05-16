@@ -1,4 +1,4 @@
-name: MRI 3.0 (EOL)
+name: MRI 3.0, 3.1 (EOL)
 
 env:
   K_SOUP_COV_DO: false
@@ -37,6 +37,14 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          # Ruby 3.1
+          - ruby: "ruby-3.1"
+            appraisal: "ruby-3-1"
+            exec_cmd: "rake test"
+            gemfile: "Appraisal.root"
+            rubygems: latest
+            bundler: latest
+
           # Ruby 3.0
           - ruby: "ruby-3.0"
             appraisal: "ruby-3-0"

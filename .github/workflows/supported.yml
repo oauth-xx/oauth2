@@ -36,14 +36,6 @@ jobs:
     strategy:
       matrix:
         include:
-          # Ruby 3.1
-          - ruby: "ruby-3.1"
-            appraisal: "ruby-3-1"
-            exec_cmd: "rake test"
-            gemfile: "Appraisal.root"
-            rubygems: latest
-            bundler: latest
-
           # Ruby 3.2
           - ruby: "ruby-3.2"
             appraisal: "ruby-3-2"
