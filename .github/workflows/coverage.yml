@@ -84,7 +84,7 @@ jobs:
       - name: Upload coverage to QLTY
         uses: qltysh/qlty-action/coverage@main
         with:
-          coverage-token: ${{secrets.QLTY_COVERAGE_TOKEN}}
+          token: ${{secrets.QLTY_COVERAGE_TOKEN}}
           files: coverage/.resultset.json
         continue-on-error: ${{ matrix.experimental != 'false' }}
 
