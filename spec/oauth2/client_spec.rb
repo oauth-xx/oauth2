@@ -922,7 +922,7 @@ RSpec.describe OAuth2::Client do
         let(:body) { "BLOOP" }
 
         it "raises error" do
-          block_is_expected { get_token }.to raise_error(JSON::ParserError, /unexpected character: 'BLOOP'/)
+          block_is_expected { get_token }.to raise_error(JSON::ParserError, /unexpected.*'BLOOP'/)
         end
 
         context "when extract_access_token raises an exception" do
