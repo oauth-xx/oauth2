@@ -14,9 +14,8 @@
 [![Downloads Rank][👽dl-ranki]][👽dl-rank]
 [![Open Source Helpers][👽oss-helpi]][👽oss-help]
 [![Depfu][🔑depfui♻️]][🔑depfu]
-[![CodeCov Test Coverage][🔑codecovi♻️]][🔑codecov]
 [![Coveralls Test Coverage][🔑coveralls-img]][🔑coveralls]
-[![CodeClimate Test Coverage][🔑cc-covi♻️]][🔑cc-cov]
+[![QLTY Test Coverage][🔑cc-covi♻️]][🔑cc-cov]
 [![Maintainability][🔑cc-mnti♻️]][🔑cc-mnt]
 [![CI Heads][🚎3-hd-wfi]][🚎3-hd-wf]
 [![CI Runtime Dependencies @ HEAD][🚎12-crh-wfi]][🚎12-crh-wf]
@@ -44,7 +43,68 @@ OAuth 2.0 focuses on client developer simplicity while providing specific author
     desktop applications, mobile phones, and living room devices.
 This is a RubyGem for implementing OAuth 2.0 clients (not servers) in Ruby applications.
 
-Quick example: Convert the following `curl` command into a token request using this gem...
+### Upgrading Runtime Gem Dependencies
+
+This project sits underneath a large portion of the authentication systems on the internet.
+According to GitHub's project tracking, which I believe only reports on public projects,
+[100,000+ projects](https://github.com/oauth-xx/oauth2/network/dependents), and
+[500+ packages](https://github.com/oauth-xx/oauth2/network/dependents?dependent_type=PACKAGE) depend on this project.
+
+That means it is painful for the Ruby community when this gem forces updates to its runtime dependencies.
+
+As a result, great care, and a lot of time, have been invested to ensure this gem is working with all the
+leading versions per each minor version of Ruby of all the runtime dependencies it can install with.
+
+What does that mean specifically for the runtime dependencies?
+
+We have 100% test coverage of lines and branches, and this test suite runs across a large matrix
+covering the latest patch for each of the following minor versions:
+
+* MRI Ruby @ v2.3, v2.4, v2.5, v2.6, v2.7, v3.0, v3.1, v3.2, v3.3, v3.4, HEAD
+  * NOTE: This gem will still install on ruby v2.2, but vanilla GitHub Actions no longer supports testing against it, so YMMV.
+* JRuby @ v9.2, v9.3, v9.4, v10.0, HEAD
+* TruffleRuby @ v23.1, v23.2, HEAD
+* gem `faraday` @ v0, v1, v2, HEAD
+* gem `jwt` @ v1, v2, v3, HEAD
+* gem `logger` @ v1.2, v1.5, v1.7, HEAD
+* gem `multi_xml` @ v0.5, v0.6, v0.7, HEAD
+* gem `rack` @ v1.2, v1.6, v2, v3, HEAD
+
+- This gem follows a _strict & correct_ (according to the maintainer of SemVer; [more info][sv-pub-api]) interpretation of SemVer.
+  - Dropping support for **any** of the runtime dependency versions above will be a major version bump.
+  - If you aren't on one of the minor versions above, make getting there a priority.
+- You should upgrade this gem with confidence\*.
+- You should upgrade the dependencies of this gem with confidence\*.
+- Please do upgrade, and then, when it goes smooth as butter [please sponsor me][🖇sponsor].  Thanks!
+
+[sv-pub-api]: #-is-platform-support-part-of-the-public-api
+
+\* MIT license; I am unable to make guarantees.
+
+| 🚚 Test matrix brought to you by | 🔎 appraisal++                                                          |
+|----------------------------------|-------------------------------------------------------------------------|
+| Adds back support for old Rubies | ✨ [appraisal PR #250](https://github.com/thoughtbot/appraisal/pull/250) |
+| Adds support for `eval_gemfile`  | ✨ [appraisal PR #248](https://github.com/thoughtbot/appraisal/pull/248) |
+| Please review                    | my PRs!                                                                 |
+
+<details>
+  <summary>Standard Library Dependencies</summary>
+
+The various versions of each are tested via the Ruby test matrix, along with whatever Ruby includes them.
+
+* base64
+* cgi
+* json
+* time
+* logger (removed from stdlib in Ruby 3.5 so added as runtime dependency in v2.0.10)
+
+If you use a gem version it should work fine!
+
+</details>
+
+### Quick Usage Example for Anti-Scrollers
+
+Convert the following `curl` command into a token request using this gem...
 
 ```shell
 curl --request POST \
@@ -100,17 +160,6 @@ One of these might be what you are looking for:
 | `...` 💖                | [![Find Me on WellFound:][💖✌️wellfound-img]][💖✌️wellfound] [![Find Me on CrunchBase][💖💲crunchbase-img]][💖💲crunchbase] [![My LinkTree][💖🌳linktree-img]][💖🌳linktree] [![More About Me][💖💁🏼‍♂️aboutme-img]][💖💁🏼‍♂️aboutme] [🧊][💖🧊berg] [🐙][💖🐙hub]  [🛖][💖🛖hut] [🧪][💖🧪lab]                                                                                                                                                                                     |
 
 ## 🚀 Release Documentation
-
-<details>
-  <summary>Standard Library Dependencies</summary>
-
-* base64
-* cgi
-* json
-* time
-* logger (removed from stdlib in Ruby 3.5 so added as runtime dependency in v2.0.10)
-
-</details>
 
 ### Version 2.0.x
 
@@ -267,7 +316,7 @@ NOTE: Be prepared to track down certs for signed gems and add them the same way 
 
 Available as part of the Tidelift Subscription.
 
-The maintainers of OAuth2 and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source packages you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact packages you use. [Learn more.][tidelift-ref]
+The maintainers of this and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source packages you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact packages you use. [Learn more.][tidelift-ref]
 
 [tidelift-ref]: https://tidelift.com/subscription/pkg/rubygems-oauth2?utm_source=rubygems-oauth2&utm_medium=referral&utm_campaign=enterprise
 
@@ -569,7 +618,8 @@ See [CONTRIBUTING.md][🤝contributing] for more detailed instructions.
 
 ### Code Coverage
 
-[![Coverage Graph][🔑codecov-g♻️]][🔑codecov]
+[![Coveralls Test Coverage][🔑coveralls-img]][🔑coveralls]
+[![QLTY Test Coverage][🔑cc-covi♻️]][🔑cc-cov]
 
 ### 🪇 Code of Conduct
 
@@ -626,7 +676,7 @@ the [Pessimistic Version Constraint][📌pvc] with two digits of precision.
 For example:
 
 ```ruby
-spec.add_dependency("oauth2", "~> 1.0")
+spec.add_dependency("oauth2", "~> 2.0")
 ```
 
 See [CHANGELOG.md][📌changelog] for list of releases.
@@ -845,4 +895,15 @@ or one of the others at the head of this README.
 
 <a rel="me" alt="Follow me on Ruby.social" href="https://ruby.social/@galtzo"><img src="https://img.shields.io/mastodon/follow/109447111526622197?domain=https%3A%2F%2Fruby.social&style=social&label=Follow%20%40galtzo%20on%20Ruby.social"></a>
 <a rel="me" alt="Follow me on FLOSS.social" href="https://floss.social/@galtzo"><img src="https://img.shields.io/mastodon/follow/110304921404405715?domain=https%3A%2F%2Ffloss.social&style=social&label=Follow%20%40galtzo%20on%20Floss.social"></a>
+</details>
+
+<details>
+  <summary>Deprecated Badges</summary>
+
+CodeCov currently fails to parse the coverage upload.
+
+[![CodeCov Test Coverage][🔑codecovi♻️]][🔑codecov]
+
+[![Coverage Graph][🔑codecov-g♻️]][🔑codecov]
+
 </details>
