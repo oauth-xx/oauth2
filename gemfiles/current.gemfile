@@ -10,3 +10,5 @@ gemspec path: "../"
 eval_gemfile("modular/faraday_v2.gemfile")
 
 eval_gemfile("modular/jwt_v3.gemfile")
+
+eval_gemfile("modular/rack_v3.gemfile")

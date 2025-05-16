@@ -7,3 +7,5 @@ gemspec path: "../"
 eval_gemfile("modular/faraday_v0.gemfile")
 
 eval_gemfile("modular/jwt_v1.gemfile")
+
+eval_gemfile("modular/rack_v1_6.gemfile")

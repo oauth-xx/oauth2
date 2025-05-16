@@ -7,3 +7,6 @@ gem "jwt", github: "jwt/ruby-jwt", branch: "main"
 
 # Ruby >= 3.0
 gem "faraday", github: "lostisland/faraday", branch: "main"
+
+# Ruby >= 2.4
+gem "rack", github: "rack/rack", branch: "main"
