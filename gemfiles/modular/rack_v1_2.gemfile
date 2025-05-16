@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 # Ruby >= 0
-# This is the oldest minor version of rack this gem is compatible with
-# We will test it against Ruby 2.3
+# We will test it against Ruby 2.3.
+# This minor version of rack is the oldest compatible with this gem:
 gem "rack", "~> 1.2", ">= 1.2.8"

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 # Ruby >= 0
-# This minor version of multi_xml is the oldest compatible with this gem:
 # We will test it against Ruby 2.3, 2.4
+# This minor version of multi_xml is the oldest compatible with this gem:
 gem "multi_xml", "~> 0.5", ">= 0.5.5"

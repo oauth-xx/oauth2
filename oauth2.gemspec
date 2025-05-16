@@ -114,6 +114,7 @@ Thanks, |7eter l-|. l3oling
 
   spec.add_dependency("faraday", [">= 0.17.3", "< 4.0"])  # Ruby >= 1.9
   spec.add_dependency("jwt", [">= 1.0", "< 4.0"])         # Ruby >= 0
+  spec.add_dependency("logger", "~> 0.5")              # Ruby >= 0
   spec.add_dependency("multi_xml", "~> 0.5")              # Ruby >= 0
   spec.add_dependency("rack", [">= 1.2", "< 4"])          # Ruby >= 0
   spec.add_dependency("snaky_hash", "~> 2.0")             # Ruby >= 2.2

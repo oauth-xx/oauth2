@@ -28,6 +28,7 @@ appraise "current" do
   gem "stringio", ">= 3.0"
   eval_gemfile "modular/faraday_v2.gemfile"
   eval_gemfile "modular/jwt_v3.gemfile"
+  eval_gemfile "modular/logger_v1_7.gemfile"
   eval_gemfile "modular/multi_xml_v0_7.gemfile"
   eval_gemfile "modular/rack_v3.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
@@ -36,6 +37,7 @@ end
 appraise "ruby-2-3" do
   eval_gemfile "modular/faraday_v0.gemfile"
   eval_gemfile "modular/jwt_v1.gemfile"
+  eval_gemfile "modular/logger_v1_2.gemfile"
   eval_gemfile "modular/multi_xml_v0_5.gemfile"
   eval_gemfile "modular/rack_v1_2.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
@@ -44,6 +46,7 @@ end
 appraise "ruby-2-4" do
   eval_gemfile "modular/faraday_v1.gemfile"
   eval_gemfile "modular/jwt_v1.gemfile"
+  eval_gemfile "modular/logger_v1_2.gemfile"
   eval_gemfile "modular/multi_xml_v0_5.gemfile"
   eval_gemfile "modular/rack_v1_6.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
@@ -52,6 +55,7 @@ end
 appraise "ruby-2-5" do
   eval_gemfile "modular/faraday_v1.gemfile"
   eval_gemfile "modular/jwt_v2.gemfile"
+  eval_gemfile "modular/logger_v1_5.gemfile"
   eval_gemfile "modular/multi_xml_v0_6.gemfile"
   eval_gemfile "modular/rack_v2.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
@@ -62,6 +66,7 @@ appraise "ruby-2-6" do
   gem "stringio", "~> 3.0"
   eval_gemfile "modular/faraday_v2.gemfile"
   eval_gemfile "modular/jwt_v2.gemfile"
+  eval_gemfile "modular/logger_v1_5.gemfile"
   eval_gemfile "modular/multi_xml_v0_6.gemfile"
   eval_gemfile "modular/rack_v3.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
@@ -72,6 +77,7 @@ appraise "ruby-2-7" do
   gem "stringio", "~> 3.0"
   eval_gemfile "modular/faraday_v2.gemfile"
   eval_gemfile "modular/jwt_v2.gemfile"
+  eval_gemfile "modular/logger_v1_7.gemfile"
   eval_gemfile "modular/multi_xml_v0_6.gemfile"
   eval_gemfile "modular/rack_v3.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
@@ -82,6 +88,7 @@ appraise "ruby-3-0" do
   gem "stringio", "~> 3.0"
   eval_gemfile "modular/faraday_v2.gemfile"
   eval_gemfile "modular/jwt_v2.gemfile"
+  eval_gemfile "modular/logger_v1_7.gemfile"
   eval_gemfile "modular/multi_xml_v0_6.gemfile"
   eval_gemfile "modular/rack_v3.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
@@ -92,6 +99,7 @@ appraise "ruby-3-1" do
   gem "stringio", "~> 3.0"
   eval_gemfile "modular/faraday_v2.gemfile"
   eval_gemfile "modular/jwt_v2.gemfile"
+  eval_gemfile "modular/logger_v1_7.gemfile"
   eval_gemfile "modular/multi_xml_v0_6.gemfile"
   eval_gemfile "modular/rack_v3.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
@@ -102,6 +110,7 @@ appraise "ruby-3-2" do
   gem "stringio", "~> 3.0"
   eval_gemfile "modular/faraday_v2.gemfile"
   eval_gemfile "modular/jwt_v2.gemfile"
+  eval_gemfile "modular/logger_v1_7.gemfile"
   eval_gemfile "modular/multi_xml_v0_7.gemfile"
   eval_gemfile "modular/rack_v3.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
@@ -112,6 +121,7 @@ appraise "ruby-3-3" do
   gem "stringio", "~> 3.0"
   eval_gemfile "modular/faraday_v2.gemfile"
   eval_gemfile "modular/jwt_v2.gemfile"
+  eval_gemfile "modular/logger_v1_7.gemfile"
   eval_gemfile "modular/multi_xml_v0_7.gemfile"
   eval_gemfile "modular/rack_v3.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
@@ -121,11 +131,12 @@ end
 appraise "audit" do
   gem "mutex_m", "~> 0.2"
   gem "stringio", "~> 3.0"
+  eval_gemfile "modular/audit.gemfile"
   eval_gemfile "modular/faraday_v2.gemfile"
   eval_gemfile "modular/jwt_v2.gemfile"
-  eval_gemfile "modular/rack_v3.gemfile"
+  eval_gemfile "modular/logger_v1_7.gemfile"
   eval_gemfile "modular/multi_xml_v0_7.gemfile"
-  eval_gemfile "modular/audit.gemfile"
+  eval_gemfile "modular/rack_v3.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
@@ -133,11 +144,12 @@ end
 appraise "coverage" do
   gem "mutex_m", "~> 0.2"
   gem "stringio", "~> 3.0"
+  eval_gemfile "modular/coverage.gemfile"
   eval_gemfile "modular/faraday_v2.gemfile"
   eval_gemfile "modular/jwt_v2.gemfile"
-  eval_gemfile "modular/rack_v3.gemfile"
+  eval_gemfile "modular/logger_v1_7.gemfile"
   eval_gemfile "modular/multi_xml_v0_7.gemfile"
-  eval_gemfile "modular/coverage.gemfile"
+  eval_gemfile "modular/rack_v3.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
@@ -155,6 +167,7 @@ appraise "omnibus" do
   eval_gemfile "modular/documentation.gemfile"
   eval_gemfile "modular/faraday_v2.gemfile"
   eval_gemfile "modular/jwt_v2.gemfile"
+  eval_gemfile "modular/logger_v1_7.gemfile"
   eval_gemfile "modular/multi_xml_v0_7.gemfile"
   eval_gemfile "modular/rack_v3.gemfile"
   eval_gemfile "modular/style.gemfile"

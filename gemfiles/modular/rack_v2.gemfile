@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
 # Ruby >= 2.3
-# This version of rack is the last compatible with Ruby 2.3
-# We will test it against Ruby 2.5
+# This version of rack is the last compatible with Ruby 2.3.
+# We will test it against Ruby 2.5.
 gem "rack", "~> 2.2", ">= 2.2.14"
