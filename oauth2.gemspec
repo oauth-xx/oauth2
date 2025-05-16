@@ -114,20 +114,20 @@ Thanks, |7eter l-|. l3oling
 
   spec.add_dependency("faraday", [">= 0.17.3", "< 4.0"])  # Ruby >= 1.9
   spec.add_dependency("jwt", [">= 1.0", "< 4.0"])         # Ruby >= 0
-  spec.add_dependency("logger", "~> 0.5")              # Ruby >= 0
+  spec.add_dependency("logger", "~> 1.2")                 # Ruby >= 0
   spec.add_dependency("multi_xml", "~> 0.5")              # Ruby >= 0
   spec.add_dependency("rack", [">= 1.2", "< 4"])          # Ruby >= 0
   spec.add_dependency("snaky_hash", "~> 2.0")             # Ruby >= 2.2
   spec.add_dependency("version_gem", ">= 1.1.8", "< 3")   # Ruby >= 2.2
 
-  spec.add_development_dependency("addressable", ">= 2")
-  spec.add_development_dependency("backports", ">= 3")
-  spec.add_development_dependency("nkf", "~> 0.2")
-  spec.add_development_dependency("rake", ">= 12")
-  spec.add_development_dependency("rexml", ">= 3")
-  spec.add_development_dependency("rspec", ">= 3")
-  spec.add_development_dependency("rspec-block_is_expected")
-  spec.add_development_dependency("rspec-pending_for")
-  spec.add_development_dependency("rspec-stubbed_env")
-  spec.add_development_dependency("silent_stream")
+  spec.add_development_dependency("addressable", "~> 2.8", ">= 2.8.7")  # ruby >= 2.2
+  spec.add_development_dependency("backports", "~> 3.25", ">= 3.25.1")  # ruby >= 0
+  spec.add_development_dependency("nkf", "~> 0.2")                      # ruby >= 2.3
+  spec.add_development_dependency("rake", "~> 13.0")                    # ruby >= 2.2
+  spec.add_development_dependency("rexml", "~> 3.2", ">= 3.2.5")        # ruby >= 0
+  spec.add_development_dependency("rspec", "~> 3.13")                   # ruby >= 0
+  spec.add_development_dependency("rspec-block_is_expected", "~> 1.0", ">= 1.0.6")  # ruby >= 1.8.7
+  spec.add_development_dependency("rspec-pending_for", "~> 0.1", ">= 0.1.17")       # ruby >= 1.8.7
+  spec.add_development_dependency("rspec-stubbed_env", "~> 1.0", ">= 1.0.2")        # ruby >= 1.8.7
+  spec.add_development_dependency("silent_stream", "~> 1.0", ">= 1.0.10")           # ruby >= 2.3
 end
