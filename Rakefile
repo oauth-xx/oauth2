@@ -102,4 +102,17 @@ rescue LoadError
   end
 end
 
+### RELEASE TASKS
+# Setup stone_checksums
+begin
+  require "stone_checksums"
+
+  GemChecksums.install_tasks
+rescue LoadError
+  desc("(stub) build:generate_checksums is unavailable")
+  task("build:generate_checksums") do
+    warn("NOTE: stone_checksums isn't installed, or is disabled for #{RUBY_VERSION} in the current environment")
+  end
+end
+
 task default: defaults
