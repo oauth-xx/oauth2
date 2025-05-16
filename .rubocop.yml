@@ -78,3 +78,6 @@ Style/TrailingCommaInArrayLiteral:
 
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: comma
+
+Gemspec/DependencyVersion:
+  Enabled: false
