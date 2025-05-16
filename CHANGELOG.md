@@ -20,13 +20,13 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 ### Added
 - [gh!632](https://github.com/oauth-xx/oauth2/pull/632) - Added `funding.yml` (@Aboling0)
 - [!635](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/635) - Added `.gitlab-ci.yml` (@jessieay)
-- [#638](https://gitlab.com/oauth-xx/oauth2/-/issues/638) - Documentation of support for ILO Fundamental Principles of Rights at Work
-- [!642](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/642) - 20 year certificate for signing gem releases, expires 2045-04-29 (@pboling)
-    - Gemspec metadata (@pboling)
+- [#638](https://gitlab.com/oauth-xx/oauth2/-/issues/638) - Documentation of support for **ILO Fundamental Principles of Rights at Work** (@pboling)
+- [!642](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/642) - 20-year certificate for signing gem releases, expires 2045-04-29 (@pboling)
+    - Gemspec metadata
       - funding_uri
       - news_uri
       - mailing_list_uri
-    - SHA256 and SHA512 Checksums for release (@pboling)
+    - SHA256 and SHA512 Checksums for release
 - [!643](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/643) - Add `token_name` option (@pboling)
     - Specify the parameter name that identifies the access token
 - [!645](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/645) - Add `OAuth2::OAUTH_DEBUG` constant, based on `ENV["OAUTH_DEBUG"] (@pboling)
@@ -38,16 +38,16 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 - [gh!644](https://github.com/oauth-xx/oauth2/pull/644), [gh!645](https://github.com/oauth-xx/oauth2/pull/645) - Added CITATION.cff (@Aboling0)
 - [!648](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/648) - Improved documentation (@pboling)
 ### Changed
-- Default value of `OAuth2.config.silence_extra_tokens_warning` was `false`, now `true`
+- Default value of `OAuth2.config.silence_extra_tokens_warning` was `false`, now `true` (@pboling)
 - Gem releases are now cryptographically signed, with a 20-year cert (@pboling)
   - Allow linux distros to build release without signing, as their package managers sign independently
 - [!647](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/647) - `OAuth2::AccessToken#refresh` now supports block param pass through (@pboling)
 - [!647](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/647) - `OAuth2.config` is no longer writable (@pboling)
-- [!647](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/647) - Errors raised by OAuth2::AccessToken are now always OAuth2::Error and have better metadata (@pboling)
+- [!647](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/647) - Errors raised by `OAuth2::AccessToken` are now always `OAuth2::Error` and have better metadata (@pboling)
 ### Fixed
 - [#95](https://gitlab.com/oauth-xx/oauth2/-/issues/95) - restoring an access token via `AccessToken#from_hash` (@pboling)
   - This was a 13 year old bug report. 😘
-- [#619](https://gitlab.com/oauth-xx/oauth2/-/issues/619) - Internal options (like snaky, raise_errors, and parse) are no longer included in request (@pboling)
+- [#619](https://gitlab.com/oauth-xx/oauth2/-/issues/619) - Internal options (like `snaky`, `raise_errors`, and `parse`) are no longer included in request (@pboling)
 - [!633](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/633) - Spaces will now be encoded as `%20` instead of `+` (@nov.matake)
 - [!634](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/634) - `CHANGELOG.md` documentation fix (@skuwa229)
 - [!638](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/638) - fix `expired?` when `expires_in` is `0` (@disep)
@@ -57,7 +57,7 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 - [!641](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/641) - Do not include sensitive information in the `inspect` (@manuelvanrijn)
 - [#641](https://gitlab.com/oauth-xx/oauth2/-/issues/641) - Made default JSON response parser more resilient (@pboling)
 - [#645](https://gitlab.com/oauth-xx/oauth2/-/issues/645) - Response no longer becomes a snaky hash (@pboling)
-- [gh!646](https://github.com/oauth-xx/oauth2/pull/646) - Change require to require_relative (improve performance) (@Aboling0)
+- [gh!646](https://github.com/oauth-xx/oauth2/pull/646) - Change `require` to `require_relative` (improve performance) (@Aboling0)
 
 ## [2.0.9] - 2022-09-16
 - TAG: [v2.0.9][2.0.9t]
