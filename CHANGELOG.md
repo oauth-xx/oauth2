@@ -36,6 +36,7 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
   - `OAuth2::AccessToken#revoke`
   - See: https://datatracker.ietf.org/doc/html/rfc7009
 - [gh!644](https://github.com/oauth-xx/oauth2/pull/644), [gh!645](https://github.com/oauth-xx/oauth2/pull/645) - Added CITATION.cff (@Aboling0)
+- [!648](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/648) - Improved documentation (@pboling)
 ### Changed
 - Default value of `OAuth2.config.silence_extra_tokens_warning` was `false`, now `true`
 - Gem releases are now cryptographically signed, with a 20-year cert (@pboling)
