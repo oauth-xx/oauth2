@@ -1,5 +1,8 @@
 name: Style
 
+permissions:
+  contents: read
+
 on:
   push:
     branches:
@@ -12,9 +15,6 @@ on:
       - '*'
   # Allow manually triggering the workflow.
   workflow_dispatch:
-
-permissions:
-  contents: read
 
 # Cancels all previous workflow runs for the same branch that have not yet completed.
 concurrency:

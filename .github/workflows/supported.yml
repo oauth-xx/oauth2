@@ -1,5 +1,8 @@
 name: MRI Non-EOL
 
+permissions:
+  contents: read
+
 env:
   K_SOUP_COV_DO: false
 
@@ -15,9 +18,6 @@ on:
       - '*'
   # Allow manually triggering the workflow.
   workflow_dispatch:
-
-permissions:
-  contents: read
 
 # Cancels all previous workflow runs for the same branch that have not yet completed.
 concurrency:

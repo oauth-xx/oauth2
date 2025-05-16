@@ -1,5 +1,8 @@
 name: MRI 2.3, 2.4, 2.5 (EOL)
 
+permissions:
+  contents: read
+
 on:
   push:
     branches:
