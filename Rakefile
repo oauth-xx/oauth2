@@ -5,6 +5,22 @@ defaults = []
 # See: https://docs.gitlab.com/ci/variables/predefined_variables/
 is_gitlab = ENV.fetch("GITLAB_CI", "false").casecmp("true") == 0
 
+### DEVELOPMENT TASKS
+# Setup Kettle Soup Cover
+begin
+  require "kettle-soup-cover"
+
+  Kettle::Soup::Cover.install_tasks
+  # NOTE: Coverage on CI is configured independent of this task.
+  #       This task is for local development, as it opens results in browser
+  defaults << "coverage" unless Kettle::Soup::Cover::IS_CI
+rescue LoadError
+  desc("(stub) coverage is unavailable")
+  task("coverage") do
+    warn("NOTE: kettle-soup-cover isn't installed, or is disabled for #{RUBY_VERSION} in the current environment")
+  end
+end
+
 # Setup Bundle Audit
 begin
   require "bundler/audit/task"
