@@ -129,7 +129,7 @@ module OAuth2
     #
     # @param [Symbol] verb one of [:get, :post, :put, :delete]
     # @param [String] url URL path of request
-    # @param [Hash] opts the options to make the request with
+    # @param [Hash] req_opts the options to make the request with
     # @option req_opts [Hash] :params additional query parameters for the URL of the request
     # @option req_opts [Hash, String] :body the body of the request
     # @option req_opts [Hash] :headers http request headers

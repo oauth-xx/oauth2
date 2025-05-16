@@ -11,8 +11,12 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 ### Removed
 
 ## [2.0.10] - 2025-05-XX ([tag][2.0.10t])
+- COVERAGE: 100.00% -- 518/518 lines in 14 files
+- BRANCH COVERAGE: 100.00% -- 170/170 branches in 14 files
+- 79.05% documented
 ### Added
-- [!635](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/635) - `.gitlab-ci.yml` file (@jessieay)
+- [gh!632](https://github.com/oauth-xx/oauth2/pull/632) - Added `funding.yml` (@Aboling0)
+- [!635](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/635) - Added `.gitlab-ci.yml` (@jessieay)
 - [#638](https://gitlab.com/oauth-xx/oauth2/-/issues/638) - Documentation of support for ILO Fundamental Principles of Rights at Work
 - [!642](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/642) - 20 year certificate for signing gem releases, expires 2045-04-29 (@pboling)
     - Gemspec metadata (@pboling)
@@ -28,16 +32,17 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
   - `OAuth2::Client#revoke_token`
   - `OAuth2::AccessToken#revoke`
   - See: https://datatracker.ietf.org/doc/html/rfc7009
+- [gh!644](https://github.com/oauth-xx/oauth2/pull/644), [gh!645](https://github.com/oauth-xx/oauth2/pull/645) - Added CITATION.cff (@Aboling0)
 ### Changed
 - Default value of `OAuth2.config.silence_extra_tokens_warning` was `false`, now `true`
 - Gem releases are now cryptographically signed, with a 20-year cert (@pboling)
-    - Allow linux distros to build release without signing, as their package managers sign independently
+  - Allow linux distros to build release without signing, as their package managers sign independently
 - [!647](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/647) - `OAuth2::AccessToken#refresh` now supports block param pass through (@pboling)
 - [!647](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/647) - `OAuth2.config` is no longer writable (@pboling)
 - [!647](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/647) - Errors raised by OAuth2::AccessToken are now always OAuth2::Error and have better metadata (@pboling)
 ### Fixed
 - [#95](https://gitlab.com/oauth-xx/oauth2/-/issues/95) - restoring an access token via `AccessToken#from_hash` (@pboling)
-    - This was a 13 year old bug report. 😘
+  - This was a 13 year old bug report. 😘
 - [#619](https://gitlab.com/oauth-xx/oauth2/-/issues/619) - Internal options (like snaky, raise_errors, and parse) are no longer included in request (@pboling)
 - [!633](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/633) - Spaces will now be encoded as `%20` instead of `+` (@nov.matake)
 - [!634](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/634) - `CHANGELOG.md` documentation fix (@skuwa229)
@@ -48,6 +53,7 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 - [!641](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/641) - Do not include sensitive information in the `inspect` (@manuelvanrijn)
 - [#641](https://gitlab.com/oauth-xx/oauth2/-/issues/641) - Made default JSON response parser more resilient (@pboling)
 - [#645](https://gitlab.com/oauth-xx/oauth2/-/issues/645) - Response no longer becomes a snaky hash (@pboling)
+- [gh!646](https://github.com/oauth-xx/oauth2/pull/646) - Change require to require_relative (improve performance) (@Aboling0)
 
 ## [2.0.9] - 2022-09-16 ([tag][2.0.9t])
 ### Added
