@@ -24,8 +24,9 @@ PATH
   remote: .
   specs:
     oauth2 (2.0.10)
-      faraday (>= 0.17.3, < 3.0)
-      jwt (>= 1.0, < 3.0)
+      faraday (>= 0.17.3, < 4.0)
+      jwt (>= 1.0, < 4.0)
+      logger (~> 1.2)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 4)
       snaky_hash (~> 2.0)
@@ -98,7 +99,7 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     json (2.12.0)
-    jwt (2.10.1)
+    jwt (3.0.0.beta1)
       base64
     kettle-soup-cover (1.0.6)
       simplecov (~> 0.22)
@@ -166,7 +167,7 @@ GEM
       ruby_version (~> 1.0)
     rspec-stubbed_env (1.0.2)
     rspec-support (3.13.3)
-    rubocop (1.75.5)
+    rubocop (1.75.6)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -221,9 +222,9 @@ GEM
     ruby-progressbar (1.13.0)
     ruby_engine (2.0.3)
     ruby_version (1.0.3)
-    silent_stream (1.0.10)
-      logger (>= 1.4.4)
-      version_gem (~> 1.1, >= 1.1.7)
+    silent_stream (1.0.11)
+      logger (~> 1.2)
+      version_gem (>= 1.1.8, < 3)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -279,9 +280,9 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  addressable (>= 2)
+  addressable (~> 2.8, >= 2.8.7)
   appraisal!
-  backports (>= 3)
+  backports (~> 3.25, >= 3.25.1)
   benchmark (~> 0.4)
   bundler-audit (~> 0.9.2)
   debug (>= 1.0.0)
@@ -289,19 +290,19 @@ DEPENDENCIES
   kettle-soup-cover (~> 1.0, >= 1.0.6)
   nkf (~> 0.2)
   oauth2!
-  rake (>= 12)
+  rake (~> 13.0)
   rdoc (~> 6.11)
   reek (~> 6.4)
-  rexml (>= 3)
-  rspec (>= 3)
-  rspec-block_is_expected
-  rspec-pending_for
-  rspec-stubbed_env
+  rexml (~> 3.2, >= 3.2.5)
+  rspec (~> 3.13)
+  rspec-block_is_expected (~> 1.0, >= 1.0.6)
+  rspec-pending_for (~> 0.1, >= 0.1.17)
+  rspec-stubbed_env (~> 1.0, >= 1.0.2)
   rubocop (~> 1.73, >= 1.73.2)
   rubocop-lts (~> 8.1, >= 8.1.1)
   rubocop-packaging (~> 0.5, >= 0.5.2)
   rubocop-rspec (~> 3.2)
-  silent_stream
+  silent_stream (~> 1.0, >= 1.0.11)
   standard (~> 1.47)
   yard (~> 0.9, >= 0.9.37)
   yard-junk (~> 0.0, >= 0.0.10)!

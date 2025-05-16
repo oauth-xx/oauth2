@@ -7,6 +7,4 @@ gem "stringio", "~> 3.0"
 
 gemspec path: "../"
 
-eval_gemfile("modular/f2.gemfile")
-
 eval_gemfile("modular/style.gemfile")

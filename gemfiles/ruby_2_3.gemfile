@@ -4,4 +4,12 @@ source "https://rubygems.org"
 
 gemspec path: "../"
 
-eval_gemfile("modular/f0.gemfile")
+eval_gemfile("modular/faraday_v0.gemfile")
+
+eval_gemfile("modular/jwt_v1.gemfile")
+
+eval_gemfile("modular/logger_v1_2.gemfile")
+
+eval_gemfile("modular/multi_xml_v0_5.gemfile")
+
+eval_gemfile("modular/rack_v1_2.gemfile")

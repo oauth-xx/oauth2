@@ -11,6 +11,9 @@ gem_version =
     OAuth2::Version::VERSION
   end
 
+gl_homepage = "https://gitlab.com/oauth-xx/oauth2"
+gh_mirror = "https://github.com/oauth-xx/oauth2"
+
 Gem::Specification.new do |spec|
   # Linux distros may package ruby gems differently,
   #   and securely certify them independently via alternate package management systems.
@@ -30,9 +33,9 @@ Gem::Specification.new do |spec|
 
   spec.authors = ["Peter Boling", "Erik Michaels-Ober", "Michael Bleigh"]
   spec.summary = "OAuth 2.0 Core Ruby implementation"
-  spec.description = "A Ruby wrapper for the OAuth 2.0 protocol built with a similar style to the original OAuth spec."
+  spec.description = "Ruby wrapper for the OAuth 2.0 protocol"
   spec.email = ["peter.boling@gmail.com", "oauth-ruby@googlegroups.com"]
-  spec.homepage = "https://gitlab.com/oauth-xx/oauth2"
+  spec.homepage = gh_mirror # Yeah, it's gross, but stars have value :(
   spec.licenses = "MIT"
   spec.name = "oauth2"
   spec.required_ruby_version = ">= 2.2.0"
@@ -42,11 +45,11 @@ You have installed oauth2 version #{gem_version}, congratulations!
 
 There are BREAKING changes if you are upgrading from < v2, but most will not encounter them, and updating your code should be easy!
 Please see:
-• #{spec.homepage}/-/blob/main/SECURITY.md
-• #{spec.homepage}/-/blob/v#{spec.version}/CHANGELOG.md#200-2022-06-21-tag
-• Summary of most important breaking changes: #{spec.homepage}#what-is-new-for-v20
+• #{gl_homepage}/-/blob/main/SECURITY.md
+• #{gl_homepage}/-/blob/v#{spec.version}/CHANGELOG.md#200-2022-06-21-tag
+• Summary of most important breaking changes: #{gl_homepage}#what-is-new-for-v20
 
-There are BUGFIXES in v2.0.10, which depending on how you relied on them instead of reporting and fixing them, may be BREAKING for you.
+There are BUGFIXES in v#{gem_version}, which depending on how you relied on them instead of reporting and fixing them, may be BREAKING for you.
 For more information please see:
 https://railsbling.com/tags/oauth2
 
@@ -73,12 +76,12 @@ Please report issues, and star the project!
 Thanks, |7eter l-|. l3oling
 }
 
-  spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "#{spec.homepage}/-/tree/v#{spec.version}"
-  spec.metadata["changelog_uri"] = "#{spec.homepage}/-/blob/v#{spec.version}/CHANGELOG.md"
-  spec.metadata["bug_tracker_uri"] = "#{spec.homepage}/-/issues"
+  spec.metadata["homepage_uri"] = gl_homepage
+  spec.metadata["source_code_uri"] = "#{gl_homepage}/-/tree/v#{spec.version}"
+  spec.metadata["changelog_uri"] = "#{gl_homepage}/-/blob/v#{spec.version}/CHANGELOG.md"
+  spec.metadata["bug_tracker_uri"] = "#{gl_homepage}/-/issues"
   spec.metadata["documentation_uri"] = "https://www.rubydoc.info/gems/#{spec.name}/#{spec.version}"
-  spec.metadata["wiki_uri"] = "#{spec.homepage}/-/wiki"
+  spec.metadata["wiki_uri"] = "#{gl_homepage}/-/wiki"
   spec.metadata["mailing_list_uri"] = "https://groups.google.com/g/oauth-ruby"
   spec.metadata["news_uri"] = "https://www.railsbling.com/tags/#{spec.name}"
   spec.metadata["funding_uri"] = "https://liberapay.com/pboling"
@@ -112,21 +115,22 @@ Thanks, |7eter l-|. l3oling
   spec.bindir = "exe"
   spec.executables = []
 
-  spec.add_dependency("faraday", [">= 0.17.3", "< 3.0"])
-  spec.add_dependency("jwt", [">= 1.0", "< 3.0"])
-  spec.add_dependency("multi_xml", "~> 0.5")
-  spec.add_dependency("rack", [">= 1.2", "< 4"])
-  spec.add_dependency("snaky_hash", "~> 2.0")
-  spec.add_dependency("version_gem", ">= 1.1.8", "< 3") # Ruby >= 2.2.0
+  spec.add_dependency("faraday", [">= 0.17.3", "< 4.0"])  # Ruby >= 1.9
+  spec.add_dependency("jwt", [">= 1.0", "< 4.0"])         # Ruby >= 0
+  spec.add_dependency("logger", "~> 1.2")                 # Ruby >= 0
+  spec.add_dependency("multi_xml", "~> 0.5")              # Ruby >= 0
+  spec.add_dependency("rack", [">= 1.2", "< 4"])          # Ruby >= 0
+  spec.add_dependency("snaky_hash", "~> 2.0")             # Ruby >= 2.2
+  spec.add_dependency("version_gem", ">= 1.1.8", "< 3")   # Ruby >= 2.2
 
-  spec.add_development_dependency("addressable", ">= 2")
-  spec.add_development_dependency("backports", ">= 3")
-  spec.add_development_dependency("nkf", "~> 0.2")
-  spec.add_development_dependency("rake", ">= 12")
-  spec.add_development_dependency("rexml", ">= 3")
-  spec.add_development_dependency("rspec", ">= 3")
-  spec.add_development_dependency("rspec-block_is_expected")
-  spec.add_development_dependency("rspec-pending_for")
-  spec.add_development_dependency("rspec-stubbed_env")
-  spec.add_development_dependency("silent_stream")
+  spec.add_development_dependency("addressable", "~> 2.8", ">= 2.8.7")  # ruby >= 2.2
+  spec.add_development_dependency("backports", "~> 3.25", ">= 3.25.1")  # ruby >= 0
+  spec.add_development_dependency("nkf", "~> 0.2")                      # ruby >= 2.3
+  spec.add_development_dependency("rake", "~> 13.0")                    # ruby >= 2.2
+  spec.add_development_dependency("rexml", "~> 3.2", ">= 3.2.5")        # ruby >= 0
+  spec.add_development_dependency("rspec", "~> 3.13")                   # ruby >= 0
+  spec.add_development_dependency("rspec-block_is_expected", "~> 1.0", ">= 1.0.6")  # ruby >= 1.8.7
+  spec.add_development_dependency("rspec-pending_for", "~> 0.1", ">= 0.1.17")       # ruby >= 1.8.7
+  spec.add_development_dependency("rspec-stubbed_env", "~> 1.0", ">= 1.0.2")        # ruby >= 1.8.7
+  spec.add_development_dependency("silent_stream", "~> 1.0", ">= 1.0.11")           # ruby >= 2.3
 end

@@ -1,0 +1,6 @@
+# frozen_string_literal: true
+
+# Ruby >= 0
+# This is the newest version of rack that installs on Ruby < 2.2.2.
+# We will test it against Ruby 2.4.
+gem "rack", "~> 1.6", ">= 1.6.13"

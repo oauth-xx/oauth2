@@ -1,0 +1,6 @@
+# frozen_string_literal: true
+
+# Ruby >= 2.3
+# This version of logger is the last compatible with Ruby 1.8. 1.9, 2.0, 2.1, 2.2:
+# We will test it against 2.3, and 2.4.
+gem "logger", "~> 1.2.8", ">= 1.2.8.1"

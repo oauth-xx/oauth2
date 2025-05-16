@@ -5,15 +5,19 @@
 
 gem "reek", "~> 6.4"
 gem "rubocop", "~> 1.73", ">= 1.73.2"
-gem "rubocop-lts", "~> 8.1", ">= 8.1.1" # Linting for Ruby >= 2.2
 gem "rubocop-packaging", "~> 0.5", ">= 0.5.2"
-gem "rubocop-rspec", "~> 3.2"
 gem "standard", "~> 1.47"
 
 # Std Lib extractions
 gem "benchmark", "~> 0.4" # Removed from Std Lib in Ruby 3.5
 
-# gem "rubocop-lts", :path => "/home/pboling/src/rubocop-lts/rubocop-lts"
-# gem "rubocop-lts-rspec", :path => "/home/pboling/src/rubocop-lts/rubocop-lts-rspec"
-# gem "rubocop-ruby1_8", :path => "/home/pboling/src/rubocop-lts/rubocop-ruby1_8"
-# gem "standard-rubocop-lts", :path => "/home/pboling/src/rubocop-lts/standard-rubocop-lts"
+if ENV.fetch("RUBOCOP_LTS_LOCAL", "false").casecmp("true").zero?
+  home = ENV["HOME"]
+  gem "rubocop-lts", path: "#{home}/src/rubocop-lts/rubocop-lts"
+  gem "rubocop-lts-rspec", path: "#{home}/src/rubocop-lts/rubocop-lts-rspec"
+  gem "rubocop-ruby2_2", path: "#{home}/src/rubocop-lts/rubocop-ruby2_2"
+  gem "standard-rubocop-lts", path: "#{home}/src/rubocop-lts/standard-rubocop-lts"
+else
+  gem "rubocop-lts", "~> 8.1", ">= 8.1.1" # Linting for Ruby >= 2.2
+  gem "rubocop-rspec", "~> 3.2"
+end

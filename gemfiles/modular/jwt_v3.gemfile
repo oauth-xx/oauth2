@@ -1,0 +1,4 @@
+# frozen_string_literal: true
+
+# Ruby >= 2.5
+gem "jwt", ">= 3.0.0.beta1", "< 4"

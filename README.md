@@ -7,18 +7,18 @@
     </a>
 </p>
 
-## OAuth2
+## 🔐 OAuth2
 
 [![Version][👽versioni]][👽version]
 [![License: MIT][📄license-img]][📄license-ref]
 [![Downloads Rank][👽dl-ranki]][👽dl-rank]
 [![Open Source Helpers][👽oss-helpi]][👽oss-help]
 [![Depfu][🔑depfui♻️]][🔑depfu]
-[![CodeCov Test Coverage][🔑codecovi♻️]][🔑codecov]
 [![Coveralls Test Coverage][🔑coveralls-img]][🔑coveralls]
-[![CodeClimate Test Coverage][🔑cc-covi♻️]][🔑cc-cov]
+[![QLTY Test Coverage][🔑cc-covi♻️]][🔑cc-cov]
 [![Maintainability][🔑cc-mnti♻️]][🔑cc-mnt]
 [![CI Heads][🚎3-hd-wfi]][🚎3-hd-wf]
+[![CI Runtime Dependencies @ HEAD][🚎12-crh-wfi]][🚎12-crh-wf]
 [![CI Current][🚎11-c-wfi]][🚎11-c-wf]
 [![CI Truffle Ruby][🚎9-t-wfi]][🚎9-t-wf]
 [![CI JRuby][🚎10-j-wfi]][🚎10-j-wf]
@@ -43,7 +43,81 @@ OAuth 2.0 focuses on client developer simplicity while providing specific author
     desktop applications, mobile phones, and living room devices.
 This is a RubyGem for implementing OAuth 2.0 clients (not servers) in Ruby applications.
 
-Quick example: Convert the following `curl` command into a token request using this gem...
+| Federated [DVCS][💎d-in-dvcs] Repository      | Status         | Issues | PRs | Wiki | CI             | Discussions |
+|-----------------------------------------------|----------------|--------|-----|------|----------------|-------------|
+| 🧪 [oauth-xx/oauth2 on GitLab][📜src-gl]      | The Truth      | 💚     | 💚  | 💚   | 🏀 Tiny Matrix | ➖          |
+| 🐙 [oauth-xx/oauth2 on GitHub][📜src-gh]      | A Dirty Mirror | 💚     | 💚  | ➖   | 💯 Full Matrix | ➖          |
+| 🤼 [OAuth Ruby Google Group][⛳gg-discussions] | "Active"        | ➖       | ➖    | ➖     | ➖               | 💚            |
+
+### Upgrading Runtime Gem Dependencies
+
+This project sits underneath a large portion of the authentication systems on the internet.
+According to GitHub's project tracking, which I believe only reports on public projects,
+[100,000+ projects](https://github.com/oauth-xx/oauth2/network/dependents), and
+[500+ packages](https://github.com/oauth-xx/oauth2/network/dependents?dependent_type=PACKAGE) depend on this project.
+
+That means it is painful for the Ruby community when this gem forces updates to its runtime dependencies.
+
+As a result, great care, and a lot of time, have been invested to ensure this gem is working with all the
+leading versions per each minor version of Ruby of all the runtime dependencies it can install with.
+
+What does that mean specifically for the runtime dependencies?
+
+We have 100% test coverage of lines and branches, and this test suite runs across a large matrix
+covering the latest patch for each of the following minor versions:
+
+* MRI Ruby @ v2.3, v2.4, v2.5, v2.6, v2.7, v3.0, v3.1, v3.2, v3.3, v3.4, HEAD
+  * NOTE: This gem will still install on ruby v2.2, but vanilla GitHub Actions no longer supports testing against it, so YMMV.
+* JRuby @ v9.2, v9.3, v9.4, v10.0, HEAD
+* TruffleRuby @ v23.1, v23.2, HEAD
+* gem `faraday` @ v0, v1, v2, HEAD
+* gem `jwt` @ v1, v2, v3, HEAD
+* gem `logger` @ v1.2, v1.5, v1.7, HEAD
+* gem `multi_xml` @ v0.5, v0.6, v0.7, HEAD
+* gem `rack` @ v1.2, v1.6, v2, v3, HEAD
+
+- This gem follows a _strict & correct_ (according to the maintainer of SemVer; [more info][sv-pub-api]) interpretation of SemVer.
+  - Dropping support for **any** of the runtime dependency versions above will be a major version bump.
+  - If you aren't on one of the minor versions above, make getting there a priority.
+- You should upgrade this gem with confidence\*.
+- You should upgrade the dependencies of this gem with confidence\*.
+- Please do upgrade, and then, when it goes smooth as butter [please sponsor me][🖇sponsor].  Thanks!
+
+If you are thinking, "that list is missing two runtime dependencies", you are correct!
+Both of them were extracted from this gem. They are part of the `oauth-xx` org,
+and are developed in tight collaboration with this gem, so not much more needs to be said about them.
+
+* gem `snaky_hash` - https://gitlab.com/oauth-xx/snaky_hash
+* gem `version_gem` - https://gitlab.com/oauth-xx/version_gem
+
+[sv-pub-api]: #-is-platform-support-part-of-the-public-api
+
+\* MIT license; I am unable to make guarantees.
+
+| 🚚 Test matrix brought to you by | 🔎 appraisal++                                                          |
+|----------------------------------|-------------------------------------------------------------------------|
+| Adds back support for old Rubies | ✨ [appraisal PR #250](https://github.com/thoughtbot/appraisal/pull/250) |
+| Adds support for `eval_gemfile`  | ✨ [appraisal PR #248](https://github.com/thoughtbot/appraisal/pull/248) |
+| Please review                    | my PRs!                                                                 |
+
+<details>
+  <summary>Standard Library Dependencies</summary>
+
+The various versions of each are tested via the Ruby test matrix, along with whatever Ruby includes them.
+
+* base64
+* cgi
+* json
+* time
+* logger (removed from stdlib in Ruby 3.5 so added as runtime dependency in v2.0.10)
+
+If you use a gem version it should work fine!
+
+</details>
+
+### Quick Usage Example for AI and Copy / Pasting
+
+Convert the following `curl` command into a token request using this gem...
 
 ```shell
 curl --request POST \
@@ -55,7 +129,7 @@ curl --request POST \
   --data resource=REDMOND_RESOURCE_UUID
 ```
 
-NOTE: In the ruby version, certain params go in the get_token call, rather than in the client creation.
+NOTE: In the ruby version below, certain params are passed to the `get_token` call, instead of the client creation.
 
 ```ruby
 OAuth2::Client.new(
@@ -71,7 +145,8 @@ OAuth2::Client.new(
 
 NOTE: `header` - The content type specified in the `curl` is already the default!
 
-## 💡 Info you can shake a stick at
+If any of the above makes you uncomfortable, you may be in the wrong place.
+One of these might be what you are looking for:
 
 * [OAuth 2.0 Spec][oauth2-spec]
 * [doorkeeper gem][doorkeeper-gem] for OAuth 2.0 server/provider implementation.
@@ -81,10 +156,12 @@ NOTE: `header` - The content type specified in the `curl` is already the default
 [sibling-gem]: https://gitlab.com/oauth-xx/oauth
 [doorkeeper-gem]: https://github.com/doorkeeper-gem/doorkeeper
 
+## 💡 Info you can shake a stick at
+
 | Tokens to Remember      | [![Gem name][⛳️name-img]][⛳️gem-name] [![Gem namespace][⛳️namespace-img]][⛳️gem-namespace]                                                                                                                                                                                                                                                                                                                                                                                            |
 |-------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Works with JRuby        | [![JRuby 9.2 Compat][💎jruby-9.2i]][🚎10-j-wf] [![JRuby 9.3 Compat][💎jruby-9.3i]][🚎10-j-wf] [![JRuby 9.4 Compat][💎jruby-9.4i]][🚎10-j-wf] [![JRuby 10.0 Compat][💎jruby-c-i]][🚎11-c-wf] [![JRuby HEAD Compat][💎jruby-headi]][🚎3-hd-wf]                                                                                                                                                                                           |
-| Works with Truffle Ruby | [![Truffle Ruby 23.1 Compat][💎truby-23.1i]][🚎9-t-wf] [![Truffle Ruby 24.1 Compat][💎truby-c-i]][🚎11-c-wf] [![Truffle Ruby HEAD Compat][💎truby-headi]][🚎3-hd-wf]                                                                                                                                                                                                    |
+| Works with JRuby        | [![JRuby 9.2 Compat][💎jruby-9.2i]][🚎10-j-wf] [![JRuby 9.3 Compat][💎jruby-9.3i]][🚎10-j-wf] [![JRuby 9.4 Compat][💎jruby-9.4i]][🚎10-j-wf] [![JRuby 10.0 Compat][💎jruby-c-i]][🚎11-c-wf] [![JRuby HEAD Compat][💎jruby-headi]][🚎3-hd-wf]                                                                                                                                                                                                                                          |
+| Works with Truffle Ruby | [![Truffle Ruby 23.1 Compat][💎truby-23.1i]][🚎9-t-wf] [![Truffle Ruby 24.1 Compat][💎truby-c-i]][🚎11-c-wf] [![Truffle Ruby HEAD Compat][💎truby-headi]][🚎3-hd-wf]                                                                                                                                                                                                                                                                                                                  |
 | Works with MRI Ruby 3   | [![Ruby 3.0 Compat][💎ruby-3.0i]][🚎4-lg-wf] [![Ruby 3.1 Compat][💎ruby-3.1i]][🚎6-s-wf] [![Ruby 3.2 Compat][💎ruby-3.2i]][🚎6-s-wf] [![Ruby 3.3 Compat][💎ruby-3.3i]][🚎6-s-wf] [![Ruby 3.4 Compat][💎ruby-c-i]][🚎11-c-wf] [![Ruby HEAD Compat][💎ruby-headi]][🚎3-hd-wf]                                                                                                                                                                                                           |
 | Works with MRI Ruby 2   | [![Ruby 2.3 Compat][💎ruby-2.3i]][🚎1-an-wf] [![Ruby 2.4 Compat][💎ruby-2.4i]][🚎1-an-wf] [![Ruby 2.5 Compat][💎ruby-2.5i]][🚎1-an-wf] [![Ruby 2.6 Compat][💎ruby-2.6i]][🚎7-us-wf] [![Ruby 2.7 Compat][💎ruby-2.7i]][🚎7-us-wf]                                                                                                                                                                                                                                                      |
 | Source                  | [![Source on GitLab.com][📜src-gl-img]][📜src-gl] [![Source on CodeBerg.org][📜src-cb-img]][📜src-cb] [![Source on Github.com][📜src-gh-img]][📜src-gh] [![The best SHA: dQw4w9WgXcQ!][🧮kloc-img]][🧮kloc]                                                                                                                                                                                                                                                                           |
@@ -100,43 +177,93 @@ NOTE: `header` - The content type specified in the `curl` is already the default
 ### Version 2.0.x
 
 <details>
-  <summary>2.0.x Readmes</summary>
+  <summary>2.0.x CHANGELOGs and READMEs</summary>
 
-| Version | Release Date | Readme                                                      |
-|---------|--------------|-------------------------------------------------------------|
-| 2.0.10  | 2025-05-16   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.10/README.md |
-| 2.0.9   | 2022-09-16   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.9/README.md  |
-| 2.0.8   | 2022-09-01   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.8/README.md  |
-| 2.0.7   | 2022-08-22   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.7/README.md  |
-| 2.0.6   | 2022-07-13   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.6/README.md  |
-| 2.0.5   | 2022-07-07   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.5/README.md  |
-| 2.0.4   | 2022-07-01   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.4/README.md  |
-| 2.0.3   | 2022-06-28   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.3/README.md  |
-| 2.0.2   | 2022-06-24   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.2/README.md  |
-| 2.0.1   | 2022-06-22   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.1/README.md  |
-| 2.0.0   | 2022-06-21   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.0/README.md  |
+| Version | Release Date | CHANGELOG                             | README                          |
+|---------|--------------|---------------------------------------|---------------------------------|
+| 2.0.10  | 2025-05-16   | [v2.0.10 CHANGELOG][2.0.10-changelog] | [v2.0.10 README][2.0.10-readme] |
+| 2.0.9   | 2022-09-16   | [v2.0.9 CHANGELOG][2.0.9-changelog]   | [v2.0.9 README][2.0.9-readme]   |
+| 2.0.8   | 2022-09-01   | [v2.0.8 CHANGELOG][2.0.8-changelog]   | [v2.0.8 README][2.0.8-readme]   |
+| 2.0.7   | 2022-08-22   | [v2.0.7 CHANGELOG][2.0.7-changelog]   | [v2.0.7 README][2.0.7-readme]   |
+| 2.0.6   | 2022-07-13   | [v2.0.6 CHANGELOG][2.0.6-changelog]   | [v2.0.6 README][2.0.6-readme]   |
+| 2.0.5   | 2022-07-07   | [v2.0.5 CHANGELOG][2.0.5-changelog]   | [v2.0.5 README][2.0.5-readme]   |
+| 2.0.4   | 2022-07-01   | [v2.0.4 CHANGELOG][2.0.4-changelog]   | [v2.0.4 README][2.0.4-readme]   |
+| 2.0.3   | 2022-06-28   | [v2.0.3 CHANGELOG][2.0.3-changelog]   | [v2.0.3 README][2.0.3-readme]   |
+| 2.0.2   | 2022-06-24   | [v2.0.2 CHANGELOG][2.0.2-changelog]   | [v2.0.2 README][2.0.2-readme]   |
+| 2.0.1   | 2022-06-22   | [v2.0.1 CHANGELOG][2.0.1-changelog]   | [v2.0.1 README][2.0.1-readme]   |
+| 2.0.0   | 2022-06-21   | [v2.0.0 CHANGELOG][2.0.0-changelog]   | [v2.0.0 README][2.0.0-readme]   |
 </details>
+
+[2.0.10-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#2010---2025-05-16
+[2.0.9-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#209---2022-09-16
+[2.0.8-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#208---2022-09-01
+[2.0.7-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#207---2022-08-22
+[2.0.6-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#206---2022-07-13
+[2.0.5-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#205---2022-07-07
+[2.0.4-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#204---2022-07-01
+[2.0.3-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#203---2022-06-28
+[2.0.2-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#202---2022-06-24
+[2.0.1-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#201---2022-06-22
+[2.0.0-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#200---2022-06-21
+
+[2.0.10-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.10/README.md
+[2.0.9-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.9/README.md
+[2.0.8-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.8/README.md
+[2.0.7-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.7/README.md
+[2.0.6-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.6/README.md
+[2.0.5-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.5/README.md
+[2.0.4-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.4/README.md
+[2.0.3-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.3/README.md
+[2.0.2-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.2/README.md
+[2.0.1-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.1/README.md
+[2.0.0-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.0/README.md
 
 ### Older Releases
 
 <details>
-  <summary>1.4.x Readmes</summary>
+  <summary>1.4.x CHANGELOGs and READMEs</summary>
 
-| Version | Release Date | Readme                                                      |
-|---------|--------------|-------------------------------------------------------------|
-| 1.4.11  | Sep 16, 2022 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.11/README.md |
-| 1.4.10  | Jul 1, 2022  | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.10/README.md |
-| 1.4.9   | Feb 20, 2022 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.9/README.md  |
-| 1.4.8   | Feb 18, 2022 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.8/README.md  |
-| 1.4.7   | Mar 19, 2021 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.7/README.md  |
-| 1.4.6   | Mar 19, 2021 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.6/README.md  |
-| 1.4.5   | Mar 18, 2021 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.5/README.md  |
-| 1.4.4   | Feb 12, 2020 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.4/README.md  |
-| 1.4.3   | Jan 29, 2020 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.3/README.md  |
-| 1.4.2   | Oct 1, 2019  | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.2/README.md  |
-| 1.4.1   | Oct 13, 2018 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.1/README.md  |
-| 1.4.0   | Jun 9, 2017  | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.0/README.md  |
+| Version | Release Date | CHANGELOG                             | README                          |
+|---------|--------------|---------------------------------------|---------------------------------|
+| 1.4.11  | Sep 16, 2022 | [v1.4.11 CHANGELOG][1.4.11-changelog] | [v1.4.11 README][1.4.11-readme] |
+| 1.4.10  | Jul 1, 2022  | [v1.4.10 CHANGELOG][1.4.10-changelog] | [v1.4.10 README][1.4.10-readme] |
+| 1.4.9   | Feb 20, 2022 | [v1.4.9 CHANGELOG][1.4.9-changelog]   | [v1.4.9 README][1.4.9-readme]   |
+| 1.4.8   | Feb 18, 2022 | [v1.4.8 CHANGELOG][1.4.8-changelog]   | [v1.4.8 README][1.4.8-readme]   |
+| 1.4.7   | Mar 19, 2021 | [v1.4.7 CHANGELOG][1.4.7-changelog]   | [v1.4.7 README][1.4.7-readme]   |
+| 1.4.6   | Mar 19, 2021 | [v1.4.6 CHANGELOG][1.4.6-changelog]   | [v1.4.6 README][1.4.6-readme]   |
+| 1.4.5   | Mar 18, 2021 | [v1.4.5 CHANGELOG][1.4.5-changelog]   | [v1.4.5 README][1.4.5-readme]   |
+| 1.4.4   | Feb 12, 2020 | [v1.4.4 CHANGELOG][1.4.4-changelog]   | [v1.4.4 README][1.4.4-readme]   |
+| 1.4.3   | Jan 29, 2020 | [v1.4.3 CHANGELOG][1.4.3-changelog]   | [v1.4.3 README][1.4.3-readme]   |
+| 1.4.2   | Oct 1, 2019  | [v1.4.2 CHANGELOG][1.4.2-changelog]   | [v1.4.2 README][1.4.2-readme]   |
+| 1.4.1   | Oct 13, 2018 | [v1.4.1 CHANGELOG][1.4.1-changelog]   | [v1.4.1 README][1.4.1-readme]   |
+| 1.4.0   | Jun 9, 2017  | [v1.4.0 CHANGELOG][1.4.0-changelog]   | [v1.4.0 README][1.4.0-readme]   |
 </details>
+
+[1.4.11-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#1411---2022-09-16
+[1.4.10-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#1410---2022-07-01
+[1.4.9-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#149---2022-02-20
+[1.4.8-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#148---2022-02-18
+[1.4.7-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#147---2021-03-19
+[1.4.6-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#146---2021-03-19
+[1.4.5-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#145---2021-03-18
+[1.4.4-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#144---2020-02-12
+[1.4.3-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#143---2020-01-29
+[1.4.2-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#142---2019-10-01
+[1.4.1-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#141---2018-10-13
+[1.4.0-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#140---2017-06-09
+
+[1.4.11-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.11/README.md
+[1.4.10-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.10/README.md
+[1.4.9-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.9/README.md
+[1.4.8-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.8/README.md
+[1.4.7-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.7/README.md
+[1.4.6-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.6/README.md
+[1.4.5-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.5/README.md
+[1.4.4-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.4/README.md
+[1.4.3-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.3/README.md
+[1.4.2-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.2/README.md
+[1.4.1-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.1/README.md
+[1.4.0-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.0/README.md
 
 <details>
   <summary>1.3.x Readmes</summary>
@@ -202,7 +329,7 @@ NOTE: Be prepared to track down certs for signed gems and add them the same way 
 
 Available as part of the Tidelift Subscription.
 
-The maintainers of OAuth2 and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source packages you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact packages you use. [Learn more.][tidelift-ref]
+The maintainers of this and thousands of other packages are working with Tidelift to deliver commercial support and maintenance for the open source packages you use to build your applications. Save time, reduce risk, and improve code health, while paying the maintainers of the exact packages you use. [Learn more.][tidelift-ref]
 
 [tidelift-ref]: https://tidelift.com/subscription/pkg/rubygems-oauth2?utm_source=rubygems-oauth2&utm_medium=referral&utm_campaign=enterprise
 
@@ -504,7 +631,8 @@ See [CONTRIBUTING.md][🤝contributing] for more detailed instructions.
 
 ### Code Coverage
 
-[![Coverage Graph][🔑codecov-g♻️]][🔑codecov]
+[![Coveralls Test Coverage][🔑coveralls-img]][🔑coveralls]
+[![QLTY Test Coverage][🔑cc-covi♻️]][🔑cc-cov]
 
 ### 🪇 Code of Conduct
 
@@ -561,7 +689,7 @@ the [Pessimistic Version Constraint][📌pvc] with two digits of precision.
 For example:
 
 ```ruby
-spec.add_dependency("oauth2", "~> 1.0")
+spec.add_dependency("oauth2", "~> 2.0")
 ```
 
 See [CHANGELOG.md][📌changelog] for list of releases.
@@ -571,7 +699,6 @@ See [CHANGELOG.md][📌changelog] for list of releases.
 The gem is available as open source under the terms of
 the [MIT License][📄license] [![License: MIT][📄license-img]][📄license-ref].
 See [LICENSE.txt][📄license] for the official [Copyright Notice][📄copyright-notice-explainer].
-
 
 [![FOSSA Status][fossa2-img])][fossa2]
 
@@ -668,7 +795,7 @@ or one of the others at the head of this README.
 [🔑cc-cov]: https://qlty.sh/gh/oauth-xx/projects/oauth2
 [🔑cc-covi♻️]: https://qlty.sh/badges/d3370c2c-8791-4202-9759-76f527f76005/test_coverage.svg
 [🔑codecov]: https://codecov.io/gh/oauth-xx/oauth2
-[🔑codecovi♻️]: https://codecov.io/gh/oauth-xx/oauth2/branch/main/graph/badge.svg?token=bNqSzNiuo2
+[🔑codecovi♻️]: https://codecov.io/gh/oauth-xx/oauth2/graph/badge.svg?token=bNqSzNiuo2
 [🔑coveralls]: https://coveralls.io/github/oauth-xx/oauth2?branch=main
 [🔑coveralls-img]: https://coveralls.io/repos/github/oauth-xx/oauth2/badge.svg?branch=main
 [🔑depfu]: https://depfu.com/github/oauth-xx/oauth2?project_id=5884
@@ -697,6 +824,8 @@ or one of the others at the head of this README.
 [🚎10-j-wfi]: https://github.com/oauth-xx/oauth2/actions/workflows/jruby.yml/badge.svg
 [🚎11-c-wf]: https://github.com/oauth-xx/oauth2/actions/workflows/current.yml
 [🚎11-c-wfi]: https://github.com/oauth-xx/oauth2/actions/workflows/current.yml/badge.svg
+[🚎12-crh-wf]: https://github.com/oauth-xx/oauth2/actions/workflows/current-runtime-heads.yml
+[🚎12-crh-wfi]: https://github.com/oauth-xx/oauth2/actions/workflows/current-runtime-heads.yml/badge.svg
 [⛳liberapay-img]: https://img.shields.io/liberapay/goal/pboling.svg?logo=liberapay
 [⛳liberapay]: https://liberapay.com/pboling/donate
 [🖇sponsor-img]: https://img.shields.io/badge/Sponsor_Me!-pboling.svg?style=social&logo=github
@@ -753,7 +882,7 @@ or one of the others at the head of this README.
 [📌gitmoji]:https://gitmoji.dev
 [📌gitmoji-img]:https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square
 [🧮kloc]: https://www.youtube.com/watch?v=dQw4w9WgXcQ
-[🧮kloc-img]: https://img.shields.io/badge/KLOC-0.073-FFDD67.svg?style=for-the-badge&logo=YouTube&logoColor=blue
+[🧮kloc-img]: https://img.shields.io/badge/KLOC-0.518-FFDD67.svg?style=for-the-badge&logo=YouTube&logoColor=blue
 [🔐security]: SECURITY.md
 [🔐security-img]: https://img.shields.io/badge/security-policy-brightgreen.svg?style=flat
 [📄copyright-notice-explainer]: https://opensource.stackexchange.com/questions/5778/why-do-licenses-such-as-the-mit-license-specify-a-single-year
@@ -770,6 +899,7 @@ or one of the others at the head of this README.
 [💎rlts-img]: https://img.shields.io/badge/code_style-rubocop--lts-brightgreen.svg?plastic&logo=ruby&logoColor=white
 [🏘fossa]: https://app.fossa.io/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2?ref=badge_shield
 [🏘fossa-img]: https://app.fossa.io/api/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2.svg?type=shield
+[💎d-in-dvcs]: https://railsbling.com/posts/dvcs/put_the_d_in_dvcs/
 
 <details>
   <summary>
@@ -778,4 +908,15 @@ or one of the others at the head of this README.
 
 <a rel="me" alt="Follow me on Ruby.social" href="https://ruby.social/@galtzo"><img src="https://img.shields.io/mastodon/follow/109447111526622197?domain=https%3A%2F%2Fruby.social&style=social&label=Follow%20%40galtzo%20on%20Ruby.social"></a>
 <a rel="me" alt="Follow me on FLOSS.social" href="https://floss.social/@galtzo"><img src="https://img.shields.io/mastodon/follow/110304921404405715?domain=https%3A%2F%2Ffloss.social&style=social&label=Follow%20%40galtzo%20on%20Floss.social"></a>
+</details>
+
+<details>
+  <summary>Deprecated Badges</summary>
+
+CodeCov currently fails to parse the coverage upload.
+
+[![CodeCov Test Coverage][🔑codecovi♻️]][🔑codecov]
+
+[![Coverage Graph][🔑codecov-g♻️]][🔑codecov]
+
 </details>
