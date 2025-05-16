@@ -129,5 +129,5 @@ Thanks, |7eter l-|. l3oling
   spec.add_development_dependency("rspec-block_is_expected", "~> 1.0", ">= 1.0.6")  # ruby >= 1.8.7
   spec.add_development_dependency("rspec-pending_for", "~> 0.1", ">= 0.1.17")       # ruby >= 1.8.7
   spec.add_development_dependency("rspec-stubbed_env", "~> 1.0", ">= 1.0.2")        # ruby >= 1.8.7
-  spec.add_development_dependency("silent_stream", "~> 1.0", ">= 1.0.10")           # ruby >= 2.3
+  spec.add_development_dependency("silent_stream", "~> 1.0", ">= 1.0.11")           # ruby >= 2.3
 end

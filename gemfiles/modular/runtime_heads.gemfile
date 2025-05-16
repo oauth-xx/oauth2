@@ -9,7 +9,7 @@ gem "faraday", github: "lostisland/faraday", branch: "main"
 gem "jwt", github: "jwt/ruby-jwt", branch: "main"
 
 # Ruby >= 2.5
-gem "logger", github: "ruby/logger/", branch: "master"
+gem "logger", github: "ruby/logger", branch: "master"
 
 # Ruby >= 3.2
 gem "multi_xml", github: "sferik/multi_xml", branch: "master"

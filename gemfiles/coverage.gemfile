@@ -7,10 +7,14 @@ gem "stringio", "~> 3.0"
 
 gemspec path: "../"
 
+eval_gemfile("modular/coverage.gemfile")
+
 eval_gemfile("modular/faraday_v2.gemfile")
 
 eval_gemfile("modular/jwt_v2.gemfile")
 
-eval_gemfile("modular/rack_v3.gemfile")
+eval_gemfile("modular/logger_v1_7.gemfile")
 
-eval_gemfile("modular/coverage.gemfile")
+eval_gemfile("modular/multi_xml_v0_7.gemfile")
+
+eval_gemfile("modular/rack_v3.gemfile")

@@ -21,7 +21,7 @@
   "lib/oauth2/response.rb:4048171841": [
     [35, 5, 204, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 996912427]
   ],
-  "oauth2.gemspec:4016497537": [
+  "oauth2.gemspec:434615840": [
     [5, 23, 12, "Gemspec/RubyVersionGlobalsUsage: Do not use `RUBY_VERSION` in gemspec file.", 31296028]
   ],
   "spec/oauth2/access_token_spec.rb:443932125": [
