@@ -143,11 +143,10 @@ OAuth2::Response.register_parser(:xml, ["text/xml", "application/rss+xml", "appl
 end
 
 OAuth2::Response.register_parser(:json, ["application/json", "text/javascript", "application/hal+json", "application/vnd.collection+json", "application/vnd.api+json", "application/problem+json"]) do |body|
-  next body if body.nil?
   next body unless body.respond_to?(:to_str)
 
   body = body.dup.force_encoding(Encoding::ASCII_8BIT) if body.respond_to?(:force_encoding)
-  next body if body.empty?
+  next body if body.respond_to?(:empty?) && body.empty?
 
   JSON.parse(body)
 end

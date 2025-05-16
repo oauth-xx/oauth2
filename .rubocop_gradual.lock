@@ -18,7 +18,7 @@
     [9, 9, 25, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 2012823020],
     [13, 9, 25, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 2012823020]
   ],
-  "lib/oauth2/response.rb:355921218": [
+  "lib/oauth2/response.rb:4048171841": [
     [35, 5, 204, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 996912427]
   ],
   "oauth2.gemspec:290828046": [
@@ -48,7 +48,7 @@
     [69, 15, 38, "RSpec/ContextWording: Context description should match /^when\\b/, /^with\\b/, or /^without\\b/.", 1480816240],
     [79, 13, 23, "RSpec/ContextWording: Context description should match /^when\\b/, /^with\\b/, or /^without\\b/.", 2314399065]
   ],
-  "spec/oauth2/client_spec.rb:1326196445": [
+  "spec/oauth2/client_spec.rb:348683155": [
     [6, 1, 29, "RSpec/SpecFilePathFormat: Spec path should end with `o_auth2/client*_spec.rb`.", 439549885],
     [175, 7, 492, "RSpec/NoExpectationExample: No expectation found in this example.", 1272021224],
     [194, 7, 592, "RSpec/NoExpectationExample: No expectation found in this example.", 3428877205],
@@ -59,13 +59,12 @@
     [830, 5, 360, "RSpec/NoExpectationExample: No expectation found in this example.", 536201463],
     [839, 5, 461, "RSpec/NoExpectationExample: No expectation found in this example.", 3392600621],
     [850, 5, 340, "RSpec/NoExpectationExample: No expectation found in this example.", 244592251],
-    [895, 63, 2, "RSpec/BeEq: Prefer `be` over `eq`.", 5860785],
-    [940, 11, 99, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 3084776886],
-    [944, 11, 82, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 1524553529],
-    [952, 7, 89, "RSpec/NoExpectationExample: No expectation found in this example.", 4609419],
-    [1040, 11, 99, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 3084776886],
-    [1044, 11, 82, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 1524553529],
-    [1124, 17, 12, "RSpec/ContextWording: Context description should match /^when\\b/, /^with\\b/, or /^without\\b/.", 664794325]
+    [978, 11, 99, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 3084776886],
+    [982, 11, 82, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 1524553529],
+    [990, 7, 89, "RSpec/NoExpectationExample: No expectation found in this example.", 4609419],
+    [1078, 11, 99, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 3084776886],
+    [1082, 11, 82, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 1524553529],
+    [1162, 17, 12, "RSpec/ContextWording: Context description should match /^when\\b/, /^with\\b/, or /^without\\b/.", 664794325]
   ],
   "spec/oauth2/error_spec.rb:1209122273": [
     [23, 1, 28, "RSpec/SpecFilePathFormat: Spec path should end with `o_auth2/error*_spec.rb`.", 3385870076],

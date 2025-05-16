@@ -883,8 +883,8 @@ RSpec.describe OAuth2::Client do
       context "when the request body is nil" do
         subject(:get_token) { client.get_token({}) }
 
-        it "raises error JSON::ParserError" do
-          block_is_expected { get_token }.to raise_error(JSON::ParserError)
+        it "does not raise error" do
+          block_is_expected { get_token }.not_to raise_error
         end
 
         context "when extract_access_token raises an exception" do
@@ -892,7 +892,45 @@ RSpec.describe OAuth2::Client do
           let(:extract_proc) { proc { |client, hash| raise ArgumentError } }
 
           it "returns a nil :access_token" do
-            expect(client.get_token({}, {}, extract_proc)).to eq(nil)
+            expect(client.get_token({}, {}, extract_proc)).to be_nil
+          end
+        end
+      end
+
+      context "when the request body is empty" do
+        subject(:get_token) { client.get_token({}) }
+
+        let(:body) { "" }
+
+        it "does not raise error" do
+          block_is_expected { get_token }.not_to raise_error
+        end
+
+        context "when extract_access_token raises an exception" do
+          let(:status_code) { 200 }
+          let(:extract_proc) { proc { |client, hash| raise ArgumentError } }
+
+          it "returns a nil :access_token" do
+            expect(client.get_token({}, {}, extract_proc)).to be_nil
+          end
+        end
+      end
+
+      context "when the request body is not valid JSON" do
+        subject(:get_token) { client.get_token({}) }
+
+        let(:body) { "BLOOP" }
+
+        it "raises error" do
+          block_is_expected { get_token }.to raise_error(JSON::ParserError, /unexpected character: 'BLOOP'/)
+        end
+
+        context "when extract_access_token raises an exception" do
+          let(:status_code) { 200 }
+          let(:extract_proc) { proc { |client, hash| raise ArgumentError } }
+
+          it "returns a nil :access_token" do
+            expect(client.get_token({}, {}, extract_proc)).to be_nil
           end
         end
       end
