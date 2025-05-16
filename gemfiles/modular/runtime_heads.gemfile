@@ -10,3 +10,6 @@ gem "faraday", github: "lostisland/faraday", branch: "main"
 
 # Ruby >= 2.4
 gem "rack", github: "rack/rack", branch: "main"
+
+# Ruby >= 3.2
+gem "multi_xml", github: "sferik/multi_xml", branch: "master"
