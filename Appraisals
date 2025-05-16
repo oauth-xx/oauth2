@@ -32,31 +32,24 @@ appraise "current" do
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
-appraise "ruby-2-2" do
+appraise "ruby-2-3" do
   eval_gemfile "modular/faraday_v0.gemfile"
   eval_gemfile "modular/jwt_v1.gemfile"
   eval_gemfile "modular/rack_v1_2.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
-appraise "ruby-2-3" do
-  eval_gemfile "modular/faraday_v0.gemfile"
-  eval_gemfile "modular/jwt_v1.gemfile"
-  eval_gemfile "modular/rack_v1_6.gemfile"
-  remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
-end
-
 appraise "ruby-2-4" do
   eval_gemfile "modular/faraday_v1.gemfile"
   eval_gemfile "modular/jwt_v1.gemfile"
-  eval_gemfile "modular/rack_v2.gemfile"
+  eval_gemfile "modular/rack_v1_6.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
 appraise "ruby-2-5" do
   eval_gemfile "modular/faraday_v1.gemfile"
   eval_gemfile "modular/jwt_v2.gemfile"
-  eval_gemfile "modular/rack_v3.gemfile"
+  eval_gemfile "modular/rack_v2.gemfile"
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
