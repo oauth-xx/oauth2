@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
 
   spec.authors = ["Peter Boling", "Erik Michaels-Ober", "Michael Bleigh"]
   spec.summary = "OAuth 2.0 Core Ruby implementation"
-  spec.description = "A Ruby wrapper for the OAuth 2.0 protocol built with a similar style to the original OAuth spec."
+  spec.description = "Ruby wrapper for the OAuth 2.0 protocol"
   spec.email = ["peter.boling@gmail.com", "oauth-ruby@googlegroups.com"]
   spec.homepage = "https://gitlab.com/oauth-xx/oauth2"
   spec.licenses = "MIT"
@@ -46,7 +46,7 @@ Please see:
 • #{spec.homepage}/-/blob/v#{spec.version}/CHANGELOG.md#200-2022-06-21-tag
 • Summary of most important breaking changes: #{spec.homepage}#what-is-new-for-v20
 
-There are BUGFIXES in v2.0.10, which depending on how you relied on them instead of reporting and fixing them, may be BREAKING for you.
+There are BUGFIXES in v#{gem_version}, which depending on how you relied on them instead of reporting and fixing them, may be BREAKING for you.
 For more information please see:
 https://railsbling.com/tags/oauth2
 

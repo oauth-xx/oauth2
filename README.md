@@ -77,6 +77,13 @@ covering the latest patch for each of the following minor versions:
 - You should upgrade the dependencies of this gem with confidence\*.
 - Please do upgrade, and then, when it goes smooth as butter [please sponsor me][🖇sponsor].  Thanks!
 
+If you are thinking, "that list is missing two runtime dependencies", you are correct!
+Both of them were extracted from this gem. They are part of the `oauth-xx` org,
+and are developed in tight collaboration with this gem, so not much more needs to be said about them.
+
+* gem `snaky_hash` - https://gitlab.com/oauth-xx/snaky_hash
+* gem `version_gem` - https://gitlab.com/oauth-xx/version_gem
+
 [sv-pub-api]: #-is-platform-support-part-of-the-public-api
 
 \* MIT license; I am unable to make guarantees.
@@ -102,7 +109,7 @@ If you use a gem version it should work fine!
 
 </details>
 
-### Quick Usage Example for Anti-Scrollers
+### Quick Usage Example for AI and Copy / Pasting
 
 Convert the following `curl` command into a token request using this gem...
 
@@ -116,7 +123,7 @@ curl --request POST \
   --data resource=REDMOND_RESOURCE_UUID
 ```
 
-NOTE: In the ruby version, certain params go in the get_token call, rather than in the client creation.
+NOTE: In the ruby version below, certain params are passed to the `get_token` call, instead of the client creation.
 
 ```ruby
 OAuth2::Client.new(
