@@ -19,6 +19,7 @@
 [![CodeClimate Test Coverage][🔑cc-covi♻️]][🔑cc-cov]
 [![Maintainability][🔑cc-mnti♻️]][🔑cc-mnt]
 [![CI Heads][🚎3-hd-wfi]][🚎3-hd-wf]
+[![CI Runtime Dependencies @ HEAD][🚎12-crh-wfi]][🚎12-crh-wf]
 [![CI Current][🚎11-c-wfi]][🚎11-c-wf]
 [![CI Truffle Ruby][🚎9-t-wfi]][🚎9-t-wf]
 [![CI JRuby][🚎10-j-wfi]][🚎10-j-wf]
@@ -71,7 +72,8 @@ OAuth2::Client.new(
 
 NOTE: `header` - The content type specified in the `curl` is already the default!
 
-## 💡 Info you can shake a stick at
+If any of the above makes you uncomfortable, you may be in the wrong place.
+One of these might be what you are looking for:
 
 * [OAuth 2.0 Spec][oauth2-spec]
 * [doorkeeper gem][doorkeeper-gem] for OAuth 2.0 server/provider implementation.
@@ -81,10 +83,12 @@ NOTE: `header` - The content type specified in the `curl` is already the default
 [sibling-gem]: https://gitlab.com/oauth-xx/oauth
 [doorkeeper-gem]: https://github.com/doorkeeper-gem/doorkeeper
 
+## 💡 Info you can shake a stick at
+
 | Tokens to Remember      | [![Gem name][⛳️name-img]][⛳️gem-name] [![Gem namespace][⛳️namespace-img]][⛳️gem-namespace]                                                                                                                                                                                                                                                                                                                                                                                            |
 |-------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| Works with JRuby        | [![JRuby 9.2 Compat][💎jruby-9.2i]][🚎10-j-wf] [![JRuby 9.3 Compat][💎jruby-9.3i]][🚎10-j-wf] [![JRuby 9.4 Compat][💎jruby-9.4i]][🚎10-j-wf] [![JRuby 10.0 Compat][💎jruby-c-i]][🚎11-c-wf] [![JRuby HEAD Compat][💎jruby-headi]][🚎3-hd-wf]                                                                                                                                                                                           |
-| Works with Truffle Ruby | [![Truffle Ruby 23.1 Compat][💎truby-23.1i]][🚎9-t-wf] [![Truffle Ruby 24.1 Compat][💎truby-c-i]][🚎11-c-wf] [![Truffle Ruby HEAD Compat][💎truby-headi]][🚎3-hd-wf]                                                                                                                                                                                                    |
+| Works with JRuby        | [![JRuby 9.2 Compat][💎jruby-9.2i]][🚎10-j-wf] [![JRuby 9.3 Compat][💎jruby-9.3i]][🚎10-j-wf] [![JRuby 9.4 Compat][💎jruby-9.4i]][🚎10-j-wf] [![JRuby 10.0 Compat][💎jruby-c-i]][🚎11-c-wf] [![JRuby HEAD Compat][💎jruby-headi]][🚎3-hd-wf]                                                                                                                                                                                                                                          |
+| Works with Truffle Ruby | [![Truffle Ruby 23.1 Compat][💎truby-23.1i]][🚎9-t-wf] [![Truffle Ruby 24.1 Compat][💎truby-c-i]][🚎11-c-wf] [![Truffle Ruby HEAD Compat][💎truby-headi]][🚎3-hd-wf]                                                                                                                                                                                                                                                                                                                  |
 | Works with MRI Ruby 3   | [![Ruby 3.0 Compat][💎ruby-3.0i]][🚎4-lg-wf] [![Ruby 3.1 Compat][💎ruby-3.1i]][🚎6-s-wf] [![Ruby 3.2 Compat][💎ruby-3.2i]][🚎6-s-wf] [![Ruby 3.3 Compat][💎ruby-3.3i]][🚎6-s-wf] [![Ruby 3.4 Compat][💎ruby-c-i]][🚎11-c-wf] [![Ruby HEAD Compat][💎ruby-headi]][🚎3-hd-wf]                                                                                                                                                                                                           |
 | Works with MRI Ruby 2   | [![Ruby 2.3 Compat][💎ruby-2.3i]][🚎1-an-wf] [![Ruby 2.4 Compat][💎ruby-2.4i]][🚎1-an-wf] [![Ruby 2.5 Compat][💎ruby-2.5i]][🚎1-an-wf] [![Ruby 2.6 Compat][💎ruby-2.6i]][🚎7-us-wf] [![Ruby 2.7 Compat][💎ruby-2.7i]][🚎7-us-wf]                                                                                                                                                                                                                                                      |
 | Source                  | [![Source on GitLab.com][📜src-gl-img]][📜src-gl] [![Source on CodeBerg.org][📜src-cb-img]][📜src-cb] [![Source on Github.com][📜src-gh-img]][📜src-gh] [![The best SHA: dQw4w9WgXcQ!][🧮kloc-img]][🧮kloc]                                                                                                                                                                                                                                                                           |
@@ -97,46 +101,107 @@ NOTE: `header` - The content type specified in the `curl` is already the default
 
 ## 🚀 Release Documentation
 
+<details>
+  <summary>Standard Library Dependencies</summary>
+
+* base64
+* cgi
+* json
+* time
+* logger (removed from stdlib in Ruby 3.5 so added as runtime dependency in v2.0.10)
+
+</details>
+
 ### Version 2.0.x
 
 <details>
-  <summary>2.0.x Readmes</summary>
+  <summary>2.0.x CHANGELOGs and READMEs</summary>
 
-| Version | Release Date | Readme                                                      |
-|---------|--------------|-------------------------------------------------------------|
-| 2.0.10  | 2025-05-16   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.10/README.md |
-| 2.0.9   | 2022-09-16   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.9/README.md  |
-| 2.0.8   | 2022-09-01   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.8/README.md  |
-| 2.0.7   | 2022-08-22   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.7/README.md  |
-| 2.0.6   | 2022-07-13   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.6/README.md  |
-| 2.0.5   | 2022-07-07   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.5/README.md  |
-| 2.0.4   | 2022-07-01   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.4/README.md  |
-| 2.0.3   | 2022-06-28   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.3/README.md  |
-| 2.0.2   | 2022-06-24   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.2/README.md  |
-| 2.0.1   | 2022-06-22   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.1/README.md  |
-| 2.0.0   | 2022-06-21   | https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.0/README.md  |
+| Version | Release Date | CHANGELOG                             | README                          |
+|---------|--------------|---------------------------------------|---------------------------------|
+| 2.0.10  | 2025-05-16   | [v2.0.10 CHANGELOG][2.0.10-changelog] | [v2.0.10 README][2.0.10-readme] |
+| 2.0.9   | 2022-09-16   | [v2.0.9 CHANGELOG][2.0.9-changelog]   | [v2.0.9 README][2.0.9-readme]   |
+| 2.0.8   | 2022-09-01   | [v2.0.8 CHANGELOG][2.0.8-changelog]   | [v2.0.8 README][2.0.8-readme]   |
+| 2.0.7   | 2022-08-22   | [v2.0.7 CHANGELOG][2.0.7-changelog]   | [v2.0.7 README][2.0.7-readme]   |
+| 2.0.6   | 2022-07-13   | [v2.0.6 CHANGELOG][2.0.6-changelog]   | [v2.0.6 README][2.0.6-readme]   |
+| 2.0.5   | 2022-07-07   | [v2.0.5 CHANGELOG][2.0.5-changelog]   | [v2.0.5 README][2.0.5-readme]   |
+| 2.0.4   | 2022-07-01   | [v2.0.4 CHANGELOG][2.0.4-changelog]   | [v2.0.4 README][2.0.4-readme]   |
+| 2.0.3   | 2022-06-28   | [v2.0.3 CHANGELOG][2.0.3-changelog]   | [v2.0.3 README][2.0.3-readme]   |
+| 2.0.2   | 2022-06-24   | [v2.0.2 CHANGELOG][2.0.2-changelog]   | [v2.0.2 README][2.0.2-readme]   |
+| 2.0.1   | 2022-06-22   | [v2.0.1 CHANGELOG][2.0.1-changelog]   | [v2.0.1 README][2.0.1-readme]   |
+| 2.0.0   | 2022-06-21   | [v2.0.0 CHANGELOG][2.0.0-changelog]   | [v2.0.0 README][2.0.0-readme]   |
 </details>
+
+[2.0.10-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#2010---2025-05-16
+[2.0.9-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#209---2022-09-16
+[2.0.8-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#208---2022-09-01
+[2.0.7-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#207---2022-08-22
+[2.0.6-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#206---2022-07-13
+[2.0.5-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#205---2022-07-07
+[2.0.4-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#204---2022-07-01
+[2.0.3-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#203---2022-06-28
+[2.0.2-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#202---2022-06-24
+[2.0.1-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#201---2022-06-22
+[2.0.0-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#200---2022-06-21
+
+[2.0.10-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.10/README.md
+[2.0.9-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.9/README.md
+[2.0.8-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.8/README.md
+[2.0.7-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.7/README.md
+[2.0.6-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.6/README.md
+[2.0.5-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.5/README.md
+[2.0.4-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.4/README.md
+[2.0.3-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.3/README.md
+[2.0.2-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.2/README.md
+[2.0.1-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.1/README.md
+[2.0.0-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.0/README.md
 
 ### Older Releases
 
 <details>
-  <summary>1.4.x Readmes</summary>
+  <summary>1.4.x CHANGELOGs and READMEs</summary>
 
-| Version | Release Date | Readme                                                      |
-|---------|--------------|-------------------------------------------------------------|
-| 1.4.11  | Sep 16, 2022 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.11/README.md |
-| 1.4.10  | Jul 1, 2022  | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.10/README.md |
-| 1.4.9   | Feb 20, 2022 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.9/README.md  |
-| 1.4.8   | Feb 18, 2022 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.8/README.md  |
-| 1.4.7   | Mar 19, 2021 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.7/README.md  |
-| 1.4.6   | Mar 19, 2021 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.6/README.md  |
-| 1.4.5   | Mar 18, 2021 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.5/README.md  |
-| 1.4.4   | Feb 12, 2020 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.4/README.md  |
-| 1.4.3   | Jan 29, 2020 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.3/README.md  |
-| 1.4.2   | Oct 1, 2019  | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.2/README.md  |
-| 1.4.1   | Oct 13, 2018 | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.1/README.md  |
-| 1.4.0   | Jun 9, 2017  | https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.0/README.md  |
+| Version | Release Date | CHANGELOG                             | README                          |
+|---------|--------------|---------------------------------------|---------------------------------|
+| 1.4.11  | Sep 16, 2022 | [v1.4.11 CHANGELOG][1.4.11-changelog] | [v1.4.11 README][1.4.11-readme] |
+| 1.4.10  | Jul 1, 2022  | [v1.4.10 CHANGELOG][1.4.10-changelog] | [v1.4.10 README][1.4.10-readme] |
+| 1.4.9   | Feb 20, 2022 | [v1.4.9 CHANGELOG][1.4.9-changelog]   | [v1.4.9 README][1.4.9-readme]   |
+| 1.4.8   | Feb 18, 2022 | [v1.4.8 CHANGELOG][1.4.8-changelog]   | [v1.4.8 README][1.4.8-readme]   |
+| 1.4.7   | Mar 19, 2021 | [v1.4.7 CHANGELOG][1.4.7-changelog]   | [v1.4.7 README][1.4.7-readme]   |
+| 1.4.6   | Mar 19, 2021 | [v1.4.6 CHANGELOG][1.4.6-changelog]   | [v1.4.6 README][1.4.6-readme]   |
+| 1.4.5   | Mar 18, 2021 | [v1.4.5 CHANGELOG][1.4.5-changelog]   | [v1.4.5 README][1.4.5-readme]   |
+| 1.4.4   | Feb 12, 2020 | [v1.4.4 CHANGELOG][1.4.4-changelog]   | [v1.4.4 README][1.4.4-readme]   |
+| 1.4.3   | Jan 29, 2020 | [v1.4.3 CHANGELOG][1.4.3-changelog]   | [v1.4.3 README][1.4.3-readme]   |
+| 1.4.2   | Oct 1, 2019  | [v1.4.2 CHANGELOG][1.4.2-changelog]   | [v1.4.2 README][1.4.2-readme]   |
+| 1.4.1   | Oct 13, 2018 | [v1.4.1 CHANGELOG][1.4.1-changelog]   | [v1.4.1 README][1.4.1-readme]   |
+| 1.4.0   | Jun 9, 2017  | [v1.4.0 CHANGELOG][1.4.0-changelog]   | [v1.4.0 README][1.4.0-readme]   |
 </details>
+
+[1.4.11-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#1411---2022-09-16
+[1.4.10-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#1410---2022-07-01
+[1.4.9-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#149---2022-02-20
+[1.4.8-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#148---2022-02-18
+[1.4.7-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#147---2021-03-19
+[1.4.6-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#146---2021-03-19
+[1.4.5-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#145---2021-03-18
+[1.4.4-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#144---2020-02-12
+[1.4.3-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#143---2020-01-29
+[1.4.2-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#142---2019-10-01
+[1.4.1-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#141---2018-10-13
+[1.4.0-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#140---2017-06-09
+
+[1.4.11-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.11/README.md
+[1.4.10-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.10/README.md
+[1.4.9-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.9/README.md
+[1.4.8-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.8/README.md
+[1.4.7-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.7/README.md
+[1.4.6-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.6/README.md
+[1.4.5-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.5/README.md
+[1.4.4-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.4/README.md
+[1.4.3-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.3/README.md
+[1.4.2-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.2/README.md
+[1.4.1-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.1/README.md
+[1.4.0-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v1.4.0/README.md
 
 <details>
   <summary>1.3.x Readmes</summary>
@@ -697,6 +762,8 @@ or one of the others at the head of this README.
 [🚎10-j-wfi]: https://github.com/oauth-xx/oauth2/actions/workflows/jruby.yml/badge.svg
 [🚎11-c-wf]: https://github.com/oauth-xx/oauth2/actions/workflows/current.yml
 [🚎11-c-wfi]: https://github.com/oauth-xx/oauth2/actions/workflows/current.yml/badge.svg
+[🚎12-crh-wf]: https://github.com/oauth-xx/oauth2/actions/workflows/current-runtime-heads.yml
+[🚎12-crh-wfi]: https://github.com/oauth-xx/oauth2/actions/workflows/current-runtime-heads.yml/badge.svg
 [⛳liberapay-img]: https://img.shields.io/liberapay/goal/pboling.svg?logo=liberapay
 [⛳liberapay]: https://liberapay.com/pboling/donate
 [🖇sponsor-img]: https://img.shields.io/badge/Sponsor_Me!-pboling.svg?style=social&logo=github
