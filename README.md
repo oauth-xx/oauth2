@@ -51,7 +51,7 @@ This is a RubyGem for implementing OAuth 2.0 clients (not servers) in Ruby appli
 
 ### Upgrading Runtime Gem Dependencies
 
-This project sits underneath a large portion of the authentication systems on the internet.
+This project sits underneath a large portion of the authorization systems on the internet.
 According to GitHub's project tracking, which I believe only reports on public projects,
 [100,000+ projects](https://github.com/oauth-xx/oauth2/network/dependents), and
 [500+ packages](https://github.com/oauth-xx/oauth2/network/dependents?dependent_type=PACKAGE) depend on this project.
