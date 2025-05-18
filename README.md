@@ -44,11 +44,12 @@ OAuth 2.0 focuses on client developer simplicity while providing specific author
     desktop applications, mobile phones, and living room devices.
 This is a RubyGem for implementing OAuth 2.0 clients (not servers) in Ruby applications.
 
-| Federated [DVCS][💎d-in-dvcs] Repository      | Status         | Issues | PRs | Wiki | CI             | Discussions |
-|-----------------------------------------------|----------------|--------|-----|------|----------------|-------------|
-| 🧪 [oauth-xx/oauth2 on GitLab][📜src-gl]      | The Truth      | 💚     | 💚  | 💚   | 🏀 Tiny Matrix | ➖          |
-| 🐙 [oauth-xx/oauth2 on GitHub][📜src-gh]      | A Dirty Mirror | 💚     | 💚  | ➖   | 💯 Full Matrix | ➖          |
-| 🤼 [OAuth Ruby Google Group][⛳gg-discussions] | "Active"        | ➖       | ➖    | ➖     | ➖               | 💚            |
+| Federated [DVCS][💎d-in-dvcs] Repository      | Status                                    | Issues            | PRs              | Wiki         | CI             | Discussions           |
+|-----------------------------------------------|-------------------------------------------|-------------------|------------------|--------------|----------------|-----------------------|
+| 🧪 [oauth-xx/oauth2 on GitLab][📜src-gl]      | The Truth                                 | [💚][🤝gl-issues] | [💚][🤝gl-pulls] | [💚][📜wiki] | 🏀 Tiny Matrix | ➖                     |
+| 🧊 [oauth-xx/oauth2 on CodeBerg][📜src-cb]    | An Ethical Mirror ([Donate][🤝cb-donate]) | ➖                 | [💚][🤝cb-pulls] | ➖            | ⭕️ No Matrix   | ➖                     |
+| 🐙 [oauth-xx/oauth2 on GitHub][📜src-gh]      | A Dirty Mirror                            | [💚][🤝gh-issues] | [💚][🤝gh-pulls] | ➖            | 💯 Full Matrix | ➖                     |
+| 🤼 [OAuth Ruby Google Group][⛳gg-discussions] | "Active"                                  | ➖                 | ➖                | ➖            | ➖              | [💚][⛳gg-discussions] |
 
 ### Upgrading Runtime Gem Dependencies
 
@@ -71,25 +72,24 @@ covering the latest patch for each of the following minor versions:
   * NOTE: This gem will still install on ruby v2.2, but vanilla GitHub Actions no longer supports testing against it, so YMMV.
 * JRuby @ v9.2, v9.3, v9.4, v10.0, HEAD
 * TruffleRuby @ v23.1, v23.2, HEAD
-* gem `faraday` @ v0, v1, v2, HEAD
-* gem `jwt` @ v1, v2, v3, HEAD
-* gem `logger` @ v1.2, v1.5, v1.7, HEAD
-* gem `multi_xml` @ v0.5, v0.6, v0.7, HEAD
-* gem `rack` @ v1.2, v1.6, v2, v3, HEAD
+* gem `faraday` @ v0, v1, v2, HEAD ⏩️ [lostisland/faraday](https://github.com/lostisland/faraday)
+* gem `jwt` @ v1, v2, v3, HEAD ⏩️ [lostisland/faraday](https://github.com/lostisland/faraday)
+* gem `logger` @ v1.2, v1.5, v1.7, HEAD ⏩️ [jwt/ruby-jwt](https://github.com/jwt/ruby-jwt)
+* gem `multi_xml` @ v0.5, v0.6, v0.7, HEAD ⏩️ [sferik/multi_xml](https://github.com/sferik/multi_xml)
+* gem `rack` @ v1.2, v1.6, v2, v3, HEAD ⏩️ [rack/rack](https://github.com/rack/rack)
+* gem `snaky_hash` @v2, HEAD ⏩️ [oauth-xx/snaky_hash](https://gitlab.com/oauth-xx/snaky_hash)
+* gem `version_gem` - @v1, HEAD ⏩️ [oauth-xx/version_gem](https://gitlab.com/oauth-xx/version_gem)
+
+The last two were extracted from this gem. They are part of the `oauth-xx` org,
+and are developed in tight collaboration with this gem.
+
+#### You should upgrade this gem with confidence\*.
 
 - This gem follows a _strict & correct_ (according to the maintainer of SemVer; [more info][sv-pub-api]) interpretation of SemVer.
   - Dropping support for **any** of the runtime dependency versions above will be a major version bump.
   - If you aren't on one of the minor versions above, make getting there a priority.
-- You should upgrade this gem with confidence\*.
 - You should upgrade the dependencies of this gem with confidence\*.
 - Please do upgrade, and then, when it goes smooth as butter [please sponsor me][🖇sponsor].  Thanks!
-
-If you are thinking, "that list is missing two runtime dependencies", you are correct!
-Both of them were extracted from this gem. They are part of the `oauth-xx` org,
-and are developed in tight collaboration with this gem, so not much more needs to be said about them.
-
-* gem `snaky_hash` - https://gitlab.com/oauth-xx/snaky_hash
-* gem `version_gem` - https://gitlab.com/oauth-xx/version_gem
 
 [sv-pub-api]: #-is-platform-support-part-of-the-public-api
 
@@ -624,7 +624,7 @@ See [SECURITY.md][🔐security].
 
 If you need some ideas of where to help, you could work on adding more code coverage,
 or if it is already 💯 (see [below](#code-coverage)) check TODOs (see [below](#todos)),
-or check [issues][🤝issues], or [PRs][🤝pulls],
+or check [issues][🤝gh-issues], or [PRs][🤝gh-pulls],
 or use the gem and think about how it could be better.
 
 We [![Keep A Changelog][📗keep-changelog-img]][📗keep-changelog] so if you make changes, remember to update it.
@@ -863,8 +863,13 @@ or one of the others at the head of this README.
 [💎jruby-9.4i]: https://img.shields.io/badge/JRuby-9.4-FBE742?style=for-the-badge&logo=ruby&logoColor=red
 [💎jruby-c-i]: https://img.shields.io/badge/JRuby-current-FBE742?style=for-the-badge&logo=ruby&logoColor=green
 [💎jruby-headi]: https://img.shields.io/badge/JRuby-HEAD-FBE742?style=for-the-badge&logo=ruby&logoColor=blue
-[🤝issues]: https://github.com/oauth-xx/oauth2/issues
-[🤝pulls]: https://github.com/oauth-xx/oauth2/pulls
+[🤝gh-issues]: https://github.com/oauth-xx/oauth2/issues
+[🤝gh-pulls]: https://github.com/oauth-xx/oauth2/pulls
+[🤝gl-issues]: https://gitlab.com/oauth-xx/oauth2/-/issues
+[🤝gl-pulls]: https://gitlab.com/oauth-xx/oauth2/-/merge_requests
+[🤝cb-issues]: https://codeberg.org/oauth-xx/oauth2/issues
+[🤝cb-pulls]: https://codeberg.org/oauth-xx/oauth2/pulls
+[🤝cb-donate]: https://donate.codeberg.org/
 [🤝contributing]: CONTRIBUTING.md
 [🔑codecov-g♻️]: https://codecov.io/gh/oauth-xx/oauth2/graphs/tree.svg?token=bNqSzNiuo2
 [🖐contrib-rocks]: https://contrib.rocks
