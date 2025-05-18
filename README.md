@@ -15,8 +15,8 @@
 [![Open Source Helpers][👽oss-helpi]][👽oss-help]
 [![Depfu][🔑depfui♻️]][🔑depfu]
 [![Coveralls Test Coverage][🔑coveralls-img]][🔑coveralls]
-[![QLTY Test Coverage][🔑cc-covi♻️]][🔑cc-cov]
-[![Maintainability][🔑cc-mnti♻️]][🔑cc-mnt]
+[![QLTY Test Coverage][🔑qlty-covi♻️]][🔑qlty-cov]
+[![QLTY Maintainability][🔑qlty-mnti♻️]][🔑qlty-mnt]
 [![CI Heads][🚎3-hd-wfi]][🚎3-hd-wf]
 [![CI Runtime Dependencies @ HEAD][🚎12-crh-wfi]][🚎12-crh-wf]
 [![CI Current][🚎11-c-wfi]][🚎11-c-wf]
@@ -634,7 +634,7 @@ See [CONTRIBUTING.md][🤝contributing] for more detailed instructions.
 ### Code Coverage
 
 [![Coveralls Test Coverage][🔑coveralls-img]][🔑coveralls]
-[![QLTY Test Coverage][🔑cc-covi♻️]][🔑cc-cov]
+[![QLTY Test Coverage][🔑qlty-covi♻️]][🔑qlty-cov]
 
 ### 🪇 Code of Conduct
 
@@ -792,10 +792,10 @@ or one of the others at the head of this README.
 [👽oss-helpi]: https://www.codetriage.com/oauth-xx/oauth2/badges/users.svg
 [👽version]: https://rubygems.org/gems/oauth2
 [👽versioni]: https://img.shields.io/gem/v/oauth2.svg
-[🔑cc-mnt]: https://qlty.sh/gh/oauth-xx/projects/oauth2
-[🔑cc-mnti♻️]: https://qlty.sh/badges/d3370c2c-8791-4202-9759-76f527f76005/maintainability.svg
-[🔑cc-cov]: https://qlty.sh/gh/oauth-xx/projects/oauth2
-[🔑cc-covi♻️]: https://qlty.sh/badges/d3370c2c-8791-4202-9759-76f527f76005/test_coverage.svg
+[🔑qlty-mnt]: https://qlty.sh/gh/oauth-xx/projects/oauth2
+[🔑qlty-mnti♻️]: https://qlty.sh/badges/d3370c2c-8791-4202-9759-76f527f76005/maintainability.svg
+[🔑qlty-cov]: https://qlty.sh/gh/oauth-xx/projects/oauth2
+[🔑qlty-covi♻️]: https://qlty.sh/badges/d3370c2c-8791-4202-9759-76f527f76005/test_coverage.svg
 [🔑codecov]: https://codecov.io/gh/oauth-xx/oauth2
 [🔑codecovi♻️]: https://codecov.io/gh/oauth-xx/oauth2/graph/badge.svg?token=bNqSzNiuo2
 [🔑coveralls]: https://coveralls.io/github/oauth-xx/oauth2?branch=main
@@ -885,9 +885,9 @@ or one of the others at the head of this README.
 [📌major-versions-not-sacred]: https://tom.preston-werner.com/2022/05/23/major-version-numbers-are-not-sacred.html
 [📌changelog]: CHANGELOG.md
 [📗keep-changelog]: https://keepachangelog.com/en/1.0.0/
-[📗keep-changelog-img]: https://img.shields.io/badge/keep--a--changelog-1.0.0-FFDD67.svg?style=flat
+[📗keep-changelog-img]: https://img.shields.io/badge/keep--a--changelog-1.0.0-34495e.svg?style=flat
 [📌gitmoji]:https://gitmoji.dev
-[📌gitmoji-img]:https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat-square
+[📌gitmoji-img]:https://img.shields.io/badge/gitmoji_commits-%20😜%20😍-34495e.svg?style=flat-square
 [🧮kloc]: https://www.youtube.com/watch?v=dQw4w9WgXcQ
 [🧮kloc-img]: https://img.shields.io/badge/KLOC-0.518-FFDD67.svg?style=for-the-badge&logo=YouTube&logoColor=blue
 [🔐security]: SECURITY.md
@@ -903,7 +903,7 @@ or one of the others at the head of this README.
 [💎stone_checksums]: https://github.com/pboling/stone_checksums
 [💎SHA_checksums]: https://gitlab.com/oauth-xx/oauth2/-/tree/main/checksums
 [💎rlts]: https://github.com/rubocop-lts/rubocop-lts
-[💎rlts-img]: https://img.shields.io/badge/code_style-rubocop--lts-brightgreen.svg?plastic&logo=ruby&logoColor=white
+[💎rlts-img]: https://img.shields.io/badge/code_style_and_linting-rubocop--lts-34495e.svg?plastic&logo=ruby&logoColor=white
 [🏘fossa]: https://app.fossa.io/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2?ref=badge_shield
 [🏘fossa-img]: https://app.fossa.io/api/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2.svg?type=shield
 [💎d-in-dvcs]: https://railsbling.com/posts/dvcs/put_the_d_in_dvcs/
