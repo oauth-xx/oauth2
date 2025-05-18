@@ -377,7 +377,7 @@ This gem is tested against MRI, JRuby, and Truffleruby.
 Each of those has varying versions that target a specific version of MRI Ruby.
 This gem should work in the just-listed Ruby engines according to the targeted MRI compatibility in the table below.
 If you would like to add support for additional engines,
-  see `gemfiles/README.md`, then submit a PR to the correct maintenance branch as according to the table below.
+  see [gemfiles/README.md](gemfiles/README.md), then submit a PR to the correct maintenance branch as according to the table below.
 </details>
 
 <details>
@@ -404,25 +404,25 @@ of a major release, support for that Ruby version may be dropped.
 | 3️⃣ | older               | N/A                | Best of luck to you! | Please upgrade!         |                              |
 
 NOTE: The 1.4 series will only receive critical security updates.
-See [SECURITY.md][🚎sec-pol]
+See [SECURITY.md][🔐security].
 
 ## Usage Examples
 
 ### Global Configuration
 
-If you started seeing this warning, but everything is working fine, you can now silence it.
-```log
-OAuth2::AccessToken.from_hash: `hash` contained more than one 'token' key
-```
+You can turn on additional warnings.
 
 ```ruby
 OAuth2.configure do |config|
-  config.silence_extra_tokens_warning = true # default: false
-  config.silence_no_tokens_warning = true # default: false, if you want to also silence warnings about no tokens
+  # Turn on a warning like:
+  #   OAuth2::AccessToken.from_hash: `hash` contained more than one 'token' key
+  config.silence_extra_tokens_warning = false # default: true
+  # Set to true if you want to also show warnings about no tokens
+  config.silence_no_tokens_warning = false # default: true,
 end
 ```
 
-This comes from ambiguity in the spec about which token is the right token.
+The "extra tokens" problem comes from ambiguity in the spec about which token is the right token.
 Some OAuth 2.0 standards legitimately have multiple tokens.
 You may need to subclass `OAuth2::AccessToken`, or write your own custom alternative to it, and pass it in.
 Specify your custom class with the `access_token_class` option.
