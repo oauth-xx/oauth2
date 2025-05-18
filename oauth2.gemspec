@@ -15,19 +15,21 @@ gl_homepage = "https://gitlab.com/oauth-xx/oauth2"
 gh_mirror = "https://github.com/oauth-xx/oauth2"
 
 Gem::Specification.new do |spec|
-  # Linux distros may package ruby gems differently,
-  #   and securely certify them independently via alternate package management systems.
+  # Linux distros often package gems and securely certify them independent
+  #   of the official RubyGem certification process. Allowed via ENV["SKIP_GEM_SIGNING"]
   # Ref: https://gitlab.com/oauth-xx/version_gem/-/issues/3
   # Hence, only enable signing if `SKIP_GEM_SIGNING` is not set in ENV.
   # See CONTRIBUTING.md
-  user_cert = "certs/#{ENV.fetch("GEM_CERT_USER", ENV["USER"])}.pem"
-  cert_file_path = File.join(__dir__, user_cert)
-  cert_chain = cert_file_path.split(",")
-  cert_chain.select! { |fp| File.exist?(fp) }
-  if cert_file_path && cert_chain.any?
-    spec.cert_chain = cert_chain
-    if $PROGRAM_NAME.end_with?("gem") && ARGV[0] == "build" && !ENV.include?("SKIP_GEM_SIGNING")
-      spec.signing_key = File.join(Gem.user_home, ".ssh", "gem-private_key.pem")
+  unless ENV.include?("SKIP_GEM_SIGNING")
+    user_cert = "certs/#{ENV.fetch("GEM_CERT_USER", ENV["USER"])}.pem"
+    cert_file_path = File.join(__dir__, user_cert)
+    cert_chain = cert_file_path.split(",")
+    cert_chain.select! { |fp| File.exist?(fp) }
+    if cert_file_path && cert_chain.any?
+      spec.cert_chain = cert_chain
+      if $PROGRAM_NAME.end_with?("gem") && ARGV[0] == "build"
+        spec.signing_key = File.join(Gem.user_home, ".ssh", "gem-private_key.pem")
+      end
     end
   end
 
