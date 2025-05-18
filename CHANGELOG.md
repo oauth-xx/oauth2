@@ -6,10 +6,15 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 
 ## [Unreleased]
 ### Added
+- Codeberg as ethical mirror (@pboling)
+  - https://codeberg.org/oauth-xx/oauth2
+- Don't check for cert if SKIP_GEM_SIGNING is set (@pboling)
+- All runtime deps, including oauth-xx sibling gems, are now tested against HEAD (@pboling)
 ### Changed
 ### Deprecated
 ### Removed
 ### Fixed
+- Incorrect documentation related to silencing warnings (@pboling)
 ### Security
 
 ## [2.0.10] - 2025-05-17
