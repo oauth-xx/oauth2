@@ -356,7 +356,7 @@ For more see [SECURITY.md][🔐security].
 - Adds new option to `OAuth2::AccessToken#initialize`:
     - `:expires_latency` (`nil`); number of seconds by which AccessToken validity will be reduced to offset latency
 - By default, keys are transformed to snake case.
-  - Original keys will still work as previously, in most scenarios, thanks to `rash_alt` gem.
+  - Original keys will still work as previously, in most scenarios, thanks to [snaky_hash](https://gitlab.com/oauth-xx/snaky_hash) gem.
   - However, this is a _breaking_ change if you rely on `response.parsed.to_h` to retain the original case, and the original wasn't snake case, as the keys in the result will be snake case.
   - As of version 2.0.4 you can turn key transformation off with the `snaky: false` option.
 - By default, the `:auth_scheme` is now `:basic_auth` (instead of `:request_body`)

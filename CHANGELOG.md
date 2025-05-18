@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 ### Fixed
 ### Security
 
-## [2.0.10] - 2025-05-16
+## [2.0.10] - 2025-05-17
 - TAG: [v2.0.10][2.0.10t]
 - COVERAGE: 100.00% -- 518/518 lines in 14 files
 - BRANCH COVERAGE: 100.00% -- 170/170 branches in 14 files
@@ -370,7 +370,7 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 [gemfiles/readme]: gemfiles/README.md
 
 [Unreleased]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.10...HEAD
-[2.0.10]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.09....v2.0.10
+[2.0.10]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.9...v2.0.10
 [2.0.10t]: https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.10
 [2.0.9]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.8...v2.0.9
 [2.0.9t]: https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.9
