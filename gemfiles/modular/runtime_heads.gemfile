@@ -16,3 +16,9 @@ gem "multi_xml", github: "sferik/multi_xml", branch: "master"
 
 # Ruby >= 2.4
 gem "rack", github: "rack/rack", branch: "main"
+
+# Ruby >= 2.2
+gem "version_gem", github: "oauth-xx/version_gem", branch: "main"
+
+# Ruby >= 2.2
+gem "snaky_hash", github: "oauth-xx/snaky_hash", branch: "main"
