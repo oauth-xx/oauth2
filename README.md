@@ -32,7 +32,7 @@
 
 ---
 
-[![Liberapay Patrons][⛳liberapay-img]][⛳liberapay]
+[![Liberapay Goal Progress][⛳liberapay-img]][⛳liberapay]
 [![Sponsor Me on Github][🖇sponsor-img]][🖇sponsor]
 [![Buy me a coffee][🖇buyme-small-img]][🖇buyme]
 [![Donate on Polar][🖇polar-img]][🖇polar]
@@ -44,12 +44,13 @@ OAuth 2.0 focuses on client developer simplicity while providing specific author
     desktop applications, mobile phones, and living room devices.
 This is a RubyGem for implementing OAuth 2.0 clients (not servers) in Ruby applications.
 
-| Federated [DVCS][💎d-in-dvcs] Repository      | Status                                    | Issues            | PRs              | Wiki         | CI             | Discussions           |
-|-----------------------------------------------|-------------------------------------------|-------------------|------------------|--------------|----------------|-----------------------|
-| 🧪 [oauth-xx/oauth2 on GitLab][📜src-gl]      | The Truth                                 | [💚][🤝gl-issues] | [💚][🤝gl-pulls] | [💚][📜wiki] | 🏀 Tiny Matrix | ➖                     |
-| 🧊 [oauth-xx/oauth2 on CodeBerg][📜src-cb]    | An Ethical Mirror ([Donate][🤝cb-donate]) | ➖                 | [💚][🤝cb-pulls] | ➖            | ⭕️ No Matrix   | ➖                     |
-| 🐙 [oauth-xx/oauth2 on GitHub][📜src-gh]      | A Dirty Mirror                            | [💚][🤝gh-issues] | [💚][🤝gh-pulls] | ➖            | 💯 Full Matrix | ➖                     |
-| 🤼 [OAuth Ruby Google Group][⛳gg-discussions] | "Active"                                  | ➖                 | ➖                | ➖            | ➖              | [💚][⛳gg-discussions] |
+| Federated [DVCS][💎d-in-dvcs] Repository      | Status                                                            | Issues                    | PRs                      | Wiki                      | CI                       | Discussions                  |
+|-----------------------------------------------|-------------------------------------------------------------------|---------------------------|--------------------------|---------------------------|--------------------------|------------------------------|
+| 🧪 [oauth-xx/oauth2 on GitLab][📜src-gl]      | The Truth                                                         | [💚][🤝gl-issues]         | [💚][🤝gl-pulls]         | [💚][📜wiki]              | 🏀 Tiny Matrix           | ➖                            |
+| 🧊 [oauth-xx/oauth2 on CodeBerg][📜src-cb]    | An Ethical Mirror ([Donate][🤝cb-donate])                         | ➖                         | [💚][🤝cb-pulls]         | ➖                         | ⭕️ No Matrix             | ➖                            |
+| 🐙 [oauth-xx/oauth2 on GitHub][📜src-gh]      | A Dirty Mirror                                                    | [💚][🤝gh-issues]         | [💚][🤝gh-pulls]         | ➖                         | 💯 Full Matrix           | ➖                            |
+| 🤼 [OAuth Ruby Google Group][⛳gg-discussions] | "Active"                                                          | ➖                         | ➖                        | ➖                         | ➖                        | [💚][⛳gg-discussions]        |
+| 🎮️ [Discord Server][✉️discord-invite]        | [![Live Chat on Discord][✉️discord-invite-img]][✉️discord-invite] | [Let's][✉️discord-invite] | [talk][✉️discord-invite] | [about][✉️discord-invite] | [this][✉️discord-invite] | [library!][✉️discord-invite] |
 
 ### Upgrading Runtime Gem Dependencies
 
@@ -167,9 +168,9 @@ One of these might be what you are looking for:
 | Works with MRI Ruby 2   | [![Ruby 2.3 Compat][💎ruby-2.3i]][🚎1-an-wf] [![Ruby 2.4 Compat][💎ruby-2.4i]][🚎1-an-wf] [![Ruby 2.5 Compat][💎ruby-2.5i]][🚎1-an-wf] [![Ruby 2.6 Compat][💎ruby-2.6i]][🚎7-us-wf] [![Ruby 2.7 Compat][💎ruby-2.7i]][🚎7-us-wf]                                                                                                                                                                                                                                    |
 | Source                  | [![Source on GitLab.com][📜src-gl-img]][📜src-gl] [![Source on CodeBerg.org][📜src-cb-img]][📜src-cb] [![Source on Github.com][📜src-gh-img]][📜src-gh] [![The best SHA: dQw4w9WgXcQ!][🧮kloc-img]][🧮kloc]                                                                                                                                                                                                                                                         |
 | Documentation           | [![Discussion][⛳gg-discussions-img]][⛳gg-discussions] [![Current release on RubyDoc.info][📜docs-cr-rd-img]][🚎yard-current] [![HEAD on RubyDoc.info][📜docs-head-rd-img]][🚎yard-head] [![BDFL Blog][🚂bdfl-blog-img]][🚂bdfl-blog] [![Wiki][📜wiki-img]][📜wiki]                                                                                                                                                                                                  |
-| Compliance              | [![License: MIT][📄license-img]][📄license-ref] [![📄ilo-declaration-img]][📄ilo-declaration] [![Security Policy][🔐security-img]][🔐security] [![Contributor Covenant 2.1][🪇conduct-img]][🪇conduct] [![SemVer 2.0.0][📌semver-img]][📌semver]  [![FOSSA][🏘fossa-img]][🏘fossa]                                                                                                                                              |
+| Compliance              | [![License: MIT][📄license-img]][📄license-ref] [![📄ilo-declaration-img]][📄ilo-declaration] [![Security Policy][🔐security-img]][🔐security] [![Contributor Covenant 2.1][🪇conduct-img]][🪇conduct] [![SemVer 2.0.0][📌semver-img]][📌semver]  [![FOSSA][🏘fossa-img]][🏘fossa]                                                                                                                                                                                  |
 | Style                   | [![Enforced Code Style Linter][💎rlts-img]][💎rlts] [![Keep-A-Changelog 1.0.0][📗keep-changelog-img]][📗keep-changelog] [![Gitmoji Commits][📌gitmoji-img]][📌gitmoji]                                                                                                                                                                                                                                                                                              |
-| Expert 1:1 Support      | [![Get help from me on Upwork][👨🏼‍🏫expsup-upwork-img]][👨🏼‍🏫expsup-upwork] `or` [![Get help from me on Codementor][👨🏼‍🏫expsup-codementor-img]][👨🏼‍🏫expsup-codementor]                                                                                                                                                                                                                                                                                    |
+| Support      | [![Live Chat on Discord][✉️discord-invite-img]][✉️discord-invite] [![Get help from me on Upwork][👨🏼‍🏫expsup-upwork-img]][👨🏼‍🏫expsup-upwork] [![Get help from me on Codementor][👨🏼‍🏫expsup-codementor-img]][👨🏼‍🏫expsup-codementor]                                                                                                                                                                                                                       |
 | Enterprise Support      | [![Get help from me on Tidelift][🏙️entsup-tidelift-img]][🏙️entsup-tidelift]<br/>💡Subscribe for support guarantees covering _all_ FLOSS dependencies!<br/>💡Tidelift is part of [Sonar][🏙️entsup-tidelift-sonar]!<br/>💡Tidelift pays maintainers to maintain the software you depend on!<br/>📊`@`Pointy Haired Boss: An [enterprise support][🏙️entsup-tidelift] subscription is "[never gonna let you down][🧮kloc]", and *supports* open source maintainers! |
 | Comrade BDFL 🎖️        | [![Follow Me on LinkedIn][💖🖇linkedin-img]][💖🖇linkedin] [![Follow Me on Ruby.Social][💖🐘ruby-mast-img]][💖🐘ruby-mast] [![Follow Me on Bluesky][💖🦋bluesky-img]][💖🦋bluesky] [![Contact BDFL][🚂bdfl-contact-img]][🚂bdfl-contact] [![My technical writing][💖💁🏼‍♂️devto-img]][💖💁🏼‍♂️devto]                                                                                                                                                              |
 | `...` 💖                | [![Find Me on WellFound:][💖✌️wellfound-img]][💖✌️wellfound] [![Find Me on CrunchBase][💖💲crunchbase-img]][💖💲crunchbase] [![My LinkTree][💖🌳linktree-img]][💖🌳linktree] [![More About Me][💖💁🏼‍♂️aboutme-img]][💖💁🏼‍♂️aboutme] [🧊][💖🧊berg] [🐙][💖🐙hub]  [🛖][💖🛖hut] [🧪][💖🧪lab]                                                                                                                                                                   |
@@ -351,6 +352,7 @@ For more see [SECURITY.md][🔐security].
 - Support IETF rfc7523 JWT Bearer Tokens
 - Support IETF rfc7231 Relative Location in Redirect
 - Support IETF rfc6749 Don't set oauth params when nil
+- Support IETF rfc7009 Token Revocation (since v2.0.10)
 - Support [OIDC 1.0 Private Key JWT](https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication); based on the OAuth JWT assertion specification [(RFC 7523)](https://tools.ietf.org/html/rfc7523)
 - Support new formats, including from [jsonapi.org](http://jsonapi.org/format/): `application/vdn.api+json`, `application/vnd.collection+json`, `application/hal+json`, `application/problem+json`
 - Adds new option to `OAuth2::Client#get_token`:
@@ -903,10 +905,12 @@ or one of the others at the head of this README.
 [💎stone_checksums]: https://github.com/pboling/stone_checksums
 [💎SHA_checksums]: https://gitlab.com/oauth-xx/oauth2/-/tree/main/checksums
 [💎rlts]: https://github.com/rubocop-lts/rubocop-lts
-[💎rlts-img]: https://img.shields.io/badge/code_style_and_linting-rubocop--lts-34495e.svg?plastic&logo=ruby&logoColor=white
+[💎rlts-img]: https://img.shields.io/badge/code_style_%26_linting-rubocop--lts-34495e.svg?plastic&logo=ruby&logoColor=white
 [🏘fossa]: https://app.fossa.io/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2?ref=badge_shield
 [🏘fossa-img]: https://app.fossa.io/api/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2.svg?type=shield
 [💎d-in-dvcs]: https://railsbling.com/posts/dvcs/put_the_d_in_dvcs/
+[✉️discord-invite]: https://discord.gg/3qme4XHNKN
+[✉️discord-invite-img]: https://img.shields.io/discord/1373797679469170758?style=for-the-badge
 
 <details>
   <summary>
