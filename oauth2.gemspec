@@ -11,10 +11,12 @@ gem_version =
     OAuth2::Version::VERSION
   end
 
-gl_homepage = "https://gitlab.com/oauth-xx/oauth2"
-gh_mirror = "https://github.com/oauth-xx/oauth2"
-
 Gem::Specification.new do |spec|
+  spec.name = "oauth2"
+  spec.version = gem_version
+  spec.authors = ["Peter Boling", "Erik Michaels-Ober", "Michael Bleigh"]
+  spec.email = ["peter.boling@gmail.com", "oauth-ruby@googlegroups.com"]
+
   # Linux distros often package gems and securely certify them independent
   #   of the official RubyGem certification process. Allowed via ENV["SKIP_GEM_SIGNING"]
   # Ref: https://gitlab.com/oauth-xx/version_gem/-/issues/3
@@ -33,15 +35,15 @@ Gem::Specification.new do |spec|
     end
   end
 
-  spec.authors = ["Peter Boling", "Erik Michaels-Ober", "Michael Bleigh"]
+  gl_homepage = "https://gitlab.com/oauth-xx/oauth2"
+  gh_mirror = "https://github.com/oauth-xx/oauth2"
+
   spec.summary = "OAuth 2.0 Core Ruby implementation"
   spec.description = "Ruby wrapper for the OAuth 2.0 protocol"
-  spec.email = ["peter.boling@gmail.com", "oauth-ruby@googlegroups.com"]
-  spec.homepage = gh_mirror # Yeah, it's gross, but stars have value :(
+  spec.homepage = gh_mirror
   spec.licenses = "MIT"
-  spec.name = "oauth2"
   spec.required_ruby_version = ">= 2.2.0"
-  spec.version = gem_version
+
   spec.post_install_message = %{
 You have installed oauth2 version #{gem_version}, congratulations!
 
@@ -78,15 +80,17 @@ Please report issues, and star the project!
 Thanks, |7eter l-|. l3oling
 }
 
-  spec.metadata["homepage_uri"] = gl_homepage
-  spec.metadata["source_code_uri"] = "#{gl_homepage}/-/tree/v#{spec.version}"
+  spec.metadata["homepage_uri"] = "https://#{spec.name}.galtzo.com/"
+  # Yes, GitHub/Microsoft is a disgusting monopoly, but GH stars have value :(
+  spec.metadata["source_code_uri"] = "#{gh_mirror}/releases/tag//v#{spec.version}"
   spec.metadata["changelog_uri"] = "#{gl_homepage}/-/blob/v#{spec.version}/CHANGELOG.md"
   spec.metadata["bug_tracker_uri"] = "#{gl_homepage}/-/issues"
   spec.metadata["documentation_uri"] = "https://www.rubydoc.info/gems/#{spec.name}/#{spec.version}"
   spec.metadata["wiki_uri"] = "#{gl_homepage}/-/wiki"
+  # Yes, Google is a disgusting monopoly, but the historical value of the mailing list archive is high.
   spec.metadata["mailing_list_uri"] = "https://groups.google.com/g/oauth-ruby"
-  spec.metadata["news_uri"] = "https://www.railsbling.com/tags/#{spec.name}"
   spec.metadata["funding_uri"] = "https://liberapay.com/pboling"
+  spec.metadata["news_uri"] = "https://www.railsbling.com/tags/#{spec.name}"
   spec.metadata["rubygems_mfa_required"] = "true"
 
   # Specify which files should be added to the gem when it is released.
@@ -108,7 +112,12 @@ Thanks, |7eter l-|. l3oling
     "--title",
     "#{spec.name} - #{spec.summary}",
     "--main",
+    "CHANGELOG.md",
+    "CODE_OF_CONDUCT.md",
+    "CONTRIBUTING.md",
+    "LICENSE.txt",
     "README.md",
+    "SECURITY.md",
     "--line-numbers",
     "--inline-source",
     "--quiet",

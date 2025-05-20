@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: CHANGELOG
+  
+    &mdash; Documentation by YARD 0.9.37
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "CHANGELOG";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: CHANGELOG</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'><h1 id="changelog">Changelog</h1>
+<p>All notable changes to this project will be documented in this file.</p>
+
+<p>The format (since v2) is based on <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog v1</a>,<br>
+and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning v2</a>.</p>
+
+<h2 id="unreleased"><a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.10...HEAD">Unreleased</a></h2>
+<h3 id="added">Added</h3>
+<ul>
+  <li>Codeberg as ethical mirror (@pboling)
+    <ul>
+      <li>https://codeberg.org/oauth-xx/oauth2</li>
+    </ul>
+  </li>
+  <li>Don’t check for cert if SKIP_GEM_SIGNING is set (@pboling)</li>
+  <li>All runtime deps, including oauth-xx sibling gems, are now tested against HEAD (@pboling)
+    <h3 id="changed">Changed</h3>
+    <h3 id="deprecated">Deprecated</h3>
+    <h3 id="removed">Removed</h3>
+    <h3 id="fixed">Fixed</h3>
+  </li>
+  <li>Incorrect documentation related to silencing warnings (@pboling)
+    <h3 id="security">Security</h3>
+  </li>
+</ul>
+
+<h2 id="2010---2025-05-17">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.9...v2.0.10">2.0.10</a> - 2025-05-17</h2>
+<ul>
+  <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.10">v2.0.10</a>
+</li>
+  <li>COVERAGE: 100.00% – 518/518 lines in 14 files</li>
+  <li>BRANCH COVERAGE: 100.00% – 170/170 branches in 14 files</li>
+  <li>79.05% documented
+    <h3 id="added-1">Added</h3>
+  </li>
+  <li>
+<a href="https://github.com/oauth-xx/oauth2/pull/632">gh!632</a> - Added <code>funding.yml</code> (@Aboling0)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/635">!635</a> - Added <code>.gitlab-ci.yml</code> (@jessieay)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/issues/638">#638</a> - Documentation of support for <strong>ILO Fundamental Principles of Rights at Work</strong> (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/642">!642</a> - 20-year certificate for signing gem releases, expires 2045-04-29 (@pboling)
+    <ul>
+      <li>Gemspec metadata
+        <ul>
+          <li>funding_uri</li>
+          <li>news_uri</li>
+          <li>mailing_list_uri</li>
+        </ul>
+      </li>
+      <li>SHA256 and SHA512 Checksums for release</li>
+    </ul>
+  </li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/643">!643</a> - Add <code>token_name</code> option (@pboling)
+    <ul>
+      <li>Specify the parameter name that identifies the access token</li>
+    </ul>
+  </li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/645">!645</a> - Add <code>OAuth2::OAUTH_DEBUG</code> constant, based on `ENV[“OAUTH_DEBUG”] (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/646">!646</a> - Add <code>OAuth2.config.silence_extra_tokens_warning</code>, default: false (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/647">!647</a> - Add IETF RFC 7009 Token Revocation compliant (@pboling)
+    <ul>
+      <li><code>OAuth2::Client#revoke_token</code></li>
+      <li><code>OAuth2::AccessToken#revoke</code></li>
+      <li>See: https://datatracker.ietf.org/doc/html/rfc7009</li>
+    </ul>
+  </li>
+  <li>
+<a href="https://github.com/oauth-xx/oauth2/pull/644">gh!644</a>, <a href="https://github.com/oauth-xx/oauth2/pull/645">gh!645</a> - Added CITATION.cff (@Aboling0)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/648">!648</a> - Improved documentation (@pboling)
+    <h3 id="changed-1">Changed</h3>
+  </li>
+  <li>Default value of <code>OAuth2.config.silence_extra_tokens_warning</code> was <code>false</code>, now <code>true</code> (@pboling)</li>
+  <li>Gem releases are now cryptographically signed, with a 20-year cert (@pboling)
+    <ul>
+      <li>Allow linux distros to build release without signing, as their package managers sign independently</li>
+    </ul>
+  </li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/647">!647</a> - <code>OAuth2::AccessToken#refresh</code> now supports block param pass through (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/647">!647</a> - <code>OAuth2.config</code> is no longer writable (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/647">!647</a> - Errors raised by <code>OAuth2::AccessToken</code> are now always <code>OAuth2::Error</code> and have better metadata (@pboling)
+    <h3 id="fixed-1">Fixed</h3>
+  </li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/issues/95">#95</a> - restoring an access token via <code>AccessToken#from_hash</code> (@pboling)
+    <ul>
+      <li>This was a 13 year old bug report. 😘</li>
+    </ul>
+  </li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/issues/619">#619</a> - Internal options (like <code>snaky</code>, <code>raise_errors</code>, and <code>parse</code>) are no longer included in request (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/633">!633</a> - Spaces will now be encoded as <code>%20</code> instead of <code>+</code> (@nov.matake)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/634">!634</a> - <code>CHANGELOG.md</code> documentation fix (@skuwa229)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/638">!638</a> - fix <code>expired?</code> when <code>expires_in</code> is <code>0</code> (@disep)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/639">!639</a> - Only instantiate <code>OAuth2::Error</code> if <code>raise_errors</code> option is <code>true</code> (@glytch2)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/issues/639">#639</a> - <code>AccessToken#to_hash</code> is now serializable, just a regular Hash (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/640">!640</a> - <code>README.md</code> documentation fix (@martinezcoder)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/641">!641</a> - Do not include sensitive information in the <code>inspect</code> (@manuelvanrijn)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/issues/641">#641</a> - Made default JSON response parser more resilient (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/issues/645">#645</a> - Response no longer becomes a snaky hash (@pboling)</li>
+  <li>
+<a href="https://github.com/oauth-xx/oauth2/pull/646">gh!646</a> - Change <code>require</code> to <code>require_relative</code> (improve performance) (@Aboling0)</li>
+</ul>
+
+<h2 id="209---2022-09-16">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.8...v2.0.9">2.0.9</a> - 2022-09-16</h2>
+<ul>
+  <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.9">v2.0.9</a>
+    <h3 id="added-2">Added</h3>
+  </li>
+  <li>More specs (@pboling)
+    <h3 id="changed-2">Changed</h3>
+  </li>
+  <li>Complete migration to main branch as default (@pboling)</li>
+  <li>Complete migration to Gitlab, updating all links, and references in VCS-managed files (@pboling)</li>
+</ul>
+
+<h2 id="208---2022-09-01">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.7...v2.0.8">2.0.8</a> - 2022-09-01</h2>
+<ul>
+  <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.8">v2.0.8</a>
+    <h3 id="changed-3">Changed</h3>
+  </li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/630">!630</a> - Extract snaky_hash to external dependency (@pboling)
+    <h3 id="added-3">Added</h3>
+  </li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/631">!631</a> - New global configuration option OAuth2.config.silence_extra_tokens_warning (default: false) fixes <a href="https://gitlab.com/oauth-xx/oauth2/-/issues/628">#628</a>
+</li>
+</ul>
+
+<h2 id="207---2022-08-22">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.6...v2.0.7">2.0.7</a> - 2022-08-22</h2>
+<ul>
+  <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.7">v2.0.7</a>
+    <h3 id="added-4">Added</h3>
+  </li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/629">!629</a> - Allow POST of JSON to get token (@pboling, @terracatta)
+    <h3 id="fixed-2">Fixed</h3>
+  </li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/626">!626</a> - Fixes a regression in 2.0.6. Will now prefer the key order from the lookup, not the hash keys (@rickselby)
+    <ul>
+      <li>Note: This fixes compatibility with <code>omniauth-oauth2</code> and AWS</li>
+    </ul>
+  </li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/625">!625</a> - Fixes the printed version in the post install message (@hasghari)</li>
+</ul>
+
+<h2 id="206---2022-07-13">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.5...v2.0.6">2.0.6</a> - 2022-07-13</h2>
+<ul>
+  <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.6">v2.0.6</a>
+    <h3 id="fixed-3">Fixed</h3>
+  </li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/624">!624</a> - Fixes a <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/623">regression</a> in v2.0.5, where an error would be raised in refresh_token flows due to (legitimate) lack of access_token (@pboling)</li>
+</ul>
+
+<h2 id="205---2022-07-07">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.4...v2.0.5">2.0.5</a> - 2022-07-07</h2>
+<ul>
+  <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.5">v2.0.5</a>
+    <h3 id="fixed-4">Fixed</h3>
+  </li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/620">!620</a> - Documentation improvements, to help with upgrading (@swanson)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/621">!621</a> - Fixed <a href="https://gitlab.com/oauth-xx/oauth2/-/issues/528">#528</a> and <a href="https://gitlab.com/oauth-xx/oauth2/-/issues/619">#619</a> (@pboling)
+    <ul>
+      <li>All data in responses is now returned, with the access token removed and set as <code>token</code>
+        <ul>
+          <li>
+<code>refresh_token</code> is no longer dropped</li>
+          <li>
+<strong>BREAKING</strong>: Microsoft’s <code>id_token</code> is no longer left as <code>access_token['id_token']</code>, but moved to the standard <code>access_token.token</code> that all other strategies use</li>
+        </ul>
+      </li>
+      <li>Remove <code>parse</code> and <code>snaky</code> from options so they don’t get included in response</li>
+      <li>There is now 100% test coverage, for lines <em>and</em> branches, and it will stay that way.</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="204---2022-07-01">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.3...v2.0.4">2.0.4</a> - 2022-07-01</h2>
+<ul>
+  <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.4">v2.0.4</a>
+    <h3 id="fixed-5">Fixed</h3>
+  </li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/618">!618</a> - In some scenarios the <code>snaky</code> option default value was not applied (@pboling)</li>
+</ul>
+
+<h2 id="203---2022-06-28">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.2...v2.0.3">2.0.3</a> - 2022-06-28</h2>
+<ul>
+  <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.3">v2.0.3</a>
+    <h3 id="added-5">Added</h3>
+  </li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/611">!611</a> - Proper deprecation warnings for <code>extract_access_token</code> argument (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/612">!612</a> - Add <code>snaky: false</code> option to skip conversion to <code>OAuth2::SnakyHash</code> (default: true) (@pboling)
+    <h3 id="fixed-6">Fixed</h3>
+  </li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/608">!608</a> - Wrap <code>Faraday::TimeoutError</code> in <code>OAuth2::TimeoutError</code> (@nbibler)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/615">!615</a> - Fix support for requests with blocks, see <code>Faraday::Connection#run_request</code> (@pboling)</li>
+</ul>
+
+<h2 id="202---2022-06-24">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.1...v2.0.2">2.0.2</a> - 2022-06-24</h2>
+<ul>
+  <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.2">v2.0.2</a>
+    <h3 id="fixed-7">Fixed</h3>
+  </li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/604">!604</a> - Wrap <code>Faraday::TimeoutError</code> in <code>OAuth2::TimeoutError</code> (@stanhu)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/606">!606</a> - Ruby 2.7 deprecation warning fix: Move <code>access_token_class</code> parameter into <code>Client</code> constructor (@stanhu)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/607">!607</a> - CHANGELOG correction, reference to <code>OAuth2::ConnectionError</code> (@zavan)</li>
+</ul>
+
+<h2 id="201---2022-06-22">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.0...v2.0.1">2.0.1</a> - 2022-06-22</h2>
+<ul>
+  <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.1">v2.0.1</a>
+    <h3 id="added-6">Added</h3>
+  </li>
+  <li>Documentation improvements (@pboling)</li>
+  <li>Increased test coverage to 99% (@pboling)</li>
+</ul>
+
+<h2 id="200---2022-06-21">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.11...v2.0.0">2.0.0</a> - 2022-06-21</h2>
+<ul>
+  <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.0">v2.0.0</a>
+    <h3 id="added-7">Added</h3>
+  </li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/158">!158</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/344">!344</a> - Optionally pass raw response to parsers (@niels)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/190">!190</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/332">!332</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/334">!334</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/335">!335</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/360">!360</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/426">!426</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/427">!427</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/461">!461</a> - Documentation (@josephpage, @pboling, @meganemura, @joshRpowell, @elliotcm)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/220">!220</a> - Support IETF rfc7523 JWT Bearer Tokens Draft 04+ (@jhmoore)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/298">!298</a> - Set the response object on the access token on Client#get_token for debugging (@cpetschnig)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/305">!305</a> - Option: <code>OAuth2::Client#get_token</code> - <code>:access_token_class</code> (<code>AccessToken</code>); user specified class to use for all calls to <code>get_token</code> (@styd)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/571">!346</a> - Modern gem structure (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/351">!351</a> - Support Jruby 9k (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/362">!362</a> - Support SemVer release version scheme (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/363">!363</a> - New method <code>OAuth2::AccessToken#refresh!</code> same as old <code>refresh</code>, with backwards compatibility alias (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/364">!364</a> - Support <code>application/hal+json</code> format (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/365">!365</a> - Support <code>application/vnd.collection+json</code> format (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/376">!376</a> - <em>Documentation</em>: Example / Test for Google 2-legged JWT (@jhmoore)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/381">!381</a> - Spec for extra header params on client credentials (@nikz)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/394">!394</a> - Option: <code>OAuth2::AccessToken#initialize</code> - <code>:expires_latency</code> (<code>nil</code>); number of seconds by which AccessToken validity will be reduced to offset latency (@klippx)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/412">!412</a> - Support <code>application/vdn.api+json</code> format (from jsonapi.org) (@david-christensen)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/413">!413</a> - <em>Documentation</em>: License scan and report (@meganemura)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/442">!442</a> - Option: <code>OAuth2::Client#initialize</code> - <code>:logger</code> (<code>::Logger.new($stdout)</code>) logger to use when OAUTH_DEBUG is enabled (for parity with <code>1-4-stable</code> branch) (@rthbound)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/494">!494</a> - Support <a href="https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication">OIDC 1.0 Private Key JWT</a>; based on the OAuth JWT assertion specification <a href="https://tools.ietf.org/html/rfc7523">(RFC 7523)</a> (@SteveyblamWork)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/549">!549</a> - Wrap <code>Faraday::ConnectionFailed</code> in <code>OAuth2::ConnectionError</code> (@nikkypx)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/550">!550</a> - Raise error if location header not present when redirecting (@stanhu)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/552">!552</a> - Add missing <code>version.rb</code> require (@ahorek)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/553">!553</a> - Support <code>application/problem+json</code> format (@janz93)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/560">!560</a> - Support IETF rfc6749, section 2.3.1 - don’t set auth params when <code>nil</code> (@bouk)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/571">!571</a> - Support Ruby 3.1 (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/575">!575</a> - Support IETF rfc7231, section 7.1.2 - relative location in redirect (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/581">!581</a> - <em>Documentation</em>: of breaking changes (@pboling)
+    <h3 id="changed-4">Changed</h3>
+  </li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/191">!191</a> - <strong>BREAKING</strong>: Token is expired if <code>expired_at</code> time is <code>now</code> (@davestevens)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/312">!312</a> - <strong>BREAKING</strong>: Set <code>:basic_auth</code> as default for <code>:auth_scheme</code> instead of <code>:request_body</code>. This was default behavior before 1.3.0. (@tetsuya, @wy193777)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/317">!317</a> - <em>Dependency</em>: Upgrade <code>jwt</code> to 2.x.x (@travisofthenorth)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/338">!338</a> - <em>Dependency</em>: Switch from <code>Rack::Utils.escape</code> to <code>CGI.escape</code> (@josephpage)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/339">!339</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/368">!368</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/424">!424</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/479">!479</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/493">!493</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/539">!539</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/542">!542</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/553">!553</a> - CI Updates, code coverage, linting, spelling, type fixes, New VERSION constant (@pboling, @josephpage, @ahorek)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/410">!410</a> - <strong>BREAKING</strong>: Removed the ability to call .error from an OAuth2::Response object (@jhmoore)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/414">!414</a> - Use Base64.strict_encode64 instead of custom internal logic (@meganemura)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/469">!469</a> - <strong>BREAKING</strong>: Default value for option <code>OAuth2::Client</code> - <code>:authorize_url</code> removed leading slash to work with relative paths by default (<code>'oauth/authorize'</code>) (@ghost)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/469">!469</a> - <strong>BREAKING</strong>: Default value for option <code>OAuth2::Client</code> - <code>:token_url</code> removed leading slash to work with relative paths by default (<code>'oauth/token'</code>) (@ghost)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/507">!507</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/575">!575</a> - <strong>BREAKING</strong>: Transform keys to snake case, always, by default (ultimately via <code>rash_alt</code> gem)
+    <ul>
+      <li>Original keys will still work as previously, in most scenarios, thanks to <code>rash_alt</code> gem.</li>
+      <li>However, this is a <em>breaking</em> change if you rely on <code>response.parsed.to_h</code>, as the keys in the result will be snake case.</li>
+      <li>As of version 2.0.4 you can turn key transformation off with the <code>snaky: false</code> option.</li>
+    </ul>
+  </li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/576">!576</a> - <strong>BREAKING</strong>: Stop rescuing parsing errors (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/576">!591</a> - <em>DEPRECATION</em>: <code>OAuth2::Client</code> - <code>:extract_access_token</code> option is deprecated
+    <h3 id="fixed-8">Fixed</h3>
+  </li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/158">!158</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/344">!344</a> - Handling of errors when using <code>omniauth-facebook</code> (@niels)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/294">!294</a> - Fix: “Unexpected middleware set” issue with Faraday when <code>OAUTH_DEBUG=true</code> (@spectator, @gafrom)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/300">!300</a> - <em>Documentation</em>: <code>Oauth2::Error</code> - Error codes are strings, not symbols (@NobodysNightmare)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/318">!318</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/326">!326</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/343">!343</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/347">!347</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/397">!397</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/464">!464</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/561">!561</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/565">!565</a> - <em>Dependency</em>: Support all versions of <code>faraday</code> (see <a href="gemfiles/README.md">gemfiles/README.md</a> for compatibility matrix with Ruby engines &amp; versions) (@pboling, @raimondasv, @zacharywelch, @Fudoshiki, @ryogift, @sj26, @jdelStrother)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/322">!322</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/331">!331</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/337">!337</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/361">!361</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/371">!371</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/377">!377</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/383">!383</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/392">!392</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/395">!395</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/400">!400</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/401">!401</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/403">!403</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/415">!415</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/567">!567</a> - Updated Rubocop, Rubocop plugins and improved code style (@pboling, @bquorning, @lautis, @spectator)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/328">!328</a> - <em>Documentation</em>: Homepage URL is SSL (@amatsuda)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/339">!339</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/479">!479</a> - Update testing infrastructure for all supported Rubies (@pboling and @josephpage)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/366">!366</a> - <strong>Security</strong>: Fix logging to <code>$stdout</code> of request and response bodies via Faraday’s logger and <code>ENV["OAUTH_DEBUG"] == 'true'</code> (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/380">!380</a> - Fix: Stop attempting to encode non-encodable objects in <code>Oauth2::Error</code> (@jhmoore)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/399">!399</a> - Fix: Stop duplicating <code>redirect_uri</code> in <code>get_token</code> (@markus)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/410">!410</a> - Fix: <code>SystemStackError</code> caused by circular reference between Error and Response classes (@jhmoore)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/460">!460</a> - Fix: Stop throwing errors when <code>raise_errors</code> is set to <code>false</code>; analog of <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/524">!524</a> for <code>1-4-stable</code> branch (@joaolrpaulo)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/472">!472</a> - <strong>Security</strong>: Add checks to enforce <code>client_secret</code> is <em>never</em> passed in authorize_url query params for <code>implicit</code> and <code>auth_code</code> grant types (@dfockler)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/482">!482</a> - <em>Documentation</em>: Update last of <code>intridea</code> links to <code>oauth-xx</code> (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/536">!536</a> - <strong>Security</strong>: Compatibility with more (and recent) Ruby OpenSSL versions, Github Actions, Rubocop updated, analogous to <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/535">!535</a> on <code>1-4-stable</code> branch (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/595">!595</a> - Graceful handling of empty responses from <code>Client#get_token</code>, respecting <code>:raise_errors</code> config (@stanhu)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/596">!596</a> - Consistency between <code>AccessToken#refresh</code> and <code>Client#get_token</code> named arguments (@stanhu)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/598">!598</a> - Fix unparseable data not raised as error in <code>Client#get_token</code>, respecting <code>:raise_errors</code> config (@stanhu)
+    <h3 id="removed-1">Removed</h3>
+  </li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/341">!341</a> - Remove Rdoc &amp; Jeweler related files (@josephpage)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/342">!342</a> - <strong>BREAKING</strong>: Dropped support for Ruby 1.8 (@josephpage)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/539">!539</a> - Remove reliance on globally included OAuth2 in tests, analog of <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/538">!538</a> for 1-4-stable (@anderscarling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/566">!566</a> - <em>Dependency</em>: Removed <code>wwtd</code> (@bquorning)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/589">!589</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/593">!593</a> - Remove support for expired MAC token draft spec (@stanhu)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/590">!590</a> - <em>Dependency</em>: Removed <code>multi_json</code> (@stanhu)</li>
+</ul>
+
+<h2 id="1411---2022-09-16">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.10...v1.4.11">1.4.11</a> - 2022-09-16</h2>
+<ul>
+  <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v1.4.11">v1.4.11</a>
+</li>
+  <li>Complete migration to main branch as default (@pboling)</li>
+  <li>Complete migration to Gitlab, updating all links, and references in VCS-managed files (@pboling)</li>
+</ul>
+
+<h2 id="1410---2022-07-01">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.9...v1.4.10">1.4.10</a> - 2022-07-01</h2>
+<ul>
+  <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v1.4.10">v1.4.10</a>
+</li>
+  <li>FIPS Compatibility <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/587">!587</a> (@akostadinov)</li>
+</ul>
+
+<h2 id="149---2022-02-20">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.8...v1.4.9">1.4.9</a> - 2022-02-20</h2>
+<ul>
+  <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v1.4.9">v1.4.9</a>
+</li>
+  <li>Fixes compatibility with Faraday v2 <a href="https://gitlab.com/oauth-xx/oauth2/-/issues/572">572</a>
+</li>
+  <li>Includes supported versions of Faraday in test matrix:
+    <ul>
+      <li>Faraday ~&gt; 2.2.0 with Ruby &gt;= 2.6</li>
+      <li>Faraday ~&gt; 1.10 with Ruby &gt;= 2.4</li>
+      <li>Faraday ~&gt; 0.17.3 with Ruby &gt;= 1.9</li>
+    </ul>
+  </li>
+  <li>Add Windows and MacOS to test matrix</li>
+</ul>
+
+<h2 id="148---2022-02-18">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.7...v1.4.8">1.4.8</a> - 2022-02-18</h2>
+<ul>
+  <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v1.4.8">v1.4.8</a>
+</li>
+  <li>MFA is now required to push new gem versions (@pboling)</li>
+  <li>README overhaul w/ new Ruby Version and Engine compatibility policies (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/569">!569</a> Backport fixes (<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/561">!561</a> by @ryogift), and add more fixes, to allow faraday 1.x and 2.x (@jrochkind)</li>
+  <li>Improve Code Coverage tracking (Coveralls, CodeCov, CodeClimate), and enable branch coverage (@pboling)</li>
+  <li>Add CodeQL, Security Policy, Funding info (@pboling)</li>
+  <li>Added Ruby 3.1, jruby, jruby-head, truffleruby, truffleruby-head to build matrix (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/543">!543</a> - Support for more modern Open SSL libraries (@pboling)</li>
+</ul>
+
+<h2 id="147---2021-03-19">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.6...v1.4.7">1.4.7</a> - 2021-03-19</h2>
+<ul>
+  <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v1.4.7">v1.4.7</a>
+</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/541">!541</a> - Backport fix to expires_at handling <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/533">!533</a> to 1-4-stable branch. (@dobon)</li>
+</ul>
+
+<h2 id="146---2021-03-19">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.5...v1.4.6">1.4.6</a> - 2021-03-19</h2>
+<ul>
+  <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v1.4.6">v1.4.6</a>
+</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/540">!540</a> - Add VERSION constant (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/537">!537</a> - Fix crash in OAuth2::Client#get_token (@anderscarling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/538">!538</a> - Remove reliance on globally included OAuth2 in tests, analogous to <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/539">!539</a> on main branch (@anderscarling)</li>
+</ul>
+
+<h2 id="145---2021-03-18">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.4...v1.4.5">1.4.5</a> - 2021-03-18</h2>
+<ul>
+  <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v1.4.5">v1.4.5</a>
+</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/535">!535</a> - Compatibility with range of supported Ruby OpenSSL versions, Rubocop updates, Github Actions, analogous to <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/536">!536</a> on main branch (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/518">!518</a> - Add extract_access_token option to OAuth2::Client (@jonspalmer)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/507">!507</a> - Fix camel case content type, response keys (@anvox)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/500">!500</a> - Fix YARD documentation formatting (@olleolleolle)</li>
+</ul>
+
+<h2 id="144---2020-02-12">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.3...v1.4.4">1.4.4</a> - 2020-02-12</h2>
+<ul>
+  <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v1.4.4">v1.4.4</a>
+</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/408">!408</a> - Fixed expires_at for formatted time (@Lomey)</li>
+</ul>
+
+<h2 id="143---2020-01-29">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.2...v1.4.3">1.4.3</a> - 2020-01-29</h2>
+<ul>
+  <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v1.4.3">v1.4.3</a>
+</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/483">!483</a> - add project metadata to gemspec (@orien)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/495">!495</a> - support additional types of access token requests (@SteveyblamFreeagent, @thomcorley, @dgholz)
+    <ul>
+      <li>Adds support for private_key_jwt and tls_client_auth</li>
+    </ul>
+  </li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/433">!433</a> - allow field names with square brackets and numbers in params (@asm256)</li>
+</ul>
+
+<h2 id="142---2019-10-01">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.1...v1.4.2">1.4.2</a> - 2019-10-01</h2>
+<ul>
+  <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v1.4.2">v1.4.2</a>
+</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/478">!478</a> - support latest version of faraday &amp; fix build (@pboling)
+    <ul>
+      <li>Officially support Ruby 2.6 and truffleruby</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="141---2018-10-13">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.0...v1.4.1">1.4.1</a> - 2018-10-13</h2>
+<ul>
+  <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v1.4.1">v1.4.1</a>
+</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/417">!417</a> - update jwt dependency (@thewoolleyman)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/419">!419</a> - remove rubocop dependency (temporary, added back in <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/423">!423</a>) (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/418">!418</a> - update faraday dependency (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/420">!420</a> - update <a href="https://gitlab.com/oauth-xx/oauth2/-/blob/1-4-stable/oauth2.gemspec">oauth2.gemspec</a> (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/421">!421</a> - fix <a href="https://gitlab.com/oauth-xx/oauth2/-/blob/1-4-stable/CHANGELOG.md">CHANGELOG.md</a> for previous releases (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/422">!422</a> - update <a href="https://gitlab.com/oauth-xx/oauth2/-/blob/1-4-stable/LICENSE">LICENSE</a> and <a href="https://gitlab.com/oauth-xx/oauth2/-/blob/1-4-stable/README.md">README.md</a> (@pboling)</li>
+  <li>
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/423">!423</a> - update <a href="https://travis-ci.org/oauth-xx/oauth2/builds">builds</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/blob/1-4-stable/Rakefile">Rakefile</a> (@pboling)
+    <ul>
+      <li>officially document supported Rubies
+        <ul>
+          <li>Ruby 1.9.3</li>
+          <li>Ruby 2.0.0</li>
+          <li>Ruby 2.1</li>
+          <li>Ruby 2.2</li>
+          <li>
+<a href="https://www.jruby.org/2017/05/11/jruby-1-7-27.html">JRuby 1.7</a> (targets MRI v1.9)</li>
+          <li>
+<a href="https://www.jruby.org/2016/01/26/jruby-9-0-5-0.html">JRuby 9.0</a> (targets MRI v2.0)</li>
+          <li>Ruby 2.3</li>
+          <li>Ruby 2.4</li>
+          <li>Ruby 2.5</li>
+          <li>
+<a href="https://www.jruby.org/2017/05/16/jruby-9-1-9-0.html">JRuby 9.1</a> (targets MRI v2.3)</li>
+          <li>
+<a href="https://www.jruby.org/2018/05/24/jruby-9-2-0-0.html">JRuby 9.2</a> (targets MRI v2.5)</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="140---2017-06-09">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v1.3.1...v1.4.0">1.4.0</a> - 2017-06-09</h2>
+<ul>
+  <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v1.4.0">v1.4.0</a>
+</li>
+  <li>Drop Ruby 1.8.7 support (@sferik)</li>
+  <li>Fix some RuboCop offenses (@sferik)</li>
+  <li>
+<em>Dependency</em>: Remove Yardstick (@sferik)</li>
+  <li>
+<em>Dependency</em>: Upgrade Faraday to 0.12 (@sferik)</li>
+</ul>
+
+<h2 id="131---2017-03-03-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v1.3.0...v1.3.1">1.3.1</a> - 2017-03-03 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v1.3.1">tag</a>)</h2>
+<ul>
+  <li>Add support for Ruby 2.4.0 (@pschambacher)</li>
+  <li>
+<em>Dependency</em>: Upgrade Faraday to Faraday 0.11 (@mcfiredrill, @rhymes, @pschambacher)</li>
+</ul>
+
+<h2 id="130---2016-12-28-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v1.2.0...v1.3.0">1.3.0</a> - 2016-12-28 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v1.3.0">tag</a>)</h2>
+<ul>
+  <li>Add support for header-based authentication to the <code>Client</code> so it can be used across the library (@bjeanes)</li>
+  <li>Default to header-based authentication when getting a token from an authorisation code (@maletor)</li>
+  <li>
+<strong>Breaking</strong>: Allow an <code>auth_scheme</code> (<code>:basic_auth</code> or <code>:request_body</code>) to be set on the client, defaulting to <code>:request_body</code> to maintain backwards compatibility (@maletor, @bjeanes)</li>
+  <li>Handle <code>redirect_uri</code> according to the OAuth 2 spec, so it is passed on redirect and at the point of token exchange (@bjeanes)</li>
+  <li>Refactor handling of encoding of error responses (@urkle)</li>
+  <li>Avoid instantiating an <code>Error</code> if there is no error to raise (@urkle)</li>
+  <li>Add support for Faraday 0.10 (@rhymes)</li>
+</ul>
+
+<h2 id="120---2016-07-01-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v1.1.0...v1.2.0">1.2.0</a> - 2016-07-01 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v1.2.0">tag</a>)</h2>
+<ul>
+  <li>Properly handle encoding of error responses (so we don’t blow up, for example, when Google’s response includes a ∞) (@Motoshi-Nishihira)</li>
+  <li>Make a copy of the options hash in <code>AccessToken#from_hash</code> to avoid accidental mutations (@Linuus)</li>
+  <li>Use <code>raise</code> rather than <code>fail</code> to throw exceptions (@sferik)</li>
+</ul>
+
+<h2 id="110---2016-01-30-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v1.0.0...v1.1.0">1.1.0</a> - 2016-01-30 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v1.1.0">tag</a>)</h2>
+<ul>
+  <li>Various refactors (eliminating <code>Hash#merge!</code> usage in <code>AccessToken#refresh!</code>, use <code>yield</code> instead of <code>#call</code>, freezing mutable objects in constants, replacing constants with class variables) (@sferik)</li>
+  <li>Add support for Rack 2, and bump various other dependencies (@sferik)</li>
+</ul>
+
+<h2 id="100---2014-07-09-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v0.9.4...v1.0.0">1.0.0</a> - 2014-07-09 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v1.0.0">tag</a>)</h2>
+<h3 id="added-8">Added</h3>
+<ul>
+  <li>Add an implementation of the MAC token spec.
+    <h3 id="fixed-9">Fixed</h3>
+  </li>
+  <li>Fix Base64.strict_encode64 incompatibility with Ruby 1.8.7.</li>
+</ul>
+
+<h2 id="050---2011-07-29-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v0.4.1...v0.5.0">0.5.0</a> - 2011-07-29 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v0.5.0">tag</a>)</h2>
+<h3 id="changed-5">Changed</h3>
+<ul>
+  <li>
+<em>breaking</em> <code>oauth_token</code> renamed to <code>oauth_bearer</code>.</li>
+  <li>
+<em>breaking</em> <code>authorize_path</code> Client option renamed to <code>authorize_url</code>.</li>
+  <li>
+<em>breaking</em> <code>access_token_path</code> Client option renamed to <code>token_url</code>.</li>
+  <li>
+<em>breaking</em> <code>access_token_method</code> Client option renamed to <code>token_method</code>.</li>
+  <li>
+<em>breaking</em> <code>web_server</code> renamed to <code>auth_code</code>.</li>
+</ul>
+
+<h2 id="041---2011-04-20-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v0.4.0...v0.4.1">0.4.1</a> - 2011-04-20 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v0.4.1">tag</a>)</h2>
+
+<h2 id="040---2011-04-20-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v0.3.0...v0.4.0">0.4.0</a> - 2011-04-20 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v0.4.0">tag</a>)</h2>
+
+<h2 id="030---2011-04-08-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v0.2.0...v0.3.0">0.3.0</a> - 2011-04-08 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v0.3.0">tag</a>)</h2>
+
+<h2 id="020---2011-04-01-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v0.1.1...v0.2.0">0.2.0</a> - 2011-04-01 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v0.2.0">tag</a>)</h2>
+
+<h2 id="011---2011-01-12-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v0.1.0...v0.1.1">0.1.1</a> - 2011-01-12 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v0.1.1">tag</a>)</h2>
+
+<h2 id="010---2010-10-13-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.13...v0.1.0">0.1.0</a> - 2010-10-13 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v0.1.0">tag</a>)</h2>
+
+<h2 id="0013---2010-08-17-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.12...v0.0.13">0.0.13</a> - 2010-08-17 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v0.0.13">tag</a>)</h2>
+
+<h2 id="0012---2010-08-17-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.11...v0.0.12">0.0.12</a> - 2010-08-17 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v0.0.12">tag</a>)</h2>
+
+<h2 id="0011---2010-08-17-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.10...v0.0.11">0.0.11</a> - 2010-08-17 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v0.0.11">tag</a>)</h2>
+
+<h2 id="0010---2010-06-19-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.9...v0.0.10">0.0.10</a> - 2010-06-19 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v0.0.10">tag</a>)</h2>
+
+<h2 id="009---2010-06-18-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.8...v0.0.9">0.0.9</a> - 2010-06-18 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v0.0.9">tag</a>)</h2>
+
+<h2 id="008---2010-04-27-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.7...v0.0.8">0.0.8</a> - 2010-04-27 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v0.0.8">tag</a>)</h2>
+
+<h2 id="007---2010-04-27-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.6...v0.0.7">0.0.7</a> - 2010-04-27 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v0.0.7">tag</a>)</h2>
+
+<h2 id="006---2010-04-25-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.5...v0.0.6">0.0.6</a> - 2010-04-25 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v0.0.6">tag</a>)</h2>
+
+<h2 id="005---2010-04-23-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.4...v0.0.5">0.0.5</a> - 2010-04-23 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v0.0.5">tag</a>)</h2>
+
+<h2 id="004---2010-04-22-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.3...v0.0.4">0.0.4</a> - 2010-04-22 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v0.0.4">tag</a>)</h2>
+
+<h2 id="003---2010-04-22-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.2...v0.0.3">0.0.3</a> - 2010-04-22 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v0.0.3">tag</a>)</h2>
+
+<h2 id="002---2010-04-22-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v0.0.1...v0.0.2">0.0.2</a> - 2010-04-22 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v0.0.2">tag</a>)</h2>
+
+<h2 id="001---2010-04-22-tag">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/311d9f4...v0.0.1">0.0.1</a> - 2010-04-22 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v0.0.1">tag</a>)</h2>
+
+</div></div>
+
+      <div id="footer">
+  Generated on Wed May 21 04:26:17 2025 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.37 (ruby-3.4.3).
+</div>
+
+    </div>
+  </body>
+</html>

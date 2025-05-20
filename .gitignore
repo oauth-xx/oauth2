@@ -20,7 +20,6 @@ Appraisal.*.gemfile.lock
 # Documentation
 /.yardoc
 /_yardoc/
-/doc/
 /rdoc/
 
 # RVM

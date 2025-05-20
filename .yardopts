@@ -1,0 +1,10 @@
+--plugin junk
+--plugin relative_markdown_links
+--readme README.md
+--charset utf-8
+--markup markdown
+--load .yard_gfm_support.rb
+'lib/**/*.rb'
+-
+'*.md'
+'*.txt'

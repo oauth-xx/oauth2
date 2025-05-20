@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: CONTRIBUTING
+  
+    &mdash; Documentation by YARD 0.9.37
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "CONTRIBUTING";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: CONTRIBUTING</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'><h2 id="contributing">Contributing</h2>
+
+<p>Bug reports and pull requests are welcome on GitLab at <a href="https://gitlab.com/oauth-xx/oauth2">https://gitlab.com/oauth-xx/oauth2</a><br>
+. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to<br>
+the <a href="https://gitlab.com/oauth-xx/oauth2/-/blob/main/CODE_OF_CONDUCT.md">code of conduct</a>.</p>
+
+<p>To submit a patch, please fork the project and create a patch with tests.<br>
+Once you’re happy with it send a pull request.</p>
+
+<p>We <a href="https://keepachangelog.com/en/1.0.0/"><img src="https://img.shields.io/badge/keep--a--changelog-1.0.0-FFDD67.svg?style=flat" alt="Keep A Changelog"></a> so if you make changes, remember to update it.</p>
+
+<h2 id="you-can-help">You can help!</h2>
+
+<p>Take a look at the <code>reek</code> list which is the file called <code>REEK</code> and find something to improve.</p>
+
+<p>Simply follow these instructions:</p>
+
+<ol>
+  <li>Fork the repository</li>
+  <li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+  <li>Make some fixes.</li>
+  <li>Commit your changes (<code>git commit -am 'Added some feature'</code>)</li>
+  <li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
+  <li>Make sure to add tests for it. This is important, so it doesn’t break in a future release.</li>
+  <li>Create new Pull Request.</li>
+</ol>
+
+<h2 id="appraisals">Appraisals</h2>
+
+<p>From time to time the appraisal gemfiles in <code>gemfiles/</code> will need to be updated.<br>
+They are created and updated with the commands:</p>
+
+<p>NOTE: We run on a <a href="https://github.com/pboling/appraisal/tree/galtzo">fork</a> of Appraisal.</p>
+
+<p>Please upvote the PR for <code>eval_gemfile</code> <a href="https://github.com/thoughtbot/appraisal/pull/248">support</a></p>
+
+<pre class="code language-shell"><code class="language-shell">BUNDLE_GEMFILE=Appraisal.root.gemfile bundle
+BUNDLE_GEMFILE=Appraisal.root.gemfile bundle exec appraisal update
+bundle exec rake rubocop_gradual:autocorrect
+</code></pre>
+
+<p>When adding an appraisal to CI check the <a href="https://github.com/ruby/ruby-builder/releases/tag/toolcache">runner tool cache</a> to see which runner to use.</p>
+
+<h2 id="the-reek-list">The Reek List</h2>
+
+<p>Take a look at the <code>reek</code> list which is the file called <code>REEK</code> and find something to improve.</p>
+
+<p>To refresh the <code>reek</code> list:</p>
+
+<pre class="code language-bash"><code class="language-bash">bundle exec reek &gt; REEK
+</code></pre>
+
+<h2 id="run-tests">Run Tests</h2>
+
+<p>To run all tests</p>
+
+<pre class="code language-bash"><code class="language-bash">bundle exec rake test
+</code></pre>
+
+<h2 id="lint-it">Lint It</h2>
+
+<p>Run all the default tasks, which includes running the gradually autocorrecting linter, <code>rubocop-gradual</code>.</p>
+
+<pre class="code language-bash"><code class="language-bash">bundle exec rake
+</code></pre>
+
+<p>Or just run the linter.</p>
+
+<pre class="code language-bash"><code class="language-bash">bundle exec rake rubocop_gradual:autocorrect
+</code></pre>
+
+<h2 id="contributors">Contributors</h2>
+
+<p>Your picture could be here!</p>
+
+<p><a href="https://github.com/oauth-xx/oauth2/graphs/contributors"><img src="https://contrib.rocks/image?repo=oauth-xx/oauth2" alt="Contributors"></a></p>
+
+<p>Made with <a href="https://contrib.rocks">contributors-img</a>.</p>
+
+<p>Also see GitLab Contributors: <a href="https://gitlab.com/oauth-xx/oauth2/-/graphs/main">https://gitlab.com/oauth-xx/oauth2/-/graphs/main</a></p>
+
+<h2 id="for-maintainers">For Maintainers</h2>
+
+<h3 id="one-time-per-maintainer-setup">One-time, Per-maintainer, Setup</h3>
+
+<p><strong>IMPORTANT</strong>: If you want to sign the build you create,<br>
+your public key for signing gems will need to be picked up by the line in the<br>
+<code>gemspec</code> defining the <code>spec.cert_chain</code> (check the relevant ENV variables there).<br>
+All releases to RubyGems.org will be signed.<br>
+See: <a href="https://guides.rubygems.org/security/#building-gems">RubyGems Security Guide</a></p>
+
+<p>NOTE: To build without signing the gem you must set <code>SKIP_GEM_SIGNING</code> to some value in your environment.</p>
+
+<h3 id="to-release-a-new-version">To release a new version:</h3>
+
+<ol>
+  <li>Run <code>bin/setup &amp;&amp; bin/rake</code> as a tests, coverage, &amp; linting sanity check</li>
+  <li>Update the version number in <code>version.rb</code>, and ensure <code>CHANGELOG.md</code> reflects changes</li>
+  <li>Run <code>bin/setup &amp;&amp; bin/rake</code> again as a secondary check, and to update <code>Gemfile.lock</code>
+</li>
+  <li>Run <code>git commit -am "🔖 Prepare release v&lt;VERSION&gt;"</code> to commit the changes</li>
+  <li>Run <code>git push</code> to trigger the final CI pipeline before release, &amp; merge PRs
+    <ul>
+      <li>NOTE: Remember to <a href="https://github.com/oauth-xx/oauth2/actions">check the build</a>!</li>
+    </ul>
+  </li>
+  <li>Run <code>export GIT_TRUNK_BRANCH_NAME="$(git remote show origin | grep 'HEAD branch' | cut -d ' ' -f5)" &amp;&amp; echo $GIT_TRUNK_BRANCH_NAME</code>
+</li>
+  <li>Run <code>git checkout $GIT_TRUNK_BRANCH_NAME</code>
+</li>
+  <li>Run <code>git pull origin $GIT_TRUNK_BRANCH_NAME</code> to ensure you will release the latest trunk code</li>
+  <li>Set <code>SOURCE_DATE_EPOCH</code> so <code>rake build</code> and <code>rake release</code> use same timestamp, and generate same checksums
+    <ul>
+      <li>Run <code>export SOURCE_DATE_EPOCH=$EPOCHSECONDS &amp;&amp; echo $SOURCE_DATE_EPOCH</code>
+</li>
+      <li>If the echo above has no output, then it didn’t work.</li>
+      <li>Note that you’ll need the <code>zsh/datetime</code> module, if running <code>zsh</code>.</li>
+      <li>In older versions of <code>bash</code> you can use <code>date +%s</code> instead, i.e. <code>export SOURCE_DATE_EPOCH=$(date +%s) &amp;&amp; echo $SOURCE_DATE_EPOCH</code>
+</li>
+    </ul>
+  </li>
+  <li>Run <code>bundle exec rake build</code>
+</li>
+  <li>Run <code>bin/gem_checksums</code> (more context <a href="https://github.com/rubygems/rubygems/pull/6022">1</a>, <a href="https://github.com/rubygems/guides/pull/325">2</a>)<br>
+to create SHA-256 and SHA-512 checksums. This functionality is provided by the <code>stone_checksums</code><br>
+<a href="https://github.com/pboling/stone_checksums">gem</a>.
+    <ul>
+      <li>Checksums will be committed automatically by the script, but not pushed</li>
+    </ul>
+  </li>
+  <li>Run <code>bundle exec rake release</code> which will create a git tag for the version,<br>
+push git commits and tags, and push the <code>.gem</code> file to <a href="https://rubygems.org">rubygems.org</a>
+</li>
+</ol>
+
+</div></div>
+
+      <div id="footer">
+  Generated on Wed May 21 04:26:17 2025 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.37 (ruby-3.4.3).
+</div>
+
+    </div>
+  </body>
+</html>

@@ -9,35 +9,11 @@
 
 ## 🔐 OAuth2
 
-[![Version][👽versioni]][👽version]
-[![License: MIT][📄license-img]][📄license-ref]
-[![Downloads Rank][👽dl-ranki]][👽dl-rank]
-[![Open Source Helpers][👽oss-helpi]][👽oss-help]
-[![Depfu][🔑depfui♻️]][🔑depfu]
-[![Coveralls Test Coverage][🔑coveralls-img]][🔑coveralls]
-[![QLTY Test Coverage][🔑qlty-covi♻️]][🔑qlty-cov]
-[![QLTY Maintainability][🔑qlty-mnti♻️]][🔑qlty-mnt]
-[![CI Heads][🚎3-hd-wfi]][🚎3-hd-wf]
-[![CI Runtime Dependencies @ HEAD][🚎12-crh-wfi]][🚎12-crh-wf]
-[![CI Current][🚎11-c-wfi]][🚎11-c-wf]
-[![CI Truffle Ruby][🚎9-t-wfi]][🚎9-t-wf]
-[![CI JRuby][🚎10-j-wfi]][🚎10-j-wf]
-[![CI Supported][🚎6-s-wfi]][🚎6-s-wf]
-[![CI Legacy][🚎4-lg-wfi]][🚎4-lg-wf]
-[![CI Unsupported][🚎7-us-wfi]][🚎7-us-wf]
-[![CI Ancient][🚎1-an-wfi]][🚎1-an-wf]
-[![CI Test Coverage][🚎2-cov-wfi]][🚎2-cov-wf]
-[![CI Style][🚎5-st-wfi]][🚎5-st-wf]
-[![CodeQL][🖐codeQL-img]][🖐codeQL]
+[![Version][👽versioni]][👽version] [![License: MIT][📄license-img]][📄license-ref] [![Downloads Rank][👽dl-ranki]][👽dl-rank] [![Open Source Helpers][👽oss-helpi]][👽oss-help] [![Depfu][🔑depfui♻️]][🔑depfu] [![Coveralls Test Coverage][🔑coveralls-img]][🔑coveralls] [![QLTY Test Coverage][🔑qlty-covi♻️]][🔑qlty-cov] [![CI Heads][🚎3-hd-wfi]][🚎3-hd-wf] [![CI Runtime Dependencies @ HEAD][🚎12-crh-wfi]][🚎12-crh-wf] [![CI Current][🚎11-c-wfi]][🚎11-c-wf] [![CI Truffle Ruby][🚎9-t-wfi]][🚎9-t-wf] [![CI JRuby][🚎10-j-wfi]][🚎10-j-wf] [![CI Supported][🚎6-s-wfi]][🚎6-s-wf] [![CI Legacy][🚎4-lg-wfi]][🚎4-lg-wf] [![CI Unsupported][🚎7-us-wfi]][🚎7-us-wf] [![CI Ancient][🚎1-an-wfi]][🚎1-an-wf] [![CI Test Coverage][🚎2-cov-wfi]][🚎2-cov-wf] [![CI Style][🚎5-st-wfi]][🚎5-st-wf] [![CodeQL][🖐codeQL-img]][🖐codeQL]
 
 ---
 
-[![Liberapay Goal Progress][⛳liberapay-img]][⛳liberapay]
-[![Sponsor Me on Github][🖇sponsor-img]][🖇sponsor]
-[![Buy me a coffee][🖇buyme-small-img]][🖇buyme]
-[![Donate on Polar][🖇polar-img]][🖇polar]
-[![Donate to my FLOSS or refugee efforts at ko-fi.com][🖇kofi-img]][🖇kofi]
-[![Donate to my FLOSS or refugee efforts using Patreon][🖇patreon-img]][🖇patreon]
+[![Liberapay Goal Progress][⛳liberapay-img]][⛳liberapay] [![Sponsor Me on Github][🖇sponsor-img]][🖇sponsor] [![Buy me a coffee][🖇buyme-small-img]][🖇buyme] [![Donate on Polar][🖇polar-img]][🖇polar] [![Donate to my FLOSS or refugee efforts at ko-fi.com][🖇kofi-img]][🖇kofi] [![Donate to my FLOSS or refugee efforts using Patreon][🖇patreon-img]][🖇patreon]
 
 OAuth 2.0 is the industry-standard protocol for authorization.
 OAuth 2.0 focuses on client developer simplicity while providing specific authorization flows for web applications,
@@ -410,7 +386,7 @@ of a major release, support for that Ruby version may be dropped.
 NOTE: The 1.4 series will only receive critical security updates.
 See [SECURITY.md][🔐security].
 
-## Usage Examples
+## 🔧 Basic Usage
 
 ### Global Configuration
 
@@ -533,7 +509,7 @@ client = OAuth2::Client.new(
 ```
 </details>
 
-## OAuth2::Response
+### OAuth2::Response
 
 The `AccessToken` methods `#get`, `#post`, `#put` and `#delete` and the generic `#request`
 will return an instance of the #OAuth2::Response class.
@@ -546,14 +522,14 @@ array.  Otherwise, it will return the original body string.
 The original response body, headers, and status can be accessed via their
 respective methods.
 
-## OAuth2::AccessToken
+### OAuth2::AccessToken
 
 If you have an existing Access Token for a user, you can initialize an instance
 using various class methods including the standard new, `from_hash` (if you have
 a hash of the values), or `from_kvform` (if you have an
 `application/x-www-form-urlencoded` encoded string of the values).
 
-## OAuth2::Error
+### OAuth2::Error
 
 On 400+ status code responses, an `OAuth2::Error` will be raised.  If it is a
 standard OAuth2 error response, the body will be parsed and `#code` and `#description` will contain the values provided from the error and
@@ -565,7 +541,7 @@ option on initialization of the client.  In this case the `OAuth2::Response`
 instance will be returned as usual and on 400+ status code responses, the
 Response instance will contain the `OAuth2::Error` instance.
 
-## Authorization Grants
+### Authorization Grants
 
 Currently the Authorization Code, Implicit, Resource Owner Password Credentials, Client Credentials, and Assertion
 authentication grant types have helper strategy classes that simplify client
@@ -784,7 +760,7 @@ or one of the others at the head of this README.
 [📜src-gh-img]: https://img.shields.io/badge/GitHub-238636?style=for-the-badge&logo=Github&logoColor=green
 [📜src-gh]: https://github.com/oauth-xx/oauth2
 [📜docs-cr-rd-img]: https://img.shields.io/badge/RubyDoc-Current_Release-943CD2?style=for-the-badge&logo=readthedocs&logoColor=white
-[📜docs-head-rd-img]: https://img.shields.io/badge/RubyDoc-HEAD-943CD2?style=for-the-badge&logo=readthedocs&logoColor=white
+[📜docs-head-rd-img]: https://img.shields.io/badge/YARD_on_Galtzo.com-HEAD-943CD2?style=for-the-badge&logo=readthedocs&logoColor=white
 [📜wiki]: https://gitlab.com/oauth-xx/oauth2/-/wikis/home
 [📜wiki-img]: https://img.shields.io/badge/wiki-examples-943CD2.svg?style=for-the-badge&logo=Wiki&logoColor=white
 [👽dl-rank]: https://rubygems.org/gems/oauth2
