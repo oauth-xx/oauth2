@@ -10,7 +10,11 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
   - https://codeberg.org/oauth-xx/oauth2
 - Don't check for cert if SKIP_GEM_SIGNING is set (@pboling)
 - All runtime deps, including oauth-xx sibling gems, are now tested against HEAD (@pboling)
+- YARD config, GFM compatible with relative file links
+- Documentation site on GitHub Pages
+  - [oauth2.galtzo.com](https://oauth2.galtzo.com)
 ### Changed
+- Updated `spec.homepage_uri` in gemspec to GitHub Pages YARD documentation site
 ### Deprecated
 ### Removed
 ### Fixed
