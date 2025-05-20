@@ -336,12 +336,14 @@ For more see [SECURITY.md][🔐security].
 - Adds new option to `OAuth2::AccessToken#initialize`:
     - `:expires_latency` (`nil`); number of seconds by which AccessToken validity will be reduced to offset latency
 - By default, keys are transformed to snake case.
-  - Original keys will still work as previously, in most scenarios, thanks to [snaky_hash](https://gitlab.com/oauth-xx/snaky_hash) gem.
+  - Original keys will still work as previously, in most scenarios, thanks to [snaky_hash][snaky_hash] gem.
   - However, this is a _breaking_ change if you rely on `response.parsed.to_h` to retain the original case, and the original wasn't snake case, as the keys in the result will be snake case.
   - As of version 2.0.4 you can turn key transformation off with the `snaky: false` option.
 - By default, the `:auth_scheme` is now `:basic_auth` (instead of `:request_body`)
   - Third-party strategies and gems may need to be updated if a provider was requiring client id/secret in the request body
 - [... A lot more](https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md#200-2022-06-21-tag)
+
+[snaky_hash]: https://gitlab.com/oauth-xx/snaky_hash
 
 ## Compatibility
 
@@ -488,7 +490,7 @@ response.parsed.class.name        # => Hash (just, regular old Hash)
 <details>
   <summary>Debugging</summary>
 
-Set an environment variable, however you would [normally do that](https://github.com/bkeepers/dotenv).
+Set an environment variable as per usual (e.g. with [dotenv](https://github.com/bkeepers/dotenv)).
 
 ```ruby
 # will log both request and response, including bodies
@@ -515,7 +517,7 @@ The `AccessToken` methods `#get`, `#post`, `#put` and `#delete` and the generic 
 will return an instance of the #OAuth2::Response class.
 
 This instance contains a `#parsed` method that will parse the response body and
-return a Hash-like [`OAuth2::SnakyHash`](https://gitlab.com/oauth-xx/oauth2/-/blob/main/lib/oauth2/snaky_hash.rb) if the `Content-Type` is `application/x-www-form-urlencoded` or if
+return a Hash-like [`SnakyHash::StringKeyed`](https://gitlab.com/oauth-xx/snaky_hash/-/blob/main/lib/snaky_hash/string_keyed.rb) if the `Content-Type` is `application/x-www-form-urlencoded` or if
 the body is a JSON object.  It will return an Array if the body is a JSON
 array.  Otherwise, it will return the original body string.
 
@@ -543,7 +545,7 @@ Response instance will contain the `OAuth2::Error` instance.
 
 ### Authorization Grants
 
-Currently the Authorization Code, Implicit, Resource Owner Password Credentials, Client Credentials, and Assertion
+Currently, the Authorization Code, Implicit, Resource Owner Password Credentials, Client Credentials, and Assertion
 authentication grant types have helper strategy classes that simplify client
 use. They are available via the [`#auth_code`](https://gitlab.com/oauth-xx/oauth2/-/blob/main/lib/oauth2/strategy/auth_code.rb),
 [`#implicit`](https://gitlab.com/oauth-xx/oauth2/-/blob/main/lib/oauth2/strategy/implicit.rb),

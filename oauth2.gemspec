@@ -3,7 +3,7 @@
 
 gem_version =
   if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new("3.1")
-    # Loading version into an anonymous module allows version.rb to get code coverage from SimpleCov!
+    # Loading Version into an anonymous module allows version.rb to get code coverage from SimpleCov!
     # See: https://github.com/simplecov-ruby/simplecov/issues/557#issuecomment-2630782358
     Module.new.tap { |mod| Kernel.load("lib/oauth2/version.rb", mod) }::OAuth2::Version::VERSION
   else

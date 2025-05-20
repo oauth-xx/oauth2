@@ -16,7 +16,7 @@ authors:
 identifiers:
   - type: url
     value: 'https://github.com/oauth-xx/oauth2'
-    description: oath2
+    description: oauth2
 repository-code: 'https://github.com/oauth-xx/oauth2'
 abstract: >-
   oauth2
