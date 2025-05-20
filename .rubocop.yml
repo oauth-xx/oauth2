@@ -42,7 +42,6 @@ Lint/UnusedBlockArgument:
     - 'vendor/**/*'
     - '**/.irbrc'
 
-
 Style/ClassVars:
   Enabled: false
 
