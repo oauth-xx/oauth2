@@ -876,7 +876,7 @@ or one of the others at the head of this README.
 [📄ilo-declaration]: https://www.ilo.org/declaration/lang--en/index.htm
 [📄ilo-declaration-img]: https://img.shields.io/badge/ILO_Fundamental_Principles-✓-259D6C.svg?style=flat
 [🚎yard-current]: http://rubydoc.info/gems/oauth2
-[🚎yard-head]: https://rubydoc.info/github/oauth-xx/oauth2/main
+[🚎yard-head]: https://oauth2.galtzo.com
 [💎stone_checksums]: https://github.com/pboling/stone_checksums
 [💎SHA_checksums]: https://gitlab.com/oauth-xx/oauth2/-/tree/main/checksums
 [💎rlts]: https://github.com/rubocop-lts/rubocop-lts
