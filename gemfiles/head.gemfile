@@ -5,6 +5,6 @@ source "https://rubygems.org"
 gem "mutex_m", ">= 0.2"
 gem "stringio", ">= 3.0"
 
-gemspec path: "../"
+gemspec :path => "../"
 
 eval_gemfile("modular/runtime_heads.gemfile")

@@ -5,11 +5,13 @@ source "https://rubygems.org"
 gem "mutex_m", "~> 0.2"
 gem "stringio", "~> 3.0"
 
-gemspec path: "../"
+gemspec :path => "../"
 
 eval_gemfile("modular/coverage.gemfile")
 
 eval_gemfile("modular/faraday_v2.gemfile")
+
+eval_gemfile("modular/hashie_v5.gemfile")
 
 eval_gemfile("modular/jwt_v2.gemfile")
 

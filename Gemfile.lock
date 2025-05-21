@@ -92,7 +92,7 @@ GEM
     gem_bench (2.0.5)
       bundler (>= 1.14)
       version_gem (~> 1.1, >= 1.1.4)
-    hashie (5.0.0)
+    hashie (0.4.0)
     io-console (0.8.0)
     irb (1.15.2)
       pp (>= 0.6.0)
