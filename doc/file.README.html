@@ -189,6 +189,13 @@ covering the latest patch for each of the following minor versions:</p>
 <p>The last two were extracted from this gem. They are part of the <code>oauth-xx</code> org,<br>
 and are developed in tight collaboration with this gem.</p>
 
+<p>Also, where reasonable, tested against the runtime dependencies of those dependencies:</p>
+
+<ul>
+  <li>gem <code>hashie</code> @ v0, v1, v2, v3, v4, v5, HEAD ⏩️ <a href="https://github.com/hashie/hashie">hashie/hashie</a>
+</li>
+</ul>
+
 <h4 id="you-should-upgrade-this-gem-with-confidence">You should upgrade this gem with confidence*.</h4>
 
 <ul>
@@ -329,7 +336,7 @@ One of these might be what you are looking for:</p>
     <tr>
       <td>Documentation</td>
       <td>
-<a href="https://groups.google.com/g/oauth-ruby"><img src="https://img.shields.io/badge/google-group-0093D0.svg?style=for-the-badge&amp;logo=google&amp;logoColor=orange" alt="Discussion"></a> <a href="http://rubydoc.info/gems/oauth2"><img src="https://img.shields.io/badge/RubyDoc-Current_Release-943CD2?style=for-the-badge&amp;logo=readthedocs&amp;logoColor=white" alt="Current release on RubyDoc.info"></a> <a href="https://rubydoc.info/github/oauth-xx/oauth2/main"><img src="https://img.shields.io/badge/YARD_on_Galtzo.com-HEAD-943CD2?style=for-the-badge&amp;logo=readthedocs&amp;logoColor=white" alt="HEAD on RubyDoc.info"></a> <a href="http://www.railsbling.com/tags/oauth2"><img src="https://img.shields.io/badge/blog-railsbling-0093D0.svg?style=for-the-badge&amp;logo=rubyonrails&amp;logoColor=orange" alt="BDFL Blog"></a> <a href="https://gitlab.com/oauth-xx/oauth2/-/wikis/home"><img src="https://img.shields.io/badge/wiki-examples-943CD2.svg?style=for-the-badge&amp;logo=Wiki&amp;logoColor=white" alt="Wiki"></a>
+<a href="https://groups.google.com/g/oauth-ruby"><img src="https://img.shields.io/badge/google-group-0093D0.svg?style=for-the-badge&amp;logo=google&amp;logoColor=orange" alt="Discussion"></a> <a href="http://rubydoc.info/gems/oauth2"><img src="https://img.shields.io/badge/RubyDoc-Current_Release-943CD2?style=for-the-badge&amp;logo=readthedocs&amp;logoColor=white" alt="Current release on RubyDoc.info"></a> <a href="https://oauth2.galtzo.com"><img src="https://img.shields.io/badge/YARD_on_Galtzo.com-HEAD-943CD2?style=for-the-badge&amp;logo=readthedocs&amp;logoColor=white" alt="HEAD on RubyDoc.info"></a> <a href="http://www.railsbling.com/tags/oauth2"><img src="https://img.shields.io/badge/blog-railsbling-0093D0.svg?style=for-the-badge&amp;logo=rubyonrails&amp;logoColor=orange" alt="BDFL Blog"></a> <a href="https://gitlab.com/oauth-xx/oauth2/-/wikis/home"><img src="https://img.shields.io/badge/wiki-examples-943CD2.svg?style=for-the-badge&amp;logo=Wiki&amp;logoColor=white" alt="Wiki"></a>
 </td>
     </tr>
     <tr>
@@ -454,7 +461,7 @@ by following the instructions below.</p>
 
 <p>Add my public key (if you haven’t already, expires 2045-04-29) as a trusted certificate:</p>
 
-<pre class="code language-shell"><code class="language-shell">gem cert --add &lt;(curl -Ls https://raw.github.com/kettle-rb/oauth2/main/certs/pboling.pem)
+<pre class="code language-shell"><code class="language-shell">gem cert --add &lt;(curl -Ls https://raw.github.com/oauth-xx/oauth2/main/certs/pboling.pem)
 </code></pre>
 
 <p>You only need to do that once.  Then proceed to install with:</p>
@@ -703,7 +710,7 @@ response.parsed.class.name        # =&gt; Hash (just, regular old Hash)
 <details>
   <summary>Debugging</summary>
 
-Set an environment variable, however you would [normally do that](https://github.com/bkeepers/dotenv).
+Set an environment variable as per usual (e.g. with [dotenv](https://github.com/bkeepers/dotenv)).
 
 ```ruby
 # will log both request and response, including bodies
@@ -730,7 +737,7 @@ client = OAuth2::Client.new(
 will return an instance of the #OAuth2::Response class.</p>
 
 <p>This instance contains a <code>#parsed</code> method that will parse the response body and<br>
-return a Hash-like <a href="https://gitlab.com/oauth-xx/oauth2/-/blob/main/lib/oauth2/snaky_hash.rb"><code>OAuth2::SnakyHash</code></a> if the <code>Content-Type</code> is <code>application/x-www-form-urlencoded</code> or if<br>
+return a Hash-like <a href="https://gitlab.com/oauth-xx/snaky_hash/-/blob/main/lib/snaky_hash/string_keyed.rb"><code>SnakyHash::StringKeyed</code></a> if the <code>Content-Type</code> is <code>application/x-www-form-urlencoded</code> or if<br>
 the body is a JSON object.  It will return an Array if the body is a JSON<br>
 array.  Otherwise, it will return the original body string.</p>
 
@@ -758,7 +765,7 @@ Response instance will contain the <code>OAuth2::Error</code> instance.</p>
 
 <h3 id="authorization-grants">Authorization Grants</h3>
 
-<p>Currently the Authorization Code, Implicit, Resource Owner Password Credentials, Client Credentials, and Assertion<br>
+<p>Currently, the Authorization Code, Implicit, Resource Owner Password Credentials, Client Credentials, and Assertion<br>
 authentication grant types have helper strategy classes that simplify client<br>
 use. They are available via the <a href="https://gitlab.com/oauth-xx/oauth2/-/blob/main/lib/oauth2/strategy/auth_code.rb"><code>#auth_code</code></a>,<br>
 <a href="https://gitlab.com/oauth-xx/oauth2/-/blob/main/lib/oauth2/strategy/implicit.rb"><code>#implicit</code></a>,<br>
@@ -950,7 +957,7 @@ CodeCov currently fails to parse the coverage upload.
 </div></div>
 
       <div id="footer">
-  Generated on Wed May 21 04:26:17 2025 by
+  Generated on Wed May 21 08:20:02 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.3).
 </div>

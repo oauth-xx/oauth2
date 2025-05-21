@@ -12,6 +12,8 @@ eval_gemfile("modular/documentation.gemfile")
 
 eval_gemfile("modular/faraday_v2.gemfile")
 
+eval_gemfile("modular/hashie_v5.gemfile")
+
 eval_gemfile("modular/jwt_v2.gemfile")
 
 eval_gemfile("modular/logger_v1_7.gemfile")

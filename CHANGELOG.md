@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 - YARD config, GFM compatible with relative file links
 - Documentation site on GitHub Pages
   - [oauth2.galtzo.com](https://oauth2.galtzo.com)
+- [!649](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/649) - Test compatibility with all key minor versions of Hashie v0, v1, v2, v3, v4, v5, HEAD
 ### Changed
 - Updated `spec.homepage_uri` in gemspec to GitHub Pages YARD documentation site
 ### Deprecated

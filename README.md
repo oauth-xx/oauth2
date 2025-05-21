@@ -60,6 +60,10 @@ covering the latest patch for each of the following minor versions:
 The last two were extracted from this gem. They are part of the `oauth-xx` org,
 and are developed in tight collaboration with this gem.
 
+Also, where reasonable, tested against the runtime dependencies of those dependencies:
+
+* gem `hashie` @ v0, v1, v2, v3, v4, v5, HEAD ⏩️ [hashie/hashie](https://github.com/hashie/hashie)
+
 #### You should upgrade this gem with confidence\*.
 
 - This gem follows a _strict & correct_ (according to the maintainer of SemVer; [more info][sv-pub-api]) interpretation of SemVer.

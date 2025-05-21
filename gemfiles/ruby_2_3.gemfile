@@ -6,6 +6,8 @@ gemspec path: "../"
 
 eval_gemfile("modular/faraday_v0.gemfile")
 
+eval_gemfile("modular/hashie_v0.gemfile")
+
 eval_gemfile("modular/jwt_v1.gemfile")
 
 eval_gemfile("modular/logger_v1_2.gemfile")

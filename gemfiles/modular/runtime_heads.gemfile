@@ -5,6 +5,9 @@
 # Ruby >= 3.0
 gem "faraday", github: "lostisland/faraday", branch: "main"
 
+# Ruby >= 0
+gem "hashie", github: "hashie/hashie", branch: "master"
+
 # Ruby >= 2.5
 gem "jwt", github: "jwt/ruby-jwt", branch: "main"
 
