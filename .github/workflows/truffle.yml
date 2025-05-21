@@ -62,7 +62,32 @@ jobs:
       # NOTE: This does not use the primary Gemfile at all.
       - name: Install Root Appraisal
         run: bundle
-      - name: Appraisal for ${{ matrix.appraisal }}
+
+      - name: "[Attempt 1] Install Root Appraisal"
+        id: bundleAttempt1
+        run: bundle
+        # Continue to the next step on failure
+        continue-on-error: true
+
+      # Effectively an automatic retry of the previous step.
+      - name: "[Attempt 2] Install Root Appraisal"
+        id: bundleAttempt2
+        # If bundleAttempt1 failed, try again here; Otherwise skip.
+        if: steps.bundleAttempt1.outcome == 'failure'
+        run: bundle
+
+      - name: "[Attempt 1] Appraisal for ${{ matrix.ruby }}@${{ matrix.appraisal }}"
+        id: bundleAppraisalAttempt1
         run: bundle exec appraisal ${{ matrix.appraisal }} bundle
+        # Continue to the next step on failure
+        continue-on-error: true
+
+      # Effectively an automatic retry of the previous step.
+      - name: "[Attempt 2] Appraisal for ${{ matrix.ruby }}@${{ matrix.appraisal }}"
+        id: bundleAppraisalAttempt2
+        # If bundleAttempt1 failed, try again here; Otherwise skip.
+        if: steps.bundleAppraisalAttempt1.outcome == 'failure'
+        run: bundle exec appraisal ${{ matrix.appraisal }} bundle
+
       - name: Tests for ${{ matrix.ruby }} via ${{ matrix.exec_cmd }}
         run: bundle exec appraisal ${{ matrix.appraisal }} bundle exec ${{ matrix.exec_cmd }}
