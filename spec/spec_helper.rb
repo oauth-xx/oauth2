@@ -4,13 +4,13 @@
 ENV["RACK_ENV"] = "test"
 
 # Third Party Libraries
+require "addressable/uri"
+require "rspec/block_is_expected"
+require "rspec/pending_for"
 require "rspec/stubbed_env"
 require "silent_stream"
-require "addressable/uri"
-require "rspec/pending_for"
-require "rspec/block_is_expected"
-require "version_gem/ruby"
 require "version_gem/rspec"
+require "version_gem/ruby"
 
 # Extensions
 require_relative "ext/backports"
