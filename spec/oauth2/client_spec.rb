@@ -610,7 +610,6 @@ RSpec.describe OAuth2::Client do
               expect(token.token).to eq("the-token")
               expect(token.response.parsed).to be_a(Hash)
               expect(token.response.parsed).not_to be_a(SnakyHash::StringKeyed)
-              expect(token.response.parsed).not_to be_a(SnakyHash::SymbolKeyed)
             end
           end
 
@@ -628,7 +627,6 @@ RSpec.describe OAuth2::Client do
               expect(token.token).to eq("the-token")
               expect(token.response.parsed).to be_a(Hash)
               expect(token.response.parsed).not_to be_a(SnakyHash::StringKeyed)
-              expect(token.response.parsed).not_to be_a(SnakyHash::SymbolKeyed)
             end
 
             context "with alternate token named" do
@@ -640,7 +638,6 @@ RSpec.describe OAuth2::Client do
                 expect(token.token).to eq("the-token")
                 expect(token.response.parsed).to be_a(Hash)
                 expect(token.response.parsed).not_to be_a(SnakyHash::StringKeyed)
-                expect(token.response.parsed).not_to be_a(SnakyHash::SymbolKeyed)
               end
 
               it "returns a snake-cased key" do
@@ -662,13 +659,15 @@ RSpec.describe OAuth2::Client do
               expect(token.token).to eq("the-token")
               expect(token.response.parsed).to be_a(Hash)
               expect(token.response.parsed).not_to be_a(SnakyHash::StringKeyed)
-              expect(token.response.parsed).not_to be_a(SnakyHash::SymbolKeyed)
             end
 
             it "returns a configured AccessToken" do
               expect(token).to be_a OAuth2::AccessToken
               expect(token.token).to eq("the-token")
-              expect(token.response.parsed.to_h).to eq("accessToken" => "the-token")
+              parsed_h = token.response.parsed.to_h
+              expect(parsed_h).to eq("accessToken" => "the-token")
+              expect(parsed_h).to be_a(Hash)
+              expect(parsed_h).not_to be_a(SnakyHash::StringKeyed)
             end
           end
 
@@ -678,7 +677,10 @@ RSpec.describe OAuth2::Client do
             it "returns a configured AccessToken" do
               expect(token).to be_a OAuth2::AccessToken
               expect(token.token).to eq("the-token")
-              expect(token.response.parsed.to_h).to eq("accessToken" => "the-token")
+              parsed_h = token.response.parsed.to_h
+              expect(parsed_h).to eq("accessToken" => "the-token")
+              expect(parsed_h).to be_a(Hash)
+              expect(parsed_h).not_to be_a(SnakyHash::StringKeyed)
             end
 
             it "parsed is a Hash" do
@@ -686,7 +688,6 @@ RSpec.describe OAuth2::Client do
               expect(token.token).to eq("the-token")
               expect(token.response.parsed).to be_a(Hash)
               expect(token.response.parsed).not_to be_a(SnakyHash::StringKeyed)
-              expect(token.response.parsed).not_to be_a(SnakyHash::SymbolKeyed)
             end
 
             context "with alternate token name" do
@@ -698,13 +699,15 @@ RSpec.describe OAuth2::Client do
                 expect(token.token).to eq("the-token")
                 expect(token.response.parsed).to be_a(Hash)
                 expect(token.response.parsed).not_to be_a(SnakyHash::StringKeyed)
-                expect(token.response.parsed).not_to be_a(SnakyHash::SymbolKeyed)
               end
 
               it "returns a snake-cased key" do
                 expect(token).to be_a OAuth2::AccessToken
                 expect(token.token).to eq("the-token")
-                expect(token.response.parsed.to_h).to eq("bananaFace" => "the-token")
+                parsed_h = token.response.parsed.to_h
+                expect(parsed_h).to eq("bananaFace" => "the-token")
+                expect(parsed_h).to be_a(Hash)
+                expect(parsed_h).not_to be_a(SnakyHash::StringKeyed)
               end
             end
           end
@@ -718,12 +721,11 @@ RSpec.describe OAuth2::Client do
           context "with token_name" do
             let(:access_token_opts) { {token_name: "access_token"} }
 
-            it "parsed is a Hash" do
+            it "parsed is a SnakyHash::StringKeyed" do
               expect(token).to be_a OAuth2::AccessToken
               expect(token.token).to eq("the-token")
               expect(token.response.parsed).to be_a(Hash)
-              expect(token.response.parsed).not_to be_a(SnakyHash::StringKeyed)
-              expect(token.response.parsed).not_to be_a(SnakyHash::SymbolKeyed)
+              expect(token.response.parsed).to be_a(SnakyHash::StringKeyed)
             end
 
             it "returns a snake-cased key" do
@@ -736,12 +738,11 @@ RSpec.describe OAuth2::Client do
               let(:access_token_opts) { {token_name: "banana_face"} }
               let(:response_body) { JSON.dump("banana_face" => "the-token") }
 
-              it "parsed is a Hash" do
+              it "parsed is a SnakyHash::StringKeyed" do
                 expect(token).to be_a OAuth2::AccessToken
                 expect(token.token).to eq("the-token")
                 expect(token.response.parsed).to be_a(Hash)
-                expect(token.response.parsed).not_to be_a(SnakyHash::StringKeyed)
-                expect(token.response.parsed).not_to be_a(SnakyHash::SymbolKeyed)
+                expect(token.response.parsed).to be_a(SnakyHash::StringKeyed)
               end
 
               it "returns a snake-cased key" do
@@ -759,12 +760,11 @@ RSpec.describe OAuth2::Client do
               expect(token.response.parsed.to_h).to eq("access_token" => "the-token")
             end
 
-            it "parsed is a Hash" do
+            it "parsed is a SnakyHash::StringKeyed" do
               expect(token).to be_a OAuth2::AccessToken
               expect(token.token).to eq("the-token")
               expect(token.response.parsed).to be_a(Hash)
-              expect(token.response.parsed).not_to be_a(SnakyHash::StringKeyed)
-              expect(token.response.parsed).not_to be_a(SnakyHash::SymbolKeyed)
+              expect(token.response.parsed).to be_a(SnakyHash::StringKeyed)
             end
           end
         end
@@ -775,12 +775,11 @@ RSpec.describe OAuth2::Client do
           context "with token_name" do
             let(:access_token_opts) { {token_name: "accessToken"} }
 
-            it "parsed is a Hash, but no token since snaky changed key" do
+            it "parsed is a SnakyHash::StringKeyed, and token is found" do
               expect(token).to be_a OAuth2::AccessToken
-              expect(token.token).to eq("")
+              expect(token.token).to eq("the-token")
               expect(token.response.parsed).to be_a(Hash)
-              expect(token.response.parsed).not_to be_a(SnakyHash::StringKeyed)
-              expect(token.response.parsed).not_to be_a(SnakyHash::SymbolKeyed)
+              expect(token.response.parsed).to be_a(SnakyHash::StringKeyed)
             end
 
             it "returns a snake-cased key" do
@@ -792,12 +791,11 @@ RSpec.describe OAuth2::Client do
               let(:access_token_opts) { {token_name: "banana_butter_cake"} }
               let(:response_body) { JSON.dump("banana-butterCake" => "the-token") }
 
-              it "parsed is a Hash" do
+              it "parsed is a SnakyHash::StringKeyed" do
                 expect(token).to be_a OAuth2::AccessToken
                 expect(token.token).to eq("the-token")
                 expect(token.response.parsed).to be_a(Hash)
-                expect(token.response.parsed).not_to be_a(SnakyHash::StringKeyed)
-                expect(token.response.parsed).not_to be_a(SnakyHash::SymbolKeyed)
+                expect(token.response.parsed).to be_a(SnakyHash::StringKeyed)
               end
 
               it "returns a snake-cased key" do
@@ -809,12 +807,11 @@ RSpec.describe OAuth2::Client do
           end
 
           context "without token_name" do
-            it "parsed is a Hash" do
+            it "parsed is a SnakyHash::StringKeyed" do
               expect(token).to be_a OAuth2::AccessToken
               expect(token.token).to eq("the-token")
               expect(token.response.parsed).to be_a(Hash)
-              expect(token.response.parsed).not_to be_a(SnakyHash::StringKeyed)
-              expect(token.response.parsed).not_to be_a(SnakyHash::SymbolKeyed)
+              expect(token.response.parsed).to be_a(SnakyHash::StringKeyed)
             end
 
             it "returns a snake-cased key" do

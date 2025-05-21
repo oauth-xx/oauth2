@@ -477,7 +477,7 @@ response.parsed.access_token      # => "aaaaaaaa"
 response.parsed[:access_token]    # => "aaaaaaaa"
 response.parsed.additional_data   # => "additional"
 response.parsed[:additional_data] # => "additional"
-response.parsed.class.name        # => OAuth2::SnakyHash (subclass of Hashie::Mash::Rash, from `rash_alt` gem)
+response.parsed.class.name        # => SnakyHash::StringKeyed (from snaky_hash gem)
 ```
 
 #### What if I hate snakes and/or indifference?

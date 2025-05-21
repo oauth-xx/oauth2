@@ -824,14 +824,14 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       <pre class="lines">
 
 
+101
 102
 103
 104
-105
-106</pre>
+105</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 101</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_content_type'>content_type</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span>
@@ -958,8 +958,7 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
 95
 96
 97
-98
-99</pre>
+98</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 78</span>
@@ -980,8 +979,7 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
     <span class='kw'>end</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:snaky</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@parsed</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_parsed'>parsed</span> <span class='op'>=</span> <span class='const'>SnakyHash</span><span class='op'>::</span><span class='const'>StringKeyed</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='ivar'>@parsed</span><span class='rparen'>)</span>
-    <span class='ivar'>@parsed</span> <span class='op'>=</span> <span class='id identifier rubyid_parsed'>parsed</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span>
+    <span class='ivar'>@parsed</span> <span class='op'>=</span> <span class='const'>SnakyHash</span><span class='op'>::</span><span class='const'>StringKeyed</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='ivar'>@parsed</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='ivar'>@parsed</span>
@@ -1058,6 +1056,7 @@ by looking up <span class='object_link'><a href="#content_type-instance_method" 
       <pre class="lines">
 
 
+123
 124
 125
 126
@@ -1068,11 +1067,10 @@ by looking up <span class='object_link'><a href="#content_type-instance_method" 
 131
 132
 133
-134
-135</pre>
+134</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 124</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 123</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parser'>parser</span>
   <span class='kw'>return</span> <span class='ivar'>@parser</span> <span class='kw'>if</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='ivar'>@parser</span><span class='rparen'>)</span>
@@ -1136,7 +1134,7 @@ by looking up <span class='object_link'><a href="#content_type-instance_method" 
 </div>
 
       <div id="footer">
-  Generated on Wed May 21 09:02:39 2025 by
+  Generated on Thu May 22 05:28:03 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.3).
 </div>

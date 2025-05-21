@@ -73,7 +73,7 @@ module OAuth2
 
     # The {#response} {#body} as parsed by {#parser}.
     #
-    # @return [Object] As returned by {#parser} if it is #call-able.
+    # @return [Object, SnakyHash::StringKeyed] As returned by {#parser} if #call-able; snaky hash if options[:snaky].
     # @return [nil] If the {#parser} is not #call-able.
     def parsed
       return @parsed if defined?(@parsed)
@@ -91,8 +91,7 @@ module OAuth2
         end
 
       if options[:snaky] && @parsed.is_a?(Hash)
-        parsed = SnakyHash::StringKeyed.new(@parsed)
-        @parsed = parsed.to_h
+        @parsed = SnakyHash::StringKeyed.new(@parsed)
       end
 
       @parsed
