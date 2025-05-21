@@ -685,7 +685,7 @@ The gem is available as open source under the terms of
 the [MIT License][📄license] [![License: MIT][📄license-img]][📄license-ref].
 See [LICENSE.txt][📄license] for the official [Copyright Notice][📄copyright-notice-explainer].
 
-[![FOSSA Status][fossa2-img])][fossa2]
+[![FOSSA Status][fossa2-img]][fossa2]
 
 [fossa2]: https://app.fossa.io/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2?ref=badge_large
 [fossa2-img]: https://app.fossa.io/api/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2.svg?type=large
