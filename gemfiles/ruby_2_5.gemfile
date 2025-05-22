@@ -2,7 +2,7 @@
 
 source "https://rubygems.org"
 
-gemspec path: "../"
+gemspec :path => "../"
 
 eval_gemfile("modular/faraday_v1.gemfile")
 

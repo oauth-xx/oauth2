@@ -54,7 +54,13 @@ module OAuth2
             extra_tokens_warning(supported_keys, t_key)
             t_key
           end
-        token = fresh.delete(key) || ""
+        token = if !defined?(Hashie::VERSION) # i.e. < "1.0"
+                  warn("snaky_hash and oauth2 will drop support for Hashie v0 in the next major version. Please upgrade to a modern Hashie.")
+                  # There is a bug in Hashie v0, which is accounts for.
+                  fresh.delete(key) || fresh[key] || ""
+                else
+                  fresh.delete(key) || ""
+                end
         new(client, token, fresh)
       end
 

@@ -1,4 +1,5 @@
-name: MRI 2.4, 2.5 (EOL)
+# THE CABOOSE IS AN ABSOLUTE WAGON
+name: MRI 2.3 X Hashie WAGON (EOL)
 
 permissions:
   contents: read
@@ -34,17 +35,49 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # Ruby 2.4
-          - ruby: "ruby-2.4"
-            appraisal: "ruby-2-4"
+          # Ruby 2.3
+          - ruby: "ruby-2.3"
+            appraisal: "ruby-2-3-hashie_v0"
             exec_cmd: "rake test"
             gemfile: "Appraisal.root"
             rubygems: "3.3.27"
             bundler: "2.3.27"
 
-          # Ruby 2.5
-          - ruby: "ruby-2.5"
-            appraisal: "ruby-2-5"
+          # Ruby 2.3
+          - ruby: "ruby-2.3"
+            appraisal: "ruby-2-3-hashie_v1"
+            exec_cmd: "rake test"
+            gemfile: "Appraisal.root"
+            rubygems: "3.3.27"
+            bundler: "2.3.27"
+
+          # Ruby 2.3
+          - ruby: "ruby-2.3"
+            appraisal: "ruby-2-3-hashie_v2"
+            exec_cmd: "rake test"
+            gemfile: "Appraisal.root"
+            rubygems: "3.3.27"
+            bundler: "2.3.27"
+
+          # Ruby 2.3
+          - ruby: "ruby-2.3"
+            appraisal: "ruby-2-3-hashie_v3"
+            exec_cmd: "rake test"
+            gemfile: "Appraisal.root"
+            rubygems: "3.3.27"
+            bundler: "2.3.27"
+
+          # Ruby 2.3
+          - ruby: "ruby-2.3"
+            appraisal: "ruby-2-3-hashie_v4"
+            exec_cmd: "rake test"
+            gemfile: "Appraisal.root"
+            rubygems: "3.3.27"
+            bundler: "2.3.27"
+
+          # Ruby 2.3
+          - ruby: "ruby-2.3"
+            appraisal: "ruby-2-3-hashie_v5"
             exec_cmd: "rake test"
             gemfile: "Appraisal.root"
             rubygems: "3.3.27"
@@ -66,8 +99,8 @@ jobs:
       # We need to do this first to get appraisal installed.
       # NOTE: This does not use the primary Gemfile at all.
       - name: Install Root Appraisal
-        run: bundle
+        run: bundle > /dev/null 2>&1
       - name: Appraisal for ${{ matrix.appraisal }}
-        run: bundle exec appraisal ${{ matrix.appraisal }} bundle
+        run: bundle exec appraisal ${{ matrix.appraisal }} bundle > /dev/null 2>&1
       - name: Tests for ${{ matrix.ruby }} via ${{ matrix.exec_cmd }}
         run: bundle exec appraisal ${{ matrix.appraisal }} bundle exec ${{ matrix.exec_cmd }}
