@@ -1,5 +1,5 @@
 spec/oauth2/access_token_spec.rb -- 1 warning:
-  [292, 293]:DuplicateMethodCall: assert_initialized_token calls 'target.params' 2 times [https://github.com/troessner/reek/blob/v6.5.0/docs/Duplicate-Method-Call.md]
+  [300, 301]:DuplicateMethodCall: assert_initialized_token calls 'target.params' 2 times [https://github.com/troessner/reek/blob/v6.5.0/docs/Duplicate-Method-Call.md]
 spec/oauth2/client_spec.rb -- 3 warnings:
   [1072]:UnusedParameters: initialize has unused parameter 'client' [https://github.com/troessner/reek/blob/v6.5.0/docs/Unused-Parameters.md]
   [1072]:UnusedParameters: initialize has unused parameter 'hash' [https://github.com/troessner/reek/blob/v6.5.0/docs/Unused-Parameters.md]

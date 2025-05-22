@@ -397,7 +397,7 @@ RSpec.describe OAuth2::AccessToken do
             let(:token) { "" }
 
             it "raises on initialize" do
-              block_is_expected.to raise_error(OAuth2::Error, {error: "OAuth2::AccessToken has no token", error_description: "Options are: {:mode=>:this_is_bad, :raise_errors=>true}"}.to_s)
+              block_is_expected.to raise_error(OAuth2::Error, {error: "OAuth2::AccessToken has no token", error_description: "Options are: #{{mode: :this_is_bad, raise_errors: true}}"}.to_s)
             end
           end
 
@@ -405,7 +405,7 @@ RSpec.describe OAuth2::AccessToken do
             let(:token) { nil }
 
             it "raises on initialize" do
-              block_is_expected.to raise_error(OAuth2::Error, {error: "OAuth2::AccessToken has no token", error_description: "Options are: {:mode=>:this_is_bad, :raise_errors=>true}"}.to_s)
+              block_is_expected.to raise_error(OAuth2::Error, {error: "OAuth2::AccessToken has no token", error_description: "Options are: #{{mode: :this_is_bad, raise_errors: true}}"}.to_s)
             end
           end
         end
@@ -611,7 +611,7 @@ RSpec.describe OAuth2::AccessToken do
 
           context "when there is no refresh_token" do
             it "raises on initialize" do
-              block_is_expected.to raise_error(OAuth2::Error, {error: "OAuth2::AccessToken has no token", error_description: "Options are: {:raise_errors=>true}"}.to_s)
+              block_is_expected.to raise_error(OAuth2::Error, {error: "OAuth2::AccessToken has no token", error_description: "Options are: #{{raise_errors: true}}"}.to_s)
             end
           end
 
@@ -637,7 +637,7 @@ RSpec.describe OAuth2::AccessToken do
 
           context "when there is no refresh_token" do
             it "raises on initialize" do
-              block_is_expected.to raise_error(OAuth2::Error, {error: "OAuth2::AccessToken has no token", error_description: "Options are: {:raise_errors=>true}"}.to_s)
+              block_is_expected.to raise_error(OAuth2::Error, {error: "OAuth2::AccessToken has no token", error_description: "Options are: #{{raise_errors: true}}"}.to_s)
             end
           end
 
