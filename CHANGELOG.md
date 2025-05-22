@@ -22,6 +22,19 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 - Incorrect documentation related to silencing warnings (@pboling)
 ### Security
 
+## [2.0.11] - 2025-05-22
+- TAG: [v2.0.11][2.0.11t]
+- COVERAGE: 100.00% -- 516/516 lines in 14 files
+- BRANCH COVERAGE: 100.00% -- 170/170 branches in 14 files
+- 79.05% documented
+### Added
+- More documentation
+### Changed
+- Upgraded to snaky_hash v2.0.2
+  - Provides solution for serialization issues
+### Fixed
+- [gh650](https://github.com/oauth-xx/oauth2/pull/650) - Regression in return type of `OAuth2::Response#parsed`
+
 ## [2.0.10] - 2025-05-17
 - TAG: [v2.0.10][2.0.10t]
 - COVERAGE: 100.00% -- 518/518 lines in 14 files

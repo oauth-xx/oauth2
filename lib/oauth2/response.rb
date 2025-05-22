@@ -10,6 +10,7 @@ module OAuth2
     DEFAULT_OPTIONS = {
       parse: :automatic,
       snaky: true,
+      snaky_hash_klass: SnakyHash::StringKeyed,
     }.freeze
     attr_reader :response
     attr_accessor :options
@@ -48,11 +49,12 @@ module OAuth2
     # @param [true, false] snaky (true) Convert @parsed to a snake-case,
     #   indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (from hashie gem)?
     # @param [Hash] options all other options for initializing the instance
-    def initialize(response, parse: :automatic, snaky: true, **options)
+    def initialize(response, parse: :automatic, snaky: true, snaky_hash_klass: nil, **options)
       @response = response
       @options = {
         parse: parse,
         snaky: snaky,
+        snaky_hash_klass: snaky_hash_klass,
       }.merge(options)
     end
 
@@ -91,7 +93,7 @@ module OAuth2
         end
 
       if options[:snaky] && @parsed.is_a?(Hash)
-        @parsed = SnakyHash::StringKeyed.new(@parsed)
+        @parsed = options[:snaky_hash_klass].new(@parsed)
       end
 
       @parsed
