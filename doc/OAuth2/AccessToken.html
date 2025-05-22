@@ -1038,30 +1038,6 @@ When nil one of TOKEN_KEY_LOOKUP will be used</p>
       <pre class="lines">
 
 
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
 142
 143
 144
@@ -1071,10 +1047,34 @@ When nil one of TOKEN_KEY_LOOKUP will be used</p>
 148
 149
 150
-151</pre>
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 118</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 142</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_client'>client</span><span class='comma'>,</span> <span class='id identifier rubyid_token'>token</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='ivar'>@client</span> <span class='op'>=</span> <span class='id identifier rubyid_client'>client</span>
@@ -1147,12 +1147,12 @@ When nil one of TOKEN_KEY_LOOKUP will be used</p>
       <pre class="lines">
 
 
-11
-12
-13</pre>
+26
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_client'>client</span>
   <span class='ivar'>@client</span>
@@ -1189,12 +1189,12 @@ When nil one of TOKEN_KEY_LOOKUP will be used</p>
       <pre class="lines">
 
 
-11
-12
-13</pre>
+26
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_expires_at'>expires_at</span>
   <span class='ivar'>@expires_at</span>
@@ -1231,12 +1231,12 @@ When nil one of TOKEN_KEY_LOOKUP will be used</p>
       <pre class="lines">
 
 
-11
-12
-13</pre>
+26
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_expires_in'>expires_in</span>
   <span class='ivar'>@expires_in</span>
@@ -1273,12 +1273,12 @@ When nil one of TOKEN_KEY_LOOKUP will be used</p>
       <pre class="lines">
 
 
-11
-12
-13</pre>
+26
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_expires_latency'>expires_latency</span>
   <span class='ivar'>@expires_latency</span>
@@ -1315,12 +1315,12 @@ When nil one of TOKEN_KEY_LOOKUP will be used</p>
       <pre class="lines">
 
 
-12
-13
-14</pre>
+27
+28
+29</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 27</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_options'>options</span>
   <span class='ivar'>@options</span>
@@ -1357,12 +1357,12 @@ When nil one of TOKEN_KEY_LOOKUP will be used</p>
       <pre class="lines">
 
 
-11
-12
-13</pre>
+26
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_params'>params</span>
   <span class='ivar'>@params</span>
@@ -1399,12 +1399,12 @@ When nil one of TOKEN_KEY_LOOKUP will be used</p>
       <pre class="lines">
 
 
-12
-13
-14</pre>
+27
+28
+29</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 27</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_refresh_token'>refresh_token</span>
   <span class='ivar'>@refresh_token</span>
@@ -1441,12 +1441,12 @@ When nil one of TOKEN_KEY_LOOKUP will be used</p>
       <pre class="lines">
 
 
-12
-13
-14</pre>
+27
+28
+29</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 27</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_response'>response</span>
   <span class='ivar'>@response</span>
@@ -1483,12 +1483,12 @@ When nil one of TOKEN_KEY_LOOKUP will be used</p>
       <pre class="lines">
 
 
-11
-12
-13</pre>
+26
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_token'>token</span>
   <span class='ivar'>@token</span>
@@ -1731,27 +1731,36 @@ OAuth2.config.silence_no_tokens_warning is true</p>
       <pre class="lines">
 
 
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
 57
 58
-59</pre>
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 57</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_hash'>from_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_client'>client</span><span class='comma'>,</span> <span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fresh'>fresh</span> <span class='op'>=</span> <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
@@ -1768,8 +1777,17 @@ OAuth2.config.silence_no_tokens_warning is true</p>
       <span class='id identifier rubyid_extra_tokens_warning'>extra_tokens_warning</span><span class='lparen'>(</span><span class='id identifier rubyid_supported_keys'>supported_keys</span><span class='comma'>,</span> <span class='id identifier rubyid_t_key'>t_key</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_t_key'>t_key</span>
     <span class='kw'>end</span>
-  <span class='id identifier rubyid_token'>token</span> <span class='op'>=</span> <span class='id identifier rubyid_fresh'>fresh</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_client'>client</span><span class='comma'>,</span> <span class='id identifier rubyid_token'>token</span><span class='comma'>,</span> <span class='id identifier rubyid_fresh'>fresh</span><span class='rparen'>)</span>
+  <span class='comment'># :nocov:
+</span>  <span class='comment'># TODO: Get rid of this branching logic when dropping Hashie &lt; v3.2
+</span>  <span class='id identifier rubyid_token'>token</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='op'>!</span><span class='kw'>defined?</span><span class='lparen'>(</span><span class='const'>Hashie</span><span class='op'>::</span><span class='const'>VERSION</span><span class='rparen'>)</span> <span class='comment'># i.e. &lt;= &quot;1.1.0&quot;; the first Hashie to ship with a VERSION constant
+</span>    <span class='id identifier rubyid_warn'>warn</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>snaky_hash and oauth2 will drop support for Hashie v0 in the next major version. Please upgrade to a modern Hashie.</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='comment'># There is a bug in Hashie v0, which is accounts for.
+</span>    <span class='id identifier rubyid_fresh'>fresh</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_fresh'>fresh</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_fresh'>fresh</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+  <span class='comment'># :nocov:
+</span>  <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_client'>client</span><span class='comma'>,</span> <span class='id identifier rubyid_token'>token</span><span class='comma'>,</span> <span class='id identifier rubyid_fresh'>fresh</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1852,12 +1870,12 @@ OAuth2.config.silence_no_tokens_warning is true</p>
       <pre class="lines">
 
 
-66
-67
-68</pre>
+90
+91
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 90</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_from_kvform'>from_kvform</span><span class='lparen'>(</span><span class='id identifier rubyid_client'>client</span><span class='comma'>,</span> <span class='id identifier rubyid_kvform'>kvform</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_from_hash'>from_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_client'>client</span><span class='comma'>,</span> <span class='const'>Rack</span><span class='op'>::</span><span class='const'>Utils</span><span class='period'>.</span><span class='id identifier rubyid_parse_query'>parse_query</span><span class='lparen'>(</span><span class='id identifier rubyid_kvform'>kvform</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -1917,12 +1935,12 @@ OAuth2.config.silence_no_tokens_warning is true</p>
       <pre class="lines">
 
 
-156
-157
-158</pre>
+180
+181
+182</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 156</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 180</span>
 
 <span class='kw'>def</span> <span class='op'>[]</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span>
   <span class='ivar'>@params</span><span class='lbracket'>[</span><span class='id identifier rubyid_key'>key</span><span class='rbracket'>]</span>
@@ -1964,12 +1982,12 @@ OAuth2.config.silence_no_tokens_warning is true</p>
       <pre class="lines">
 
 
-338
-339
-340</pre>
+362
+363
+364</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 338</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 362</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_request'>request</span><span class='lparen'>(</span><span class='symbol'>:delete</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
@@ -2021,12 +2039,12 @@ OAuth2.config.silence_no_tokens_warning is true</p>
       <pre class="lines">
 
 
-170
-171
-172</pre>
+194
+195
+196</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 194</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_expired?'>expired?</span>
   <span class='id identifier rubyid_expires?'>expires?</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='id identifier rubyid_expires_at'>expires_at</span> <span class='op'>&lt;=</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_now'>now</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='rparen'>)</span>
@@ -2074,12 +2092,12 @@ OAuth2.config.silence_no_tokens_warning is true</p>
       <pre class="lines">
 
 
-163
-164
-165</pre>
+187
+188
+189</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 163</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 187</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_expires?'>expires?</span>
   <span class='op'>!</span><span class='op'>!</span><span class='ivar'>@expires_at</span>
@@ -2121,12 +2139,12 @@ OAuth2.config.silence_no_tokens_warning is true</p>
       <pre class="lines">
 
 
-310
-311
-312</pre>
+334
+335
+336</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 310</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 334</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_request'>request</span><span class='lparen'>(</span><span class='symbol'>:get</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
@@ -2161,12 +2179,12 @@ OAuth2.config.silence_no_tokens_warning is true</p>
       <pre class="lines">
 
 
-343
-344
-345</pre>
+367
+368
+369</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 343</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 367</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_headers'>headers</span>
   <span class='lbrace'>{</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Authorization</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:header_format</span><span class='rbracket'>]</span> <span class='op'>%</span> <span class='id identifier rubyid_token'>token</span><span class='rbrace'>}</span>
@@ -2208,12 +2226,12 @@ OAuth2.config.silence_no_tokens_warning is true</p>
       <pre class="lines">
 
 
-331
-332
-333</pre>
+355
+356
+357</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 331</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 355</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_patch'>patch</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_request'>request</span><span class='lparen'>(</span><span class='symbol'>:patch</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
@@ -2255,12 +2273,12 @@ OAuth2.config.silence_no_tokens_warning is true</p>
       <pre class="lines">
 
 
-317
-318
-319</pre>
+341
+342
+343</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 317</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 341</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_post'>post</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_request'>request</span><span class='lparen'>(</span><span class='symbol'>:post</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
@@ -2302,12 +2320,12 @@ OAuth2.config.silence_no_tokens_warning is true</p>
       <pre class="lines">
 
 
-324
-325
-326</pre>
+348
+349
+350</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 324</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 348</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_put'>put</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_request'>request</span><span class='lparen'>(</span><span class='symbol'>:put</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
@@ -2457,23 +2475,23 @@ OAuth2.config.silence_no_tokens_warning is true</p>
       <pre class="lines">
 
 
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198</pre>
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 185</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 209</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_refresh'>refresh</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_access_token_opts'>access_token_opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="../OAuth2.html" title="OAuth2 (module)">OAuth2</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Error.html" title="OAuth2::Error (class)">Error</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Error.html#initialize-instance_method" title="OAuth2::Error#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='label'>error:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>A refresh_token is not available</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_refresh_token'>refresh_token</span>
@@ -2679,13 +2697,13 @@ OAuth2.config.silence_no_tokens_warning is true</p>
       <pre class="lines">
 
 
-302
-303
-304
-305</pre>
+326
+327
+328
+329</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 302</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 326</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_request'>request</span><span class='lparen'>(</span><span class='id identifier rubyid_verb'>verb</span><span class='comma'>,</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_configure_authentication!'>configure_authentication!</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
@@ -2893,34 +2911,34 @@ requesting client.</p>
       <pre class="lines">
 
 
-234
-235
-236
-237
-238
-239
-240
-241
-242
-243
-244
-245
-246
-247
-248
-249
-250
-251
-252
-253
-254
-255
-256
-257
-258</pre>
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 234</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 258</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_revoke'>revoke</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_token_type_hint_orig'>token_type_hint_orig</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='symbol'>:token_type_hint</span><span class='rparen'>)</span>
@@ -3001,27 +3019,27 @@ requesting client.</p>
       <pre class="lines">
 
 
-268
-269
-270
-271
-272
-273
-274
-275
-276
-277
-278
-279
-280
-281
-282
-283
-284
-285</pre>
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 268</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/access_token.rb', line 292</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_hash'>to_hash</span>
   <span class='id identifier rubyid_hsh'>hsh</span> <span class='op'>=</span> <span class='lbrace'>{</span>
@@ -3051,7 +3069,7 @@ requesting client.</p>
 </div>
 
       <div id="footer">
-  Generated on Thu May 22 05:28:03 2025 by
+  Generated on Thu May 22 08:30:17 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.3).
 </div>

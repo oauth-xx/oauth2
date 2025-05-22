@@ -6,9 +6,9 @@
   "lib/oauth2.rb:65351186": [
     [38, 11, 7, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 651502127]
   ],
-  "lib/oauth2/access_token.rb:3471244990": [
-    [49, 13, 5, "Style/IdenticalConditionalBranches: Move `t_key` out of the conditional.", 183811513],
-    [55, 13, 5, "Style/IdenticalConditionalBranches: Move `t_key` out of the conditional.", 183811513]
+  "lib/oauth2/access_token.rb:558937598": [
+    [64, 13, 5, "Style/IdenticalConditionalBranches: Move `t_key` out of the conditional.", 183811513],
+    [70, 13, 5, "Style/IdenticalConditionalBranches: Move `t_key` out of the conditional.", 183811513]
   ],
   "lib/oauth2/authenticator.rb:63639854": [
     [42, 5, 113, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 734523108]
@@ -18,7 +18,7 @@
     [9, 9, 25, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 2012823020],
     [13, 9, 25, "ThreadSafety/ClassInstanceVariable: Avoid class instance variables.", 2012823020]
   ],
-  "lib/oauth2/response.rb:1516229748": [
+  "lib/oauth2/response.rb:2808363818": [
     [35, 5, 204, "Style/ClassMethodsDefinitions: Use `class << self` to define a class method.", 996912427]
   ],
   "oauth2.gemspec:1301437182": [

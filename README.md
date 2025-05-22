@@ -496,7 +496,7 @@ SnakyHash::StringKeyed.class_eval do
 end
 ```
 
-2. 
+2.
 
 #### What if I hate snakes and/or indifference?
 
