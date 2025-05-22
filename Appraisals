@@ -35,9 +35,59 @@ appraise "current" do
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
-appraise "ruby-2-3" do
+appraise "ruby-2-3-hashie_v0" do
   eval_gemfile "modular/faraday_v0.gemfile"
   eval_gemfile "modular/hashie_v0.gemfile"
+  eval_gemfile "modular/jwt_v1.gemfile"
+  eval_gemfile "modular/logger_v1_2.gemfile"
+  eval_gemfile "modular/multi_xml_v0_5.gemfile"
+  eval_gemfile "modular/rack_v1_2.gemfile"
+  remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
+end
+
+appraise "ruby-2-3-hashie_v1" do
+  eval_gemfile "modular/faraday_v0.gemfile"
+  eval_gemfile "modular/hashie_v1.gemfile"
+  eval_gemfile "modular/jwt_v1.gemfile"
+  eval_gemfile "modular/logger_v1_2.gemfile"
+  eval_gemfile "modular/multi_xml_v0_5.gemfile"
+  eval_gemfile "modular/rack_v1_2.gemfile"
+  remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
+end
+
+appraise "ruby-2-3-hashie_v2" do
+  eval_gemfile "modular/faraday_v0.gemfile"
+  eval_gemfile "modular/hashie_v2.gemfile"
+  eval_gemfile "modular/jwt_v1.gemfile"
+  eval_gemfile "modular/logger_v1_2.gemfile"
+  eval_gemfile "modular/multi_xml_v0_5.gemfile"
+  eval_gemfile "modular/rack_v1_2.gemfile"
+  remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
+end
+
+appraise "ruby-2-3-hashie_v3" do
+  eval_gemfile "modular/faraday_v0.gemfile"
+  eval_gemfile "modular/hashie_v3.gemfile"
+  eval_gemfile "modular/jwt_v1.gemfile"
+  eval_gemfile "modular/logger_v1_2.gemfile"
+  eval_gemfile "modular/multi_xml_v0_5.gemfile"
+  eval_gemfile "modular/rack_v1_2.gemfile"
+  remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
+end
+
+appraise "ruby-2-3-hashie_v4" do
+  eval_gemfile "modular/faraday_v0.gemfile"
+  eval_gemfile "modular/hashie_v4.gemfile"
+  eval_gemfile "modular/jwt_v1.gemfile"
+  eval_gemfile "modular/logger_v1_2.gemfile"
+  eval_gemfile "modular/multi_xml_v0_5.gemfile"
+  eval_gemfile "modular/rack_v1_2.gemfile"
+  remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
+end
+
+appraise "ruby-2-3-hashie_v5" do
+  eval_gemfile "modular/faraday_v0.gemfile"
+  eval_gemfile "modular/hashie_v5.gemfile"
   eval_gemfile "modular/jwt_v1.gemfile"
   eval_gemfile "modular/logger_v1_2.gemfile"
   eval_gemfile "modular/multi_xml_v0_5.gemfile"

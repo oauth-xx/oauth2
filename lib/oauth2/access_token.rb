@@ -1,5 +1,20 @@
 # frozen_string_literal: true
 
+# :nocov:
+begin
+  # The first version of hashie that has a version file was 1.1.0
+  # The first version of hashie that required the version file at runtime was 3.2.0
+  # If it has already been loaded then this is very low cost, as Kernel.require uses maintains a cache
+  # If this it hasn't this will work to get it loaded, and then we will be able to use
+  #   defined?(Hashie::Version)
+  # as a test.
+  # TODO: get rid this mess when we drop Hashie < 3.2, as Hashie will self-load its version then
+  require "hashie/version"
+rescue LoadError
+  nil
+end
+# :nocov:
+
 module OAuth2
   class AccessToken # rubocop:disable Metrics/ClassLength
     TOKEN_KEYS_STR = %w[access_token id_token token accessToken idToken].freeze
@@ -54,7 +69,16 @@ module OAuth2
             extra_tokens_warning(supported_keys, t_key)
             t_key
           end
-        token = fresh.delete(key) || ""
+        # :nocov:
+        # TODO: Get rid of this branching logic when dropping Hashie < v3.2
+        token = if !defined?(Hashie::VERSION) # i.e. <= "1.1.0"; the first Hashie to ship with a VERSION constant
+          warn("snaky_hash and oauth2 will drop support for Hashie v0 in the next major version. Please upgrade to a modern Hashie.")
+          # There is a bug in Hashie v0, which is accounts for.
+          fresh.delete(key) || fresh[key] || ""
+        else
+          fresh.delete(key) || ""
+        end
+        # :nocov:
         new(client, token, fresh)
       end
 

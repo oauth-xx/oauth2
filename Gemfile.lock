@@ -29,7 +29,7 @@ PATH
       logger (~> 1.2)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 4)
-      snaky_hash (~> 2.0)
+      snaky_hash (~> 2.0, >= 2.0.2)
       version_gem (>= 1.1.8, < 3)
 
 GEM
@@ -83,6 +83,7 @@ GEM
       dry-inflector (~> 1.0)
       dry-logic (~> 1.4)
       zeitwerk (~> 2.6)
+    erb (5.0.1)
     faraday (2.13.1)
       faraday-net_http (>= 2.0, < 3.5)
       json
@@ -92,7 +93,7 @@ GEM
     gem_bench (2.0.5)
       bundler (>= 1.14)
       version_gem (~> 1.1, >= 1.1.4)
-    hashie (0.4.0)
+    hashie (5.0.0)
     io-console (0.8.0)
     irb (1.15.2)
       pp (>= 0.6.0)
@@ -101,7 +102,7 @@ GEM
     json (2.12.0)
     jwt (3.0.0.beta1)
       base64
-    kettle-soup-cover (1.0.6)
+    kettle-soup-cover (1.0.9)
       simplecov (~> 0.22)
       simplecov-cobertura (~> 2.1)
       simplecov-console (~> 0.9, >= 0.9.1)
@@ -140,10 +141,11 @@ GEM
       stringio
     public_suffix (6.0.2)
     racc (1.8.1)
-    rack (3.1.14)
+    rack (3.1.15)
     rainbow (3.1.1)
     rake (13.2.1)
-    rdoc (6.13.1)
+    rdoc (6.14.0)
+      erb
       psych (>= 4.0.0)
     reek (6.5.0)
       dry-schema (~> 1.13)
@@ -175,7 +177,7 @@ GEM
       ruby_version (~> 1.0)
     rspec-stubbed_env (1.0.2)
     rspec-support (3.13.3)
-    rubocop (1.75.6)
+    rubocop (1.75.7)
       json (~> 2.3)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.1.0)
@@ -249,9 +251,9 @@ GEM
     simplecov-rcov (0.3.7)
       simplecov (>= 0.4.1)
     simplecov_json_formatter (0.1.4)
-    snaky_hash (2.0.1)
-      hashie
-      version_gem (~> 1.1, >= 1.1.1)
+    snaky_hash (2.0.2)
+      hashie (>= 0.1.0, < 6)
+      version_gem (>= 1.1.8, < 3)
     standard (1.50.0)
       language_server-protocol (~> 3.17.0.2)
       lint_roller (~> 1.0)
@@ -284,7 +286,7 @@ GEM
     yard (0.9.37)
     yard-relative_markdown_links (0.5.0)
       nokogiri (>= 1.14.3, < 2)
-    zeitwerk (2.7.2)
+    zeitwerk (2.7.3)
 
 PLATFORMS
   x86_64-darwin-21

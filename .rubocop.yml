@@ -80,3 +80,7 @@ Style/TrailingCommaInHashLiteral:
 
 Gemspec/DependencyVersion:
   Enabled: false
+
+Lint/LiteralInInterpolation:
+  Exclude:
+    - 'spec/**/*.rb'

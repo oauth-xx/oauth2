@@ -61,6 +61,7 @@ RSpec.describe OAuth2::AccessToken do
       end
 
       it "warns on STDERR" do
+        skip("Warning output we spit on Hashie without VERSION constant makes this test invalid") unless defined?(Hashie::VERSION)
         msg = <<-MSG.lstrip
             OAuth2::AccessToken.from_hash: `hash` contained more than one 'token' key ([:access_token, :id_token]); using :access_token.
         MSG
@@ -90,6 +91,7 @@ RSpec.describe OAuth2::AccessToken do
         end
 
         it "does not warn on STDERR" do
+          skip("Warning output we spit on Hashie without VERSION constant makes this test invalid") unless defined?(Hashie::VERSION)
           expect(printed).to eq("")
         end
       end
@@ -111,6 +113,7 @@ RSpec.describe OAuth2::AccessToken do
         end
 
         it "does not warn on STDERR" do
+          skip("Warning output we spit on Hashie without VERSION constant makes this test invalid") unless defined?(Hashie::VERSION)
           expect(printed).to eq("")
         end
       end
@@ -140,6 +143,7 @@ RSpec.describe OAuth2::AccessToken do
       end
 
       it "warns on STDERR and selects the correct key" do
+        skip("Warning output we spit on Hashie without VERSION constant makes this test invalid") unless defined?(Hashie::VERSION)
         msg = <<-MSG.lstrip
             OAuth2::AccessToken.from_hash: `hash` contained more than one 'token' key ([:access_token, :id_token]); using :access_token.
         MSG
@@ -180,6 +184,7 @@ RSpec.describe OAuth2::AccessToken do
         let(:options) { {raise_errors: false} }
 
         it "warns on STDERR" do
+          skip("Warning output we spit on Hashie without VERSION constant makes this test invalid") unless defined?(Hashie::VERSION)
           msg = <<-MSG.lstrip
             OAuth2::AccessToken has no token
           MSG
@@ -206,6 +211,7 @@ RSpec.describe OAuth2::AccessToken do
           end
 
           it "does not warn when token is found" do
+            skip("Warning output we spit on Hashie without VERSION constant makes this test invalid") unless defined?(Hashie::VERSION)
             expect(printed).to eq("")
           end
         end
@@ -240,6 +246,7 @@ RSpec.describe OAuth2::AccessToken do
             end
 
             it "warns when no token is found" do
+              skip("Warning output we spit on Hashie without VERSION constant makes this test invalid") unless defined?(Hashie::VERSION)
               expect(printed.each_line.to_a).to eq([
                 "\n",
                 "OAuth2::AccessToken#from_hash key mismatch.\n",
@@ -266,6 +273,7 @@ RSpec.describe OAuth2::AccessToken do
             end
 
             it "does not warn when no token is found" do
+              skip("Warning output we spit on Hashie without VERSION constant makes this test invalid") unless defined?(Hashie::VERSION)
               expect(printed.each_line.to_a).to eq([])
             end
           end
