@@ -902,8 +902,6 @@ or one of the others at the head of this README.
 [💎SHA_checksums]: https://gitlab.com/oauth-xx/oauth2/-/tree/main/checksums
 [💎rlts]: https://github.com/rubocop-lts/rubocop-lts
 [💎rlts-img]: https://img.shields.io/badge/code_style_%26_linting-rubocop--lts-34495e.svg?plastic&logo=ruby&logoColor=white
-[🏘fossa]: https://app.fossa.io/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2?ref=badge_shield
-[🏘fossa-img]: https://app.fossa.io/api/projects/git%2Bgithub.com%2Foauth-xx%2Foauth2.svg?type=shield
 [💎d-in-dvcs]: https://railsbling.com/posts/dvcs/put_the_d_in_dvcs/
 [✉️discord-invite]: https://discord.gg/3qme4XHNKN
 [✉️discord-invite-img]: https://img.shields.io/discord/1373797679469170758?style=for-the-badge
