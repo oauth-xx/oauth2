@@ -124,6 +124,7 @@
         <dd><pre class="code"><span class='lbrace'>{</span>
   <span class='label'>parse:</span> <span class='symbol'>:automatic</span><span class='comma'>,</span>
   <span class='label'>snaky:</span> <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='label'>snaky_hash_klass:</span> <span class='const'>SnakyHash</span><span class='op'>::</span><span class='const'>StringKeyed</span><span class='comma'>,</span>
 <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
       
         <dt id="parsers-classvariable" class="">@@parsers =
@@ -343,7 +344,7 @@ to the specified format.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(response, parse: :automatic, snaky: true, **options)  &#x21d2; Response </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(response, parse: :automatic, snaky: true, snaky_hash_klass: nil, **options)  &#x21d2; Response </a>
     
 
     
@@ -443,7 +444,7 @@ to the specified format.</p>
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(response, parse: :automatic, snaky: true, **options)  &#x21d2; <tt><span class='object_link'><a href="" title="OAuth2::Response (class)">Response</a></span></tt> 
+    #<strong>initialize</strong>(response, parse: :automatic, snaky: true, snaky_hash_klass: nil, **options)  &#x21d2; <tt><span class='object_link'><a href="" title="OAuth2::Response (class)">Response</a></span></tt> 
   
 
   
@@ -535,22 +536,24 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       <pre class="lines">
 
 
-51
 52
 53
 54
 55
 56
-57</pre>
+57
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 51</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 52</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='label'>parse:</span> <span class='symbol'>:automatic</span><span class='comma'>,</span> <span class='label'>snaky:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='label'>parse:</span> <span class='symbol'>:automatic</span><span class='comma'>,</span> <span class='label'>snaky:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>snaky_hash_klass:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='ivar'>@response</span> <span class='op'>=</span> <span class='id identifier rubyid_response'>response</span>
   <span class='ivar'>@options</span> <span class='op'>=</span> <span class='lbrace'>{</span>
     <span class='label'>parse:</span> <span class='id identifier rubyid_parse'>parse</span><span class='comma'>,</span>
     <span class='label'>snaky:</span> <span class='id identifier rubyid_snaky'>snaky</span><span class='comma'>,</span>
+    <span class='label'>snaky_hash_klass:</span> <span class='id identifier rubyid_snaky_hash_klass'>snaky_hash_klass</span><span class='comma'>,</span>
   <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -590,12 +593,12 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       <pre class="lines">
 
 
-15
 16
-17</pre>
+17
+18</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 15</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 16</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_options'>options</span>
   <span class='ivar'>@options</span>
@@ -632,12 +635,12 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       <pre class="lines">
 
 
-14
 15
-16</pre>
+16
+17</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 15</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_response'>response</span>
   <span class='ivar'>@response</span>
@@ -730,16 +733,16 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       <pre class="lines">
 
 
-35
 36
 37
 38
 39
 40
-41</pre>
+41
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 36</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_register_parser'>register_parser</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_mime_types'>mime_types</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_key'>key</span> <span class='op'>=</span> <span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -784,12 +787,12 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       <pre class="lines">
 
 
-70
-71
-72</pre>
+72
+73
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_body'>body</span>
   <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
@@ -824,14 +827,14 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       <pre class="lines">
 
 
-101
-102
-103
 104
-105</pre>
+105
+106
+107
+108</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 101</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 104</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_content_type'>content_type</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span>
@@ -868,12 +871,12 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       <pre class="lines">
 
 
-60
-61
-62</pre>
+62
+63
+64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 62</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_headers'>headers</span>
   <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span>
@@ -938,8 +941,6 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       <pre class="lines">
 
 
-78
-79
 80
 81
 82
@@ -958,10 +959,13 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
 95
 96
 97
-98</pre>
+98
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 78</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 80</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parsed'>parsed</span>
   <span class='kw'>return</span> <span class='ivar'>@parsed</span> <span class='kw'>if</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='ivar'>@parsed</span><span class='rparen'>)</span>
@@ -979,7 +983,8 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
     <span class='kw'>end</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:snaky</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@parsed</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span>
-    <span class='ivar'>@parsed</span> <span class='op'>=</span> <span class='const'>SnakyHash</span><span class='op'>::</span><span class='const'>StringKeyed</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='ivar'>@parsed</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_hash_klass'>hash_klass</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:snaky_hash_klass</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="#DEFAULT_OPTIONS-constant" title="OAuth2::Response::DEFAULT_OPTIONS (constant)">DEFAULT_OPTIONS</a></span></span><span class='lbracket'>[</span><span class='symbol'>:snaky_hash_klass</span><span class='rbracket'>]</span>
+    <span class='ivar'>@parsed</span> <span class='op'>=</span> <span class='id identifier rubyid_hash_klass'>hash_klass</span><span class='lbracket'>[</span><span class='ivar'>@parsed</span><span class='rbracket'>]</span>
   <span class='kw'>end</span>
 
   <span class='ivar'>@parsed</span>
@@ -1056,9 +1061,6 @@ by looking up <span class='object_link'><a href="#content_type-instance_method" 
       <pre class="lines">
 
 
-123
-124
-125
 126
 127
 128
@@ -1067,10 +1069,13 @@ by looking up <span class='object_link'><a href="#content_type-instance_method" 
 131
 132
 133
-134</pre>
+134
+135
+136
+137</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 126</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parser'>parser</span>
   <span class='kw'>return</span> <span class='ivar'>@parser</span> <span class='kw'>if</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='ivar'>@parser</span><span class='rparen'>)</span>
@@ -1114,12 +1119,12 @@ by looking up <span class='object_link'><a href="#content_type-instance_method" 
       <pre class="lines">
 
 
-65
-66
-67</pre>
+67
+68
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 67</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_status'>status</span>
   <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span>
@@ -1134,7 +1139,7 @@ by looking up <span class='object_link'><a href="#content_type-instance_method" 
 </div>
 
       <div id="footer">
-  Generated on Thu May 22 10:28:34 2025 by
+  Generated on Fri May 23 10:50:57 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.3).
 </div>

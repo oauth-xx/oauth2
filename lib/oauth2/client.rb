@@ -19,7 +19,7 @@ module OAuth2
   # The OAuth2::Client class
   class Client # rubocop:disable Metrics/ClassLength
     RESERVED_REQ_KEYS = %w[body headers params redirect_count].freeze
-    RESERVED_PARAM_KEYS = (RESERVED_REQ_KEYS + %w[parse snaky token_method]).freeze
+    RESERVED_PARAM_KEYS = (RESERVED_REQ_KEYS + %w[parse snaky snaky_hash_klass token_method]).freeze
 
     include FilteredAttributes
 
@@ -342,14 +342,14 @@ module OAuth2
 
   private
 
-    # A generic token request options parser
     def params_to_req_opts(params)
-      parse, snaky, token_method, params, headers = parse_snaky_params_headers(params)
+      parse, snaky, snaky_hash_klass, token_method, params, headers = parse_snaky_params_headers(params)
       req_opts = {
         raise_errors: options[:raise_errors],
         token_method: token_method || options[:token_method],
         parse: parse,
         snaky: snaky,
+        snaky_hash_klass: snaky_hash_klass,
       }
       if req_opts[:token_method] == :post
         # NOTE: If proliferation of request types continues, we should implement a parser solution for Request,
@@ -394,11 +394,12 @@ module OAuth2
       end.to_h
       parse = params.key?(:parse) ? params.delete(:parse) : Response::DEFAULT_OPTIONS[:parse]
       snaky = params.key?(:snaky) ? params.delete(:snaky) : Response::DEFAULT_OPTIONS[:snaky]
+      snaky_hash_klass = params.key?(:snaky_hash_klass) ? params.delete(:snaky_hash_klass) : Response::DEFAULT_OPTIONS[:snaky_hash_klass]
       token_method = params.delete(:token_method) if params.key?(:token_method)
       params = authenticator.apply(params)
       # authenticator may add :headers, and we separate them from params here
       headers = params.delete(:headers) || {}
-      [parse, snaky, token_method, params, headers]
+      [parse, snaky, snaky_hash_klass, token_method, params, headers]
     end
 
     # Executes an HTTP request with error handling and response processing

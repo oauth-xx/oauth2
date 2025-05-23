@@ -93,7 +93,8 @@ module OAuth2
         end
 
       if options[:snaky] && @parsed.is_a?(Hash)
-        @parsed = options[:snaky_hash_klass].new(@parsed)
+        hash_klass = options[:snaky_hash_klass] || DEFAULT_OPTIONS[:snaky_hash_klass]
+        @parsed = hash_klass[@parsed]
       end
 
       @parsed

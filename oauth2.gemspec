@@ -131,7 +131,7 @@ Thanks, |7eter l-|. l3oling
   spec.add_dependency("logger", "~> 1.2")                 # Ruby >= 0
   spec.add_dependency("multi_xml", "~> 0.5")              # Ruby >= 0
   spec.add_dependency("rack", [">= 1.2", "< 4"])          # Ruby >= 0
-  spec.add_dependency("snaky_hash", "~> 2.0", ">= 2.0.2") # Ruby >= 2.2
+  spec.add_dependency("snaky_hash", "~> 2.0", ">= 2.0.3") # Ruby >= 2.2
   spec.add_dependency("version_gem", ">= 1.1.8", "< 3")   # Ruby >= 2.2
 
   spec.add_development_dependency("addressable", "~> 2.8", ">= 2.8.7")  # ruby >= 2.2
