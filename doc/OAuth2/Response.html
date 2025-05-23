@@ -101,13 +101,29 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>OAuth2::Response class</p>
+    <p>The Response class handles HTTP responses in the OAuth2 gem, providing methods<br />
+to access and parse response data in various formats.</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>1.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
   
@@ -119,24 +135,98 @@
     <dl class="constants">
       
         <dt id="DEFAULT_OPTIONS-constant" class="">DEFAULT_OPTIONS =
-          
-        </dt>
-        <dd><pre class="code"><span class='lbrace'>{</span>
-  <span class='label'>parse:</span> <span class='symbol'>:automatic</span><span class='comma'>,</span>
-  <span class='label'>snaky:</span> <span class='kw'>true</span><span class='comma'>,</span>
-<span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
-      
-        <dt id="parsers-classvariable" class="">@@parsers =
           <div class="docstring">
   <div class="discussion">
-    <p>Procs that, when called, will parse a response body according<br />
-to the specified format.</p>
+    <p>Default configuration options for Response instances</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The default options hash</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>1.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span>
+  <span class='label'>parse:</span> <span class='symbol'>:automatic</span><span class='comma'>,</span>
+  <span class='label'>snaky:</span> <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='label'>snaky_hash_klass:</span> <span class='const'>SnakyHash</span><span class='op'>::</span><span class='const'>StringKeyed</span><span class='comma'>,</span>
+<span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
+        <dt id="parsers-classvariable" class="">@@parsers =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Storage for response body parser procedures</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash&lt;Symbol, Proc&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Hash of parser procs keyed by format symbol</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>1.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
         </dt>
@@ -148,13 +238,45 @@ to the specified format.</p>
         <dt id="content_types-classvariable" class="">@@content_types =
           <div class="docstring">
   <div class="discussion">
-    <p>Content type assignments for various potential HTTP content types.</p>
+    <p>Maps content types to parser symbols</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash&lt;String, Symbol&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Hash of content types mapped to parser symbols</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>1.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
         </dt>
@@ -175,7 +297,7 @@ to the specified format.</p>
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#options-instance_method" title="#options (instance method)">#<strong>options</strong>  &#x21d2; Object </a>
+      <a href="#options-instance_method" title="#options (instance method)">#<strong>options</strong>  &#x21d2; Hash </a>
     
 
     
@@ -192,7 +314,7 @@ to the specified format.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute options.</p>
+    <span class="summary_desc"><div class='inline'><p>The options hash for this instance.</p>
 </div></span>
   
 </li>
@@ -201,7 +323,7 @@ to the specified format.</p>
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#response-instance_method" title="#response (instance method)">#<strong>response</strong>  &#x21d2; Object </a>
+      <a href="#response-instance_method" title="#response (instance method)">#<strong>response</strong>  &#x21d2; Faraday::Response </a>
     
 
     
@@ -220,7 +342,7 @@ to the specified format.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute response.</p>
+    <span class="summary_desc"><div class='inline'><p>The raw Faraday response object.</p>
 </div></span>
   
 </li>
@@ -242,7 +364,7 @@ to the specified format.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#register_parser-class_method" title="register_parser (class method)">.<strong>register_parser</strong>(key, mime_types) {|String| ... } &#x21d2; Object </a>
+      <a href="#register_parser-class_method" title="register_parser (class method)">.<strong>register_parser</strong>(key, mime_types) {|String| ... } &#x21d2; void </a>
     
 
     
@@ -274,7 +396,7 @@ to the specified format.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#body-instance_method" title="#body (instance method)">#<strong>body</strong>  &#x21d2; Object </a>
+      <a href="#body-instance_method" title="#body (instance method)">#<strong>body</strong>  &#x21d2; String </a>
     
 
     
@@ -297,7 +419,7 @@ to the specified format.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#content_type-instance_method" title="#content_type (instance method)">#<strong>content_type</strong>  &#x21d2; Object </a>
+      <a href="#content_type-instance_method" title="#content_type (instance method)">#<strong>content_type</strong>  &#x21d2; String<sup>?</sup> </a>
     
 
     
@@ -311,7 +433,7 @@ to the specified format.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Attempts to determine the content type of the response.</p>
+    <span class="summary_desc"><div class='inline'><p>Determines the content type of the response.</p>
 </div></span>
   
 </li>
@@ -320,7 +442,7 @@ to the specified format.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#headers-instance_method" title="#headers (instance method)">#<strong>headers</strong>  &#x21d2; Object </a>
+      <a href="#headers-instance_method" title="#headers (instance method)">#<strong>headers</strong>  &#x21d2; Hash </a>
     
 
     
@@ -343,7 +465,7 @@ to the specified format.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(response, parse: :automatic, snaky: true, **options)  &#x21d2; Response </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(response, parse: :automatic, snaky: true, snaky_hash_klass: nil, **options)  &#x21d2; OAuth2::Response </a>
     
 
     
@@ -382,7 +504,7 @@ to the specified format.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>The <span class='object_link'><a href="#response-instance_method" title="OAuth2::Response#response (method)">#response</a></span> <span class='object_link'><a href="#body-instance_method" title="OAuth2::Response#body (method)">#body</a></span> as parsed by <span class='object_link'><a href="#parser-instance_method" title="OAuth2::Response#parser (method)">#parser</a></span>.</p>
+    <span class="summary_desc"><div class='inline'><p>The parsed response body.</p>
 </div></span>
   
 </li>
@@ -405,7 +527,7 @@ to the specified format.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Determines the parser (a Proc or other Object which responds to #call) that will be passed the <span class='object_link'><a href="#body-instance_method" title="OAuth2::Response#body (method)">#body</a></span> (and optional <span class='object_link'><a href="#response-instance_method" title="OAuth2::Response#response (method)">#response</a></span>) to supply <span class='object_link'><a href="#parsed-instance_method" title="OAuth2::Response#parsed (method)">#parsed</a></span>.</p>
+    <span class="summary_desc"><div class='inline'><p>Determines the parser to be used for the response body.</p>
 </div></span>
   
 </li>
@@ -414,7 +536,7 @@ to the specified format.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#status-instance_method" title="#status (instance method)">#<strong>status</strong>  &#x21d2; Object </a>
+      <a href="#status-instance_method" title="#status (instance method)">#<strong>status</strong>  &#x21d2; Integer </a>
     
 
     
@@ -443,7 +565,7 @@ to the specified format.</p>
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(response, parse: :automatic, snaky: true, **options)  &#x21d2; <tt><span class='object_link'><a href="" title="OAuth2::Response (class)">Response</a></span></tt> 
+    #<strong>initialize</strong>(response, parse: :automatic, snaky: true, snaky_hash_klass: nil, **options)  &#x21d2; <tt><span class='object_link'><a href="" title="OAuth2::Response (class)">OAuth2::Response</a></span></tt> 
   
 
   
@@ -487,8 +609,7 @@ to the specified format.</p>
       
       
         &mdash;
-        <div class='inline'><p>(:automatic) how to parse the response body.  one of :query (for x-www-form-urlencoded),<br />
-:json, or :automatic (determined by Content-Type response header)</p>
+        <div class='inline'><p>(:automatic) How to parse the response body</p>
 </div>
       
     </li>
@@ -498,15 +619,31 @@ to the specified format.</p>
         <span class='name'>snaky</span>
       
       
-        <span class='type'>(<tt>true</tt>, <tt>false</tt>)</span>
+        <span class='type'>(<tt>Boolean</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>true</tt>)</em>
       
       
         &mdash;
-        <div class='inline'><p>(true) Convert @parsed to a snake-case,<br />
-indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (from hashie gem)?</p>
+        <div class='inline'><p>(true) Whether to convert parsed response to snake_case using SnakyHash</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>snaky_hash_klass</span>
+      
+      
+        <span class='type'>(<tt>Class</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>(nil) Custom class for snake_case hash conversion</p>
 </div>
       
     </li>
@@ -521,13 +658,90 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       
       
         &mdash;
-        <div class='inline'><p>all other options for initializing the instance</p>
+        <div class='inline'><p>Additional options for the response</p>
 </div>
       
     </li>
   
 </ul>
 
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <p class="tag_title">Options Hash (<tt>**options</tt>):</p>
+    <ul class="option">
+      
+        <li>
+          <span class="name">:parse</span>
+          <span class="type">(<tt>Symbol</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>:automatic</tt>
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>Parse strategy (:query, :json, or :automatic)</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:snaky</span>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>true</tt>
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>Enable/disable snake_case conversion</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:snaky_hash_klass</span>
+          <span class="type">(<tt>Class</tt>)</span>
+          <span class="default">
+            
+              &mdash; default:
+              <tt>SnakyHash::StringKeyed</tt>
+            
+          </span>
+          
+            &mdash; <div class='inline'><p>Class to use for hash conversion</p>
+</div>
+          
+        </li>
+      
+    </ul>
+  
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>1.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -535,22 +749,24 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       <pre class="lines">
 
 
-51
-52
-53
-54
-55
-56
-57</pre>
+72
+73
+74
+75
+76
+77
+78
+79</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 51</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 72</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='label'>parse:</span> <span class='symbol'>:automatic</span><span class='comma'>,</span> <span class='label'>snaky:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_response'>response</span><span class='comma'>,</span> <span class='label'>parse:</span> <span class='symbol'>:automatic</span><span class='comma'>,</span> <span class='label'>snaky:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>snaky_hash_klass:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='ivar'>@response</span> <span class='op'>=</span> <span class='id identifier rubyid_response'>response</span>
   <span class='ivar'>@options</span> <span class='op'>=</span> <span class='lbrace'>{</span>
     <span class='label'>parse:</span> <span class='id identifier rubyid_parse'>parse</span><span class='comma'>,</span>
     <span class='label'>snaky:</span> <span class='id identifier rubyid_snaky'>snaky</span><span class='comma'>,</span>
+    <span class='label'>snaky_hash_klass:</span> <span class='id identifier rubyid_snaky_hash_klass'>snaky_hash_klass</span><span class='comma'>,</span>
   <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -568,7 +784,7 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       <div class="method_details first">
   <h3 class="signature first" id="options-instance_method">
   
-    #<strong>options</strong>  &#x21d2; <tt>Object</tt> 
+    #<strong>options</strong>  &#x21d2; <tt>Hash</tt> 
   
 
   
@@ -576,13 +792,45 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns the value of attribute options.</p>
+    <p>Returns The options hash for this instance.</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The options hash for this instance</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>1.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -590,12 +838,12 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       <pre class="lines">
 
 
-15
-16
-17</pre>
+26
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 15</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_options'>options</span>
   <span class='ivar'>@options</span>
@@ -610,7 +858,7 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       <div class="method_details ">
   <h3 class="signature " id="response-instance_method">
   
-    #<strong>response</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+    #<strong>response</strong>  &#x21d2; <tt>Faraday::Response</tt>  <span class="extras">(readonly)</span>
   
 
   
@@ -618,13 +866,45 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns the value of attribute response.</p>
+    <p>Returns The raw Faraday response object.</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Faraday::Response</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The raw Faraday response object</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>1.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -632,12 +912,12 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       <pre class="lines">
 
 
-14
-15
-16</pre>
+23
+24
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_response'>response</span>
   <span class='ivar'>@response</span>
@@ -657,7 +937,7 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       <div class="method_details first">
   <h3 class="signature first" id="register_parser-class_method">
   
-    .<strong>register_parser</strong>(key, mime_types) {|String| ... } &#x21d2; <tt>Object</tt> 
+    .<strong>register_parser</strong>(key, mime_types) {|String| ... } &#x21d2; <tt>void</tt> 
   
 
   
@@ -665,7 +945,7 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Adds a new content type parser.</p>
+    <p class="note returns_void">This method returns an undefined value.</p><p>Adds a new content type parser.</p>
 
 
   </div>
@@ -684,7 +964,7 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       
       
         &mdash;
-        <div class='inline'><p>A descriptive symbol key such as :json or :query.</p>
+        <div class='inline'><p>A descriptive symbol key such as :json or :query</p>
 </div>
       
     </li>
@@ -694,12 +974,12 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
         <span class='name'>mime_types</span>
       
       
-        <span class='type'>(<tt>Array</tt>)</span>
+        <span class='type'>(<tt>Array&lt;String&gt;</tt>, <tt>String</tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><p>One or more mime types to which this parser applies.</p>
+        <div class='inline'><p>One or more mime types to which this parser applies</p>
 </div>
       
     </li>
@@ -717,7 +997,41 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       
       
         &mdash;
-        <div class='inline'><p>A block returning parsed content.</p>
+        <div class='inline'><p>Block that will be called to parse the response body</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>body</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The response body to parse</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>1.0.0</p>
 </div>
       
     </li>
@@ -730,16 +1044,16 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       <pre class="lines">
 
 
-35
-36
-37
-38
-39
-40
-41</pre>
+53
+54
+55
+56
+57
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_register_parser'>register_parser</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_mime_types'>mime_types</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_key'>key</span> <span class='op'>=</span> <span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -762,7 +1076,7 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       <div class="method_details first">
   <h3 class="signature first" id="body-instance_method">
   
-    #<strong>body</strong>  &#x21d2; <tt>Object</tt> 
+    #<strong>body</strong>  &#x21d2; <tt>String</tt> 
   
 
   
@@ -777,6 +1091,38 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The response body or empty string if nil</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>1.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -784,12 +1130,12 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       <pre class="lines">
 
 
-70
-71
-72</pre>
+98
+99
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 98</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_body'>body</span>
   <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
@@ -802,7 +1148,7 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       <div class="method_details ">
   <h3 class="signature " id="content_type-instance_method">
   
-    #<strong>content_type</strong>  &#x21d2; <tt>Object</tt> 
+    #<strong>content_type</strong>  &#x21d2; <tt>String</tt><sup>?</sup> 
   
 
   
@@ -810,13 +1156,45 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Attempts to determine the content type of the response.</p>
+    <p>Determines the content type of the response</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The content type or nil if headers are not present</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>1.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -824,14 +1202,14 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       <pre class="lines">
 
 
-101
-102
-103
-104
-105</pre>
+132
+133
+134
+135
+136</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 101</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 132</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_content_type'>content_type</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span>
@@ -846,7 +1224,7 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       <div class="method_details ">
   <h3 class="signature " id="headers-instance_method">
   
-    #<strong>headers</strong>  &#x21d2; <tt>Object</tt> 
+    #<strong>headers</strong>  &#x21d2; <tt>Hash</tt> 
   
 
   
@@ -861,6 +1239,38 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The response headers</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>1.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -868,12 +1278,12 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       <pre class="lines">
 
 
-60
-61
-62</pre>
+84
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 84</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_headers'>headers</span>
   <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span>
@@ -894,7 +1304,7 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>The <span class='object_link'><a href="#response-instance_method" title="OAuth2::Response#response (method)">#response</a></span> <span class='object_link'><a href="#body-instance_method" title="OAuth2::Response#body (method)">#body</a></span> as parsed by <span class='object_link'><a href="#parser-instance_method" title="OAuth2::Response#parser (method)">#parser</a></span>.</p>
+    <p>The parsed response body</p>
 
 
   </div>
@@ -912,7 +1322,7 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       
       
         &mdash;
-        <div class='inline'><p>As returned by <span class='object_link'><a href="#parser-instance_method" title="OAuth2::Response#parser (method)">#parser</a></span> if #call-able; snaky hash if options[:snaky].</p>
+        <div class='inline'><p>The parsed response body</p>
 </div>
       
     </li>
@@ -925,7 +1335,22 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       
       
         &mdash;
-        <div class='inline'><p>If the <span class='object_link'><a href="#parser-instance_method" title="OAuth2::Response#parser (method)">#parser</a></span> is not #call-able.</p>
+        <div class='inline'><p>If no parser is available</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>1.0.0</p>
 </div>
       
     </li>
@@ -938,30 +1363,31 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
       <pre class="lines">
 
 
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98</pre>
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 78</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 106</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parsed'>parsed</span>
   <span class='kw'>return</span> <span class='ivar'>@parsed</span> <span class='kw'>if</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='ivar'>@parsed</span><span class='rparen'>)</span>
@@ -979,7 +1405,8 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
     <span class='kw'>end</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:snaky</span><span class='rbracket'>]</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@parsed</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span>
-    <span class='ivar'>@parsed</span> <span class='op'>=</span> <span class='const'>SnakyHash</span><span class='op'>::</span><span class='const'>StringKeyed</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='ivar'>@parsed</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_hash_klass'>hash_klass</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='lbracket'>[</span><span class='symbol'>:snaky_hash_klass</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="#DEFAULT_OPTIONS-constant" title="OAuth2::Response::DEFAULT_OPTIONS (constant)">DEFAULT_OPTIONS</a></span></span><span class='lbracket'>[</span><span class='symbol'>:snaky_hash_klass</span><span class='rbracket'>]</span>
+    <span class='ivar'>@parsed</span> <span class='op'>=</span> <span class='id identifier rubyid_hash_klass'>hash_klass</span><span class='lbracket'>[</span><span class='ivar'>@parsed</span><span class='rbracket'>]</span>
   <span class='kw'>end</span>
 
   <span class='ivar'>@parsed</span>
@@ -1000,19 +1427,30 @@ indifferent-access SnakyHash::StringKeyed, which is a subclass of Hashie::Mash (
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Determines the parser (a Proc or other Object which responds to #call)<br />
-that will be passed the <span class='object_link'><a href="#body-instance_method" title="OAuth2::Response#body (method)">#body</a></span> (and optional <span class='object_link'><a href="#response-instance_method" title="OAuth2::Response#response (method)">#response</a></span>) to supply<br />
-<span class='object_link'><a href="#parsed-instance_method" title="OAuth2::Response#parsed (method)">#parsed</a></span>.</p>
-
-<p>The parser can be supplied as the +:parse+ option in the form of a Proc<br />
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>The parser can be supplied as the +:parse+ option in the form of a Proc<br />
 (or other Object responding to #call) or a Symbol. In the latter case,<br />
 the actual parser will be looked up in <span class='object_link'><a href="#parsers-classvariable" title="OAuth2::Response::@@parsers (classvariable)">@@parsers</a></span> by the supplied Symbol.</p>
+</div>
+  </div>
 
-<p>If no +:parse+ option is supplied, the lookup Symbol will be determined<br />
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>If no +:parse+ option is supplied, the lookup Symbol will be determined<br />
 by looking up <span class='object_link'><a href="#content_type-instance_method" title="OAuth2::Response#content_type (method)">#content_type</a></span> in <span class='object_link'><a href="#content_types-classvariable" title="OAuth2::Response::@@content_types (classvariable)">@@content_types</a></span>.</p>
+</div>
+  </div>
 
-<p>If <span class='object_link'><a href="#parser-instance_method" title="OAuth2::Response#parser (method)">#parser</a></span> is a Proc, it will be called with no arguments, just<br />
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>If <span class='object_link'><a href="#parser-instance_method" title="OAuth2::Response#parser (method)">#parser</a></span> is a Proc, it will be called with no arguments, just<br />
 <span class='object_link'><a href="#body-instance_method" title="OAuth2::Response#body (method)">#body</a></span>, or <span class='object_link'><a href="#body-instance_method" title="OAuth2::Response#body (method)">#body</a></span> and <span class='object_link'><a href="#response-instance_method" title="OAuth2::Response#response (method)">#response</a></span>, depending on the Proc’s arity.</p>
+</div>
+  </div>
+
+<p>Determines the parser to be used for the response body</p>
 
 
   </div>
@@ -1030,7 +1468,7 @@ by looking up <span class='object_link'><a href="#content_type-instance_method" 
       
       
         &mdash;
-        <div class='inline'><p>If a parser was found.</p>
+        <div class='inline'><p>The parser proc or callable object</p>
 </div>
       
     </li>
@@ -1043,7 +1481,22 @@ by looking up <span class='object_link'><a href="#content_type-instance_method" 
       
       
         &mdash;
-        <div class='inline'><p>If no parser was found.</p>
+        <div class='inline'><p>If no suitable parser is found</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>1.0.0</p>
 </div>
       
     </li>
@@ -1056,21 +1509,21 @@ by looking up <span class='object_link'><a href="#content_type-instance_method" 
       <pre class="lines">
 
 
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134</pre>
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 152</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parser'>parser</span>
   <span class='kw'>return</span> <span class='ivar'>@parser</span> <span class='kw'>if</span> <span class='kw'>defined?</span><span class='lparen'>(</span><span class='ivar'>@parser</span><span class='rparen'>)</span>
@@ -1092,7 +1545,7 @@ by looking up <span class='object_link'><a href="#content_type-instance_method" 
       <div class="method_details ">
   <h3 class="signature " id="status-instance_method">
   
-    #<strong>status</strong>  &#x21d2; <tt>Object</tt> 
+    #<strong>status</strong>  &#x21d2; <tt>Integer</tt> 
   
 
   
@@ -1107,6 +1560,38 @@ by looking up <span class='object_link'><a href="#content_type-instance_method" 
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>The response status code</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>1.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -1114,12 +1599,12 @@ by looking up <span class='object_link'><a href="#content_type-instance_method" 
       <pre class="lines">
 
 
-65
-66
-67</pre>
+91
+92
+93</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'lib/oauth2/response.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_status'>status</span>
   <span class='id identifier rubyid_response'>response</span><span class='period'>.</span><span class='id identifier rubyid_status'>status</span>
@@ -1134,7 +1619,7 @@ by looking up <span class='object_link'><a href="#content_type-instance_method" 
 </div>
 
       <div id="footer">
-  Generated on Thu May 22 10:13:43 2025 by
+  Generated on Fri May 23 12:05:47 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.3).
 </div>

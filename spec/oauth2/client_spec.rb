@@ -525,6 +525,18 @@ RSpec.describe OAuth2::Client do
       expect(token.token).to eq("the-token")
     end
 
+    it "works with a standard Hash if keys are correct" do
+      client = stubbed_client do |stub|
+        stub.post("/oauth/token") do
+          [200, {"Content-Type" => "application/json"}, JSON.dump("access_token" => "the-token")]
+        end
+      end
+
+      token = client.get_token({snaky_hash_klass: Hash})
+      expect(token).to be_a OAuth2::AccessToken
+      expect(token.token).to eq("the-token")
+    end
+
     context "when parse: :automatic" do
       it "returns a configured AccessToken" do
         client = stubbed_client do |stub|

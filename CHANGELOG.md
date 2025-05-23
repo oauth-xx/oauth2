@@ -6,21 +6,37 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 
 ## [Unreleased]
 ### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+
+## [2.0.11] - 2025-05-23
+- TAG: [v2.0.11][2.0.11t]
+- COVERAGE: 100.00% -- 518/518 lines in 14 files
+- BRANCH COVERAGE: 100.00% -- 172/172 branches in 14 files
+- 80.00% documented
+### Added
+- [gh651](https://github.com/oauth-xx/oauth2/pull/651) - `:snaky_hash_klass` option (@pboling)
+- More documentation
 - Codeberg as ethical mirror (@pboling)
   - https://codeberg.org/oauth-xx/oauth2
 - Don't check for cert if SKIP_GEM_SIGNING is set (@pboling)
 - All runtime deps, including oauth-xx sibling gems, are now tested against HEAD (@pboling)
-- YARD config, GFM compatible with relative file links
-- Documentation site on GitHub Pages
+- YARD config, GFM compatible with relative file links (@pboling)
+- Documentation site on GitHub Pages (@pboling)
   - [oauth2.galtzo.com](https://oauth2.galtzo.com)
-- [!649](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/649) - Test compatibility with all key minor versions of Hashie v0, v1, v2, v3, v4, v5, HEAD
+- [!649](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/649) - Test compatibility with all key minor versions of Hashie v0, v1, v2, v3, v4, v5, HEAD (@pboling)
+- [gh651](https://github.com/oauth-xx/oauth2/pull/651) - Mock OAuth2 server for testing (@pboling)
+  - https://github.com/navikt/mock-oauth2-server
 ### Changed
-- Updated `spec.homepage_uri` in gemspec to GitHub Pages YARD documentation site
-### Deprecated
-### Removed
+- [gh651](https://github.com/oauth-xx/oauth2/pull/651) - Upgraded to snaky_hash v2.0.3 (@pboling)
+  - Provides solution for serialization issues
+- Updated `spec.homepage_uri` in gemspec to GitHub Pages YARD documentation site (@pboling)
 ### Fixed
+- [gh650](https://github.com/oauth-xx/oauth2/pull/650) - Regression in return type of `OAuth2::Response#parsed` (@pboling)
 - Incorrect documentation related to silencing warnings (@pboling)
-### Security
 
 ## [2.0.10] - 2025-05-17
 - TAG: [v2.0.10][2.0.10t]
@@ -379,7 +395,9 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 
 [gemfiles/readme]: gemfiles/README.md
 
-[Unreleased]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.10...HEAD
+[Unreleased]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.11...HEAD
+[2.0.11]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.10...v2.0.11
+[2.0.11t]: https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.11
 [2.0.10]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.9...v2.0.10
 [2.0.10t]: https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.10
 [2.0.9]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.8...v2.0.9

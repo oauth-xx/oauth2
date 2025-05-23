@@ -1,0 +1,78 @@
+# For a guide to configuration, visit https://qlty.sh/d/config
+# Or for a full reference, visit https://qlty.sh/d/qlty-toml
+config_version = "0"
+
+exclude_patterns = [
+  "*_min.*",
+  "*-min.*",
+  "*.min.*",
+  "**/.yarn/**",
+  "**/*.d.ts",
+  "**/assets/**",
+  "**/bin/**",
+  "**/bower_components/**",
+  "**/build/**",
+  "**/cache/**",
+  "**/config/**",
+  "**/.devcontainer",
+  "**/db/**",
+  "**/deps/**",
+  "**/dist/**",
+  "**/doc/**",
+  "**/extern/**",
+  "**/external/**",
+  "**/generated/**",
+  "**/Godeps/**",
+  "**/gradlew/**",
+  "**/mvnw/**",
+  "**/node_modules/**",
+  "**/protos/**",
+  "**/seed/**",
+  "**/target/**",
+  "**/templates/**",
+  "**/testdata/**",
+  "**/vendor/**",
+]
+
+
+test_patterns = [
+  "**/test/**",
+  "**/spec/**",
+  "**/*.test.*",
+  "**/*.spec.*",
+  "**/*_test.*",
+  "**/*_spec.*",
+  "**/test_*.*",
+  "**/spec_*.*",
+]
+
+[smells]
+mode = "comment"
+
+[smells.boolean_logic]
+threshold = 4
+enabled = true
+
+[smells.file_complexity]
+threshold = 55
+enabled = false
+
+[smells.return_statements]
+threshold = 4
+enabled = true
+
+[smells.nested_control_flow]
+threshold = 4
+enabled = true
+
+[smells.function_parameters]
+threshold = 4
+enabled = true
+
+[smells.function_complexity]
+threshold = 5
+enabled = true
+
+[smells.duplication]
+enabled = true
+threshold = 20

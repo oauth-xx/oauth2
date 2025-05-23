@@ -314,7 +314,7 @@ RSpec.describe OAuth2::Response do
 
       subject = described_class.new(response, parse: false)
 
-      expect(subject.parsed).to eq(nil)
+      expect(subject.parsed).to be_nil
     end
   end
 
@@ -343,6 +343,382 @@ RSpec.describe OAuth2::Response do
   describe "converting to json" do
     it "does not blow up" do
       expect { subject.to_json }.not_to raise_error
+    end
+  end
+
+  describe "with custom vanilla snaky_hash_klass" do
+    let(:parsed_response) { {"some_key" => "some_value"} }
+    let(:custom_hash_class) do
+      Class.new(Hash)
+    end
+
+    before do
+      @response = double(
+        "response",
+        headers: {"Content-Type" => "application/json"},
+        status: 200,
+        body: parsed_response.to_json,
+      )
+    end
+
+    it "uses the specified hash class when snaky is true" do
+      response = described_class.new(@response, parse: :automatic, snaky: true, snaky_hash_klass: custom_hash_class)
+      expect(response.parsed).to be_a(custom_hash_class)
+      expect(response.parsed).not_to be_a(OAuth2::Response::DEFAULT_OPTIONS[:snaky_hash_klass])
+      expect(response.parsed).to eq({"some_key" => "some_value"})
+      expect(response.parsed["some_key"]).to eq("some_value")
+    end
+
+    it "uses the default hash class when snaky_hash_klass is not specified" do
+      response = described_class.new(@response, parse: :automatic, snaky: true)
+      expect(response.parsed).not_to be_a(custom_hash_class)
+      expect(response.parsed).to be_a(OAuth2::Response::DEFAULT_OPTIONS[:snaky_hash_klass])
+    end
+
+    it "doesn't convert to any special hash class when snaky is false" do
+      response = described_class.new(@response, parse: :automatic, snaky: false, snaky_hash_klass: custom_hash_class)
+      expect(response.parsed).to be_a(Hash)
+      expect(response.parsed).not_to be_a(custom_hash_class)
+    end
+  end
+
+  describe "with dump_value & load_value extensions" do
+    let(:custom_hash_class) do
+      klass = Class.new(SnakyHash::StringKeyed) do
+        # Give this class has `dump` and `load` abilities!
+        extend SnakyHash::Serializer
+
+        unless instance_methods.include?(:transform_keys)
+          # Patch our custom Hash to support Ruby < 2.4.2
+          def transform_keys!
+            keys.each do |key|
+              ref = delete(key)
+              self[key] = yield(ref)
+            end
+          end
+
+          def transform_keys
+            dup.transform_keys! { |key| yield(key) }
+          end
+        end
+      end
+
+      # Act on the non-hash values as they are dumped to JSON
+      klass.dump_value_extensions.add(:to_fruit) do |value|
+        "banana"
+      end
+
+      # Act on the non-hash values as they are loaded from the JSON dump
+      klass.load_value_extensions.add(:to_stars) do |value|
+        "asdf***qwer"
+      end
+
+      klass
+    end
+
+    before do
+      @response = double(
+        "response",
+        headers: {"Content-Type" => "application/json"},
+        status: 200,
+        body: parsed_response.to_json,
+      )
+    end
+
+    context "when hash with top-level hashes" do
+      let(:parsed_response) { {"a-b_c-d_e-F_G-H" => "i-j_k-l_m-n_o-P_Q-R", "arr" => [1, 2, 3]} }
+
+      it "uses the specified hash class when snaky is true" do
+        response = described_class.new(@response, parse: :automatic, snaky: true, snaky_hash_klass: custom_hash_class)
+        expect(response.parsed).to be_a(custom_hash_class)
+        expect(response.parsed).to eq("a_b_c_d_e_f_g_h" => "i-j_k-l_m-n_o-P_Q-R", "arr" => [1, 2, 3])
+        expect(response.parsed["a_b_c_d_e_f_g_h"]).to eq("i-j_k-l_m-n_o-P_Q-R")
+        expect(response.parsed[:a_b_c_d_e_f_g_h]).to eq("i-j_k-l_m-n_o-P_Q-R")
+        expect(response.parsed.a_b_c_d_e_f_g_h).to eq("i-j_k-l_m-n_o-P_Q-R")
+        expect(response.parsed["arr"]).to eq([1, 2, 3])
+        expect(response.parsed[:arr]).to eq([1, 2, 3])
+        expect(response.parsed.arr).to eq([1, 2, 3])
+      end
+
+      it "can dump the hash" do
+        response = described_class.new(@response, parse: :automatic, snaky: true, snaky_hash_klass: custom_hash_class)
+        expect(response.parsed).to be_a(custom_hash_class)
+        expect(response.parsed.class.dump_value_extensions.has?(:to_fruit)).to be(true)
+        dump = custom_hash_class.dump(response.parsed)
+        expect(dump).to eq("{\"a_b_c_d_e_f_g_h\":\"banana\",\"arr\":[\"banana\",\"banana\",\"banana\"]}")
+      end
+
+      it "can load the dump, and run extensions on values" do
+        response = described_class.new(@response, parse: :automatic, snaky: true, snaky_hash_klass: custom_hash_class)
+        expect(response.parsed).to be_a(custom_hash_class)
+        expect(response.parsed.class.load_value_extensions.has?(:to_stars)).to be(true)
+        dump = custom_hash_class.dump(response.parsed)
+        hydrated = custom_hash_class.load(dump)
+        expect(hydrated).not_to eq(response.parsed.to_hash)
+        expect(hydrated).to eq({
+          "a_b_c_d_e_f_g_h" => "asdf***qwer",
+          "arr" => %w[asdf***qwer asdf***qwer asdf***qwer],
+        })
+        expect(hydrated["a_b_c_d_e_f_g_h"]).to eq("asdf***qwer")
+        expect(hydrated[:a_b_c_d_e_f_g_h]).to eq("asdf***qwer")
+        expect(hydrated.a_b_c_d_e_f_g_h).to eq("asdf***qwer")
+        expect(hydrated["arr"]).to eq(%w[asdf***qwer asdf***qwer asdf***qwer])
+        expect(hydrated[:arr]).to eq(%w[asdf***qwer asdf***qwer asdf***qwer])
+        expect(hydrated.arr).to eq(%w[asdf***qwer asdf***qwer asdf***qwer])
+      end
+
+      it "doesn't convert to any special hash class when snaky is false" do
+        response = described_class.new(@response, parse: :automatic, snaky: false, snaky_hash_klass: custom_hash_class)
+        expect(response.parsed).to be_a(Hash)
+        expect(response.parsed).not_to be_a(custom_hash_class)
+        expect(response.parsed).to eq("a-b_c-d_e-F_G-H" => "i-j_k-l_m-n_o-P_Q-R", "arr" => [1, 2, 3])
+        expect(response.parsed["a-b_c-d_e-F_G-H"]).to eq("i-j_k-l_m-n_o-P_Q-R")
+        expect(response.parsed["arr"]).to eq([1, 2, 3])
+      end
+    end
+
+    context "when hash with nested hashes" do
+      let(:parsed_response) { {"a-b_c-d_e-F_G-H" => {"i-j_k-l_m-n_o-P_Q-R" => "s-t_u-v_w-X_Y-Z"}, "arr" => [1, 2, 3]} }
+
+      it "uses the specified hash class when snaky is true" do
+        response = described_class.new(@response, parse: :automatic, snaky: true, snaky_hash_klass: custom_hash_class)
+        expect(response.parsed).to be_a(custom_hash_class)
+        expect(response.parsed).to eq("a_b_c_d_e_f_g_h" => {"i_j_k_l_m_n_o_p_q_r" => "s-t_u-v_w-X_Y-Z"}, "arr" => [1, 2, 3])
+        expect(response.parsed["a_b_c_d_e_f_g_h"]).to eq({"i_j_k_l_m_n_o_p_q_r" => "s-t_u-v_w-X_Y-Z"})
+        expect(response.parsed[:a_b_c_d_e_f_g_h]).to eq({"i_j_k_l_m_n_o_p_q_r" => "s-t_u-v_w-X_Y-Z"})
+        expect(response.parsed.a_b_c_d_e_f_g_h).to eq({"i_j_k_l_m_n_o_p_q_r" => "s-t_u-v_w-X_Y-Z"})
+        expect(response.parsed["arr"]).to eq([1, 2, 3])
+        expect(response.parsed[:arr]).to eq([1, 2, 3])
+        expect(response.parsed.arr).to eq([1, 2, 3])
+      end
+
+      it "can dump the hash" do
+        response = described_class.new(@response, parse: :automatic, snaky: true, snaky_hash_klass: custom_hash_class)
+        expect(response.parsed).to be_a(custom_hash_class)
+        expect(response.parsed.class.dump_value_extensions.has?(:to_fruit)).to be(true)
+        dump = custom_hash_class.dump(response.parsed)
+        expect(dump).to eq("{\"a_b_c_d_e_f_g_h\":{\"i_j_k_l_m_n_o_p_q_r\":\"banana\"},\"arr\":[\"banana\",\"banana\",\"banana\"]}")
+      end
+
+      it "can load the dump, and run extensions on values" do
+        response = described_class.new(@response, parse: :automatic, snaky: true, snaky_hash_klass: custom_hash_class)
+        expect(response.parsed).to be_a(custom_hash_class)
+        expect(response.parsed.class.load_value_extensions.has?(:to_stars)).to be(true)
+        dump = custom_hash_class.dump(response.parsed)
+        hydrated = custom_hash_class.load(dump)
+        expect(hydrated).not_to eq(response.parsed.to_hash)
+        expect(hydrated).to eq({
+          "a_b_c_d_e_f_g_h" =>
+            {
+              "i_j_k_l_m_n_o_p_q_r" => "asdf***qwer",
+            },
+          "arr" => %w[asdf***qwer asdf***qwer asdf***qwer],
+        })
+        expect(hydrated["a_b_c_d_e_f_g_h"]).to eq({"i_j_k_l_m_n_o_p_q_r" => "asdf***qwer"})
+        expect(hydrated[:a_b_c_d_e_f_g_h]).to eq({"i_j_k_l_m_n_o_p_q_r" => "asdf***qwer"})
+        expect(hydrated.a_b_c_d_e_f_g_h).to eq({"i_j_k_l_m_n_o_p_q_r" => "asdf***qwer"})
+        expect(hydrated["arr"]).to eq(%w[asdf***qwer asdf***qwer asdf***qwer])
+        expect(hydrated[:arr]).to eq(%w[asdf***qwer asdf***qwer asdf***qwer])
+        expect(hydrated.arr).to eq(%w[asdf***qwer asdf***qwer asdf***qwer])
+      end
+
+      it "doesn't convert to any special hash class when snaky is false" do
+        response = described_class.new(@response, parse: :automatic, snaky: false, snaky_hash_klass: custom_hash_class)
+        expect(response.parsed).to be_a(Hash)
+        expect(response.parsed).not_to be_a(custom_hash_class)
+        expect(response.parsed).to eq("a-b_c-d_e-F_G-H" => {"i-j_k-l_m-n_o-P_Q-R" => "s-t_u-v_w-X_Y-Z"}, "arr" => [1, 2, 3])
+        expect(response.parsed["a-b_c-d_e-F_G-H"]).to eq({"i-j_k-l_m-n_o-P_Q-R" => "s-t_u-v_w-X_Y-Z"})
+        expect(response.parsed["arr"]).to eq([1, 2, 3])
+      end
+    end
+  end
+
+  describe "with dump_hash & load_hash extensions" do
+    let(:custom_hash_class) do
+      klass = Class.new(SnakyHash::StringKeyed) do
+        # Give this class has `dump` and `load` abilities!
+        extend SnakyHash::Serializer
+
+        unless instance_methods.include?(:transform_keys)
+          # Patch our custom Hash to support Ruby < 2.4.2
+          def transform_keys!
+            keys.each do |key|
+              ref = delete(key)
+              self[key] = yield(ref)
+            end
+          end
+
+          def transform_keys
+            dup.transform_keys! { |key| yield(key) }
+          end
+        end
+      end
+
+      # Act on the entire hash as it is prepared for dumping to JSON
+      klass.dump_hash_extensions.add(:to_cheese) do |value|
+        if value.is_a?(Hash)
+          # TODO: Drop this hack when dropping support for Ruby 2.6
+          ref = value.transform_keys do |key|
+            # This is an example tailored to this specific test!
+            # It is not a generalized solution for anything!
+            split = key.split("_")
+            first_word = split[0]
+            key.sub(first_word, "cheese")
+          end
+          # TODO: Drop this hack when dropping support for Ruby <= 2.4
+          if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new("2.4.2")
+            ref
+          else
+            puts
+            klass[ref]
+          end
+        else
+          value
+        end
+      end
+
+      # Act on the entire hash as it is loaded from the JSON dump
+      klass.load_hash_extensions.add(:to_pizza) do |value|
+        if value.is_a?(Hash)
+          # TODO: Drop this hack when dropping support for Ruby <= 2.4
+          if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new("2.4.2")
+            value.transform_keys do |key|
+              # This is an example tailored to this specific test!
+              # It is not a generalized solution for anything!
+              split = key.split("_")
+              last_word = split[-1]
+              key.sub(last_word, "pizza")
+            end
+          else
+            res = klass.new
+            value.keys.each_with_object(res) do |key, result|
+              split = key.split("_")
+              last_word = split[-1]
+              new_key = key.sub(last_word, "pizza")
+              result[new_key] = value[key]
+            end
+            res
+          end
+        else
+          value
+        end
+      end
+
+      klass
+    end
+
+    before do
+      @response = double(
+        "response",
+        headers: {"Content-Type" => "application/json"},
+        status: 200,
+        body: parsed_response.to_json,
+      )
+    end
+
+    context "when hash with top-level hashes" do
+      let(:parsed_response) { {"a-b_c-d_e-F_G-H" => "i-j_k-l_m-n_o-P_Q-R", "arr" => [1, 2, 3]} }
+
+      it "uses the specified hash class when snaky is true" do
+        response = described_class.new(@response, parse: :automatic, snaky: true, snaky_hash_klass: custom_hash_class)
+        expect(response.parsed).to be_a(custom_hash_class)
+        expect(response.parsed).to eq("a_b_c_d_e_f_g_h" => "i-j_k-l_m-n_o-P_Q-R", "arr" => [1, 2, 3])
+        expect(response.parsed["a_b_c_d_e_f_g_h"]).to eq("i-j_k-l_m-n_o-P_Q-R")
+        expect(response.parsed[:a_b_c_d_e_f_g_h]).to eq("i-j_k-l_m-n_o-P_Q-R")
+        expect(response.parsed.a_b_c_d_e_f_g_h).to eq("i-j_k-l_m-n_o-P_Q-R")
+        expect(response.parsed["arr"]).to eq([1, 2, 3])
+        expect(response.parsed[:arr]).to eq([1, 2, 3])
+        expect(response.parsed.arr).to eq([1, 2, 3])
+      end
+
+      it "can dump the hash" do
+        response = described_class.new(@response, parse: :automatic, snaky: true, snaky_hash_klass: custom_hash_class)
+        expect(response.parsed).to be_a(custom_hash_class)
+        expect(response.parsed.class.dump_hash_extensions.has?(:to_cheese)).to be(true)
+        puts "response.parsed: #{response.parsed.inspect} (#{response.parsed})"
+        dump = custom_hash_class.dump(response.parsed)
+        expect(dump).to eq("{\"cheese_b_c_d_e_f_g_h\":\"i-j_k-l_m-n_o-P_Q-R\",\"cheese\":[1,2,3]}")
+      end
+
+      it "can load the dump, and run extensions on values" do
+        response = described_class.new(@response, parse: :automatic, snaky: true, snaky_hash_klass: custom_hash_class)
+        expect(response.parsed).to be_a(custom_hash_class)
+        expect(response.parsed.class.load_hash_extensions.has?(:to_pizza)).to be(true)
+        dump = custom_hash_class.dump(response.parsed)
+        hydrated = custom_hash_class.load(dump)
+        expect(hydrated).not_to eq(response.parsed.to_hash)
+        expect(hydrated).to eq({
+          "cpizzaeese_b_c_d_e_f_g_h" => "i-j_k-l_m-n_o-P_Q-R",
+          "pizza" => [1, 2, 3],
+        })
+        expect(hydrated["cpizzaeese_b_c_d_e_f_g_h"]).to eq("i-j_k-l_m-n_o-P_Q-R")
+        expect(hydrated[:cpizzaeese_b_c_d_e_f_g_h]).to eq("i-j_k-l_m-n_o-P_Q-R")
+        expect(hydrated.cpizzaeese_b_c_d_e_f_g_h).to eq("i-j_k-l_m-n_o-P_Q-R")
+        expect(hydrated["pizza"]).to eq([1, 2, 3])
+        expect(hydrated[:pizza]).to eq([1, 2, 3])
+        expect(hydrated.pizza).to eq([1, 2, 3])
+      end
+
+      it "doesn't convert to any special hash class when snaky is false" do
+        response = described_class.new(@response, parse: :automatic, snaky: false, snaky_hash_klass: custom_hash_class)
+        expect(response.parsed).to be_a(Hash)
+        expect(response.parsed).not_to be_a(custom_hash_class)
+        expect(response.parsed).to eq("a-b_c-d_e-F_G-H" => "i-j_k-l_m-n_o-P_Q-R", "arr" => [1, 2, 3])
+        expect(response.parsed["a-b_c-d_e-F_G-H"]).to eq("i-j_k-l_m-n_o-P_Q-R")
+        expect(response.parsed["arr"]).to eq([1, 2, 3])
+      end
+    end
+
+    context "when hash with nested hashes" do
+      let(:parsed_response) { {"a-b_c-d_e-F_G-H" => {"i-j_k-l_m-n_o-P_Q-R" => "s-t_u-v_w-X_Y-Z"}, "arr" => [1, 2, 3]} }
+
+      it "uses the specified hash class when snaky is true" do
+        response = described_class.new(@response, parse: :automatic, snaky: true, snaky_hash_klass: custom_hash_class)
+        expect(response.parsed).to be_a(custom_hash_class)
+        expect(response.parsed).to eq("a_b_c_d_e_f_g_h" => {"i_j_k_l_m_n_o_p_q_r" => "s-t_u-v_w-X_Y-Z"}, "arr" => [1, 2, 3])
+        expect(response.parsed["a_b_c_d_e_f_g_h"]).to eq({"i_j_k_l_m_n_o_p_q_r" => "s-t_u-v_w-X_Y-Z"})
+        expect(response.parsed[:a_b_c_d_e_f_g_h]).to eq({"i_j_k_l_m_n_o_p_q_r" => "s-t_u-v_w-X_Y-Z"})
+        expect(response.parsed.a_b_c_d_e_f_g_h).to eq({"i_j_k_l_m_n_o_p_q_r" => "s-t_u-v_w-X_Y-Z"})
+        expect(response.parsed["arr"]).to eq([1, 2, 3])
+        expect(response.parsed[:arr]).to eq([1, 2, 3])
+        expect(response.parsed.arr).to eq([1, 2, 3])
+      end
+
+      it "can dump the hash" do
+        response = described_class.new(@response, parse: :automatic, snaky: true, snaky_hash_klass: custom_hash_class)
+        expect(response.parsed).to be_a(custom_hash_class)
+        expect(response.parsed.class.dump_hash_extensions.has?(:to_cheese)).to be(true)
+        dump = custom_hash_class.dump(response.parsed)
+        expect(dump).to eq("{\"cheese_b_c_d_e_f_g_h\":{\"cheese_j_k_l_m_n_o_p_q_r\":\"s-t_u-v_w-X_Y-Z\"},\"cheese\":[1,2,3]}")
+      end
+
+      it "can load the dump, and run extensions on values" do
+        response = described_class.new(@response, parse: :automatic, snaky: true, snaky_hash_klass: custom_hash_class)
+        expect(response.parsed).to be_a(custom_hash_class)
+        expect(response.parsed.class.load_hash_extensions.has?(:to_pizza)).to be(true)
+        dump = custom_hash_class.dump(response.parsed)
+        hydrated = custom_hash_class.load(dump)
+        expect(hydrated).not_to eq(response.parsed.to_hash)
+        expect(hydrated).to eq({
+          "cpizzaeese_b_c_d_e_f_g_h" => {"cheese_j_k_l_m_n_o_p_q_pizza" => "s-t_u-v_w-X_Y-Z"},
+          "pizza" => [1, 2, 3],
+        })
+        expect(hydrated["cpizzaeese_b_c_d_e_f_g_h"]).to eq({"cheese_j_k_l_m_n_o_p_q_pizza" => "s-t_u-v_w-X_Y-Z"})
+        expect(hydrated[:cpizzaeese_b_c_d_e_f_g_h]).to eq({"cheese_j_k_l_m_n_o_p_q_pizza" => "s-t_u-v_w-X_Y-Z"})
+        expect(hydrated.cpizzaeese_b_c_d_e_f_g_h).to eq({"cheese_j_k_l_m_n_o_p_q_pizza" => "s-t_u-v_w-X_Y-Z"})
+        expect(hydrated["pizza"]).to eq([1, 2, 3])
+        expect(hydrated[:pizza]).to eq([1, 2, 3])
+        expect(hydrated.pizza).to eq([1, 2, 3])
+      end
+
+      it "doesn't convert to any special hash class when snaky is false" do
+        response = described_class.new(@response, parse: :automatic, snaky: false, snaky_hash_klass: custom_hash_class)
+        expect(response.parsed).to be_a(Hash)
+        expect(response.parsed).not_to be_a(custom_hash_class)
+        expect(response.parsed).to eq("a-b_c-d_e-F_G-H" => {"i-j_k-l_m-n_o-P_Q-R" => "s-t_u-v_w-X_Y-Z"}, "arr" => [1, 2, 3])
+        expect(response.parsed["a-b_c-d_e-F_G-H"]).to eq({"i-j_k-l_m-n_o-P_Q-R" => "s-t_u-v_w-X_Y-Z"})
+        expect(response.parsed["arr"]).to eq([1, 2, 3])
+      end
     end
   end
 end
