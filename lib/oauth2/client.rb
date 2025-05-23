@@ -342,6 +342,18 @@ module OAuth2
 
   private
 
+    # Processes request parameters and transforms them into request options
+    #
+    # @param [Hash] params the request parameters to process
+    # @option params [Symbol] :parse (:automatic) parsing strategy for the response
+    # @option params [Boolean] :snaky (true) whether to convert response keys to snake_case
+    # @option params [Class] :snaky_hash_klass (SnakyHash::StringKeyed) class to use for snake_case hash conversion
+    # @option params [Symbol] :token_method (:post) HTTP method to use for token request
+    # @option params [Hash] :headers Additional HTTP headers for the request
+    #
+    # @return [Hash] the processed request options
+    #
+    # @api private
     def params_to_req_opts(params)
       parse, snaky, snaky_hash_klass, token_method, params, headers = parse_snaky_params_headers(params)
       req_opts = {
@@ -369,19 +381,22 @@ module OAuth2
       req_opts
     end
 
-    # Processes and transforms the input parameters for OAuth requests
+    # Processes and transforms parameters for OAuth requests
     #
     # @param [Hash] params the input parameters to process
-    # @option params [Symbol, nil] :parse (:automatic) parsing strategy for the response
+    # @option params [Symbol] :parse (:automatic) parsing strategy for the response
     # @option params [Boolean] :snaky (true) whether to convert response keys to snake_case
+    # @option params [Class] :snaky_hash_klass (SnakyHash::StringKeyed) class to use for snake_case hash conversion
+    # @option params [Symbol] :token_method overrides the default token method for this request
     # @option params [Hash] :headers HTTP headers for the request
     #
-    # @return [Array<(Symbol, Boolean, Hash, Hash)>] Returns an array containing:
-    #   - [Symbol, nil] parse strategy
-    #   - [Boolean] snaky flag for response key transformation
-    #   - [Symbol, nil] token_method overrides options[:token_method] for a request
-    #   - [Hash] processed parameters
-    #   - [Hash] HTTP headers
+    # @return [Array<(Symbol, Boolean, Class, Symbol, Hash, Hash)>] Returns an array containing:
+    #   - parse strategy (Symbol)
+    #   - snaky flag for response key transformation (Boolean)
+    #   - hash class for snake_case conversion (Class)
+    #   - token method override (Symbol, nil)
+    #   - processed parameters (Hash)
+    #   - HTTP headers (Hash)
     #
     # @api private
     def parse_snaky_params_headers(params)

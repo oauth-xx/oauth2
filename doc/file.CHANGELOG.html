@@ -63,9 +63,25 @@
 <p>The format (since v2) is based on <a href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog v1</a>,<br>
 and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning v2</a>.</p>
 
-<h2 id="unreleased"><a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.10...HEAD">Unreleased</a></h2>
+<h2 id="unreleased"><a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.11...HEAD">Unreleased</a></h2>
 <h3 id="added">Added</h3>
+<h3 id="changed">Changed</h3>
+<h3 id="deprecated">Deprecated</h3>
+<h3 id="removed">Removed</h3>
+<h3 id="fixed">Fixed</h3>
+<h3 id="security">Security</h3>
+
+<h2 id="2011---2025-05-23">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.10...v2.0.11">2.0.11</a> - 2025-05-23</h2>
 <ul>
+  <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.11">v2.0.11</a>
+</li>
+  <li>COVERAGE: 100.00% – 518/518 lines in 14 files</li>
+  <li>BRANCH COVERAGE: 100.00% – 172/172 branches in 14 files</li>
+  <li>80.00% documented
+    <h3 id="added-1">Added</h3>
+  </li>
+  <li>More documentation</li>
   <li>Codeberg as ethical mirror (@pboling)
     <ul>
       <li>https://codeberg.org/oauth-xx/oauth2</li>
@@ -73,47 +89,27 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
   </li>
   <li>Don’t check for cert if SKIP_GEM_SIGNING is set (@pboling)</li>
   <li>All runtime deps, including oauth-xx sibling gems, are now tested against HEAD (@pboling)</li>
-  <li>YARD config, GFM compatible with relative file links</li>
-  <li>Documentation site on GitHub Pages
+  <li>YARD config, GFM compatible with relative file links (@pboling)</li>
+  <li>Documentation site on GitHub Pages (@pboling)
     <ul>
       <li><a href="https://oauth2.galtzo.com">oauth2.galtzo.com</a></li>
     </ul>
   </li>
   <li>
-<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/649">!649</a> - Test compatibility with all key minor versions of Hashie v0, v1, v2, v3, v4, v5, HEAD
-    <h3 id="changed">Changed</h3>
-  </li>
-  <li>Updated <code>spec.homepage_uri</code> in gemspec to GitHub Pages YARD documentation site
-    <h3 id="deprecated">Deprecated</h3>
-    <h3 id="removed">Removed</h3>
-    <h3 id="fixed">Fixed</h3>
-  </li>
-  <li>Incorrect documentation related to silencing warnings (@pboling)
-    <h3 id="security">Security</h3>
-  </li>
-</ul>
-
-<h2 id="2011---2025-05-22">[2.0.11] - 2025-05-22</h2>
-<ul>
-  <li>TAG: [v2.0.11][2.0.11t]</li>
-  <li>COVERAGE: 100.00% – 516/516 lines in 14 files</li>
-  <li>BRANCH COVERAGE: 100.00% – 170/170 branches in 14 files</li>
-  <li>79.05% documented
-    <h3 id="added-1">Added</h3>
-  </li>
-  <li>More documentation
+<a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/649">!649</a> - Test compatibility with all key minor versions of Hashie v0, v1, v2, v3, v4, v5, HEAD (@pboling)
     <h3 id="changed-1">Changed</h3>
   </li>
-  <li>Upgraded to snaky_hash v2.0.2
+  <li>Upgraded to snaky_hash v2.0.2 (@pboling)
     <ul>
-      <li>Provides solution for serialization issues
-        <h3 id="fixed-1">Fixed</h3>
-      </li>
+      <li>Provides solution for serialization issues</li>
     </ul>
   </li>
+  <li>Updated <code>spec.homepage_uri</code> in gemspec to GitHub Pages YARD documentation site (@pboling)
+    <h3 id="fixed-1">Fixed</h3>
+  </li>
   <li>
-<a href="https://github.com/oauth-xx/oauth2/pull/650">gh650</a> - Regression in return type of <code>OAuth2::Response#parsed</code>
-</li>
+<a href="https://github.com/oauth-xx/oauth2/pull/650">gh650</a> - Regression in return type of <code>OAuth2::Response#parsed</code> (@pboling)</li>
+  <li>Incorrect documentation related to silencing warnings (@pboling)</li>
 </ul>
 
 <h2 id="2010---2025-05-17">
@@ -796,7 +792,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 </div></div>
 
       <div id="footer">
-  Generated on Fri May 23 10:50:57 2025 by
+  Generated on Fri May 23 11:14:08 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.3).
 </div>
