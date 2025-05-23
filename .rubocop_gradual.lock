@@ -65,7 +65,7 @@
     [375, 11, 534, "RSpec/NoExpectationExample: No expectation found in this example.", 3347340910],
     [391, 11, 210, "RSpec/NoExpectationExample: No expectation found in this example.", 3948582233]
   ],
-  "spec/oauth2/response_spec.rb:1229128056": [
+  "spec/oauth2/response_spec.rb:2248532534": [
     [3, 1, 31, "RSpec/SpecFilePathFormat: Spec path should end with `o_auth2/response*_spec.rb`.", 3190869319]
   ],
   "spec/oauth2/strategy/assertion_spec.rb:793170256": [

@@ -557,12 +557,20 @@ RSpec.describe OAuth2::Response do
       # Act on the entire hash as it is prepared for dumping to JSON
       klass.dump_hash_extensions.add(:to_cheese) do |value|
         if value.is_a?(Hash)
-          value.transform_keys do |key|
+          # TODO: Drop this hack when dropping support for Ruby 2.6
+          ref = value.transform_keys do |key|
             # This is an example tailored to this specific test!
             # It is not a generalized solution for anything!
             split = key.split("_")
             first_word = split[0]
             key.sub(first_word, "cheese")
+          end
+          # TODO: Drop this hack when dropping support for Ruby <= 2.4
+          if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new("2.4.2")
+            ref
+          else
+            puts
+            klass[ref]
           end
         else
           value
@@ -572,12 +580,24 @@ RSpec.describe OAuth2::Response do
       # Act on the entire hash as it is loaded from the JSON dump
       klass.load_hash_extensions.add(:to_pizza) do |value|
         if value.is_a?(Hash)
-          value.transform_keys do |key|
-            # This is an example tailored to this specific test!
-            # It is not a generalized solution for anything!
-            split = key.split("_")
-            last_word = split[-1]
-            key.sub(last_word, "pizza")
+          # TODO: Drop this hack when dropping support for Ruby <= 2.4
+          if Gem::Version.new(RUBY_VERSION) >= Gem::Version.new("2.4.2")
+            value.transform_keys do |key|
+              # This is an example tailored to this specific test!
+              # It is not a generalized solution for anything!
+              split = key.split("_")
+              last_word = split[-1]
+              key.sub(last_word, "pizza")
+            end
+          else
+            res = klass.new
+            value.keys.each_with_object(res) do |key, result|
+              split = key.split("_")
+              last_word = split[-1]
+              new_key = key.sub(last_word, "pizza")
+              result[new_key] = value[key]
+            end
+            res
           end
         else
           value
@@ -615,6 +635,7 @@ RSpec.describe OAuth2::Response do
         response = described_class.new(@response, parse: :automatic, snaky: true, snaky_hash_klass: custom_hash_class)
         expect(response.parsed).to be_a(custom_hash_class)
         expect(response.parsed.class.dump_hash_extensions.has?(:to_cheese)).to be(true)
+        puts "response.parsed: #{response.parsed.inspect} (#{response.parsed})"
         dump = custom_hash_class.dump(response.parsed)
         expect(dump).to eq("{\"cheese_b_c_d_e_f_g_h\":\"i-j_k-l_m-n_o-P_Q-R\",\"cheese\":[1,2,3]}")
       end

@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 - BRANCH COVERAGE: 100.00% -- 172/172 branches in 14 files
 - 80.00% documented
 ### Added
+- [gh651](https://github.com/oauth-xx/oauth2/pull/651) - `:snaky_hash_klass` option (@pboling)
 - More documentation
 - Codeberg as ethical mirror (@pboling)
   - https://codeberg.org/oauth-xx/oauth2
@@ -27,8 +28,10 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 - Documentation site on GitHub Pages (@pboling)
   - [oauth2.galtzo.com](https://oauth2.galtzo.com)
 - [!649](https://gitlab.com/oauth-xx/oauth2/-/merge_requests/649) - Test compatibility with all key minor versions of Hashie v0, v1, v2, v3, v4, v5, HEAD (@pboling)
+- [gh651](https://github.com/oauth-xx/oauth2/pull/651) - Mock OAuth2 server for testing (@pboling)
+  - https://github.com/navikt/mock-oauth2-server
 ### Changed
-- Upgraded to snaky_hash v2.0.2 (@pboling)
+- [gh651](https://github.com/oauth-xx/oauth2/pull/651) - Upgraded to snaky_hash v2.0.3 (@pboling)
   - Provides solution for serialization issues
 - Updated `spec.homepage_uri` in gemspec to GitHub Pages YARD documentation site (@pboling)
 ### Fixed
