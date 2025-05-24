@@ -50,8 +50,8 @@ covering the latest patch for each of the following minor versions:
 * JRuby @ v9.2, v9.3, v9.4, v10.0, HEAD
 * TruffleRuby @ v23.1, v23.2, HEAD
 * gem `faraday` @ v0, v1, v2, HEAD ⏩️ [lostisland/faraday](https://github.com/lostisland/faraday)
-* gem `jwt` @ v1, v2, v3, HEAD ⏩️ [lostisland/faraday](https://github.com/lostisland/faraday)
-* gem `logger` @ v1.2, v1.5, v1.7, HEAD ⏩️ [jwt/ruby-jwt](https://github.com/jwt/ruby-jwt)
+* gem `jwt` @ v1, v2, v3, HEAD ⏩️ [jwt/ruby-jwt](https://github.com/jwt/ruby-jwt)
+* gem `logger` @ v1.2, v1.5, v1.7, HEAD ⏩️ [ruby/logger](https://github.com/ruby/logger)
 * gem `multi_xml` @ v0.5, v0.6, v0.7, HEAD ⏩️ [sferik/multi_xml](https://github.com/sferik/multi_xml)
 * gem `rack` @ v1.2, v1.6, v2, v3, HEAD ⏩️ [rack/rack](https://github.com/rack/rack)
 * gem `snaky_hash` @v2, HEAD ⏩️ [oauth-xx/snaky_hash](https://gitlab.com/oauth-xx/snaky_hash)
