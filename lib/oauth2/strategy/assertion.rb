@@ -100,7 +100,6 @@ module OAuth2
 
         JWT.encode(claims, encoding_opts[:key], encoding_opts[:algorithm], headers)
       end
-
     end
   end
 end
