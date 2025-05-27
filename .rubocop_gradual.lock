@@ -68,7 +68,7 @@
   "spec/oauth2/response_spec.rb:2248532534": [
     [3, 1, 31, "RSpec/SpecFilePathFormat: Spec path should end with `o_auth2/response*_spec.rb`.", 3190869319]
   ],
-  "spec/oauth2/strategy/assertion_spec.rb:793170256": [
+  "spec/oauth2/strategy/assertion_spec.rb:3524328522": [
     [6, 1, 42, "RSpec/SpecFilePathFormat: Spec path should end with `o_auth2/strategy/assertion*_spec.rb`.", 3665690869]
   ],
   "spec/oauth2/strategy/auth_code_spec.rb:142083698": [
