@@ -164,6 +164,24 @@ RSpec.describe OAuth2::Strategy::Assertion do
             expect { client_assertion.get_token(claims, encoding_opts) }.to raise_error(ArgumentError, /encoding_opts/)
           end
         end
+
+        context "when including a Key ID (kid)" do
+          let(:algorithm) { "HS256" }
+          let(:key) { "new_secret_key" }
+          let(:kid) { "my_super_secure_key_id_123" }
+
+          before do
+            client_assertion.get_token(claims, algorithm: algorithm, key: key, kid: kid)
+            raise "No request made!" if @request_body.nil?
+          end
+
+          it_behaves_like "encodes the JWT"
+
+          it "includes the kid in the JWT header" do
+            expect(header).not_to be_nil
+            expect(header["kid"]).to eq(kid)
+          end
+        end
       end
     end
 
