@@ -95,7 +95,10 @@ module OAuth2
       def build_assertion(claims, encoding_opts)
         raise ArgumentError.new(message: "Please provide an encoding_opts hash with :algorithm and :key") if !encoding_opts.is_a?(Hash) || (%i[algorithm key] - encoding_opts.keys).any?
 
-        JWT.encode(claims, encoding_opts[:key], encoding_opts[:algorithm])
+        headers = {}
+        headers[:kid] = encoding_opts[:kid] if encoding_opts.key?(:kid)
+
+        JWT.encode(claims, encoding_opts[:key], encoding_opts[:algorithm], headers)
       end
     end
   end
