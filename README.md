@@ -54,8 +54,8 @@ covering the latest patch for each of the following minor versions:
 * gem `logger` @ v1.2, v1.5, v1.7, HEAD ⏩️ [ruby/logger](https://github.com/ruby/logger)
 * gem `multi_xml` @ v0.5, v0.6, v0.7, HEAD ⏩️ [sferik/multi_xml](https://github.com/sferik/multi_xml)
 * gem `rack` @ v1.2, v1.6, v2, v3, HEAD ⏩️ [rack/rack](https://github.com/rack/rack)
-* gem `snaky_hash` @v2, HEAD ⏩️ [oauth-xx/snaky_hash](https://gitlab.com/oauth-xx/snaky_hash)
-* gem `version_gem` - @v1, HEAD ⏩️ [oauth-xx/version_gem](https://gitlab.com/oauth-xx/version_gem)
+* gem `snaky_hash` @ v2, HEAD ⏩️ [oauth-xx/snaky_hash](https://gitlab.com/oauth-xx/snaky_hash)
+* gem `version_gem` @ v1, HEAD ⏩️ [oauth-xx/version_gem](https://gitlab.com/oauth-xx/version_gem)
 
 The last two were extracted from this gem. They are part of the `oauth-xx` org,
 and are developed in tight collaboration with this gem.
