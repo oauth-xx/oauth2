@@ -48,7 +48,7 @@ covering the latest patch for each of the following minor versions:
 * MRI Ruby @ v2.3, v2.4, v2.5, v2.6, v2.7, v3.0, v3.1, v3.2, v3.3, v3.4, HEAD
   * NOTE: This gem will still install on ruby v2.2, but vanilla GitHub Actions no longer supports testing against it, so YMMV.
 * JRuby @ v9.2, v9.3, v9.4, v10.0, HEAD
-* TruffleRuby @ v23.1, v23.2, v24.1, HEAD
+* TruffleRuby @ v23.1, v24.1, HEAD
 * gem `faraday` @ v0, v1, v2, HEAD ⏩️ [lostisland/faraday](https://github.com/lostisland/faraday)
 * gem `jwt` @ v1, v2, v3, HEAD ⏩️ [jwt/ruby-jwt](https://github.com/jwt/ruby-jwt)
 * gem `logger` @ v1.2, v1.5, v1.7, HEAD ⏩️ [ruby/logger](https://github.com/ruby/logger)
