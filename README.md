@@ -612,10 +612,6 @@ access = client.auth_code.get_token("code_value", redirect_uri: "http://localhos
 You can always use the `#request` method on the `OAuth2::Client` instance to make
 requests for tokens for any Authentication grant type.
 
-### 🚀 Release Instructions
-
-See [CONTRIBUTING.md][🤝contributing].
-
 ## 🔐 Security
 
 See [SECURITY.md][🔐security].
@@ -629,6 +625,10 @@ or use the gem and think about how it could be better.
 We [![Keep A Changelog][📗keep-changelog-img]][📗keep-changelog] so if you make changes, remember to update it.
 
 See [CONTRIBUTING.md][🤝contributing] for more detailed instructions.
+
+### 🚀 Release Instructions
+
+See [CONTRIBUTING.md][🤝contributing].
 
 ### Code Coverage
 
