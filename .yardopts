@@ -3,6 +3,7 @@
 --readme README.md
 --charset utf-8
 --markup markdown
+--output docs
 --load .yard_gfm_support.rb
 'lib/**/*.rb'
 -
