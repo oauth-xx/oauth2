@@ -509,28 +509,34 @@ As of v2.0.11, if you need to serialize the parsed result, you can!
 
 There are two ways to do this, globally, or discretely.  The discrete way is recommended.
 
-1. Globally configure `SnakyHash::StringKeyed` to use the serializer. Put this in your code somewhere reasonable (like an initializer for Rails):
+##### Global Serialization Config
 
-    ```ruby
+Globally configure `SnakyHash::StringKeyed` to use the serializer. Put this in your code somewhere reasonable (like an initializer for Rails).
+
+```ruby
 SnakyHash::StringKeyed.class_eval do
   extend SnakyHash::Serializer
 end
-    ```
+```
 
-2. Discretely configure a custom Snaky Hash class to use the serializer:
+##### Discrete Serialization Config
 
-    ```ruby
+Discretely configure a custom Snaky Hash class to use the serializer.
+
+```ruby
 class MySnakyHash < SnakyHash::StringKeyed
   # Give this hash class `dump` and `load` abilities!
   extend SnakyHash::Serializer
 end
 
-    # And tell your client to use the custom class in each call:
+# And tell your client to use the custom class in each call:
 client = OAuth2::Client.new("client_id", "client_secret", site: "https://example.org/oauth2")
 token = client.get_token({snaky_hash_klass: MySnakyHash})
-    ```
+```
 
 ##### Serialization Extensions
+
+These extensions work regardless of whether you used the global or discrete config above.
 
 There are a few hacks you may need in your class to support Ruby < 2.4.2 or < 2.6.
 They are likely not needed if you are on a newer Ruby.
@@ -791,7 +797,7 @@ For example:
 spec.add_dependency("oauth2", "~> 2.0")
 ```
 
-See [CHANGELOG.md][📌changelog] for list of releases.
+See [CHANGELOG.md][📌changelog] for a list of releases.
 
 ## 📄 License
 

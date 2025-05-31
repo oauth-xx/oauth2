@@ -42,6 +42,12 @@ Lint/UnusedBlockArgument:
     - 'vendor/**/*'
     - '**/.irbrc'
 
+# Test if we can turn this back on after upgrading rubocop-md.
+# It is still an open issue, so not expecting it to be fixed.
+# See: https://github.com/rubocop/rubocop-md/issues/28
+Layout/InitialIndentation:
+  Enabled: false
+
 Style/ClassVars:
   Enabled: false
 
