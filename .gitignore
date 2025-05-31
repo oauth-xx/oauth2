@@ -1,9 +1,7 @@
 # Build Artifacts
 /pkg/
 /tmp/
-
-# rspec failure tracking
-.rspec_status
+*.gem
 
 # Bundler
 /.bundle/
@@ -14,29 +12,33 @@
 Appraisal.*.gemfile.lock
 
 # Specs
+.rspec_status
 /coverage/
 /spec/reports/
 
 # Documentation
-/.yardoc
+/.yardoc/
 /_yardoc/
 /rdoc/
+/doc/
 
-# RVM
+# Ruby Version Managers (RVM, rbenv, etc)
+# Ignored because we currently use .tool-versions
 .rvmrc
+.ruby-version
+.ruby-gemset
 
-# Editors
-.idea
-*~
-
-# Other
+# Benchmarking
 /measurement/
-/.byebug_history
+
+# Debugger detritus
+.byebug_history
+
+# direnv - brew install direnv
+.env.local
+
+# OS Detritus
 .DS_Store
 
-# Version Managers
-.ruby-version
-.tool-versions
-
-# Local config
-.env.local
+# Editors
+*~
