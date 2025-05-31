@@ -912,14 +912,3 @@ or one of the others at the head of this README.
 <a rel="me" alt="Follow me on Ruby.social" href="https://ruby.social/@galtzo"><img src="https://img.shields.io/mastodon/follow/109447111526622197?domain=https%3A%2F%2Fruby.social&style=social&label=Follow%20%40galtzo%20on%20Ruby.social"></a>
 <a rel="me" alt="Follow me on FLOSS.social" href="https://floss.social/@galtzo"><img src="https://img.shields.io/mastodon/follow/110304921404405715?domain=https%3A%2F%2Ffloss.social&style=social&label=Follow%20%40galtzo%20on%20Floss.social"></a>
 </details>
-
-<details>
-  <summary>Deprecated Badges</summary>
-
-CodeCov currently fails to parse the coverage upload.
-
-[![CodeCov Test Coverage][🔑codecovi♻️]][🔑codecov]
-
-[![Coverage Graph][🔑codecov-g♻️]][🔑codecov]
-
-</details>
