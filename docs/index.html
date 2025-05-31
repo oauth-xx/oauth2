@@ -390,7 +390,8 @@ One of these might be what you are looking for:</p>
 
 | Version | Release Date | CHANGELOG                             | README                          |
 |---------|--------------|---------------------------------------|---------------------------------|
-| 2.0.11  | 2025-05-23   | [v2.0.11 CHANGELOG][2.0.11-changelog] | [v2.0.10 README][2.0.11-readme] |
+| 2.0.12  | 2025-05-31   | [v2.0.12 CHANGELOG][2.0.12-changelog] | [v2.0.12 README][2.0.12-readme] |
+| 2.0.11  | 2025-05-23   | [v2.0.11 CHANGELOG][2.0.11-changelog] | [v2.0.11 README][2.0.11-readme] |
 | 2.0.10  | 2025-05-17   | [v2.0.10 CHANGELOG][2.0.10-changelog] | [v2.0.10 README][2.0.10-readme] |
 | 2.0.9   | 2022-09-16   | [v2.0.9 CHANGELOG][2.0.9-changelog]   | [v2.0.9 README][2.0.9-readme]   |
 | 2.0.8   | 2022-09-01   | [v2.0.8 CHANGELOG][2.0.8-changelog]   | [v2.0.8 README][2.0.8-readme]   |
@@ -502,7 +503,11 @@ Tidelift will coordinate the fix and disclosure.</p>
 <ul>
   <li>Works with Ruby versions &gt;= 2.2</li>
   <li>Drop support for the expired MAC Draft (all versions)</li>
-  <li>Support IETF rfc7515 JSON Web Signature - JWS (since v2.0.12)</li>
+  <li>Support IETF rfc7515 JSON Web Signature - JWS (since v2.0.12)
+    <ul>
+      <li>Support JWT <code>kid</code> for key discovery and management</li>
+    </ul>
+  </li>
   <li>Support IETF rfc7523 JWT Bearer Tokens (since v2.0.0)</li>
   <li>Support IETF rfc7231 Relative Location in Redirect (since v2.0.0)</li>
   <li>Support IETF rfc6749 Don’t set oauth params when nil (since v2.0.0)</li>
@@ -962,7 +967,7 @@ or one of the others at the head of this README.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Sun Jun  1 04:18:48 2025 by
+  Generated on Sun Jun  1 04:25:45 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.3).
 </div>

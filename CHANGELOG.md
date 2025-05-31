@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 ### Security
 
 ## [2.0.12] - 2025-05-31
+- TAG: [v2.0.12][2.0.12t]
+- Line Coverage: 100.0% (520 / 520)
+- Branch Coverage: 100.0% (174 / 174)
+- 80.00% documented
 ### Added
 - [gh652][gh652] - Support IETF rfc7515 JSON Web Signature - JWS by @mridang
   - Support JWT `kid` for key discovery and management
@@ -412,7 +416,9 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 
 [gemfiles/readme]: gemfiles/README.md
 
-[Unreleased]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.11...HEAD
+[Unreleased]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.12...HEAD
+[2.0.12]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.11...v2.0.12
+[2.0.12t]: https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.12
 [2.0.11]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.10...v2.0.11
 [2.0.11t]: https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.11
 [2.0.10]: https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.9...v2.0.10
