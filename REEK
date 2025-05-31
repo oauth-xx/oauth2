@@ -99,7 +99,7 @@ lib/oauth2/response.rb -- 12 warnings:
   [106]:TooManyStatements: OAuth2::Response#parsed has approx 7 statements [https://github.com/troessner/reek/blob/v6.5.0/docs/Too-Many-Statements.md]
   [7]:UncommunicativeModuleName: OAuth2 has the name 'OAuth2' [https://github.com/troessner/reek/blob/v6.5.0/docs/Uncommunicative-Module-Name.md]
 lib/oauth2/strategy/assertion.rb -- 5 warnings:
-  [96, 96, 98, 98]:FeatureEnvy: OAuth2::Strategy::Assertion#build_assertion refers to 'encoding_opts' more than self (maybe move it to another class?) [https://github.com/troessner/reek/blob/v6.5.0/docs/Feature-Envy.md]
+  [96, 96, 99, 99, 101, 101]:FeatureEnvy: OAuth2::Strategy::Assertion#build_assertion refers to 'encoding_opts' more than self (maybe move it to another class?) [https://github.com/troessner/reek/blob/v6.5.0/docs/Feature-Envy.md]
   [32]:InstanceVariableAssumption: OAuth2::Strategy::Assertion assumes too much for instance variable '@client' [https://github.com/troessner/reek/blob/v6.5.0/docs/Instance-Variable-Assumption.md]
   [79]:LongParameterList: OAuth2::Strategy::Assertion#get_token has 4 parameters [https://github.com/troessner/reek/blob/v6.5.0/docs/Long-Parameter-List.md]
   [5]:UncommunicativeModuleName: OAuth2 has the name 'OAuth2' [https://github.com/troessner/reek/blob/v6.5.0/docs/Uncommunicative-Module-Name.md]
