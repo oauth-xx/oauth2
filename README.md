@@ -334,6 +334,7 @@ For more see [SECURITY.md][🔐security].
 - Works with Ruby versions >= 2.2
 - Drop support for the expired MAC Draft (all versions)
 - Support IETF rfc7515 JSON Web Signature - JWS (since v2.0.12)
+  - Support JWT `kid` for key discovery and management
 - Support IETF rfc7523 JWT Bearer Tokens (since v2.0.0)
 - Support IETF rfc7231 Relative Location in Redirect (since v2.0.0)
 - Support IETF rfc6749 Don't set oauth params when nil (since v2.0.0)
