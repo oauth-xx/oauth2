@@ -540,7 +540,7 @@ These extensions work regardless of whether you used the global or discrete conf
 
 There are a few hacks you may need in your class to support Ruby < 2.4.2 or < 2.6.
 They are likely not needed if you are on a newer Ruby.
-See `response_spec.rb` if you need to study the hacks for older Rubies.
+See [response_spec.rb](https://github.com/oauth-xx/oauth2/blob/main/spec/oauth2/response_spec.rb) if you need to study the hacks for older Rubies.
 
 ```ruby
 class MySnakyHash < SnakyHash::StringKeyed
@@ -596,7 +596,7 @@ class MySnakyHash < SnakyHash::StringKeyed
 end
 ```
 
-See `response_spec.rb`, or the [oauth-xx/snaky_hash](https://gitlab.com/oauth-xx/snaky_hash) gem for more ideas.
+See [response_spec.rb](https://github.com/oauth-xx/oauth2/blob/main/spec/oauth2/response_spec.rb), or the [oauth-xx/snaky_hash](https://gitlab.com/oauth-xx/snaky_hash) gem for more ideas.
 
 #### What if I hate snakes and/or indifference?
 
