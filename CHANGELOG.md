@@ -12,6 +12,22 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 ### Fixed
 ### Security
 
+## [2.0.11] - 2025-05-31
+### Added
+- [gh652][gh652] - Support IETF rfc7515 JSON Web Signature - JWS by @mridang
+  - Support JWT `kid` for key discovery and management
+- More Documentation by @pboling
+- Documentation site @ https://oauth2.galtzo.com now complete
+### Changed
+- Updates to gemspec (email, funding url, post install message)
+### Deprecated
+### Removed
+### Fixed
+- Documentation Typos by @pboling
+### Security
+
+[gh652]: https://github.com/oauth-xx/oauth2/pull/652
+
 ## [2.0.11] - 2025-05-23
 - TAG: [v2.0.11][2.0.11t]
 - COVERAGE: 100.00% -- 518/518 lines in 14 files

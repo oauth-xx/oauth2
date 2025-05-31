@@ -330,9 +330,10 @@ For more see [SECURITY.md][🔐security].
 
 - Works with Ruby versions >= 2.2
 - Drop support for the expired MAC Draft (all versions)
-- Support IETF rfc7523 JWT Bearer Tokens
-- Support IETF rfc7231 Relative Location in Redirect
-- Support IETF rfc6749 Don't set oauth params when nil
+- Support IETF rfc7515 JSON Web Signature - JWS (since v2.0.12)
+- Support IETF rfc7523 JWT Bearer Tokens (since v2.0.0)
+- Support IETF rfc7231 Relative Location in Redirect (since v2.0.0)
+- Support IETF rfc6749 Don't set oauth params when nil (since v2.0.0)
 - Support IETF rfc7009 Token Revocation (since v2.0.10)
 - Support [OIDC 1.0 Private Key JWT](https://openid.net/specs/openid-connect-core-1_0.html#ClientAuthentication); based on the OAuth JWT assertion specification [(RFC 7523)](https://tools.ietf.org/html/rfc7523)
 - Support new formats, including from [jsonapi.org](http://jsonapi.org/format/): `application/vdn.api+json`, `application/vnd.collection+json`, `application/hal+json`, `application/problem+json`
@@ -494,7 +495,6 @@ SnakyHash::StringKeyed.class_eval do
   extend SnakyHash::Serializer
 end
 ```
-
 
 #### What if I hate snakes and/or indifference?
 
