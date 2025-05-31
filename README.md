@@ -734,8 +734,10 @@ Also see GitLab Contributors: [https://gitlab.com/oauth-xx/oauth2/-/graphs/main]
 
 <a href="https://star-history.com/#oauth-xx/oauth2&Date">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=oauth-xx/oauth2&type=Date&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=oauth-xx/oauth2&type=Date" />
+     <source media="(prefers-color-scheme: dark)"
+             srcset="https://api.star-history.com/svg?repos=oauth-xx/oauth2&type=Date&theme=dark"/>
+     <source media="(prefers-color-scheme: light)"
+             srcset="https://api.star-history.com/svg?repos=oauth-xx/oauth2&type=Date"/>
    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=oauth-xx/oauth2&type=Date" />
  </picture>
 </a>
@@ -787,7 +789,7 @@ See [LICENSE.txt][📄license] for the official [Copyright Notice][📄copyright
 
 <ul>
     <li>
-        2017 - 2025 Peter H. Boling, of
+        Copyright (c) 2017–2025 Peter H. Boling, of
         <a href="https://discord.gg/3qme4XHNKN">
             Galtzo.com
             <picture>
