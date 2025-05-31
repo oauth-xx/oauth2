@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 - [gh652][gh652] - Support IETF rfc7515 JSON Web Signature - JWS by @mridang
   - Support JWT `kid` for key discovery and management
 - More Documentation by @pboling
+  - Documented Serialization Extensions
   - Added Gatzo.com FLOSS logo by @Aboling0, CC BY-SA 4.0
 - Documentation site @ https://oauth2.galtzo.com now complete
 ### Changed

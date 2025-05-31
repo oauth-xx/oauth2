@@ -386,7 +386,7 @@ One of these might be what you are looking for:</p>
 <h3 id="version-20x">Version 2.0.x</h3>
 
 <details>
-  <summary>2.0.x CHANGELOGs and READMEs</summary>
+  <summary>2.0.x CHANGELOG and README</summary>
 
 | Version | Release Date | CHANGELOG                             | README                          |
 |---------|--------------|---------------------------------------|---------------------------------|
@@ -709,16 +709,92 @@ response.parsed.class.name        # =&gt; SnakyHash::StringKeyed (from snaky_has
 
 <p>As of v2.0.11, if you need to serialize the parsed result, you can!</p>
 
-<p>There are two ways to do this, and the second option recommended.</p>
+<p>There are two ways to do this, globally, or discretely.  The discrete way is recommended.</p>
 
 <ol>
-  <li>Globally configure <code>SnakyHash::StringKeyed</code> to use the serializer. Put this in your code somewhere reasonable (like an initializer for Rails):</li>
-</ol>
+  <li>
+    <p>Globally configure <code>SnakyHash::StringKeyed</code> to use the serializer. Put this in your code somewhere reasonable (like an initializer for Rails):</p>
 
-<pre class="code language-ruby"><code class="language-ruby">SnakyHash::StringKeyed.class_eval do
+    <pre class="code language-ruby"><code class="language-ruby">SnakyHash::StringKeyed.class_eval do
   extend SnakyHash::Serializer
 end
 </code></pre>
+  </li>
+  <li>
+    <p>Discretely configure a custom Snaky Hash class to use the serializer:</p>
+
+    <pre class="code language-ruby"><code class="language-ruby">class MySnakyHash &lt; SnakyHash::StringKeyed
+  # Give this hash class `dump` and `load` abilities!
+  extend SnakyHash::Serializer
+end
+
+ # And tell your client to use the custom class in each call:
+client = OAuth2::Client.new(&quot;client_id&quot;, &quot;client_secret&quot;, site: &quot;https://example.org/oauth2&quot;)
+token = client.get_token({snaky_hash_klass: MySnakyHash})
+</code></pre>
+  </li>
+</ol>
+
+<h5 id="serialization-extensions">Serialization Extensions</h5>
+
+<p>There are a few hacks you may need in your class to support Ruby &lt; 2.4.2 or &lt; 2.6.<br>
+They are likely not needed if you are on a newer Ruby.<br>
+See <code>response_spec.rb</code> if you need to study the hacks for older Rubies.</p>
+
+<pre class="code language-ruby"><code class="language-ruby">class MySnakyHash &lt; SnakyHash::StringKeyed
+  # Give this hash class `dump` and `load` abilities!
+  extend SnakyHash::Serializer
+
+  #### Serialization Extentions
+  #
+  # Act on the non-hash values (including the values of hashes) as they are dumped to JSON
+  # In other words, this retains nested hashes, and only the deepest leaf nodes become bananas.
+  # WARNING: This is a silly example!
+  dump_value_extensions.add(:to_fruit) do |value|
+    &quot;banana&quot; # =&gt; Make values &quot;banana&quot; on dump
+  end
+
+  # Act on the non-hash values (including the values of hashes) as they are loaded from the JSON dump
+  # In other words, this retains nested hashes, and only the deepest leaf nodes become ***.
+  # WARNING: This is a silly example!
+  load_value_extensions.add(:to_stars) do |value|
+    &quot;***&quot; # Turn dumped bananas into *** when they are loaded
+  end
+
+  # Act on the entire hash as it is prepared for dumping to JSON
+  # WARNING: This is a silly example!
+  dump_hash_extensions.add(:to_cheese) do |value|
+    if value.is_a?(Hash)
+      value.transform_keys do |key|
+        split = key.split(&quot;_&quot;)
+        first_word = split[0]
+        key.sub(first_word, &quot;cheese&quot;)
+      end
+    else
+      value
+    end
+  end
+
+  # Act on the entire hash as it is loaded from the JSON dump
+  # WARNING: This is a silly example!
+  load_hash_extensions.add(:to_pizza) do |value|
+    if value.is_a?(Hash)
+      res = klass.new
+      value.keys.each_with_object(res) do |key, result|
+        split = key.split(&quot;_&quot;)
+        last_word = split[-1]
+        new_key = key.sub(last_word, &quot;pizza&quot;)
+        result[new_key] = value[key]
+      end
+      res
+    else
+      value
+    end
+  end
+end
+</code></pre>
+
+<p>See <code>response_spec.rb</code>, or the <a href="https://gitlab.com/oauth-xx/snaky_hash">oauth-xx/snaky_hash</a> gem for more ideas.</p>
 
 <h4 id="what-if-i-hate-snakes-andor-indifference">What if I hate snakes and/or indifference?</h4>
 
@@ -967,7 +1043,7 @@ or one of the others at the head of this README.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Sun Jun  1 04:25:45 2025 by
+  Generated on Sun Jun  1 05:10:24 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.3).
 </div>

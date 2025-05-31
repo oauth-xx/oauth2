@@ -163,7 +163,7 @@ One of these might be what you are looking for:
 ### Version 2.0.x
 
 <details>
-  <summary>2.0.x CHANGELOGs and READMEs</summary>
+  <summary>2.0.x CHANGELOG and README</summary>
 
 | Version | Release Date | CHANGELOG                             | README                          |
 |---------|--------------|---------------------------------------|---------------------------------|
@@ -196,7 +196,8 @@ One of these might be what you are looking for:
 [2.0.1-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#201---2022-06-22
 [2.0.0-changelog]: https://gitlab.com/oauth-xx/oauth2/-/blob/main/CHANGELOG.md?ref_type=heads#200---2022-06-21
 
-[2.0.10-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.11/README.md
+[2.0.12-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.12/README.md
+[2.0.11-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.11/README.md
 [2.0.10-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.10/README.md
 [2.0.9-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.9/README.md
 [2.0.8-readme]: https://gitlab.com/oauth-xx/oauth2/-/blob/v2.0.8/README.md
@@ -492,15 +493,90 @@ response.parsed.class.name        # => SnakyHash::StringKeyed (from snaky_hash g
 
 As of v2.0.11, if you need to serialize the parsed result, you can!
 
-There are two ways to do this, and the second option recommended.
+There are two ways to do this, globally, or discretely.  The discrete way is recommended.
 
 1. Globally configure `SnakyHash::StringKeyed` to use the serializer. Put this in your code somewhere reasonable (like an initializer for Rails):
 
-```ruby
+    ```ruby
 SnakyHash::StringKeyed.class_eval do
   extend SnakyHash::Serializer
 end
+    ```
+
+2. Discretely configure a custom Snaky Hash class to use the serializer:
+
+    ```ruby
+class MySnakyHash < SnakyHash::StringKeyed
+  # Give this hash class `dump` and `load` abilities!
+  extend SnakyHash::Serializer
+end
+
+    # And tell your client to use the custom class in each call:
+client = OAuth2::Client.new("client_id", "client_secret", site: "https://example.org/oauth2")
+token = client.get_token({snaky_hash_klass: MySnakyHash})
+    ```
+
+##### Serialization Extensions
+
+There are a few hacks you may need in your class to support Ruby < 2.4.2 or < 2.6.
+They are likely not needed if you are on a newer Ruby.
+See `response_spec.rb` if you need to study the hacks for older Rubies.
+
+```ruby
+class MySnakyHash < SnakyHash::StringKeyed
+  # Give this hash class `dump` and `load` abilities!
+  extend SnakyHash::Serializer
+
+  #### Serialization Extentions
+  #
+  # Act on the non-hash values (including the values of hashes) as they are dumped to JSON
+  # In other words, this retains nested hashes, and only the deepest leaf nodes become bananas.
+  # WARNING: This is a silly example!
+  dump_value_extensions.add(:to_fruit) do |value|
+    "banana" # => Make values "banana" on dump
+  end
+
+  # Act on the non-hash values (including the values of hashes) as they are loaded from the JSON dump
+  # In other words, this retains nested hashes, and only the deepest leaf nodes become ***.
+  # WARNING: This is a silly example!
+  load_value_extensions.add(:to_stars) do |value|
+    "***" # Turn dumped bananas into *** when they are loaded
+  end
+
+  # Act on the entire hash as it is prepared for dumping to JSON
+  # WARNING: This is a silly example!
+  dump_hash_extensions.add(:to_cheese) do |value|
+    if value.is_a?(Hash)
+      value.transform_keys do |key|
+        split = key.split("_")
+        first_word = split[0]
+        key.sub(first_word, "cheese")
+      end
+    else
+      value
+    end
+  end
+
+  # Act on the entire hash as it is loaded from the JSON dump
+  # WARNING: This is a silly example!
+  load_hash_extensions.add(:to_pizza) do |value|
+    if value.is_a?(Hash)
+      res = klass.new
+      value.keys.each_with_object(res) do |key, result|
+        split = key.split("_")
+        last_word = split[-1]
+        new_key = key.sub(last_word, "pizza")
+        result[new_key] = value[key]
+      end
+      res
+    else
+      value
+    end
+  end
+end
 ```
+
+See `response_spec.rb`, or the [oauth-xx/snaky_hash](https://gitlab.com/oauth-xx/snaky_hash) gem for more ideas.
 
 #### What if I hate snakes and/or indifference?
 

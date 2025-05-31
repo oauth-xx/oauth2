@@ -385,7 +385,7 @@ RSpec.describe OAuth2::Response do
   describe "with dump_value & load_value extensions" do
     let(:custom_hash_class) do
       klass = Class.new(SnakyHash::StringKeyed) do
-        # Give this class has `dump` and `load` abilities!
+        # Give this hash class `dump` and `load` abilities!
         extend SnakyHash::Serializer
 
         unless instance_methods.include?(:transform_keys)
@@ -536,7 +536,7 @@ RSpec.describe OAuth2::Response do
   describe "with dump_hash & load_hash extensions" do
     let(:custom_hash_class) do
       klass = Class.new(SnakyHash::StringKeyed) do
-        # Give this class has `dump` and `load` abilities!
+        # Give this hash class `dump` and `load` abilities!
         extend SnakyHash::Serializer
 
         unless instance_methods.include?(:transform_keys)
