@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
   spec.name = "oauth2"
   spec.version = gem_version
   spec.authors = ["Peter Boling", "Erik Michaels-Ober", "Michael Bleigh"]
-  spec.email = ["peter.boling@gmail.com", "oauth-ruby@googlegroups.com"]
+  spec.email = ["floss@galtzo.com"]
 
   # Linux distros often package gems and securely certify them independent
   #   of the official RubyGem certification process. Allowed via ENV["SKIP_GEM_SIGNING"]
@@ -45,27 +45,22 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = ">= 2.2.0"
 
   spec.post_install_message = %{
-You have installed oauth2 version #{gem_version}, congratulations!
+---+++ oauth2 v#{gem_version} +++---
 
-There are BREAKING changes if you are upgrading from < v2, but most will not encounter them, and updating your code should be easy!
+There are BREAKING CHANGES when upgrading from < v2
+Most will not encounter them, and updating your code should be easy!
 Please see:
 • #{gl_homepage}/-/blob/main/SECURITY.md
 • #{gl_homepage}/-/blob/v#{spec.version}/CHANGELOG.md#200-2022-06-21-tag
 • Summary of most important breaking changes: #{gl_homepage}#what-is-new-for-v20
 
-There are BUGFIXES in v#{gem_version}, which depending on how you relied on them instead of reporting and fixing them, may be BREAKING for you.
-For more information please see:
-https://railsbling.com/tags/oauth2
-
-Important News:
-1. Google Group is "active" (again)!
-• https://groups.google.com/g/oauth-ruby/c/QA_dtrXWXaE
-2. Non-commercial support for the 2.x series will end by April, 2026. Please make a plan to upgrade to the next version prior to that date.
+News:
+1. New documentation website: https://oauth2.galtzo.com
+2. Discord for discussion and support: https://discord.gg/3qme4XHNKN
+3. Non-commercial support for the 2.x series will end by April, 2026. Please make a plan to upgrade to the next version prior to that date.
 Support will be dropped for Ruby 2.2, 2.3, 2.4, 2.5, 2.6, 2.7, 3.0, 3.1 and any other Ruby versions which will also have reached EOL by then.
-3. Gem releases are now cryptographically signed with a 20-year cert, with checksums by stone_checksums.
-4. I need your support.
-
-If you are sentient, please consider a donation as I move toward supporting myself with Open Source work:
+4. Gem releases are now cryptographically signed with a 20-year cert, with checksums by stone_checksums.
+5. Please consider supporting this project, and my other open source work, with one of the following methods:
 • https://liberapay.com/pboling
 • https://ko-fi.com/pboling
 • https://www.buymeacoffee.com/pboling
@@ -89,7 +84,7 @@ Thanks, |7eter l-|. l3oling
   spec.metadata["wiki_uri"] = "#{gl_homepage}/-/wiki"
   # Yes, Google is a disgusting monopoly, but the historical value of the mailing list archive is high.
   spec.metadata["mailing_list_uri"] = "https://groups.google.com/g/oauth-ruby"
-  spec.metadata["funding_uri"] = "https://liberapay.com/pboling"
+  spec.metadata["funding_uri"] = "https://github.com/sponsors/pboling"
   spec.metadata["news_uri"] = "https://www.railsbling.com/tags/#{spec.name}"
   spec.metadata["rubygems_mfa_required"] = "true"
 
