@@ -1,4 +1,7 @@
 <p align="center">
+    <a href="https://discord.gg/3qme4XHNKN" target="_blank" rel="noopener">
+      <img width="124px" src="https://github.com/oauth-xx/oauth2/raw/main/docs/images/logo/galtzo-floss-logos-original.svg?raw=true" alt="Galtzo.com Logo by Aboling0, CC BY-SA 4.0">
+    </a>
     <a href="http://oauth.net/2/" target="_blank" rel="noopener">
       <img src="https://github.com/oauth-xx/oauth2/raw/main/docs/images/logo/oauth2-logo-124px.png?raw=true" alt="OAuth 2.0 Logo by Chris Messina, CC BY-SA 3.0">
     </a>
@@ -706,10 +709,10 @@ See [LICENSE.txt][📄license] for the official [Copyright Notice][📄copyright
 <ul>
     <li>
         2017 - 2025 Peter H. Boling, of
-        <a href="https://railsbling.com">
-            RailsBling.com
+        <a href="https://discord.gg/3qme4XHNKN">
+            Galtzo.com
             <picture>
-                <img alt="Rails Bling" height="20" src="https://railsbling.com/images/logos/RailsBling-TrainLogo.svg" />
+              <img src="https://github.com/oauth-xx/oauth2/raw/main/docs/images/logo/galtzo-floss-logos-wordless.svg?raw=true" alt="Galtzo.com Logo by Aboling0, CC BY-SA 4.0" height="20">
             </picture>
         </a>, and oauth2 contributors
     </li>
