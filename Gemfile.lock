@@ -23,7 +23,7 @@ GIT
 PATH
   remote: .
   specs:
-    oauth2 (2.0.11)
+    oauth2 (2.0.12)
       faraday (>= 0.17.3, < 4.0)
       jwt (>= 1.0, < 4.0)
       logger (~> 1.2)

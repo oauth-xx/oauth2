@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning v2](https://semver.org/spec/v2.
 ### Fixed
 ### Security
 
-## [2.0.11] - 2025-05-31
+## [2.0.12] - 2025-05-31
 ### Added
 - [gh652][gh652] - Support IETF rfc7515 JSON Web Signature - JWS by @mridang
   - Support JWT `kid` for key discovery and management

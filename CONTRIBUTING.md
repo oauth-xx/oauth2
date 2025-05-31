@@ -96,7 +96,7 @@ NOTE: To build without signing the gem you must set `SKIP_GEM_SIGNING` to some v
 
 ### To release a new version:
 
-1. Run `bin/setup && bin/rake` as a tests, coverage, & linting sanity check
+1. Run `bin/setup && bin/rake` as a "test, coverage, & linting" sanity check
 2. Update the version number in `version.rb`, and ensure `CHANGELOG.md` reflects changes
 3. Run `bin/setup && bin/rake` again as a secondary check, and to update `Gemfile.lock`
 4. Run `git commit -am "🔖 Prepare release v<VERSION>"` to commit the changes
