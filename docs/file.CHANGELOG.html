@@ -71,6 +71,30 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <h3 id="fixed">Fixed</h3>
 <h3 id="security">Security</h3>
 
+<h2 id="2011---2025-05-31">
+<a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.10...v2.0.11">2.0.11</a> - 2025-05-31</h2>
+<h3 id="added-1">Added</h3>
+<ul>
+  <li>
+<a href="https://github.com/oauth-xx/oauth2/pull/652">gh652</a> - Support IETF rfc7515 JSON Web Signature - JWS by @mridang
+    <ul>
+      <li>Support JWT <code>kid</code> for key discovery and management</li>
+    </ul>
+  </li>
+  <li>More Documentation by @pboling</li>
+  <li>Documentation site @ https://oauth2.galtzo.com now complete
+    <h3 id="changed-1">Changed</h3>
+  </li>
+  <li>Updates to gemspec (email, funding url, post install message)
+    <h3 id="deprecated-1">Deprecated</h3>
+    <h3 id="removed-1">Removed</h3>
+    <h3 id="fixed-1">Fixed</h3>
+  </li>
+  <li>Documentation Typos by @pboling
+    <h3 id="security-1">Security</h3>
+  </li>
+</ul>
+
 <h2 id="2011---2025-05-23">
 <a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.10...v2.0.11">2.0.11</a> - 2025-05-23</h2>
 <ul>
@@ -79,7 +103,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
   <li>COVERAGE: 100.00% – 518/518 lines in 14 files</li>
   <li>BRANCH COVERAGE: 100.00% – 172/172 branches in 14 files</li>
   <li>80.00% documented
-    <h3 id="added-1">Added</h3>
+    <h3 id="added-2">Added</h3>
   </li>
   <li>
 <a href="https://github.com/oauth-xx/oauth2/pull/651">gh651</a> - <code>:snaky_hash_klass</code> option (@pboling)</li>
@@ -103,7 +127,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <a href="https://github.com/oauth-xx/oauth2/pull/651">gh651</a> - Mock OAuth2 server for testing (@pboling)
     <ul>
       <li>https://github.com/navikt/mock-oauth2-server
-        <h3 id="changed-1">Changed</h3>
+        <h3 id="changed-2">Changed</h3>
       </li>
     </ul>
   </li>
@@ -114,7 +138,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
     </ul>
   </li>
   <li>Updated <code>spec.homepage_uri</code> in gemspec to GitHub Pages YARD documentation site (@pboling)
-    <h3 id="fixed-1">Fixed</h3>
+    <h3 id="fixed-2">Fixed</h3>
   </li>
   <li>
 <a href="https://github.com/oauth-xx/oauth2/pull/650">gh650</a> - Regression in return type of <code>OAuth2::Response#parsed</code> (@pboling)</li>
@@ -129,7 +153,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
   <li>COVERAGE: 100.00% – 518/518 lines in 14 files</li>
   <li>BRANCH COVERAGE: 100.00% – 170/170 branches in 14 files</li>
   <li>79.05% documented
-    <h3 id="added-2">Added</h3>
+    <h3 id="added-3">Added</h3>
   </li>
   <li>
 <a href="https://github.com/oauth-xx/oauth2/pull/632">gh!632</a> - Added <code>funding.yml</code> (@Aboling0)</li>
@@ -172,7 +196,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <a href="https://github.com/oauth-xx/oauth2/pull/644">gh!644</a>, <a href="https://github.com/oauth-xx/oauth2/pull/645">gh!645</a> - Added CITATION.cff (@Aboling0)</li>
   <li>
 <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/648">!648</a> - Improved documentation (@pboling)
-    <h3 id="changed-2">Changed</h3>
+    <h3 id="changed-3">Changed</h3>
   </li>
   <li>Default value of <code>OAuth2.config.silence_extra_tokens_warning</code> was <code>false</code>, now <code>true</code> (@pboling)</li>
   <li>Gem releases are now cryptographically signed, with a 20-year cert (@pboling)
@@ -186,7 +210,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/647">!647</a> - <code>OAuth2.config</code> is no longer writable (@pboling)</li>
   <li>
 <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/647">!647</a> - Errors raised by <code>OAuth2::AccessToken</code> are now always <code>OAuth2::Error</code> and have better metadata (@pboling)
-    <h3 id="fixed-2">Fixed</h3>
+    <h3 id="fixed-3">Fixed</h3>
   </li>
   <li>
 <a href="https://gitlab.com/oauth-xx/oauth2/-/issues/95">#95</a> - restoring an access token via <code>AccessToken#from_hash</code> (@pboling)
@@ -222,10 +246,10 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.8...v2.0.9">2.0.9</a> - 2022-09-16</h2>
 <ul>
   <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.9">v2.0.9</a>
-    <h3 id="added-3">Added</h3>
+    <h3 id="added-4">Added</h3>
   </li>
   <li>More specs (@pboling)
-    <h3 id="changed-3">Changed</h3>
+    <h3 id="changed-4">Changed</h3>
   </li>
   <li>Complete migration to main branch as default (@pboling)</li>
   <li>Complete migration to Gitlab, updating all links, and references in VCS-managed files (@pboling)</li>
@@ -235,11 +259,11 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.7...v2.0.8">2.0.8</a> - 2022-09-01</h2>
 <ul>
   <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.8">v2.0.8</a>
-    <h3 id="changed-4">Changed</h3>
+    <h3 id="changed-5">Changed</h3>
   </li>
   <li>
 <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/630">!630</a> - Extract snaky_hash to external dependency (@pboling)
-    <h3 id="added-4">Added</h3>
+    <h3 id="added-5">Added</h3>
   </li>
   <li>
 <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/631">!631</a> - New global configuration option OAuth2.config.silence_extra_tokens_warning (default: false) fixes <a href="https://gitlab.com/oauth-xx/oauth2/-/issues/628">#628</a>
@@ -250,11 +274,11 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.6...v2.0.7">2.0.7</a> - 2022-08-22</h2>
 <ul>
   <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.7">v2.0.7</a>
-    <h3 id="added-5">Added</h3>
+    <h3 id="added-6">Added</h3>
   </li>
   <li>
 <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/629">!629</a> - Allow POST of JSON to get token (@pboling, @terracatta)
-    <h3 id="fixed-3">Fixed</h3>
+    <h3 id="fixed-4">Fixed</h3>
   </li>
   <li>
 <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/626">!626</a> - Fixes a regression in 2.0.6. Will now prefer the key order from the lookup, not the hash keys (@rickselby)
@@ -270,7 +294,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.5...v2.0.6">2.0.6</a> - 2022-07-13</h2>
 <ul>
   <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.6">v2.0.6</a>
-    <h3 id="fixed-4">Fixed</h3>
+    <h3 id="fixed-5">Fixed</h3>
   </li>
   <li>
 <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/624">!624</a> - Fixes a <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/623">regression</a> in v2.0.5, where an error would be raised in refresh_token flows due to (legitimate) lack of access_token (@pboling)</li>
@@ -280,7 +304,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.4...v2.0.5">2.0.5</a> - 2022-07-07</h2>
 <ul>
   <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.5">v2.0.5</a>
-    <h3 id="fixed-5">Fixed</h3>
+    <h3 id="fixed-6">Fixed</h3>
   </li>
   <li>
 <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/620">!620</a> - Documentation improvements, to help with upgrading (@swanson)</li>
@@ -305,7 +329,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.3...v2.0.4">2.0.4</a> - 2022-07-01</h2>
 <ul>
   <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.4">v2.0.4</a>
-    <h3 id="fixed-6">Fixed</h3>
+    <h3 id="fixed-7">Fixed</h3>
   </li>
   <li>
 <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/618">!618</a> - In some scenarios the <code>snaky</code> option default value was not applied (@pboling)</li>
@@ -315,13 +339,13 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.2...v2.0.3">2.0.3</a> - 2022-06-28</h2>
 <ul>
   <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.3">v2.0.3</a>
-    <h3 id="added-6">Added</h3>
+    <h3 id="added-7">Added</h3>
   </li>
   <li>
 <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/611">!611</a> - Proper deprecation warnings for <code>extract_access_token</code> argument (@pboling)</li>
   <li>
 <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/612">!612</a> - Add <code>snaky: false</code> option to skip conversion to <code>OAuth2::SnakyHash</code> (default: true) (@pboling)
-    <h3 id="fixed-7">Fixed</h3>
+    <h3 id="fixed-8">Fixed</h3>
   </li>
   <li>
 <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/608">!608</a> - Wrap <code>Faraday::TimeoutError</code> in <code>OAuth2::TimeoutError</code> (@nbibler)</li>
@@ -333,7 +357,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.1...v2.0.2">2.0.2</a> - 2022-06-24</h2>
 <ul>
   <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.2">v2.0.2</a>
-    <h3 id="fixed-8">Fixed</h3>
+    <h3 id="fixed-9">Fixed</h3>
   </li>
   <li>
 <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/604">!604</a> - Wrap <code>Faraday::TimeoutError</code> in <code>OAuth2::TimeoutError</code> (@stanhu)</li>
@@ -347,7 +371,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v2.0.0...v2.0.1">2.0.1</a> - 2022-06-22</h2>
 <ul>
   <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.1">v2.0.1</a>
-    <h3 id="added-7">Added</h3>
+    <h3 id="added-8">Added</h3>
   </li>
   <li>Documentation improvements (@pboling)</li>
   <li>Increased test coverage to 99% (@pboling)</li>
@@ -357,7 +381,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v1.4.11...v2.0.0">2.0.0</a> - 2022-06-21</h2>
 <ul>
   <li>TAG: <a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v2.0.0">v2.0.0</a>
-    <h3 id="added-8">Added</h3>
+    <h3 id="added-9">Added</h3>
   </li>
   <li>
 <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/158">!158</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/344">!344</a> - Optionally pass raw response to parsers (@niels)</li>
@@ -411,7 +435,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/575">!575</a> - Support IETF rfc7231, section 7.1.2 - relative location in redirect (@pboling)</li>
   <li>
 <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/581">!581</a> - <em>Documentation</em>: of breaking changes (@pboling)
-    <h3 id="changed-5">Changed</h3>
+    <h3 id="changed-6">Changed</h3>
   </li>
   <li>
 <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/191">!191</a> - <strong>BREAKING</strong>: Token is expired if <code>expired_at</code> time is <code>now</code> (@davestevens)</li>
@@ -443,7 +467,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/576">!576</a> - <strong>BREAKING</strong>: Stop rescuing parsing errors (@pboling)</li>
   <li>
 <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/576">!591</a> - <em>DEPRECATION</em>: <code>OAuth2::Client</code> - <code>:extract_access_token</code> option is deprecated
-    <h3 id="fixed-9">Fixed</h3>
+    <h3 id="fixed-10">Fixed</h3>
   </li>
   <li>
 <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/158">!158</a>, <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/344">!344</a> - Handling of errors when using <code>omniauth-facebook</code> (@niels)</li>
@@ -481,7 +505,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/596">!596</a> - Consistency between <code>AccessToken#refresh</code> and <code>Client#get_token</code> named arguments (@stanhu)</li>
   <li>
 <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/598">!598</a> - Fix unparseable data not raised as error in <code>Client#get_token</code>, respecting <code>:raise_errors</code> config (@stanhu)
-    <h3 id="removed-1">Removed</h3>
+    <h3 id="removed-2">Removed</h3>
   </li>
   <li>
 <a href="https://gitlab.com/oauth-xx/oauth2/-/merge_requests/341">!341</a> - Remove Rdoc &amp; Jeweler related files (@josephpage)</li>
@@ -717,17 +741,17 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 
 <h2 id="100---2014-07-09-tag">
 <a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v0.9.4...v1.0.0">1.0.0</a> - 2014-07-09 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v1.0.0">tag</a>)</h2>
-<h3 id="added-9">Added</h3>
+<h3 id="added-10">Added</h3>
 <ul>
   <li>Add an implementation of the MAC token spec.
-    <h3 id="fixed-10">Fixed</h3>
+    <h3 id="fixed-11">Fixed</h3>
   </li>
   <li>Fix Base64.strict_encode64 incompatibility with Ruby 1.8.7.</li>
 </ul>
 
 <h2 id="050---2011-07-29-tag">
 <a href="https://gitlab.com/oauth-xx/oauth2/-/compare/v0.4.1...v0.5.0">0.5.0</a> - 2011-07-29 (<a href="https://gitlab.com/oauth-xx/oauth2/-/tags/v0.5.0">tag</a>)</h2>
-<h3 id="changed-6">Changed</h3>
+<h3 id="changed-7">Changed</h3>
 <ul>
   <li>
 <em>breaking</em> <code>oauth_token</code> renamed to <code>oauth_bearer</code>.</li>
@@ -801,7 +825,7 @@ and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semant
 </div></div>
 
       <div id="footer">
-  Generated on Sun Jun  1 00:42:25 2025 by
+  Generated on Sun Jun  1 03:27:31 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.3).
 </div>
