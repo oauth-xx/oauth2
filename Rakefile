@@ -77,6 +77,7 @@ begin
       "lib/**/*.rb",
       "-", # source and extra docs are separated by "-"
       # Extra Files (alphabetical)
+      "*.cff",
       "*.md",
       "*.txt",
     ]
