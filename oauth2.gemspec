@@ -41,7 +41,7 @@ Gem::Specification.new do |spec|
   spec.summary = "OAuth 2.0 Core Ruby implementation"
   spec.description = "Ruby wrapper for the OAuth 2.0 protocol"
   spec.homepage = gh_mirror
-  spec.licenses = "MIT"
+  spec.license = "MIT"
   spec.required_ruby_version = ">= 2.2.0"
 
   spec.post_install_message = %{
