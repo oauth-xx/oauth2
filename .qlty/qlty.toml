@@ -35,7 +35,6 @@ exclude_patterns = [
   ".github/workflows/codeql-analysis.yml"
 ]
 
-
 test_patterns = [
   "**/test/**",
   "**/spec/**",
