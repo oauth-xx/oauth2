@@ -28,8 +28,6 @@
 [🖇kofi]: https://ko-fi.com/O5O86SNP4
 [🖇patreon-img]: https://img.shields.io/badge/patreon-donate-yellow.svg
 [🖇patreon]: https://patreon.com/galtzo
-[🖇buyme-img]: https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20latte&emoji=&slug=pboling&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff
-[🖇buyme]: https://www.buymeacoffee.com/pboling
 [🖇buyme-small-img]: https://img.shields.io/badge/buy_me_a_coffee-✓-yellow.svg?style=flat
 
 OAuth 2.0 is the industry-standard protocol for authorization.
@@ -832,6 +830,9 @@ Please consider supporting my efforts via the giant yellow link below,
 or one of the others at the head of this README.
 
 [![Buy me a latte][🖇buyme-img]][🖇buyme]
+
+[🖇buyme-img]: https://img.buymeacoffee.com/button-api/?text=Buy%20me%20a%20latte&emoji=&slug=pboling&button_colour=FFDD00&font_colour=000000&font_family=Cookie&outline_colour=000000&coffee_colour=ffffff
+[🖇buyme]: https://www.buymeacoffee.com/pboling
 
 [⛳gg-discussions]: https://groups.google.com/g/oauth-ruby
 [⛳gg-discussions-img]: https://img.shields.io/badge/google-group-0093D0.svg?style=for-the-badge&logo=google&logoColor=orange
