@@ -187,7 +187,7 @@ appraise "ruby-3-3" do
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
-# Only run security audit on latest Ruby version
+# Only run security audit on the latest version of Ruby
 appraise "audit" do
   gem "mutex_m", "~> 0.2"
   gem "stringio", "~> 3.0"
@@ -201,7 +201,7 @@ appraise "audit" do
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
-# Only run coverage on latest Ruby version
+# Only run coverage on the latest version of Ruby
 appraise "coverage" do
   gem "mutex_m", "~> 0.2"
   gem "stringio", "~> 3.0"
@@ -215,7 +215,7 @@ appraise "coverage" do
   remove_gem "appraisal" # only present because it must be in the gemfile because we target a git branch
 end
 
-# Only run linter on latest Ruby version (but, in support of oldest supported Ruby version)
+# Only run linter on the latest version of Ruby (but, in support of oldest supported Ruby version)
 appraise "style" do
   gem "mutex_m", "~> 0.2"
   gem "stringio", "~> 3.0"
