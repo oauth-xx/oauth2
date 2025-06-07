@@ -816,7 +816,7 @@ See [LICENSE.txt][📄license] for the official [Copyright Notice][📄copyright
         </a>, and oauth2 contributors
     </li>
     <li>
-        Copyright (c) 2011 - 2013 Michael Bleigh and Intridea, Inc.
+        Copyright (c) 2011-2013 Michael Bleigh and Intridea, Inc.
     </li>
 </ul>
 

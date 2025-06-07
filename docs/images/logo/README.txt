@@ -18,7 +18,7 @@ The OAuth logo was designed by Chris Messina.
 
 ---
 
-The Ruby Logo - ruby-logo-124px.jpeg (resized)
+The Ruby Logo - ruby-logo-198px.svg
 
 https://www.ruby-lang.org/en/about/logo/
 

@@ -1,24 +1,23 @@
 ## Contributing
 
-Bug reports and pull requests are welcome on GitLab at [https://gitlab.com/oauth-xx/oauth2][🚎src-main]
-. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to
+Bug reports and pull requests are welcome on GitLab at [https://gitlab.com/oauth-xx/oauth2][🚎src-main].
+This project should be a safe, welcoming space for collaboration, so contributors agree to adhere to
 the [code of conduct][🤝conduct].
 
-To submit a patch, please fork the project and create a patch with tests.
-Once you're happy with it send a pull request.
+To submit a patch, please fork the project, create a patch with tests, and send a pull request.
 
-We [![Keep A Changelog][📗keep-changelog-img]][📗keep-changelog] so if you make changes, remember to update it.
+Remember to [![Keep A Changelog][📗keep-changelog-img]][📗keep-changelog] if you make changes.
 
-## You can help!
+## Help out!
 
 Take a look at the `reek` list which is the file called `REEK` and find something to improve.
 
-Simply follow these instructions:
+Follow these instructions:
 
 1. Fork the repository
-2. Create your feature branch (`git checkout -b my-new-feature`)
+2. Create a feature branch (`git checkout -b my-new-feature`)
 3. Make some fixes.
-4. Commit your changes (`git commit -am 'Added some feature'`)
+4. Commit changes (`git commit -am 'Added some feature'`)
 5. Push to the branch (`git push origin my-new-feature`)
 6. Make sure to add tests for it. This is important, so it doesn't break in a future release.
 7. Create new Pull Request.
@@ -26,11 +25,12 @@ Simply follow these instructions:
 ## Appraisals
 
 From time to time the appraisal gemfiles in `gemfiles/` will need to be updated.
-They are created and updated with the commands:
 
 NOTE: We run on a [fork][🚎appraisal-fork] of Appraisal.
 
 Please upvote the PR for `eval_gemfile` [support][🚎appraisal-eval-gemfile-pr]
+
+Create or update them with the commands:
 
 ```shell
 BUNDLE_GEMFILE=Appraisal.root.gemfile bundle
@@ -38,7 +38,7 @@ BUNDLE_GEMFILE=Appraisal.root.gemfile bundle exec appraisal update
 bundle exec rake rubocop_gradual:autocorrect
 ```
 
-When adding an appraisal to CI check the [runner tool cache][🏃‍♂️runner-tool-cache] to see which runner to use.
+When adding an appraisal to CI, check the [runner tool cache][🏃‍♂️runner-tool-cache] to see which runner to use.
 
 ## The Reek List
 
@@ -74,8 +74,6 @@ bundle exec rake rubocop_gradual:autocorrect
 
 ## Contributors
 
-Your picture could be here!
-
 [![Contributors][🖐contributors-img]][🖐contributors]
 
 Made with [contributors-img][🖐contrib-rocks].
@@ -86,13 +84,13 @@ Also see GitLab Contributors: [https://gitlab.com/oauth-xx/oauth2/-/graphs/main]
 
 ### One-time, Per-maintainer, Setup
 
-**IMPORTANT**: If you want to sign the build you create,
-your public key for signing gems will need to be picked up by the line in the
+**IMPORTANT**: To sign a build,
+a public key for signing gems will need to be picked up by the line in the
 `gemspec` defining the `spec.cert_chain` (check the relevant ENV variables there).
-All releases to RubyGems.org will be signed.
+All releases to RubyGems.org are signed releases.
 See: [RubyGems Security Guide][🔒️rubygems-security-guide]
 
-NOTE: To build without signing the gem you must set `SKIP_GEM_SIGNING` to some value in your environment.
+NOTE: To build without signing the gem set `SKIP_GEM_SIGNING` to any value in the environment.
 
 ### To release a new version:
 
@@ -100,21 +98,21 @@ NOTE: To build without signing the gem you must set `SKIP_GEM_SIGNING` to some v
 2. Update the version number in `version.rb`, and ensure `CHANGELOG.md` reflects changes
 3. Run `bin/setup && bin/rake` again as a secondary check, and to update `Gemfile.lock`
 4. Run `git commit -am "🔖 Prepare release v<VERSION>"` to commit the changes
-5. Run `git push` to trigger the final CI pipeline before release, & merge PRs
-    - NOTE: Remember to [check the build][🧪build]!
+5. Run `git push` to trigger the final CI pipeline before release, and merge PRs
+    - NOTE: Remember to [check the build][🧪build].
 6. Run `export GIT_TRUNK_BRANCH_NAME="$(git remote show origin | grep 'HEAD branch' | cut -d ' ' -f5)" && echo $GIT_TRUNK_BRANCH_NAME`
 7. Run `git checkout $GIT_TRUNK_BRANCH_NAME`
-8. Run `git pull origin $GIT_TRUNK_BRANCH_NAME` to ensure you will release the latest trunk code
+8. Run `git pull origin $GIT_TRUNK_BRANCH_NAME` to ensure latest trunk code
 9. Set `SOURCE_DATE_EPOCH` so `rake build` and `rake release` use same timestamp, and generate same checksums
     - Run `export SOURCE_DATE_EPOCH=$EPOCHSECONDS && echo $SOURCE_DATE_EPOCH`
     - If the echo above has no output, then it didn't work.
-    - Note that you'll need the `zsh/datetime` module, if running `zsh`.
+    - Note: `zsh/datetime` module is needed, if running `zsh`.
     - In older versions of `bash` you can use `date +%s` instead, i.e. `export SOURCE_DATE_EPOCH=$(date +%s) && echo $SOURCE_DATE_EPOCH`
 10. Run `bundle exec rake build`
 11. Run `bin/gem_checksums` (more context [1][🔒️rubygems-checksums-pr], [2][🔒️rubygems-guides-pr])
     to create SHA-256 and SHA-512 checksums. This functionality is provided by the `stone_checksums`
     [gem][💎stone_checksums].
-    - Checksums will be committed automatically by the script but not pushed
+    - The script automatically commits but does not push the checksums
 12. Run `bundle exec rake release` which will create a git tag for the version,
     push git commits and tags, and push the `.gem` file to [rubygems.org][💎rubygems]
 
