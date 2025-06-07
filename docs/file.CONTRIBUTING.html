@@ -59,26 +59,25 @@
 
       <div id="content"><div id='filecontents'><h2 id="contributing">Contributing</h2>
 
-<p>Bug reports and pull requests are welcome on GitLab at <a href="https://gitlab.com/oauth-xx/oauth2">https://gitlab.com/oauth-xx/oauth2</a><br>
-. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to<br>
+<p>Bug reports and pull requests are welcome on GitLab at <a href="https://gitlab.com/oauth-xx/oauth2">https://gitlab.com/oauth-xx/oauth2</a>.<br>
+This project should be a safe, welcoming space for collaboration, so contributors agree to adhere to<br>
 the <a href="https://gitlab.com/oauth-xx/oauth2/-/blob/main/CODE_OF_CONDUCT.md">code of conduct</a>.</p>
 
-<p>To submit a patch, please fork the project and create a patch with tests.<br>
-Once you’re happy with it send a pull request.</p>
+<p>To submit a patch, please fork the project, create a patch with tests, and send a pull request.</p>
 
-<p>We <a href="https://keepachangelog.com/en/1.0.0/"><img src="https://img.shields.io/badge/keep--a--changelog-1.0.0-FFDD67.svg?style=flat" alt="Keep A Changelog"></a> so if you make changes, remember to update it.</p>
+<p>Remember to <a href="https://keepachangelog.com/en/1.0.0/"><img src="https://img.shields.io/badge/keep--a--changelog-1.0.0-FFDD67.svg?style=flat" alt="Keep A Changelog"></a> if you make changes.</p>
 
-<h2 id="you-can-help">You can help!</h2>
+<h2 id="help-out">Help out!</h2>
 
 <p>Take a look at the <code>reek</code> list which is the file called <code>REEK</code> and find something to improve.</p>
 
-<p>Simply follow these instructions:</p>
+<p>Follow these instructions:</p>
 
 <ol>
   <li>Fork the repository</li>
-  <li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+  <li>Create a feature branch (<code>git checkout -b my-new-feature</code>)</li>
   <li>Make some fixes.</li>
-  <li>Commit your changes (<code>git commit -am 'Added some feature'</code>)</li>
+  <li>Commit changes (<code>git commit -am 'Added some feature'</code>)</li>
   <li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
   <li>Make sure to add tests for it. This is important, so it doesn’t break in a future release.</li>
   <li>Create new Pull Request.</li>
@@ -86,19 +85,20 @@ Once you’re happy with it send a pull request.</p>
 
 <h2 id="appraisals">Appraisals</h2>
 
-<p>From time to time the appraisal gemfiles in <code>gemfiles/</code> will need to be updated.<br>
-They are created and updated with the commands:</p>
+<p>From time to time the appraisal gemfiles in <code>gemfiles/</code> will need to be updated.</p>
 
 <p>NOTE: We run on a <a href="https://github.com/pboling/appraisal/tree/galtzo">fork</a> of Appraisal.</p>
 
 <p>Please upvote the PR for <code>eval_gemfile</code> <a href="https://github.com/thoughtbot/appraisal/pull/248">support</a></p>
+
+<p>Create or update them with the commands:</p>
 
 <pre class="code language-shell"><code class="language-shell">BUNDLE_GEMFILE=Appraisal.root.gemfile bundle
 BUNDLE_GEMFILE=Appraisal.root.gemfile bundle exec appraisal update
 bundle exec rake rubocop_gradual:autocorrect
 </code></pre>
 
-<p>When adding an appraisal to CI check the <a href="https://github.com/ruby/ruby-builder/releases/tag/toolcache">runner tool cache</a> to see which runner to use.</p>
+<p>When adding an appraisal to CI, check the <a href="https://github.com/ruby/ruby-builder/releases/tag/toolcache">runner tool cache</a> to see which runner to use.</p>
 
 <h2 id="the-reek-list">The Reek List</h2>
 
@@ -130,8 +130,6 @@ bundle exec rake rubocop_gradual:autocorrect
 
 <h2 id="contributors">Contributors</h2>
 
-<p>Your picture could be here!</p>
-
 <p><a href="https://github.com/oauth-xx/oauth2/graphs/contributors"><img src="https://contrib.rocks/image?repo=oauth-xx/oauth2" alt="Contributors"></a></p>
 
 <p>Made with <a href="https://contrib.rocks">contributors-img</a>.</p>
@@ -142,13 +140,13 @@ bundle exec rake rubocop_gradual:autocorrect
 
 <h3 id="one-time-per-maintainer-setup">One-time, Per-maintainer, Setup</h3>
 
-<p><strong>IMPORTANT</strong>: If you want to sign the build you create,<br>
-your public key for signing gems will need to be picked up by the line in the<br>
+<p><strong>IMPORTANT</strong>: To sign a build,<br>
+a public key for signing gems will need to be picked up by the line in the<br>
 <code>gemspec</code> defining the <code>spec.cert_chain</code> (check the relevant ENV variables there).<br>
-All releases to RubyGems.org will be signed.<br>
+All releases to RubyGems.org are signed releases.<br>
 See: <a href="https://guides.rubygems.org/security/#building-gems">RubyGems Security Guide</a></p>
 
-<p>NOTE: To build without signing the gem you must set <code>SKIP_GEM_SIGNING</code> to some value in your environment.</p>
+<p>NOTE: To build without signing the gem set <code>SKIP_GEM_SIGNING</code> to any value in the environment.</p>
 
 <h3 id="to-release-a-new-version">To release a new version:</h3>
 
@@ -158,22 +156,22 @@ See: <a href="https://guides.rubygems.org/security/#building-gems">RubyGems Secu
   <li>Run <code>bin/setup &amp;&amp; bin/rake</code> again as a secondary check, and to update <code>Gemfile.lock</code>
 </li>
   <li>Run <code>git commit -am "🔖 Prepare release v&lt;VERSION&gt;"</code> to commit the changes</li>
-  <li>Run <code>git push</code> to trigger the final CI pipeline before release, &amp; merge PRs
+  <li>Run <code>git push</code> to trigger the final CI pipeline before release, and merge PRs
     <ul>
-      <li>NOTE: Remember to <a href="https://github.com/oauth-xx/oauth2/actions">check the build</a>!</li>
+      <li>NOTE: Remember to <a href="https://github.com/oauth-xx/oauth2/actions">check the build</a>.</li>
     </ul>
   </li>
   <li>Run <code>export GIT_TRUNK_BRANCH_NAME="$(git remote show origin | grep 'HEAD branch' | cut -d ' ' -f5)" &amp;&amp; echo $GIT_TRUNK_BRANCH_NAME</code>
 </li>
   <li>Run <code>git checkout $GIT_TRUNK_BRANCH_NAME</code>
 </li>
-  <li>Run <code>git pull origin $GIT_TRUNK_BRANCH_NAME</code> to ensure you will release the latest trunk code</li>
+  <li>Run <code>git pull origin $GIT_TRUNK_BRANCH_NAME</code> to ensure latest trunk code</li>
   <li>Set <code>SOURCE_DATE_EPOCH</code> so <code>rake build</code> and <code>rake release</code> use same timestamp, and generate same checksums
     <ul>
       <li>Run <code>export SOURCE_DATE_EPOCH=$EPOCHSECONDS &amp;&amp; echo $SOURCE_DATE_EPOCH</code>
 </li>
       <li>If the echo above has no output, then it didn’t work.</li>
-      <li>Note that you’ll need the <code>zsh/datetime</code> module, if running <code>zsh</code>.</li>
+      <li>Note: <code>zsh/datetime</code> module is needed, if running <code>zsh</code>.</li>
       <li>In older versions of <code>bash</code> you can use <code>date +%s</code> instead, i.e. <code>export SOURCE_DATE_EPOCH=$(date +%s) &amp;&amp; echo $SOURCE_DATE_EPOCH</code>
 </li>
     </ul>
@@ -184,7 +182,7 @@ See: <a href="https://guides.rubygems.org/security/#building-gems">RubyGems Secu
 to create SHA-256 and SHA-512 checksums. This functionality is provided by the <code>stone_checksums</code><br>
 <a href="https://github.com/pboling/stone_checksums">gem</a>.
     <ul>
-      <li>Checksums will be committed automatically by the script but not pushed</li>
+      <li>The script automatically commits but does not push the checksums</li>
     </ul>
   </li>
   <li>Run <code>bundle exec rake release</code> which will create a git tag for the version,<br>
@@ -195,7 +193,7 @@ push git commits and tags, and push the <code>.gem</code> file to <a href="https
 </div></div>
 
       <div id="footer">
-  Generated on Sat Jun  7 07:41:46 2025 by
+  Generated on Sat Jun  7 13:38:10 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.3).
 </div>

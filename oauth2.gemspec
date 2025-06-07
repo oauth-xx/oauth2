@@ -35,8 +35,8 @@ Gem::Specification.new do |spec|
     end
   end
 
-  gl_homepage = "https://gitlab.com/oauth-xx/oauth2"
-  gh_mirror = "https://github.com/oauth-xx/oauth2"
+  gl_homepage = "https://gitlab.com/oauth-xx/#{spec.name}"
+  gh_mirror = "https://github.com/oauth-xx/#{spec.name}"
 
   spec.summary = "OAuth 2.0 Core Ruby implementation"
   spec.description = "Ruby wrapper for the OAuth 2.0 protocol"
