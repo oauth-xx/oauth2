@@ -811,7 +811,7 @@ See [LICENSE.txt][📄license] for the official [Copyright Notice][📄copyright
         <a href="https://discord.gg/3qme4XHNKN">
             Galtzo.com
             <picture>
-              <img src="https://github.com/oauth-xx/oauth2/raw/main/docs/images/logo/galtzo-floss-logos-wordless.svg?raw=true" alt="Galtzo.com Logo by Aboling0, CC BY-SA 4.0" height="20">
+              <img src="https://github.com/oauth-xx/oauth2/raw/main/docs/images/logo/galtzo-floss-logos-wordless.svg?raw=true" alt="Galtzo.com Logo by Aboling0, CC BY-SA 4.0" width="24">
             </picture>
         </a>, and oauth2 contributors
     </li>
