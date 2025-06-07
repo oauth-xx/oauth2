@@ -4,7 +4,7 @@
 #   BUNDLE_GEMFILE=Appraisal.root.gemfile bundle
 #   BUNDLE_GEMFILE=Appraisal.root.gemfile bundle exec appraisal update
 
-# Used for head (nightly) releases of ruby, truffleruby, and jruby.
+# Used for HEAD (nightly) releases of ruby, truffleruby, and jruby.
 # Split into discrete appraisals if one of them needs a dependency locked discretely.
 appraise "head" do
   gem "mutex_m", ">= 0.2"
