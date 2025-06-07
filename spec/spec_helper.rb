@@ -31,7 +31,7 @@ begin
   require "kettle-soup-cover"
   require "simplecov" if Kettle::Soup::Cover::DO_COV # `.simplecov` is run here!
 rescue LoadError => error
-  # check the error message, if you are so inclined, and re-raise if not what is expected
+  # check the error message, and re-raise if not what is expected
   raise error unless error.message.include?("kettle")
 end
 

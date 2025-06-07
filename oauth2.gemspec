@@ -76,13 +76,11 @@ Thanks, |7eter l-|. l3oling
 }
 
   spec.metadata["homepage_uri"] = "https://#{spec.name}.galtzo.com/"
-  # Yes, GitHub/Microsoft is a disgusting monopoly, but GH stars have value :(
   spec.metadata["source_code_uri"] = "#{gh_mirror}/releases/tag//v#{spec.version}"
   spec.metadata["changelog_uri"] = "#{gl_homepage}/-/blob/v#{spec.version}/CHANGELOG.md"
   spec.metadata["bug_tracker_uri"] = "#{gl_homepage}/-/issues"
   spec.metadata["documentation_uri"] = "https://www.rubydoc.info/gems/#{spec.name}/#{spec.version}"
   spec.metadata["wiki_uri"] = "#{gl_homepage}/-/wiki"
-  # Yes, Google is a disgusting monopoly, but the historical value of the mailing list archive is high.
   spec.metadata["mailing_list_uri"] = "https://groups.google.com/g/oauth-ruby"
   spec.metadata["funding_uri"] = "https://github.com/sponsors/pboling"
   spec.metadata["news_uri"] = "https://www.railsbling.com/tags/#{spec.name}"
